@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="5130416d-df1d-4255-aa2e-5b2e5da82765" name="UMLUseCaseDiagram" linkedPackageId="f41d5e10-47f9-4134-be15-46658b93a845" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+  <profileInstances>
+    <packageHasProfileInstances Id="7e3bb745-e155-438c-bdac-5e0dc8519c1d">
+      <profileInstance Id="f86497ac-97ec-4c79-ae39-d5705116fda4" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="168839fa-60f2-4c3b-bd30-2fb3e65ddf94">
+      <profileInstance Id="a57c9302-321f-48a0-8e1f-4103e81ba9ea" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <useCaseModelRootHasTypes>
+      <actor Id="f5749fa7-1206-46e6-b07c-4914d3299263" name="用户" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="237fcde2-f193-4e0b-8e70-1e546c1f391b" />
+        <targetEnds>
+          <association Id="2c67035b-9d59-4fed-89bb-33fdf9c3696a" isDerived="false" sourceEndRoleName="用户" targetEndRoleName="登录" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="287d0940-63de-4240-b506-787e375ecd4e" LastKnownName="登录" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="eb26501f-1174-4f0b-b194-d056682c1c5a" name="用户" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="c948e021-6149-4b80-9ce2-7271c16714b1" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="85ed72ef-bc53-4bdd-b67c-83a0df40dac5" name="登录" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="48422c72-066f-4727-bd05-ceefd86ec122" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="51e8aa93-030c-47ed-99c2-8a19b559bcbc" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="287d0940-63de-4240-b506-787e375ecd4e" name="登录" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="870fe492-7708-4552-a18b-c15fc646fad3" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <actor Id="0f6a0d64-bfdf-42a0-94ef-f090f581e628" name="登录用户" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="e6227cc5-1193-469f-9e17-9acd061fd44b" />
+        <targetEnds>
+          <association Id="ec7b7f86-679f-4f1e-a2b6-1afdd0293c8a" isDerived="false" sourceEndRoleName="登录用户" targetEndRoleName="导入记录" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="cb03f1ef-98e4-4ae9-8bf4-4fab16ffb716" LastKnownName="导入记录" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="6f4154bb-dfaa-4f31-ba97-220f1f86a4ba" name="登录用户" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="f8b40e05-c1e4-4dcd-bcfe-ebd1db17784e" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="895b266c-35f1-45f5-8eda-bce010030f07" name="导入记录" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="ac92f3f1-952b-48aa-ae50-8becfba05068" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="285d8002-96fd-48b4-bf7e-f4f60c4bda33" />
+          </association>
+          <association Id="8947e8ba-fa43-4bf1-a843-4b448bb1f687" isDerived="false" sourceEndRoleName="登录用户" targetEndRoleName="分析记录" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="d48b1ccd-6efd-412d-8f6f-7bbd73c72600" LastKnownName="分析记录" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="c3f7ff73-bd67-435f-accd-cfb16afffb90" name="登录用户" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="002a3b0a-1bff-4ba2-939b-21e2912ee175" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="14a5ae9e-319f-4db0-870d-0cfb9c768226" name="分析记录" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="e9490b97-0363-42e6-aae2-898474c5c3af" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="7e49f1b5-8842-47e5-aff3-93fb999db43a" />
+          </association>
+          <association Id="8ca42811-30a4-4f39-98eb-37163b5cf1fe" isDerived="false" sourceEndRoleName="登录用户" targetEndRoleName="管理记录" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="75a9eb4b-429a-4616-91a4-c09a0a6aa543" LastKnownName="管理记录" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="35960914-5035-430f-816b-944bd1a9c6df" name="登录用户" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="0cceef1a-d894-4b11-ad5f-9d7608d0e6e9" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="a15bdc45-affb-4d1d-b53c-5ac4d7cfb06a" name="管理记录" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="21d75dd9-24b1-465b-b1b8-fee37b4ff284" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="99087f09-02d3-47a4-adfc-43191de4bc77" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="cb03f1ef-98e4-4ae9-8bf4-4fab16ffb716" name="导入记录" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="e0d6efa1-a601-4dcd-9b76-f18abf9585db" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="d48b1ccd-6efd-412d-8f6f-7bbd73c72600" name="分析记录" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="525add28-7d02-4e45-84a3-9ad8ad2a2c46" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="75a9eb4b-429a-4616-91a4-c09a0a6aa543" name="管理记录" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="c65d46b0-af08-425c-8cf0-3051d964852e" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+  </packagedElements>
+  <package Id="f41d5e10-47f9-4134-be15-46658b93a845" name="TrendAnalysis.ModelingProject">
+    <elementDefinition Id="157f3c16-3e6f-4d21-b55b-3345795bc7f0" />
+  </package>
+</useCaseModelRoot>
