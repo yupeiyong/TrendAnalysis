@@ -1,0 +1,14 @@
+E:\我的程序\趋势分析\DBUtility\bin\Debug\DBUtility.dll
+E:\我的程序\趋势分析\DBUtility\bin\Debug\DBUtility.pdb
+E:\我的程序\趋势分析\DBUtility\obj\Debug\DBUtility.dll
+E:\我的程序\趋势分析\DBUtility\obj\Debug\DBUtility.pdb
+E:\我的程序\趋势分析\DBUtility\obj\Debug\DBUtility.csprojResolveAssemblyReference.cache
+E:\我的工作区\yz开发文件夹\练习与测试\趋势分析\DBUtility\bin\Debug\DBUtility.dll
+E:\我的工作区\yz开发文件夹\练习与测试\趋势分析\DBUtility\bin\Debug\DBUtility.pdb
+E:\我的工作区\yz开发文件夹\练习与测试\趋势分析\DBUtility\obj\Debug\DBUtility.dll
+E:\我的工作区\yz开发文件夹\练习与测试\趋势分析\DBUtility\obj\Debug\DBUtility.pdb
+E:\我的工作区\我的程序\趋势分析\DBUtility\bin\Debug\DBUtility.dll
+E:\我的工作区\我的程序\趋势分析\DBUtility\bin\Debug\DBUtility.pdb
+E:\我的工作区\我的程序\趋势分析\DBUtility\obj\Debug\DBUtility.csprojResolveAssemblyReference.cache
+E:\我的工作区\我的程序\趋势分析\DBUtility\obj\Debug\DBUtility.dll
+E:\我的工作区\我的程序\趋势分析\DBUtility\obj\Debug\DBUtility.pdb
