@@ -34,7 +34,7 @@
             isAbstract="false">
             <useCaseMoniker
               Id="870fe492-7708-4552-a18b-c15fc646fad3"
-              LastKnownName="登录"
+              LastKnownName="注册"
               LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -70,7 +70,7 @@
     <packageHasNamedElement>
       <useCase
         Id="870fe492-7708-4552-a18b-c15fc646fad3"
-        name="登录"
+        name="注册"
         isAbstract="false"
         isLeaf="false" />
     </packageHasNamedElement>
@@ -90,7 +90,7 @@
             isAbstract="false">
             <useCaseMoniker
               Id="e0d6efa1-a601-4dcd-9b76-f18abf9585db"
-              LastKnownName="导入记录"
+              LastKnownName="导入历史记录"
               LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -129,7 +129,7 @@
             isAbstract="false">
             <useCaseMoniker
               Id="525add28-7d02-4e45-84a3-9ad8ad2a2c46"
-              LastKnownName="分析记录"
+              LastKnownName="分析指定位置号码"
               LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -198,20 +198,98 @@
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
+          <association
+            Id="5d26f409-10a8-4dbf-86b1-8ec3e5bbbe19"
+            isDerived="false"
+            sourceEndRoleName="登录用户"
+            targetEndRoleName="登录"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="4d66852a-f460-43cc-a905-22fa1ed1bc00"
+              LastKnownName="登录"
+              LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="21e88d1e-709b-4644-8996-42ded059ac05"
+                  name="登录用户"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="5a9e3126-2649-4490-8553-04d141911e6b"
+                  name="登录"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="53e5a3b2-adf3-4809-8a82-3872c427e960"
+            isDerived="false"
+            sourceEndRoleName="登录用户"
+            targetEndRoleName="分析全部位置号码"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="ad25ef70-8ade-4f2f-b33d-2ca1d0b59729"
+              LastKnownName="分析全部位置号码"
+              LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="2c56625c-480c-4f56-935d-6a62ca77ae72"
+                  name="登录用户"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="573e36e9-f77c-4e5f-a3e0-1070bd470c96"
+                  name="分析全部位置号码"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
         </targetEnds>
       </actor>
     </packageHasNamedElement>
     <packageHasNamedElement>
       <useCase
         Id="e0d6efa1-a601-4dcd-9b76-f18abf9585db"
-        name="导入记录"
+        name="导入历史记录"
         isAbstract="false"
         isLeaf="false" />
     </packageHasNamedElement>
     <packageHasNamedElement>
       <useCase
         Id="525add28-7d02-4e45-84a3-9ad8ad2a2c46"
-        name="分析记录"
+        name="分析指定位置号码"
         isAbstract="false"
         isLeaf="false" />
     </packageHasNamedElement>
@@ -221,6 +299,54 @@
         name="管理记录"
         isAbstract="false"
         isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="4d66852a-f460-43cc-a905-22fa1ed1bc00"
+        name="登录"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="eafcc87d-e46c-4371-b5db-ee47a128113a"
+        name="购买指定位置号码"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="f96c3c59-a245-40b8-825e-66490ce0c7a3">
+            <useCaseMoniker
+              Id="525add28-7d02-4e45-84a3-9ad8ad2a2c46"
+              LastKnownName="分析指定位置号码"
+              LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+          </include>
+        </additions>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="ad25ef70-8ade-4f2f-b33d-2ca1d0b59729"
+        name="分析全部位置号码"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="7f16422b-b7dc-4443-bee1-f51733541790"
+        name="购买全部位置的号码"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="00078ed7-0463-4a3f-abe7-ac0825dc0bd8">
+            <useCaseMoniker
+              Id="ad25ef70-8ade-4f2f-b33d-2ca1d0b59729"
+              LastKnownName="分析全部位置号码"
+              LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+          </include>
+        </additions>
+      </useCase>
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType
