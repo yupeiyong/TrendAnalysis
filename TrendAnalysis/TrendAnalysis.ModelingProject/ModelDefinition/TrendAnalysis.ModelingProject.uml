@@ -1,8 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm10="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/dsltools/UseCaseModel"
   dslVersion="1.0.0.0"
   Id="157f3c16-3e6f-4d21-b55b-3345795bc7f0"
   name="TrendAnalysis.ModelingProject" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <ownedCommentsInternal>
+    <comment
+      Id="2c8d6bb6-9367-4944-b98b-c758d65b14d3">
+      <body>EF上下文类</body>
+      <annotatedElements>
+        <classMoniker
+          Id="86af5cb8-3677-49e9-9c64-31711a71d75b"
+          LastKnownName="DbContext"
+          LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+      </annotatedElements>
+    </comment>
+  </ownedCommentsInternal>
   <profileInstances>
     <packageHasProfileInstances
       Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
@@ -561,6 +573,250 @@
       <class
         Id="2c1439d5-ddcf-4d4f-8d88-d52c27d5ac99"
         name="MarkSixSpecifiedLocationPurchase"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="4d883519-e024-428c-966e-d9659f2699ac"
+        name="MarkSixReportService"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="5417768b-0110-44fb-a97e-ec10c294fd66"
+            isDerived="false"
+            sourceEndRoleName="MarkSixReportService"
+            targetEndRoleName="DbContext"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="86af5cb8-3677-49e9-9c64-31711a71d75b"
+              LastKnownName="DbContext"
+              LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="f63f96ff-7e58-4472-a15d-e1e482941b42"
+                  name="MarkSixReportService"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="aba622de-997d-4fe2-a22d-602b59f357ac"
+                  name="DbContext"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedOperationsInternal>
+          <operation
+            Id="c2706e66-c0ac-4488-9685-9c803eb4a39a"
+            name="Import"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="467be087-48ce-4d43-9a1a-7f73897406df"
+            name="Export"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="490d5645-fc5c-4e4b-ad83-817dac39f2c7"
+            name="NetworkCapture"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="b53cf007-113e-4a75-972c-1286eed4cb2e"
+        name="MarkSixAnalysisService"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="18dc56c5-1b73-41d9-a150-9a6426f605b8"
+            isDerived="false"
+            sourceEndRoleName="MarkSixAnalysisService"
+            targetEndRoleName="DbContext"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="86af5cb8-3677-49e9-9c64-31711a71d75b"
+              LastKnownName="DbContext"
+              LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="bf978a02-996f-41ef-8a45-16ea9fbd6102"
+                  name="MarkSixAnalysisService"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="d60e9535-1b02-4bec-82a1-16e415d30093"
+                  name="DbContext"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedOperationsInternal>
+          <operation
+            Id="78ca5284-8416-4fc0-805a-df7ea8263b40"
+            name="AnalyseSpecifiedLocation"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="27f237b0-3f29-4075-966b-cfdf2711700a"
+            name="AnalyseFullNum"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="4a20fd18-c4f3-40ff-acb1-ce41027b4758"
+        name="MarkSixSpecifiedLocationPurchaseService"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="77b0f7e0-1172-4183-ac18-4cb8f4eab136"
+            isDerived="false"
+            sourceEndRoleName="MarkSixSpecifiedLocationPurchaseService"
+            targetEndRoleName="DbContext"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="86af5cb8-3677-49e9-9c64-31711a71d75b"
+              LastKnownName="DbContext"
+              LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="29fa2e0a-441d-4a97-9ab4-0f57691cc088"
+                  name="MarkSixSpecifiedLocationPurchaseService"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="369c61cc-850c-4f86-b08f-d04077fc14b1"
+                  name="DbContext"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedOperationsInternal>
+          <operation
+            Id="690eb2af-439b-41df-8a29-a52c3266e978"
+            name="Search"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="a0779a1e-cb61-4956-86c6-57ec3eb108c6"
+            name="Purchase"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="2e2fa437-efc2-48c6-b685-3633a65bba67"
+            name="Cancel"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="e76da540-710f-49b0-adda-89ce24ed6752"
+            name="Update"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="d833758e-2d88-4a61-85b8-23580c55c06e"
+            name="GetDataById"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="86af5cb8-3677-49e9-9c64-31711a71d75b"
+        name="DbContext"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false" />
