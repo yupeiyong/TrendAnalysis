@@ -22,6 +22,20 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
+    <Content Include="ExportReport.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ExportReport.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>ExportReport.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="ImportExport.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ImportExport.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>ImportExport.sequencediagram</DependentUpon>
+    </Content>
     <Content Include="MarkSixBusiness.classdiagram">
       <SubType>Content</SubType>
     </Content>
@@ -35,6 +49,20 @@
     <Content Include="MarkSixModel.classdiagram.layout">
       <SubType>Content</SubType>
       <DependentUpon>MarkSixModel.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="MarksixPurchase.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="MarksixPurchase.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>MarksixPurchase.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="MarkSixSpecifiedLocationAnalysis.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="MarkSixSpecifiedLocationAnalysis.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>MarkSixSpecifiedLocationAnalysis.sequencediagram</DependentUpon>
     </Content>
     <Content Include="UMLUseCaseDiagram.usecasediagram">
       <SubType>Content</SubType>
