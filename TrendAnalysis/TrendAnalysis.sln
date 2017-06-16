@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrendAnalysis.Services", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrendAnalysis.Models", "TrendAnalysis.Models\TrendAnalysis.Models.csproj", "{409059F6-03A5-4FAD-A5C6-3AE7076E078D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Config", "Config\Config.csproj", "{31F6DB06-FC56-453F-9931-174D97F57E08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{409059F6-03A5-4FAD-A5C6-3AE7076E078D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{409059F6-03A5-4FAD-A5C6-3AE7076E078D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{409059F6-03A5-4FAD-A5C6-3AE7076E078D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31F6DB06-FC56-453F-9931-174D97F57E08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31F6DB06-FC56-453F-9931-174D97F57E08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31F6DB06-FC56-453F-9931-174D97F57E08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31F6DB06-FC56-453F-9931-174D97F57E08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,5 +63,6 @@ Global
 		{267BB916-A300-47DA-B054-22E89F463F4B} = {C9EB1B13-8675-4FC0-BE42-C4461A626D15}
 		{53EE76BD-A2F2-405F-A64B-B3C075D32850} = {C9EB1B13-8675-4FC0-BE42-C4461A626D15}
 		{409059F6-03A5-4FAD-A5C6-3AE7076E078D} = {C9EB1B13-8675-4FC0-BE42-C4461A626D15}
+		{31F6DB06-FC56-453F-9931-174D97F57E08} = {C9EB1B13-8675-4FC0-BE42-C4461A626D15}
 	EndGlobalSection
 EndGlobal
