@@ -8,5 +8,6 @@ namespace Config
 {
     public class Settings
     {
+        public static string ConnectionString { get; set; } = "TrendDbContext";
     }
 }
