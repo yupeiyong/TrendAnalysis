@@ -16,13 +16,19 @@ namespace TrendAnalysis.Models
         /// </summary>
         public string Times { get; set; }
 
-        public int FirstNum { get; set; }
-        public int SecondNum { get; set; }
-        public int ThirdNum { get; set; }
-        public int FourthNum { get; set; }
-        public int FifthNum { get; set; }
-        public int SixthNum { get; set; }
-        public int SeventhNum { get; set; }
+        public byte FirstNum { get; set; }
+
+        public byte SecondNum { get; set; }
+
+        public byte ThirdNum { get; set; }
+
+        public byte FourthNum { get; set; }
+
+        public byte FifthNum { get; set; }
+
+        public byte SixthNum { get; set; }
+
+        public byte SeventhNum { get; set; }
         /// <summary>
         /// 开奖日期
         /// </summary>
