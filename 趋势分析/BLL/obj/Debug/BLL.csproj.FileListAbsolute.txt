@@ -31,3 +31,14 @@ E:\我的工作区\我的程序\趋势分析\BLL\bin\Debug\Model.pdb
 E:\我的工作区\我的程序\趋势分析\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
 E:\我的工作区\我的程序\趋势分析\BLL\obj\Debug\BLL.dll
 E:\我的工作区\我的程序\趋势分析\BLL\obj\Debug\BLL.pdb
+E:\workspace\TrendAnalysis\趋势分析\BLL\bin\Debug\BLL.dll
+E:\workspace\TrendAnalysis\趋势分析\BLL\bin\Debug\BLL.pdb
+E:\workspace\TrendAnalysis\趋势分析\BLL\bin\Debug\DBFactory.dll
+E:\workspace\TrendAnalysis\趋势分析\BLL\bin\Debug\IDAL.dll
+E:\workspace\TrendAnalysis\趋势分析\BLL\bin\Debug\Model.dll
+E:\workspace\TrendAnalysis\趋势分析\BLL\bin\Debug\DBFactory.pdb
+E:\workspace\TrendAnalysis\趋势分析\BLL\bin\Debug\IDAL.pdb
+E:\workspace\TrendAnalysis\趋势分析\BLL\bin\Debug\Model.pdb
+E:\workspace\TrendAnalysis\趋势分析\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+E:\workspace\TrendAnalysis\趋势分析\BLL\obj\Debug\BLL.dll
+E:\workspace\TrendAnalysis\趋势分析\BLL\obj\Debug\BLL.pdb

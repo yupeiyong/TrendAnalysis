@@ -22,3 +22,11 @@ E:\我的工作区\我的程序\趋势分析\Common\obj\Debug\CommonLibrary.cspr
 E:\我的工作区\我的程序\趋势分析\Common\obj\Debug\CommonLibrary.csproj.ResolveComReference.cache
 E:\我的工作区\我的程序\趋势分析\Common\obj\Debug\Common.dll
 E:\我的工作区\我的程序\趋势分析\Common\obj\Debug\Common.pdb
+E:\workspace\TrendAnalysis\趋势分析\Common\bin\Debug\Common.dll
+E:\workspace\TrendAnalysis\趋势分析\Common\bin\Debug\Common.pdb
+E:\workspace\TrendAnalysis\趋势分析\Common\bin\Debug\Model.dll
+E:\workspace\TrendAnalysis\趋势分析\Common\bin\Debug\Model.pdb
+E:\workspace\TrendAnalysis\趋势分析\Common\obj\Debug\CommonLibrary.csprojResolveAssemblyReference.cache
+E:\workspace\TrendAnalysis\趋势分析\Common\obj\Debug\CommonLibrary.csproj.ResolveComReference.cache
+E:\workspace\TrendAnalysis\趋势分析\Common\obj\Debug\Common.dll
+E:\workspace\TrendAnalysis\趋势分析\Common\obj\Debug\Common.pdb

@@ -19,3 +19,10 @@ E:\我的工作区\我的程序\趋势分析\IDAL\bin\Debug\Model.pdb
 E:\我的工作区\我的程序\趋势分析\IDAL\obj\Debug\IDAL.csprojResolveAssemblyReference.cache
 E:\我的工作区\我的程序\趋势分析\IDAL\obj\Debug\IDAL.dll
 E:\我的工作区\我的程序\趋势分析\IDAL\obj\Debug\IDAL.pdb
+E:\workspace\TrendAnalysis\趋势分析\IDAL\bin\Debug\IDAL.dll
+E:\workspace\TrendAnalysis\趋势分析\IDAL\bin\Debug\IDAL.pdb
+E:\workspace\TrendAnalysis\趋势分析\IDAL\bin\Debug\Model.dll
+E:\workspace\TrendAnalysis\趋势分析\IDAL\bin\Debug\Model.pdb
+E:\workspace\TrendAnalysis\趋势分析\IDAL\obj\Debug\IDAL.csprojResolveAssemblyReference.cache
+E:\workspace\TrendAnalysis\趋势分析\IDAL\obj\Debug\IDAL.dll
+E:\workspace\TrendAnalysis\趋势分析\IDAL\obj\Debug\IDAL.pdb

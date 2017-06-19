@@ -31,3 +31,14 @@ E:\我的工作区\我的程序\趋势分析\SQLServerDAL\bin\Debug\Model.pdb
 E:\我的工作区\我的程序\趋势分析\SQLServerDAL\obj\Debug\SQLServerDAL.csprojResolveAssemblyReference.cache
 E:\我的工作区\我的程序\趋势分析\SQLServerDAL\obj\Debug\SQLServerDAL.dll
 E:\我的工作区\我的程序\趋势分析\SQLServerDAL\obj\Debug\SQLServerDAL.pdb
+E:\workspace\TrendAnalysis\趋势分析\SQLServerDAL\bin\Debug\SQLServerDAL.dll
+E:\workspace\TrendAnalysis\趋势分析\SQLServerDAL\bin\Debug\SQLServerDAL.pdb
+E:\workspace\TrendAnalysis\趋势分析\SQLServerDAL\bin\Debug\DBUtility.dll
+E:\workspace\TrendAnalysis\趋势分析\SQLServerDAL\bin\Debug\IDAL.dll
+E:\workspace\TrendAnalysis\趋势分析\SQLServerDAL\bin\Debug\Model.dll
+E:\workspace\TrendAnalysis\趋势分析\SQLServerDAL\bin\Debug\DBUtility.pdb
+E:\workspace\TrendAnalysis\趋势分析\SQLServerDAL\bin\Debug\IDAL.pdb
+E:\workspace\TrendAnalysis\趋势分析\SQLServerDAL\bin\Debug\Model.pdb
+E:\workspace\TrendAnalysis\趋势分析\SQLServerDAL\obj\Debug\SQLServerDAL.csprojResolveAssemblyReference.cache
+E:\workspace\TrendAnalysis\趋势分析\SQLServerDAL\obj\Debug\SQLServerDAL.dll
+E:\workspace\TrendAnalysis\趋势分析\SQLServerDAL\obj\Debug\SQLServerDAL.pdb

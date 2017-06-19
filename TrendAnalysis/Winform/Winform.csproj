@@ -46,14 +46,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Common\FormHelper.cs" />
+    <Compile Include="Common\myDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMarksixRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMarksixRecord.Designer.cs">
+      <DependentUpon>frmMarksixRecord.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMarksixRecord.resx">
+      <DependentUpon>frmMarksixRecord.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -62,6 +78,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -75,6 +92,82 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\excel.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\excel1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\保存.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\保存1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\导入.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\分析.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\分析small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\分析结果.ICO" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\分析结果small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\计算.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\计算small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\记录.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\记录small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\离开.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\离开1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\历史记录.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\历史记录1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\清空.ICO" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\清空1.ICO" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\停止small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\新增.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\粘贴.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\粘贴1.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

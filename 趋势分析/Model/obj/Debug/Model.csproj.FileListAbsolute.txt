@@ -17,3 +17,8 @@ E:\我的工作区\我的程序\趋势分析\Model\bin\Debug\Model.pdb
 E:\我的工作区\我的程序\趋势分析\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
 E:\我的工作区\我的程序\趋势分析\Model\obj\Debug\Model.dll
 E:\我的工作区\我的程序\趋势分析\Model\obj\Debug\Model.pdb
+E:\workspace\TrendAnalysis\趋势分析\Model\bin\Debug\Model.dll
+E:\workspace\TrendAnalysis\趋势分析\Model\bin\Debug\Model.pdb
+E:\workspace\TrendAnalysis\趋势分析\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
+E:\workspace\TrendAnalysis\趋势分析\Model\obj\Debug\Model.dll
+E:\workspace\TrendAnalysis\趋势分析\Model\obj\Debug\Model.pdb
