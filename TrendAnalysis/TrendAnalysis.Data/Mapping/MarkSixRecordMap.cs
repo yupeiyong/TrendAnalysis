@@ -10,9 +10,9 @@ using TrendAnalysis.Models;
 
 namespace TrendAnalysis.Data.Mapping
 {
-    public class MarkSixReportMap:EntityTypeConfiguration<MarkSixReport>
+    public class MarkSixRecordMap:EntityTypeConfiguration<MarkSixRecord>
     {
-        public MarkSixReportMap()
+        public MarkSixRecordMap()
         {
             Property(p => p.Times).HasMaxLength(7).IsRequired().HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_MarkSixReportTimes") { IsUnique = true }));
         }

@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mapping\MarkSixReportMap.cs" />
+    <Compile Include="Mapping\MarkSixRecordMap.cs" />
     <Compile Include="Mapping\MarkSixSpecifiedLocationPurchaseMap.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

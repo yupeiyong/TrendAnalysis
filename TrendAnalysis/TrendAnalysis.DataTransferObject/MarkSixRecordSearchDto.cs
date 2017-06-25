@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TrendAnalysis.DataTransferObject
 {
-    public class MarkSixReportSearchDto:BaseSearchDto
+    public class MarkSixRecordSearchDto:BaseSearchDto
     {
     }
 }

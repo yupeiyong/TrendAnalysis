@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.msMaster = new System.Windows.Forms.MenuStrip();
             this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMarksix = new System.Windows.Forms.ToolStripMenuItem();
             this.tsbMarksixRecord = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,35 +65,42 @@
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip.SuspendLayout();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.ssMaster = new System.Windows.Forms.StatusStrip();
+            this.tsslInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tspbCompletePrecent = new System.Windows.Forms.ToolStripProgressBar();
+            this.tslMaster = new System.Windows.Forms.ToolStrip();
+            this.tsbRecord = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsbAnalysis = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsbAnalysisResult = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsbExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.msMaster.SuspendLayout();
             this.toolStrip.SuspendLayout();
-            this.statusStrip.SuspendLayout();
+            this.ssMaster.SuspendLayout();
+            this.tslMaster.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip
+            // msMaster
             // 
-            this.menuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.msMaster.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.msMaster.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenu,
             this.editMenu,
             this.viewMenu,
             this.toolsMenu,
             this.windowsMenu,
             this.helpMenu});
-            this.menuStrip.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip.MdiWindowListItem = this.windowsMenu;
-            this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
-            this.menuStrip.Size = new System.Drawing.Size(948, 34);
-            this.menuStrip.TabIndex = 0;
-            this.menuStrip.Text = "MenuStrip";
+            this.msMaster.Location = new System.Drawing.Point(0, 0);
+            this.msMaster.MdiWindowListItem = this.windowsMenu;
+            this.msMaster.Name = "msMaster";
+            this.msMaster.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            this.msMaster.Size = new System.Drawing.Size(948, 34);
+            this.msMaster.TabIndex = 0;
+            this.msMaster.Text = "MenuStrip";
             // 
             // fileMenu
             // 
@@ -256,7 +263,6 @@
             this.statusBarToolStripMenuItem.Name = "statusBarToolStripMenuItem";
             this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(169, 30);
             this.statusBarToolStripMenuItem.Text = "状态栏(&S)";
-            this.statusBarToolStripMenuItem.Click += new System.EventHandler(this.StatusBarToolStripMenuItem_Click);
             // 
             // toolsMenu
             // 
@@ -386,24 +392,6 @@
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "ToolStrip";
             // 
-            // statusStrip
-            // 
-            this.statusStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 598);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Padding = new System.Windows.Forms.Padding(2, 0, 21, 0);
-            this.statusStrip.Size = new System.Drawing.Size(948, 29);
-            this.statusStrip.TabIndex = 2;
-            this.statusStrip.Text = "StatusStrip";
-            // 
-            // toolStripStatusLabel
-            // 
-            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(46, 24);
-            this.toolStripStatusLabel.Text = "状态";
-            // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -441,27 +429,100 @@
             this.toolStripMenuItem4.Text = "退出(&X)";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
+            // ssMaster
+            // 
+            this.ssMaster.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.ssMaster.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsslInfo,
+            this.tspbCompletePrecent});
+            this.ssMaster.Location = new System.Drawing.Point(0, 598);
+            this.ssMaster.Name = "ssMaster";
+            this.ssMaster.Padding = new System.Windows.Forms.Padding(2, 0, 21, 0);
+            this.ssMaster.Size = new System.Drawing.Size(948, 29);
+            this.ssMaster.TabIndex = 8;
+            this.ssMaster.Text = "statusStrip1";
+            // 
+            // tsslInfo
+            // 
+            this.tsslInfo.Name = "tsslInfo";
+            this.tsslInfo.Size = new System.Drawing.Size(46, 24);
+            this.tsslInfo.Text = "就绪";
+            // 
+            // tspbCompletePrecent
+            // 
+            this.tspbCompletePrecent.Maximum = 1000;
+            this.tspbCompletePrecent.Name = "tspbCompletePrecent";
+            this.tspbCompletePrecent.Size = new System.Drawing.Size(300, 24);
+            this.tspbCompletePrecent.Step = 1;
+            this.tspbCompletePrecent.Visible = false;
+            // 
+            // tslMaster
+            // 
+            this.tslMaster.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.tslMaster.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbRecord,
+            this.tsbAnalysis,
+            this.tsbAnalysisResult,
+            this.tsbExit});
+            this.tslMaster.Location = new System.Drawing.Point(0, 62);
+            this.tslMaster.Name = "tslMaster";
+            this.tslMaster.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.tslMaster.Size = new System.Drawing.Size(948, 28);
+            this.tslMaster.TabIndex = 6;
+            this.tslMaster.Text = "toolStrip1";
+            // 
+            // tsbRecord
+            // 
+            this.tsbRecord.Name = "tsbRecord";
+            this.tsbRecord.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.tsbRecord.Size = new System.Drawing.Size(58, 28);
+            this.tsbRecord.Text = "记录";
+            // 
+            // tsbAnalysis
+            // 
+            this.tsbAnalysis.Name = "tsbAnalysis";
+            this.tsbAnalysis.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.tsbAnalysis.Size = new System.Drawing.Size(58, 28);
+            this.tsbAnalysis.Text = "分析";
+            // 
+            // tsbAnalysisResult
+            // 
+            this.tsbAnalysisResult.Name = "tsbAnalysisResult";
+            this.tsbAnalysisResult.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.tsbAnalysisResult.Size = new System.Drawing.Size(94, 28);
+            this.tsbAnalysisResult.Text = "分析结果";
+            // 
+            // tsbExit
+            // 
+            this.tsbExit.Name = "tsbExit";
+            this.tsbExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.tsbExit.Size = new System.Drawing.Size(58, 28);
+            this.tsbExit.Text = "退出";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(948, 627);
-            this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.ssMaster);
+            this.Controls.Add(this.tslMaster);
             this.Controls.Add(this.toolStrip);
-            this.Controls.Add(this.menuStrip);
+            this.Controls.Add(this.msMaster);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
-            this.MainMenuStrip = this.menuStrip;
+            this.MainMenuStrip = this.msMaster;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmMain";
             this.Text = "趋势分析";
             this.Load += new System.EventHandler(this.frmMain_Load);
-            this.menuStrip.ResumeLayout(false);
-            this.menuStrip.PerformLayout();
+            this.msMaster.ResumeLayout(false);
+            this.msMaster.PerformLayout();
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
-            this.statusStrip.ResumeLayout(false);
-            this.statusStrip.PerformLayout();
+            this.ssMaster.ResumeLayout(false);
+            this.ssMaster.PerformLayout();
+            this.tslMaster.ResumeLayout(false);
+            this.tslMaster.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -469,14 +530,12 @@
         #endregion
 
 
-        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.MenuStrip msMaster;
         private System.Windows.Forms.ToolStrip toolStrip;
-        private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tileHorizontalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileMenu;
@@ -511,6 +570,14 @@
         internal System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         internal System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.StatusStrip ssMaster;
+        internal System.Windows.Forms.ToolStripStatusLabel tsslInfo;
+        internal System.Windows.Forms.ToolStripProgressBar tspbCompletePrecent;
+        private System.Windows.Forms.ToolStrip tslMaster;
+        internal System.Windows.Forms.ToolStripMenuItem tsbRecord;
+        internal System.Windows.Forms.ToolStripMenuItem tsbAnalysis;
+        internal System.Windows.Forms.ToolStripMenuItem tsbAnalysisResult;
+        internal System.Windows.Forms.ToolStripMenuItem tsbExit;
     }
 }
 

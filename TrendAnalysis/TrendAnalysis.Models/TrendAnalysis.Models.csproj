@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="BaseEntity.cs" />
     <Compile Include="IEntity.cs" />
-    <Compile Include="MarkSixReport.cs" />
+    <Compile Include="MarkSixRecord.cs" />
     <Compile Include="MarkSixSpecifiedLocationPurchase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

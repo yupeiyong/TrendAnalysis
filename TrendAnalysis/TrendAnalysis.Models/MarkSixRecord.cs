@@ -10,7 +10,7 @@ namespace TrendAnalysis.Models
     /// <summary>
     /// MarkSix历史记录
     /// </summary>
-    public class MarkSixReport:BaseEntity
+    public class MarkSixRecord:BaseEntity
     {
         /// <summary>
         /// 期次
