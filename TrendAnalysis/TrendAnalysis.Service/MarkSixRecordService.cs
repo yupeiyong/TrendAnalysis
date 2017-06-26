@@ -117,6 +117,23 @@ namespace TrendAnalysis.Service
             }
             if (records.Count > 0)
             {
+                using(var dao=new TrendDbContext())
+                {
+                    var timeses = records.Select(r => r.Times).ToList();
+                    var originalRecords = dao.Set<MarkSixRecord>().Where(m => timeses.Any(times => times == m.Times));
+                    dao.Set<MarkSixRecord>().RemoveRange(originalRecords);
+                    dao.Set<MarkSixRecord>().AddRange(records);
+                    //foreach (var record in records)
+                    //{
+                    //    var originalRecord = dao.Set<MarkSixRecord>().FirstOrDefault(m => m.Times == record.Times);
+                    //    if (originalRecord != null)
+                    //    {
+                    //        dao.Set<MarkSixRecord>().Remove(originalRecord);
+                    //    }
+                    //    dao.Set<MarkSixRecord>().Add(record);
+                    //}
+                    dao.SaveChanges();
+                }
             }
         }
 
