@@ -132,6 +132,8 @@ namespace TrendAnalysis.Service
                     //    }
                     //    dao.Set<MarkSixRecord>().Add(record);
                     //}
+
+
                     dao.SaveChanges();
                 }
             }
