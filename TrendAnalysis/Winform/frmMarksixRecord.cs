@@ -238,6 +238,23 @@ namespace Winform
 
         private void tsbExport_Click(object sender, EventArgs e)
         {
+            var service = new MarkSixRecordService();
+            var rows = service.Search(new MarkSixRecordSearchDto { StartIndex = 0, TakeCount = 20 });
+            var table = rows.ConvertDataTable(properties =>
+            {
+                var rowVersionProperty = properties.FirstOrDefault(p => p.Name == nameof(MarkSixRecord.RowVersion));
+                if (rowVersionProperty != null)
+                {
+                    properties.Remove(rowVersionProperty);
+                }
+                var idProperty = properties.FirstOrDefault(p => p.Name == nameof(MarkSixRecord.Id));
+                if (idProperty != null)
+                {
+                    properties.Remove(idProperty);
+                }
+                properties.Insert(0, idProperty);
+            });
+            service.Export(table);
 
         }
 
