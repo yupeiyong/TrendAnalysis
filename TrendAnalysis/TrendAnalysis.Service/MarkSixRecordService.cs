@@ -24,7 +24,11 @@ namespace TrendAnalysis.Service
             using(var dao=new TrendDbContext())
             {
                 var source = dao.Set<MarkSixRecord>().AsQueryable();
-                return source.OrderBy(m=>m.Times).Skip(dto.StartIndex).Take(dto.TakeCount).ToList();
+                if (dto.IsGetTotalCount)
+                {
+                    dto.TotalCount = source.Count();
+                }
+                return source.OrderBy(m=>m.Times).Skip(dto.StartIndex).Take(dto.PageSize).ToList();
             }
         }
         /// <summary>

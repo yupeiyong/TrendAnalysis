@@ -39,7 +39,7 @@ namespace Winform
         private void tsbSearch_Click(object sender, EventArgs e)
         {
             var service = new MarkSixRecordService();
-            var rows=service.Search(new MarkSixRecordSearchDto {StartIndex=0,TakeCount=20 });
+            var rows=service.Search(new MarkSixRecordSearchDto {StartIndex=0,PageSize=20 });
             var table = rows.ConvertDataTable(properties=> 
             {
                 var rowVersionProperty = properties.FirstOrDefault(p => p.Name == nameof(MarkSixRecord.RowVersion));
@@ -54,9 +54,29 @@ namespace Winform
                 }
                 properties.Insert(0, idProperty);
             });
-            dgvList.DataSource = table;
+            dgvMarksixRecordList.DataSource = table;
         }
 
+        private void Search()
+        {
+            var service = new MarkSixRecordService();
+            var rows = service.Search(new MarkSixRecordSearchDto { StartIndex = 0, PageSize = 20 });
+            var table = rows.ConvertDataTable(properties =>
+            {
+                var rowVersionProperty = properties.FirstOrDefault(p => p.Name == nameof(MarkSixRecord.RowVersion));
+                if (rowVersionProperty != null)
+                {
+                    properties.Remove(rowVersionProperty);
+                }
+                var idProperty = properties.FirstOrDefault(p => p.Name == nameof(MarkSixRecord.Id));
+                if (idProperty != null)
+                {
+                    properties.Remove(idProperty);
+                }
+                properties.Insert(0, idProperty);
+            });
+            dgvMarksixRecordList.DataSource = table;
+        }
         private void tsbImport_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("确认导入记录数据吗？", "确认", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
@@ -239,7 +259,7 @@ namespace Winform
         private void tsbExport_Click(object sender, EventArgs e)
         {
             var service = new MarkSixRecordService();
-            var rows = service.Search(new MarkSixRecordSearchDto { StartIndex = 0, TakeCount = 20 });
+            var rows = service.Search(new MarkSixRecordSearchDto { StartIndex = 0, PageSize = 20 });
             var table = rows.ConvertDataTable(properties =>
             {
                 var rowVersionProperty = properties.FirstOrDefault(p => p.Name == nameof(MarkSixRecord.RowVersion));
@@ -278,25 +298,30 @@ namespace Winform
             ////自动调整列宽
             //dgvList.AutoResizeColumns();
             //设置ID列只读
-            dgvList.Columns[nameof(MarkSixRecord.Id)].ReadOnly = true;
+            dgvMarksixRecordList.Columns[nameof(MarkSixRecord.Id)].ReadOnly = true;
             //设置日期列的显示格式
-            dgvList.Columns["开奖日期"].DefaultCellStyle.Format = "yyyy-MM-dd";
+            dgvMarksixRecordList.Columns["开奖日期"].DefaultCellStyle.Format = "yyyy-MM-dd";
 
         }
 
         private void dgvList_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = e.RowIndex;
-            if (rowIndex < 0 || rowIndex > dgvList.Rows.Count) { return; }
-            dgvList.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.MistyRose;
+            if (rowIndex < 0 || rowIndex > dgvMarksixRecordList.Rows.Count) { return; }
+            dgvMarksixRecordList.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.MistyRose;
 
         }
 
         private void dgvList_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = e.RowIndex;
-            if (rowIndex < 0 || rowIndex > dgvList.Rows.Count) { return; }
-            dgvList.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Empty;
+            if (rowIndex < 0 || rowIndex > dgvMarksixRecordList.Rows.Count) { return; }
+            dgvMarksixRecordList.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Empty;
+        }
+
+        private void bdnMoveFirstItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

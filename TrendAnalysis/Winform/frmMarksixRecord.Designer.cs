@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMarksixRecord));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMarksixRecord));
             this.tslMaster = new System.Windows.Forms.ToolStrip();
             this.tsbSearch = new System.Windows.Forms.ToolStripMenuItem();
             this.tsbImport = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,11 +58,23 @@
             this.txtSixthNum = new System.Windows.Forms.TextBox();
             this.txtSeventhNum = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.dgvList = new Winform.Common.myDataGridView();
+            this.bdnMarksixRecord = new System.Windows.Forms.BindingNavigator(this.components);
+            this.bdnMoveFirstItem = new System.Windows.Forms.ToolStripButton();
+            this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
+            this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
+            this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
+            this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
+            this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
+            this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.dgvMarksixRecordList = new Winform.Common.myDataGridView();
             this.tslMaster.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bdnMarksixRecord)).BeginInit();
+            this.bdnMarksixRecord.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMarksixRecordList)).BeginInit();
             this.SuspendLayout();
             // 
             // tslMaster
@@ -363,15 +376,111 @@
             this.label6.Text = "第四数";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // dgvList
+            // bdnMarksixRecord
             // 
-            this.dgvList.AllowUserToAddRows = false;
-            this.dgvList.AllowUserToDeleteRows = false;
-            this.dgvList.AllowUserToResizeColumns = false;
-            this.dgvList.AllowUserToResizeRows = false;
+            this.bdnMarksixRecord.AddNewItem = null;
+            this.bdnMarksixRecord.CountItem = this.bindingNavigatorCountItem;
+            this.bdnMarksixRecord.DeleteItem = null;
+            this.bdnMarksixRecord.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.bdnMarksixRecord.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.bdnMarksixRecord.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bdnMoveFirstItem,
+            this.bindingNavigatorMovePreviousItem,
+            this.bindingNavigatorSeparator,
+            this.bindingNavigatorPositionItem,
+            this.bindingNavigatorCountItem,
+            this.bindingNavigatorSeparator1,
+            this.bindingNavigatorMoveNextItem,
+            this.bindingNavigatorMoveLastItem,
+            this.bindingNavigatorSeparator2});
+            this.bdnMarksixRecord.Location = new System.Drawing.Point(0, 594);
+            this.bdnMarksixRecord.MoveFirstItem = this.bdnMoveFirstItem;
+            this.bdnMarksixRecord.MoveLastItem = this.bindingNavigatorMoveLastItem;
+            this.bdnMarksixRecord.MoveNextItem = this.bindingNavigatorMoveNextItem;
+            this.bdnMarksixRecord.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
+            this.bdnMarksixRecord.Name = "bdnMarksixRecord";
+            this.bdnMarksixRecord.PositionItem = this.bindingNavigatorPositionItem;
+            this.bdnMarksixRecord.Size = new System.Drawing.Size(1254, 31);
+            this.bdnMarksixRecord.TabIndex = 7;
+            this.bdnMarksixRecord.Text = "bindingNavigator1";
+            // 
+            // bdnMoveFirstItem
+            // 
+            this.bdnMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bdnMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bdnMoveFirstItem.Image")));
+            this.bdnMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
+            this.bdnMoveFirstItem.RightToLeftAutoMirrorImage = true;
+            this.bdnMoveFirstItem.Size = new System.Drawing.Size(28, 28);
+            this.bdnMoveFirstItem.Text = "移到第一条记录";
+            this.bdnMoveFirstItem.Click += new System.EventHandler(this.bdnMoveFirstItem_Click);
+            // 
+            // bindingNavigatorMovePreviousItem
+            // 
+            this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
+            this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
+            this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(28, 28);
+            this.bindingNavigatorMovePreviousItem.Text = "移到上一条记录";
+            // 
+            // bindingNavigatorSeparator
+            // 
+            this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
+            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 31);
+            // 
+            // bindingNavigatorPositionItem
+            // 
+            this.bindingNavigatorPositionItem.AccessibleName = "位置";
+            this.bindingNavigatorPositionItem.AutoSize = false;
+            this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
+            this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 30);
+            this.bindingNavigatorPositionItem.Text = "0";
+            this.bindingNavigatorPositionItem.ToolTipText = "当前位置";
+            // 
+            // bindingNavigatorCountItem
+            // 
+            this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
+            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(46, 28);
+            this.bindingNavigatorCountItem.Text = "/ {0}";
+            this.bindingNavigatorCountItem.ToolTipText = "总项数";
+            // 
+            // bindingNavigatorSeparator1
+            // 
+            this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator";
+            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 31);
+            // 
+            // bindingNavigatorMoveNextItem
+            // 
+            this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
+            this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
+            this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(28, 28);
+            this.bindingNavigatorMoveNextItem.Text = "移到下一条记录";
+            // 
+            // bindingNavigatorMoveLastItem
+            // 
+            this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
+            this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
+            this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
+            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(28, 28);
+            this.bindingNavigatorMoveLastItem.Text = "移到最后一条记录";
+            // 
+            // bindingNavigatorSeparator2
+            // 
+            this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator";
+            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 31);
+            // 
+            // dgvMarksixRecordList
+            // 
+            this.dgvMarksixRecordList.AllowUserToAddRows = false;
+            this.dgvMarksixRecordList.AllowUserToDeleteRows = false;
+            this.dgvMarksixRecordList.AllowUserToResizeColumns = false;
+            this.dgvMarksixRecordList.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dgvList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvMarksixRecordList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvMarksixRecordList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -381,17 +490,17 @@
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvList.ColumnHeadersHeight = 25;
-            this.dgvList.Location = new System.Drawing.Point(0, 151);
-            this.dgvList.Name = "dgvList";
-            this.dgvList.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvList.RowTemplate.Height = 30;
-            this.dgvList.Size = new System.Drawing.Size(1254, 474);
-            this.dgvList.TabIndex = 6;
-            this.dgvList.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellMouseEnter);
-            this.dgvList.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellMouseLeave);
-            this.dgvList.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvList_DataBindingComplete);
+            this.dgvMarksixRecordList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvMarksixRecordList.ColumnHeadersHeight = 25;
+            this.dgvMarksixRecordList.Location = new System.Drawing.Point(0, 147);
+            this.dgvMarksixRecordList.Name = "dgvMarksixRecordList";
+            this.dgvMarksixRecordList.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMarksixRecordList.RowTemplate.Height = 30;
+            this.dgvMarksixRecordList.Size = new System.Drawing.Size(1254, 444);
+            this.dgvMarksixRecordList.TabIndex = 6;
+            this.dgvMarksixRecordList.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellMouseEnter);
+            this.dgvMarksixRecordList.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellMouseLeave);
+            this.dgvMarksixRecordList.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvList_DataBindingComplete);
             // 
             // frmMarksixRecord
             // 
@@ -399,7 +508,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1254, 625);
-            this.Controls.Add(this.dgvList);
+            this.Controls.Add(this.bdnMarksixRecord);
+            this.Controls.Add(this.dgvMarksixRecordList);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tslMaster);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -411,7 +521,10 @@
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bdnMarksixRecord)).EndInit();
+            this.bdnMarksixRecord.ResumeLayout(false);
+            this.bdnMarksixRecord.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMarksixRecordList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -444,6 +557,16 @@
         private System.Windows.Forms.TextBox txtSixthNum;
         private System.Windows.Forms.TextBox txtSeventhNum;
         private System.Windows.Forms.Label label6;
-        private Common.myDataGridView dgvList;
+        private Common.myDataGridView dgvMarksixRecordList;
+        private System.Windows.Forms.BindingNavigator bdnMarksixRecord;
+        private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
+        private System.Windows.Forms.ToolStripButton bdnMoveFirstItem;
+        private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem;
+        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator;
+        private System.Windows.Forms.ToolStripTextBox bindingNavigatorPositionItem;
+        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator1;
+        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
+        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
+        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
     }
 }
