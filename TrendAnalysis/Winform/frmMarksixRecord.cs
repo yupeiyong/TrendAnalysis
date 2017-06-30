@@ -31,6 +31,8 @@ namespace Winform
         /// </summary>
         private BackgroundWorker bgwImport = null;
 
+        private bool enableEvent = false;
+
         public frmMarksixRecord()
         {
             InitializeComponent();
@@ -38,29 +40,22 @@ namespace Winform
 
         private void tsbSearch_Click(object sender, EventArgs e)
         {
-            var service = new MarkSixRecordService();
-            var rows=service.Search(new MarkSixRecordSearchDto {StartIndex=0,PageSize=20 });
-            var table = rows.ConvertDataTable(properties=> 
-            {
-                var rowVersionProperty = properties.FirstOrDefault(p => p.Name == nameof(MarkSixRecord.RowVersion));
-                if (rowVersionProperty != null)
-                {
-                    properties.Remove(rowVersionProperty);
-                }
-                var idProperty= properties.FirstOrDefault(p => p.Name == nameof(MarkSixRecord.Id));
-                if (idProperty != null)
-                {
-                    properties.Remove(idProperty);
-                }
-                properties.Insert(0, idProperty);
-            });
-            dgvMarksixRecordList.DataSource = table;
+            Search();
         }
 
         private void Search()
         {
+            //每页数量
+            var pageSize = 0;
+            int.TryParse(tlscombo.Text, out pageSize);
+            //页码开始数
+            var pageIndex = 1;
+            int.TryParse(bdnPositionItem.Text, out pageIndex);
+            //开始位置
+            var startIndex = pageSize*(pageIndex-1);
             var service = new MarkSixRecordService();
-            var rows = service.Search(new MarkSixRecordSearchDto { StartIndex = 0, PageSize = 20 });
+            var searchDto = new MarkSixRecordSearchDto { StartIndex = startIndex, PageSize = pageSize };
+            var rows = service.Search(searchDto);
             var table = rows.ConvertDataTable(properties =>
             {
                 var rowVersionProperty = properties.FirstOrDefault(p => p.Name == nameof(MarkSixRecord.RowVersion));
@@ -76,6 +71,31 @@ namespace Winform
                 properties.Insert(0, idProperty);
             });
             dgvMarksixRecordList.DataSource = table;
+
+            var pageCount = searchDto.PageCount;
+            bdnCountItem.Text = pageCount.ToString();
+
+            if (pageIndex <= 1)
+            {
+                bdnMoveFirstItem.Enabled = false;
+                bdnMovePreviousItem.Enabled = false;
+            }
+            else
+            {
+                bdnMoveFirstItem.Enabled = true;
+                bdnMovePreviousItem.Enabled = true;
+            }
+
+            if (pageIndex == pageCount)
+            {
+                bdnMoveNextItem.Enabled = false;
+                bdnMoveLastItem.Enabled = false;
+            }
+            else
+            {
+                bdnMoveNextItem.Enabled = true;
+                bdnMoveLastItem.Enabled = true;
+            }
         }
         private void tsbImport_Click(object sender, EventArgs e)
         {
@@ -290,6 +310,14 @@ namespace Winform
 
         private void frmMarksixRecord_Load(object sender, EventArgs e)
         {
+            //设置默认页数
+            if (tlscombo.Items.Count > 1)
+            {
+                tlscombo.SelectedIndex = 1;
+            }
+            bdnPositionItem.Enabled = true;
+            bdnPositionItem.Text = "1";
+            enableEvent = true;
             tsbSearch_Click(null, e);
         }
 
@@ -321,7 +349,72 @@ namespace Winform
 
         private void bdnMoveFirstItem_Click(object sender, EventArgs e)
         {
-
+            //页码开始数
+            var pageIndex = 0;
+            int.TryParse(bdnPositionItem.Text, out pageIndex);
+            if (pageIndex > 1)
+            {
+                pageIndex=1;
+                bdnPositionItem.Text = pageIndex.ToString();
+                Search();
+            }
         }
+
+        private void tlscombo_TextChanged(object sender, EventArgs e)
+        {
+            if (!enableEvent) return;
+            enableEvent = false;
+            bdnPositionItem.Text = "1";
+            Search();
+            enableEvent = true;
+        }
+
+        private void bdnMovePreviousItem_Click(object sender, EventArgs e)
+        {
+            //页码开始数
+            var pageIndex = 0;
+            int.TryParse(bdnPositionItem.Text, out pageIndex);
+            if (pageIndex > 1)
+            {
+                pageIndex--;
+                bdnPositionItem.Text = pageIndex.ToString();
+            }
+        }
+
+        private void bdnMoveNextItem_Click(object sender, EventArgs e)
+        {
+            //页码开始数
+            var pageIndex = 0;
+            int.TryParse(bdnPositionItem.Text, out pageIndex);
+
+            var pageCount = 0;
+            int.TryParse(bdnCountItem.Text, out pageCount);
+            if (pageIndex <pageCount)
+            {
+                pageIndex++;
+                bdnPositionItem.Text = pageIndex.ToString();
+            }
+        }
+        private void bdnMoveLastItem_Click(object sender, EventArgs e)
+        {
+            //页码开始数
+            var pageIndex = 0;
+            int.TryParse(bdnPositionItem.Text, out pageIndex);
+
+            var pageCount = 0;
+            int.TryParse(bdnCountItem.Text, out pageCount);
+            if (pageIndex < pageCount)
+            {
+                pageIndex=pageCount;
+                bdnPositionItem.Text = pageIndex.ToString();
+            }
+        }
+        private void bdnPositionItem_TextChanged(object sender, EventArgs e)
+        {
+            if (!enableEvent) return;
+            Search();
+        }
+
+
     }
 }

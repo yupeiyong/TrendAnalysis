@@ -59,15 +59,17 @@
             this.txtSeventhNum = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.bdnMarksixRecord = new System.Windows.Forms.BindingNavigator(this.components);
+            this.bdnCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bdnMoveFirstItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
+            this.bdnMovePreviousItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
-            this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
+            this.bdnPositionItem = new System.Windows.Forms.ToolStripTextBox();
             this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
+            this.bdnMoveNextItem = new System.Windows.Forms.ToolStripButton();
+            this.bdnMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.tlscombo = new System.Windows.Forms.ToolStripComboBox();
             this.dgvMarksixRecordList = new Winform.Common.myDataGridView();
             this.tslMaster.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -379,98 +381,123 @@
             // bdnMarksixRecord
             // 
             this.bdnMarksixRecord.AddNewItem = null;
-            this.bdnMarksixRecord.CountItem = this.bindingNavigatorCountItem;
+            this.bdnMarksixRecord.CountItem = this.bdnCountItem;
+            this.bdnMarksixRecord.CountItemFormat = "/ 1";
             this.bdnMarksixRecord.DeleteItem = null;
             this.bdnMarksixRecord.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.bdnMarksixRecord.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.bdnMarksixRecord.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bdnMoveFirstItem,
-            this.bindingNavigatorMovePreviousItem,
+            this.bdnMovePreviousItem,
             this.bindingNavigatorSeparator,
-            this.bindingNavigatorPositionItem,
-            this.bindingNavigatorCountItem,
+            this.bdnPositionItem,
+            this.bdnCountItem,
             this.bindingNavigatorSeparator1,
-            this.bindingNavigatorMoveNextItem,
-            this.bindingNavigatorMoveLastItem,
-            this.bindingNavigatorSeparator2});
-            this.bdnMarksixRecord.Location = new System.Drawing.Point(0, 594);
+            this.bdnMoveNextItem,
+            this.bdnMoveLastItem,
+            this.bindingNavigatorSeparator2,
+            this.toolStripLabel1,
+            this.tlscombo});
+            this.bdnMarksixRecord.Location = new System.Drawing.Point(0, 593);
             this.bdnMarksixRecord.MoveFirstItem = this.bdnMoveFirstItem;
-            this.bdnMarksixRecord.MoveLastItem = this.bindingNavigatorMoveLastItem;
-            this.bdnMarksixRecord.MoveNextItem = this.bindingNavigatorMoveNextItem;
-            this.bdnMarksixRecord.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
+            this.bdnMarksixRecord.MoveLastItem = this.bdnMoveLastItem;
+            this.bdnMarksixRecord.MoveNextItem = this.bdnMoveNextItem;
+            this.bdnMarksixRecord.MovePreviousItem = this.bdnMovePreviousItem;
             this.bdnMarksixRecord.Name = "bdnMarksixRecord";
-            this.bdnMarksixRecord.PositionItem = this.bindingNavigatorPositionItem;
-            this.bdnMarksixRecord.Size = new System.Drawing.Size(1254, 31);
+            this.bdnMarksixRecord.PositionItem = this.bdnPositionItem;
+            this.bdnMarksixRecord.Size = new System.Drawing.Size(1254, 32);
             this.bdnMarksixRecord.TabIndex = 7;
             this.bdnMarksixRecord.Text = "bindingNavigator1";
+            // 
+            // bdnCountItem
+            // 
+            this.bdnCountItem.Name = "bdnCountItem";
+            this.bdnCountItem.Size = new System.Drawing.Size(34, 29);
+            this.bdnCountItem.Text = "/ 1";
+            this.bdnCountItem.ToolTipText = "总项数";
             // 
             // bdnMoveFirstItem
             // 
             this.bdnMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.bdnMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bdnMoveFirstItem.Image")));
-            this.bdnMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
+            this.bdnMoveFirstItem.Name = "bdnMoveFirstItem";
             this.bdnMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.bdnMoveFirstItem.Size = new System.Drawing.Size(28, 28);
+            this.bdnMoveFirstItem.Size = new System.Drawing.Size(28, 29);
             this.bdnMoveFirstItem.Text = "移到第一条记录";
             this.bdnMoveFirstItem.Click += new System.EventHandler(this.bdnMoveFirstItem_Click);
             // 
-            // bindingNavigatorMovePreviousItem
+            // bdnMovePreviousItem
             // 
-            this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
-            this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
-            this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(28, 28);
-            this.bindingNavigatorMovePreviousItem.Text = "移到上一条记录";
+            this.bdnMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bdnMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bdnMovePreviousItem.Image")));
+            this.bdnMovePreviousItem.Name = "bdnMovePreviousItem";
+            this.bdnMovePreviousItem.RightToLeftAutoMirrorImage = true;
+            this.bdnMovePreviousItem.Size = new System.Drawing.Size(28, 29);
+            this.bdnMovePreviousItem.Text = "移到上一条记录";
+            this.bdnMovePreviousItem.Click += new System.EventHandler(this.bdnMovePreviousItem_Click);
             // 
             // bindingNavigatorSeparator
             // 
             this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 31);
+            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 32);
             // 
-            // bindingNavigatorPositionItem
+            // bdnPositionItem
             // 
-            this.bindingNavigatorPositionItem.AccessibleName = "位置";
-            this.bindingNavigatorPositionItem.AutoSize = false;
-            this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
-            this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 30);
-            this.bindingNavigatorPositionItem.Text = "0";
-            this.bindingNavigatorPositionItem.ToolTipText = "当前位置";
-            // 
-            // bindingNavigatorCountItem
-            // 
-            this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(46, 28);
-            this.bindingNavigatorCountItem.Text = "/ {0}";
-            this.bindingNavigatorCountItem.ToolTipText = "总项数";
+            this.bdnPositionItem.AccessibleName = "位置";
+            this.bdnPositionItem.AutoSize = false;
+            this.bdnPositionItem.Name = "bdnPositionItem";
+            this.bdnPositionItem.Size = new System.Drawing.Size(50, 30);
+            this.bdnPositionItem.Text = "0";
+            this.bdnPositionItem.ToolTipText = "当前位置";
+            this.bdnPositionItem.TextChanged += new System.EventHandler(this.bdnPositionItem_TextChanged);
             // 
             // bindingNavigatorSeparator1
             // 
-            this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator";
-            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 31);
+            this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
+            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 32);
             // 
-            // bindingNavigatorMoveNextItem
+            // bdnMoveNextItem
             // 
-            this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
-            this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
-            this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(28, 28);
-            this.bindingNavigatorMoveNextItem.Text = "移到下一条记录";
+            this.bdnMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bdnMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bdnMoveNextItem.Image")));
+            this.bdnMoveNextItem.Name = "bdnMoveNextItem";
+            this.bdnMoveNextItem.RightToLeftAutoMirrorImage = true;
+            this.bdnMoveNextItem.Size = new System.Drawing.Size(28, 29);
+            this.bdnMoveNextItem.Text = "移到下一条记录";
+            this.bdnMoveNextItem.Click += new System.EventHandler(this.bdnMoveNextItem_Click);
             // 
-            // bindingNavigatorMoveLastItem
+            // bdnMoveLastItem
             // 
-            this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
-            this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
-            this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(28, 28);
-            this.bindingNavigatorMoveLastItem.Text = "移到最后一条记录";
+            this.bdnMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bdnMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bdnMoveLastItem.Image")));
+            this.bdnMoveLastItem.Name = "bdnMoveLastItem";
+            this.bdnMoveLastItem.RightToLeftAutoMirrorImage = true;
+            this.bdnMoveLastItem.Size = new System.Drawing.Size(28, 29);
+            this.bdnMoveLastItem.Text = "移到最后一条记录";
+            this.bdnMoveLastItem.Click += new System.EventHandler(this.bdnMoveLastItem_Click);
             // 
             // bindingNavigatorSeparator2
             // 
-            this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator";
-            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 31);
+            this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
+            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 32);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(82, 29);
+            this.toolStripLabel1.Text = "每页条数";
+            // 
+            // tlscombo
+            // 
+            this.tlscombo.Items.AddRange(new object[] {
+            "10",
+            "20",
+            "50",
+            "100",
+            "200"});
+            this.tlscombo.Name = "tlscombo";
+            this.tlscombo.Size = new System.Drawing.Size(121, 32);
+            this.tlscombo.TextChanged += new System.EventHandler(this.tlscombo_TextChanged);
             // 
             // dgvMarksixRecordList
             // 
@@ -559,14 +586,16 @@
         private System.Windows.Forms.Label label6;
         private Common.myDataGridView dgvMarksixRecordList;
         private System.Windows.Forms.BindingNavigator bdnMarksixRecord;
-        private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
+        private System.Windows.Forms.ToolStripLabel bdnCountItem;
         private System.Windows.Forms.ToolStripButton bdnMoveFirstItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem;
+        private System.Windows.Forms.ToolStripButton bdnMovePreviousItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator;
-        private System.Windows.Forms.ToolStripTextBox bindingNavigatorPositionItem;
+        private System.Windows.Forms.ToolStripTextBox bdnPositionItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator1;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
+        private System.Windows.Forms.ToolStripButton bdnMoveNextItem;
+        private System.Windows.Forms.ToolStripButton bdnMoveLastItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripComboBox tlscombo;
     }
 }
