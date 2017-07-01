@@ -8,5 +8,10 @@ namespace TrendAnalysis.DataTransferObject
 {
     public class MarkSixRecordSearchDto:BaseSearchDto
     {
+        public DateTime? StartDateTime { get; set; }
+
+        public DateTime? EndDateTime { get; set; }
+
+
     }
 }

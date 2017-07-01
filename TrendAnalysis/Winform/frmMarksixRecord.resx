@@ -120,10 +120,56 @@
   <metadata name="tslMaster.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="button1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAAzpJREFUOE+FUWlI02EY/0MUBUn3fVBU0Pkhuq8PYReBHWbaZVpmiWWp6dystm4s
+        suyAMgqKZPWloFMla6vpNK0drxusbc7Nua1duTWvzePX+/6DRp964ccLz/v8jud9OMWJHZlVaRuIPGMT
+        UWZtIfW58UQlSCLa03uJTrKf6MTJRFu4m3zLTyRfsneQ6sw4Iju8ibxPXUdkxxPWc+bi41LLrXxYbgpg
+        KcmDteQkmkpyYSrKwPdLR2C4kA7D2TToxSloPJUMItwDbf4uqE8moDo7ScRZirOl/m8yuOUv4at+BfuL
+        +2h9Xgq9MBE6QSIaBTuhzUuAJmc71Lnx0BVlQXc5ExrJQSiOxYs46iS1lV2H8ZYA5ntnYSqVQH8uDQ0p
+        q1CXvAK1+5ZBuXcplOxOWQ1yNQf64jxoz2eiJjtRxPkaZFJ/gxy++ioe3rr38NZWwaOshLumgscPBcXn
+        d3AxyN/AKXsL+8dXMLx+JuJ6I2FpX18f+vv7we7/oaenB+HubnR0dMBhs4o4SvwjQBEI/MTTJ4/x6MF9
+        2FvsPCEcDqP87Wvcu3MbdcoadHV18eRAIIDW1taoQDd9WLN0MSaOiMHUsSMxY9J4uFwO5GQdxYyJ45C0
+        LQ6jhw7G07Iynuzz+dDc3BwV+Fpfj5FDBkHxWQ7FJxmGDxyAD5UViNsQiyMHD9BELVg0bzYuSsTwejxU
+        3AWTyRQViIQjCP0KopFosHblMiycMxt+nxc3rhZhFBWeNWUSxsUMQWV5OZxOJ1qooMFgiAr09vbiYeld
+        TBgWg6OH0/DD6UIo+AtjaGxxYQE8HjdiVy3H5ti1sNlsLD70en1UQK9rpE4DMW3MCGzdGEuxDhXv3mDB
+        zOlYMn8uBDknMHnUcKSn7ofFYkFTU9O/AmrVV0gKhRCLCnBGKMApQR5qFNUgdCSxsAAZB1JxregyDMbv
+        MFOy1WqF2WwWcZQsZbuNRCL8itrb2xEMBuH3++F2u+FwOPh5WWTmymC32xEKhf6skRKlbNednZ18sa2t
+        DV6vl/9l2vB3XkZk0VmdGTFTmkLE0cIV2kBoAzEajYT+LKGzEXY0Gg1Rq9VEpVLxYIf10PXxfSaT6dBv
+        kQ8GxQ3GLEQAAAAASUVORK5CYII=
+</value>
+  </data>
+  <metadata name="btnProductDate.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="btnProductDate.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAAzpJREFUOE+FUWlI02EY/0MUBUn3fVBU0Pkhuq8PYReBHWbaZVpmiWWp6dystm4s
+        suyAMgqKZPWloFMla6vpNK0drxusbc7Nua1duTWvzePX+/6DRp964ccLz/v8jud9OMWJHZlVaRuIPGMT
+        UWZtIfW58UQlSCLa03uJTrKf6MTJRFu4m3zLTyRfsneQ6sw4Iju8ibxPXUdkxxPWc+bi41LLrXxYbgpg
+        KcmDteQkmkpyYSrKwPdLR2C4kA7D2TToxSloPJUMItwDbf4uqE8moDo7ScRZirOl/m8yuOUv4at+BfuL
+        +2h9Xgq9MBE6QSIaBTuhzUuAJmc71Lnx0BVlQXc5ExrJQSiOxYs46iS1lV2H8ZYA5ntnYSqVQH8uDQ0p
+        q1CXvAK1+5ZBuXcplOxOWQ1yNQf64jxoz2eiJjtRxPkaZFJ/gxy++ioe3rr38NZWwaOshLumgscPBcXn
+        d3AxyN/AKXsL+8dXMLx+JuJ6I2FpX18f+vv7we7/oaenB+HubnR0dMBhs4o4SvwjQBEI/MTTJ4/x6MF9
+        2FvsPCEcDqP87Wvcu3MbdcoadHV18eRAIIDW1taoQDd9WLN0MSaOiMHUsSMxY9J4uFwO5GQdxYyJ45C0
+        LQ6jhw7G07Iynuzz+dDc3BwV+Fpfj5FDBkHxWQ7FJxmGDxyAD5UViNsQiyMHD9BELVg0bzYuSsTwejxU
+        3AWTyRQViIQjCP0KopFosHblMiycMxt+nxc3rhZhFBWeNWUSxsUMQWV5OZxOJ1qooMFgiAr09vbiYeld
+        TBgWg6OH0/DD6UIo+AtjaGxxYQE8HjdiVy3H5ti1sNlsLD70en1UQK9rpE4DMW3MCGzdGEuxDhXv3mDB
+        zOlYMn8uBDknMHnUcKSn7ofFYkFTU9O/AmrVV0gKhRCLCnBGKMApQR5qFNUgdCSxsAAZB1JxregyDMbv
+        MFOy1WqF2WwWcZQsZbuNRCL8itrb2xEMBuH3++F2u+FwOPh5WWTmymC32xEKhf6skRKlbNednZ18sa2t
+        DV6vl/9l2vB3XkZk0VmdGTFTmkLE0cIV2kBoAzEajYT+LKGzEXY0Gg1Rq9VEpVLxYIf10PXxfSaT6dBv
+        kQ8GxQ3GLEQAAAAASUVORK5CYII=
+</value>
+  </data>
   <metadata name="bdnMarksixRecord.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>160, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="bdnMoveFirstItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAW

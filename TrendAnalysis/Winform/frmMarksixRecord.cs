@@ -9,6 +9,7 @@ using TrendAnalysis.Models;
 using System.Drawing;
 using System.ComponentModel;
 using System.Collections.Generic;
+using Winform.Common;
 
 namespace Winform
 {
@@ -36,7 +37,9 @@ namespace Winform
         public frmMarksixRecord()
         {
             InitializeComponent();
+            monthCalendar.LostFocus += MonthCalendar_LostFocus;
         }
+
 
         private void tsbSearch_Click(object sender, EventArgs e)
         {
@@ -54,8 +57,28 @@ namespace Winform
             //开始位置
             var startIndex = pageSize*(pageIndex-1);
             if (startIndex < 0) startIndex = 0;
-            var service = new MarkSixRecordService();
+
             var searchDto = new MarkSixRecordSearchDto { StartIndex = startIndex, PageSize = pageSize };
+            if (tbStartDateTime.Text.Trim().Length > 0)
+            {
+                var strDate = tbStartDateTime.Text.Trim();
+                DateTime dt;
+                if(DateTime.TryParse(strDate,out dt))
+                {
+                    searchDto.StartDateTime = dt;
+                }
+            }
+
+            if (tbEndDateTime.Text.Trim().Length > 0)
+            {
+                var strDate = tbEndDateTime.Text.Trim();
+                DateTime dt;
+                if (DateTime.TryParse(strDate, out dt))
+                {
+                    searchDto.EndDateTime = dt;
+                }
+            }
+            var service = new MarkSixRecordService();
             var rows = service.Search(searchDto);
             var table = rows.ConvertDataTable(properties =>
             {
@@ -311,7 +334,6 @@ namespace Winform
 
         private void frmMarksixRecord_Load(object sender, EventArgs e)
         {
-            dateTimePicker2.Text = "";
             //设置默认页数
             if (tlscombo.Items.Count > 1)
             {
@@ -428,6 +450,49 @@ namespace Winform
         {
             if (!enableEvent) return;
             Search();
+        }
+
+
+        private void monthCalendar_DateSelected(object sender, DateRangeEventArgs e)
+        {
+            var mc = sender as MonthCalendar;
+            if (mc == null)
+                return;
+            var tb = mc.Tag as Control;
+            if (tb != null)
+            {
+                tb.Text=mc.SelectionStart.ToString("yyyy-MM-dd");
+                tb.Focus();
+            }
+        }
+        private void MonthCalendar_LostFocus(object sender, EventArgs e)
+        {
+            //失去焦点就隐藏日期选择控件
+            monthCalendar.Visible = false;
+        }
+
+        private void btnProductDate_Click(object sender, EventArgs e)
+        {
+            //日期选择
+            ControlHelper.SetMonthCalendarPosition(monthCalendar, tbStartDateTime, true);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //日期选择
+            ControlHelper.SetMonthCalendarPosition(monthCalendar, tbEndDateTime, true);
+        }
+
+        private void TextBox_Enter(object sender,EventArgs e)
+        {
+            var tb = sender as TextBox;
+            if (tb != null)
+            {
+                //var len = tb.Text.Length;
+                //tb.SelectionLength = len;
+                tb.Focus();
+                tb.SelectAll();
+            }
         }
     }
 }

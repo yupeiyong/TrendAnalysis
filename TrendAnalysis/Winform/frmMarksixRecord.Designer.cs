@@ -41,22 +41,25 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.txtTimes = new System.Windows.Forms.TextBox();
-            this.txtFirstNum = new System.Windows.Forms.TextBox();
-            this.txtSecondNum = new System.Windows.Forms.TextBox();
-            this.txtThirdNum = new System.Windows.Forms.TextBox();
-            this.txtFourthNum = new System.Windows.Forms.TextBox();
-            this.txtFifthNum = new System.Windows.Forms.TextBox();
-            this.txtSixthNum = new System.Windows.Forms.TextBox();
-            this.txtSeventhNum = new System.Windows.Forms.TextBox();
+            this.tbFirstNum = new System.Windows.Forms.TextBox();
+            this.tbSecondNum = new System.Windows.Forms.TextBox();
+            this.tbThirdNum = new System.Windows.Forms.TextBox();
+            this.tbFourthNum = new System.Windows.Forms.TextBox();
+            this.tbFifthNum = new System.Windows.Forms.TextBox();
+            this.tbSixthNum = new System.Windows.Forms.TextBox();
+            this.tbSeventhNum = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tbStartTimes = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.tbEndTimes = new System.Windows.Forms.TextBox();
             this.bdnMarksixRecord = new System.Windows.Forms.BindingNavigator(this.components);
             this.bdnCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bdnMoveFirstItem = new System.Windows.Forms.ToolStripButton();
@@ -69,12 +72,12 @@
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.tlscombo = new System.Windows.Forms.ToolStripComboBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.tbStartDateTime = new System.Windows.Forms.TextBox();
+            this.tbEndDateTime = new System.Windows.Forms.TextBox();
+            this.monthCalendar = new System.Windows.Forms.MonthCalendar();
+            this.btnProductDate = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.dgvMarksixRecordList = new Winform.Common.myDataGridView();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tslMaster.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -154,7 +157,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(1254, 101);
+            this.groupBox1.Size = new System.Drawing.Size(1382, 101);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             // 
@@ -175,6 +178,10 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.button1, 7, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnProductDate, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label4, 2, 1);
@@ -182,29 +189,28 @@
             this.tableLayoutPanel1.Controls.Add(this.label7, 8, 1);
             this.tableLayoutPanel1.Controls.Add(this.label8, 10, 1);
             this.tableLayoutPanel1.Controls.Add(this.label9, 12, 1);
-            this.tableLayoutPanel1.Controls.Add(this.txtFirstNum, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.txtSecondNum, 3, 1);
-            this.tableLayoutPanel1.Controls.Add(this.txtThirdNum, 5, 1);
-            this.tableLayoutPanel1.Controls.Add(this.txtFourthNum, 7, 1);
-            this.tableLayoutPanel1.Controls.Add(this.txtFifthNum, 9, 1);
-            this.tableLayoutPanel1.Controls.Add(this.txtSixthNum, 11, 1);
-            this.tableLayoutPanel1.Controls.Add(this.txtSeventhNum, 13, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbFirstNum, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbSecondNum, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbFourthNum, 7, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbFifthNum, 9, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbSixthNum, 11, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbSeventhNum, 13, 1);
             this.tableLayoutPanel1.Controls.Add(this.label6, 6, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label10, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.dateTimePicker2, 4, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 6, 0);
-            this.tableLayoutPanel1.Controls.Add(this.txtTimes, 7, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label11, 8, 0);
-            this.tableLayoutPanel1.Controls.Add(this.textBox2, 9, 0);
-            this.tableLayoutPanel1.Controls.Add(this.comboBox1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tbStartDateTime, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tbEndTimes, 13, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label11, 12, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tbStartTimes, 11, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label2, 10, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label10, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tbEndDateTime, 5, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tbThirdNum, 5, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 22);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1170, 71);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1169, 71);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // label1
@@ -218,18 +224,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "开奖日期";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(537, 8);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 18);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "期数";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label3
             // 
@@ -303,69 +297,68 @@
             this.label9.Text = "第七数";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // txtTimes
+            // tbFirstNum
             // 
-            this.txtTimes.Location = new System.Drawing.Point(589, 4);
-            this.txtTimes.Margin = new System.Windows.Forms.Padding(4);
-            this.txtTimes.Name = "txtTimes";
-            this.txtTimes.Size = new System.Drawing.Size(79, 28);
-            this.txtTimes.TabIndex = 1;
+            this.tbFirstNum.Location = new System.Drawing.Point(94, 39);
+            this.tbFirstNum.Margin = new System.Windows.Forms.Padding(4);
+            this.tbFirstNum.Name = "tbFirstNum";
+            this.tbFirstNum.Size = new System.Drawing.Size(79, 28);
+            this.tbFirstNum.TabIndex = 1;
+            this.tbFirstNum.Enter += new System.EventHandler(this.TextBox_Enter);
             // 
-            // txtFirstNum
+            // tbSecondNum
             // 
-            this.txtFirstNum.Location = new System.Drawing.Point(94, 39);
-            this.txtFirstNum.Margin = new System.Windows.Forms.Padding(4);
-            this.txtFirstNum.Name = "txtFirstNum";
-            this.txtFirstNum.Size = new System.Drawing.Size(79, 28);
-            this.txtFirstNum.TabIndex = 1;
+            this.tbSecondNum.Location = new System.Drawing.Point(259, 39);
+            this.tbSecondNum.Margin = new System.Windows.Forms.Padding(4);
+            this.tbSecondNum.Name = "tbSecondNum";
+            this.tbSecondNum.Size = new System.Drawing.Size(79, 28);
+            this.tbSecondNum.TabIndex = 1;
+            this.tbSecondNum.Enter += new System.EventHandler(this.TextBox_Enter);
             // 
-            // txtSecondNum
+            // tbThirdNum
             // 
-            this.txtSecondNum.Location = new System.Drawing.Point(259, 39);
-            this.txtSecondNum.Margin = new System.Windows.Forms.Padding(4);
-            this.txtSecondNum.Name = "txtSecondNum";
-            this.txtSecondNum.Size = new System.Drawing.Size(79, 28);
-            this.txtSecondNum.TabIndex = 1;
+            this.tbThirdNum.Location = new System.Drawing.Point(424, 39);
+            this.tbThirdNum.Margin = new System.Windows.Forms.Padding(4);
+            this.tbThirdNum.Name = "tbThirdNum";
+            this.tbThirdNum.Size = new System.Drawing.Size(79, 28);
+            this.tbThirdNum.TabIndex = 1;
+            this.tbThirdNum.Enter += new System.EventHandler(this.TextBox_Enter);
             // 
-            // txtThirdNum
+            // tbFourthNum
             // 
-            this.txtThirdNum.Location = new System.Drawing.Point(424, 39);
-            this.txtThirdNum.Margin = new System.Windows.Forms.Padding(4);
-            this.txtThirdNum.Name = "txtThirdNum";
-            this.txtThirdNum.Size = new System.Drawing.Size(79, 28);
-            this.txtThirdNum.TabIndex = 1;
+            this.tbFourthNum.Location = new System.Drawing.Point(589, 39);
+            this.tbFourthNum.Margin = new System.Windows.Forms.Padding(4);
+            this.tbFourthNum.Name = "tbFourthNum";
+            this.tbFourthNum.Size = new System.Drawing.Size(79, 28);
+            this.tbFourthNum.TabIndex = 1;
+            this.tbFourthNum.Enter += new System.EventHandler(this.TextBox_Enter);
             // 
-            // txtFourthNum
+            // tbFifthNum
             // 
-            this.txtFourthNum.Location = new System.Drawing.Point(589, 39);
-            this.txtFourthNum.Margin = new System.Windows.Forms.Padding(4);
-            this.txtFourthNum.Name = "txtFourthNum";
-            this.txtFourthNum.Size = new System.Drawing.Size(79, 28);
-            this.txtFourthNum.TabIndex = 1;
+            this.tbFifthNum.Location = new System.Drawing.Point(754, 39);
+            this.tbFifthNum.Margin = new System.Windows.Forms.Padding(4);
+            this.tbFifthNum.Name = "tbFifthNum";
+            this.tbFifthNum.Size = new System.Drawing.Size(79, 28);
+            this.tbFifthNum.TabIndex = 1;
+            this.tbFifthNum.Enter += new System.EventHandler(this.TextBox_Enter);
             // 
-            // txtFifthNum
+            // tbSixthNum
             // 
-            this.txtFifthNum.Location = new System.Drawing.Point(754, 39);
-            this.txtFifthNum.Margin = new System.Windows.Forms.Padding(4);
-            this.txtFifthNum.Name = "txtFifthNum";
-            this.txtFifthNum.Size = new System.Drawing.Size(79, 28);
-            this.txtFifthNum.TabIndex = 1;
+            this.tbSixthNum.Location = new System.Drawing.Point(919, 39);
+            this.tbSixthNum.Margin = new System.Windows.Forms.Padding(4);
+            this.tbSixthNum.Name = "tbSixthNum";
+            this.tbSixthNum.Size = new System.Drawing.Size(79, 28);
+            this.tbSixthNum.TabIndex = 1;
+            this.tbSixthNum.Enter += new System.EventHandler(this.TextBox_Enter);
             // 
-            // txtSixthNum
+            // tbSeventhNum
             // 
-            this.txtSixthNum.Location = new System.Drawing.Point(919, 39);
-            this.txtSixthNum.Margin = new System.Windows.Forms.Padding(4);
-            this.txtSixthNum.Name = "txtSixthNum";
-            this.txtSixthNum.Size = new System.Drawing.Size(79, 28);
-            this.txtSixthNum.TabIndex = 1;
-            // 
-            // txtSeventhNum
-            // 
-            this.txtSeventhNum.Location = new System.Drawing.Point(1084, 39);
-            this.txtSeventhNum.Margin = new System.Windows.Forms.Padding(4);
-            this.txtSeventhNum.Name = "txtSeventhNum";
-            this.txtSeventhNum.Size = new System.Drawing.Size(79, 28);
-            this.txtSeventhNum.TabIndex = 1;
+            this.tbSeventhNum.Location = new System.Drawing.Point(1084, 39);
+            this.tbSeventhNum.Margin = new System.Windows.Forms.Padding(4);
+            this.tbSeventhNum.Name = "tbSeventhNum";
+            this.tbSeventhNum.Size = new System.Drawing.Size(79, 28);
+            this.tbSeventhNum.TabIndex = 1;
+            this.tbSeventhNum.Enter += new System.EventHandler(this.TextBox_Enter);
             // 
             // label6
             // 
@@ -378,6 +371,60 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "第四数";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label10
+            // 
+            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(390, 8);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(26, 18);
+            this.label10.TabIndex = 7;
+            this.label10.Text = "至";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(867, 8);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(44, 18);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "期数";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbStartTimes
+            // 
+            this.tbStartTimes.Location = new System.Drawing.Point(919, 4);
+            this.tbStartTimes.Margin = new System.Windows.Forms.Padding(4);
+            this.tbStartTimes.Name = "tbStartTimes";
+            this.tbStartTimes.Size = new System.Drawing.Size(79, 28);
+            this.tbStartTimes.TabIndex = 1;
+            this.tbStartTimes.Enter += new System.EventHandler(this.TextBox_Enter);
+            // 
+            // label11
+            // 
+            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(1050, 8);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(26, 18);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "至";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbEndTimes
+            // 
+            this.tbEndTimes.Location = new System.Drawing.Point(1084, 4);
+            this.tbEndTimes.Margin = new System.Windows.Forms.Padding(4);
+            this.tbEndTimes.Name = "tbEndTimes";
+            this.tbEndTimes.Size = new System.Drawing.Size(79, 28);
+            this.tbEndTimes.TabIndex = 4;
+            this.tbEndTimes.Enter += new System.EventHandler(this.TextBox_Enter);
             // 
             // bdnMarksixRecord
             // 
@@ -407,7 +454,7 @@
             this.bdnMarksixRecord.MovePreviousItem = this.bdnMovePreviousItem;
             this.bdnMarksixRecord.Name = "bdnMarksixRecord";
             this.bdnMarksixRecord.PositionItem = this.bdnPositionItem;
-            this.bdnMarksixRecord.Size = new System.Drawing.Size(1254, 32);
+            this.bdnMarksixRecord.Size = new System.Drawing.Size(1382, 32);
             this.bdnMarksixRecord.TabIndex = 7;
             this.bdnMarksixRecord.Text = "bindingNavigator1";
             // 
@@ -503,46 +550,56 @@
             this.tlscombo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyNumberControl_KeyPress);
             this.tlscombo.TextChanged += new System.EventHandler(this.tlscombo_TextChanged);
             // 
-            // textBox2
+            // tbStartDateTime
             // 
-            this.textBox2.Location = new System.Drawing.Point(754, 4);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(79, 28);
-            this.textBox2.TabIndex = 4;
+            this.tableLayoutPanel1.SetColumnSpan(this.tbStartDateTime, 2);
+            this.tbStartDateTime.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbStartDateTime.Location = new System.Drawing.Point(93, 3);
+            this.tbStartDateTime.Name = "tbStartDateTime";
+            this.tbStartDateTime.Size = new System.Drawing.Size(159, 28);
+            this.tbStartDateTime.TabIndex = 8;
+            this.tbStartDateTime.Enter += new System.EventHandler(this.TextBox_Enter);
             // 
-            // label11
+            // tbEndDateTime
             // 
-            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(720, 8);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(26, 18);
-            this.label11.TabIndex = 6;
-            this.label11.Text = "至";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tableLayoutPanel1.SetColumnSpan(this.tbEndDateTime, 2);
+            this.tbEndDateTime.Location = new System.Drawing.Point(423, 3);
+            this.tbEndDateTime.Name = "tbEndDateTime";
+            this.tbEndDateTime.Size = new System.Drawing.Size(159, 28);
+            this.tbEndDateTime.TabIndex = 9;
+            this.tbEndDateTime.Enter += new System.EventHandler(this.TextBox_Enter);
             // 
-            // label10
+            // monthCalendar
             // 
-            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(315, 8);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(26, 18);
-            this.label10.TabIndex = 7;
-            this.label10.Text = "至";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.monthCalendar.Location = new System.Drawing.Point(73, 194);
+            this.monthCalendar.Name = "monthCalendar";
+            this.monthCalendar.TabIndex = 8;
+            this.monthCalendar.Visible = false;
+            this.monthCalendar.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_DateSelected);
             // 
-            // dateTimePicker2
+            // btnProductDate
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.dateTimePicker2, 2);
-            this.dateTimePicker2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dateTimePicker2.Location = new System.Drawing.Point(348, 3);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(159, 28);
-            this.dateTimePicker2.TabIndex = 9;
+            this.btnProductDate.Image = ((System.Drawing.Image)(resources.GetObject("btnProductDate.Image")));
+            this.btnProductDate.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnProductDate.Location = new System.Drawing.Point(257, 2);
+            this.btnProductDate.Margin = new System.Windows.Forms.Padding(2);
+            this.btnProductDate.Name = "btnProductDate";
+            this.btnProductDate.Size = new System.Drawing.Size(41, 29);
+            this.btnProductDate.TabIndex = 15;
+            this.btnProductDate.UseVisualStyleBackColor = true;
+            this.btnProductDate.Click += new System.EventHandler(this.btnProductDate_Click);
+            // 
+            // button1
+            // 
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.button1.Location = new System.Drawing.Point(587, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(41, 29);
+            this.button1.TabIndex = 16;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // dgvMarksixRecordList
             // 
@@ -568,26 +625,19 @@
             this.dgvMarksixRecordList.Name = "dgvMarksixRecordList";
             this.dgvMarksixRecordList.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvMarksixRecordList.RowTemplate.Height = 30;
-            this.dgvMarksixRecordList.Size = new System.Drawing.Size(1254, 444);
+            this.dgvMarksixRecordList.Size = new System.Drawing.Size(1382, 444);
             this.dgvMarksixRecordList.TabIndex = 6;
             this.dgvMarksixRecordList.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellMouseEnter);
             this.dgvMarksixRecordList.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellMouseLeave);
             this.dgvMarksixRecordList.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvList_DataBindingComplete);
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(93, 3);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(84, 26);
-            this.comboBox1.TabIndex = 10;
             // 
             // frmMarksixRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(1254, 625);
+            this.ClientSize = new System.Drawing.Size(1382, 625);
+            this.Controls.Add(this.monthCalendar);
             this.Controls.Add(this.bdnMarksixRecord);
             this.Controls.Add(this.dgvMarksixRecordList);
             this.Controls.Add(this.groupBox1);
@@ -627,14 +677,14 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtTimes;
-        private System.Windows.Forms.TextBox txtFirstNum;
-        private System.Windows.Forms.TextBox txtSecondNum;
-        private System.Windows.Forms.TextBox txtThirdNum;
-        private System.Windows.Forms.TextBox txtFourthNum;
-        private System.Windows.Forms.TextBox txtFifthNum;
-        private System.Windows.Forms.TextBox txtSixthNum;
-        private System.Windows.Forms.TextBox txtSeventhNum;
+        private System.Windows.Forms.TextBox tbStartTimes;
+        private System.Windows.Forms.TextBox tbFirstNum;
+        private System.Windows.Forms.TextBox tbSecondNum;
+        private System.Windows.Forms.TextBox tbThirdNum;
+        private System.Windows.Forms.TextBox tbFourthNum;
+        private System.Windows.Forms.TextBox tbFifthNum;
+        private System.Windows.Forms.TextBox tbSixthNum;
+        private System.Windows.Forms.TextBox tbSeventhNum;
         private System.Windows.Forms.Label label6;
         private Common.myDataGridView dgvMarksixRecordList;
         private System.Windows.Forms.BindingNavigator bdnMarksixRecord;
@@ -651,8 +701,11 @@
         private System.Windows.Forms.ToolStripComboBox tlscombo;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.TextBox tbEndTimes;
+        private System.Windows.Forms.TextBox tbEndDateTime;
+        private System.Windows.Forms.TextBox tbStartDateTime;
+        private System.Windows.Forms.MonthCalendar monthCalendar;
+        internal System.Windows.Forms.Button button1;
+        internal System.Windows.Forms.Button btnProductDate;
     }
 }
