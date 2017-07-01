@@ -53,6 +53,7 @@ namespace Winform
             int.TryParse(bdnPositionItem.Text, out pageIndex);
             //开始位置
             var startIndex = pageSize*(pageIndex-1);
+            if (startIndex < 0) startIndex = 0;
             var service = new MarkSixRecordService();
             var searchDto = new MarkSixRecordSearchDto { StartIndex = startIndex, PageSize = pageSize };
             var rows = service.Search(searchDto);
@@ -310,6 +311,7 @@ namespace Winform
 
         private void frmMarksixRecord_Load(object sender, EventArgs e)
         {
+            dateTimePicker2.Text = "";
             //设置默认页数
             if (tlscombo.Items.Count > 1)
             {
@@ -369,6 +371,19 @@ namespace Winform
             enableEvent = true;
         }
 
+
+        /// <summary>
+        /// 只允许输入数字的控件的输入键事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnlyNumberControl_KeyPress(object sender,KeyPressEventArgs e)
+        {
+            if (!char.IsNumber(e.KeyChar) && e.KeyChar != (char)8)
+            {
+                e.Handled = true;
+            }
+        }
         private void bdnMovePreviousItem_Click(object sender, EventArgs e)
         {
             //页码开始数
@@ -414,7 +429,5 @@ namespace Winform
             if (!enableEvent) return;
             Search();
         }
-
-
     }
 }

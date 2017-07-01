@@ -55,6 +55,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ExtendDateTimePicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\ExtendDateTimePicker.Designer.cs">
+      <DependentUpon>ExtendDateTimePicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="Common\FormHelper.cs" />
     <Compile Include="Common\myDataGridView.cs">
       <SubType>Component</SubType>
