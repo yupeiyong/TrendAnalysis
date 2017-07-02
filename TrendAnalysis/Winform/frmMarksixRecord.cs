@@ -25,6 +25,12 @@ namespace Winform
         /// 记录总条数
         /// </summary>
         private int recordCount = 0;
+
+
+        /// <summary>
+        /// 已导入条数
+        /// </summary>
+        private int importedCount = 0;
         /// <summary>
         /// 是否停止导入记录
         /// </summary>
@@ -242,6 +248,7 @@ namespace Winform
         void bgwImport_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             frmMdi.tspbCompletePrecent.Value = e.ProgressPercentage;
+            frmMdi.tsslInfo.Text =string.Format( "导入 {0}/{1}", importedCount, recordCount);
         }
 
         void bgwImport_DoWork(object sender, DoWorkEventArgs e)
@@ -287,11 +294,12 @@ namespace Winform
                     return;
                 }
             }
-            int value = frmMdi.tspbCompletePrecent.Value + 1;
+            int value = recordService.ImportedCount;
+            importedCount = value;
             int max = frmMdi.tspbCompletePrecent.Maximum;
             if (value > max)
             {
-                value = value - max;
+                value = value % max;
             }
             bgwImport.ReportProgress(value);
         }

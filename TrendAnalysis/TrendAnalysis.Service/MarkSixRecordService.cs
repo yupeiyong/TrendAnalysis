@@ -25,6 +25,12 @@ namespace TrendAnalysis.Service
         /// 记录条数
         /// </summary>
         public int RecordCount { get; set; }
+
+
+        /// <summary>
+        /// 已导入条数
+        /// </summary>
+        public int ImportedCount { get; set; } = 0;
         /// <summary>
         /// 是否停止导入
         /// </summary>
@@ -182,9 +188,10 @@ namespace TrendAnalysis.Service
                     //dao.Set<MarkSixRecord>().AddRange(records);
                     foreach (var record in records)
                     {
+                        //记录已导入数量
+                        ImportedCount++;
                         //处理正在导入事件
                         OnImportingEvent(null);
-
                         if (IsStopImporting)
                             return 0;
                         var originalRecord = dao.Set<MarkSixRecord>().FirstOrDefault(m => m.Times == record.Times);
