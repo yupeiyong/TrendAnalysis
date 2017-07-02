@@ -78,6 +78,8 @@ namespace Winform
                     searchDto.EndDateTime = dt;
                 }
             }
+
+            searchDto.Times = tbTimes.Text;
             var service = new MarkSixRecordService();
             var rows = service.Search(searchDto);
             var table = rows.ConvertDataTable(properties =>
@@ -131,7 +133,7 @@ namespace Winform
             //文件选择窗口
             OpenFileDialog ofd = new OpenFileDialog();
             //筛选条件
-            ofd.Filter = "Excel2003(*.xls)|*.xls|Excel2007(*.xlsx)|*.xlsx";
+            ofd.Filter = "Excel2007(*.xlsx)|*.xlsx";
             //文件名
             string fileName = string.Empty;
             if (ofd.ShowDialog(this) == DialogResult.OK)
@@ -153,7 +155,7 @@ namespace Winform
                     bgwImport.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgwImport_RunWorkerCompleted);
                 }
                 //设置工具条和菜单状态
-                foreach (ToolStripItem item in this.MainMenuStrip.Items)
+                foreach (ToolStripItem item in this.msMaster.Items)
                 {
                     item.Enabled = false;
                 }
@@ -214,7 +216,7 @@ namespace Winform
                 }
             }
             //设置工具条和菜单状态
-            foreach (ToolStripItem item in this.MainMenuStrip.Items)
+            foreach (ToolStripItem item in this.msMaster.Items)
             {
                 item.Enabled = true;
             }
@@ -334,6 +336,8 @@ namespace Winform
 
         private void frmMarksixRecord_Load(object sender, EventArgs e)
         {
+            //取得MDI窗体的引用
+            frmMdi = this.MdiParent as frmMain;
             //设置默认页数
             if (tlscombo.Items.Count > 1)
             {
@@ -471,18 +475,6 @@ namespace Winform
             monthCalendar.Visible = false;
         }
 
-        private void btnProductDate_Click(object sender, EventArgs e)
-        {
-            //日期选择
-            ControlHelper.SetMonthCalendarPosition(monthCalendar, tbStartDateTime, true);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //日期选择
-            ControlHelper.SetMonthCalendarPosition(monthCalendar, tbEndDateTime, true);
-        }
-
         private void TextBox_Enter(object sender,EventArgs e)
         {
             var tb = sender as TextBox;
@@ -493,6 +485,18 @@ namespace Winform
                 tb.Focus();
                 tb.SelectAll();
             }
+        }
+
+        private void btnEndDateTime_Click(object sender, EventArgs e)
+        {
+            //日期选择
+            ControlHelper.SetMonthCalendarPosition(monthCalendar, tbEndDateTime, true);
+        }
+
+        private void btnStartDateTime_Click(object sender, EventArgs e)
+        {
+            //日期选择
+            ControlHelper.SetMonthCalendarPosition(monthCalendar, tbStartDateTime, true);
         }
     }
 }

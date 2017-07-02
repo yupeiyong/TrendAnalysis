@@ -40,6 +40,8 @@
             this.tsbExit = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnEndDateTime = new System.Windows.Forms.Button();
+            this.btnStartDateTime = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -49,17 +51,17 @@
             this.label9 = new System.Windows.Forms.Label();
             this.tbFirstNum = new System.Windows.Forms.TextBox();
             this.tbSecondNum = new System.Windows.Forms.TextBox();
-            this.tbThirdNum = new System.Windows.Forms.TextBox();
             this.tbFourthNum = new System.Windows.Forms.TextBox();
             this.tbFifthNum = new System.Windows.Forms.TextBox();
             this.tbSixthNum = new System.Windows.Forms.TextBox();
             this.tbSeventhNum = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
+            this.tbStartDateTime = new System.Windows.Forms.TextBox();
+            this.tbTimes = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.tbStartTimes = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.tbEndTimes = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tbEndDateTime = new System.Windows.Forms.TextBox();
+            this.tbThirdNum = new System.Windows.Forms.TextBox();
             this.bdnMarksixRecord = new System.Windows.Forms.BindingNavigator(this.components);
             this.bdnCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bdnMoveFirstItem = new System.Windows.Forms.ToolStripButton();
@@ -72,17 +74,23 @@
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.tlscombo = new System.Windows.Forms.ToolStripComboBox();
-            this.tbStartDateTime = new System.Windows.Forms.TextBox();
-            this.tbEndDateTime = new System.Windows.Forms.TextBox();
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
-            this.btnProductDate = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.msMaster = new System.Windows.Forms.MenuStrip();
+            this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmImport = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmStopImport = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmExport = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSearch = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmExit = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvMarksixRecordList = new Winform.Common.myDataGridView();
             this.tslMaster.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bdnMarksixRecord)).BeginInit();
             this.bdnMarksixRecord.SuspendLayout();
+            this.msMaster.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMarksixRecordList)).BeginInit();
             this.SuspendLayout();
             // 
@@ -111,7 +119,7 @@
             this.tsbSearch.ShortcutKeys = System.Windows.Forms.Keys.F7;
             this.tsbSearch.Size = new System.Drawing.Size(82, 28);
             this.tsbSearch.Text = "查询";
-            this.tsbSearch.ToolTipText = "按F7可以执行查询\r\n支持通配符 ? 单个字符 *多个字符\r\n数字和日期支持>、<、=、>=、<=、<>";
+            this.tsbSearch.ToolTipText = "按F7可以执行查询\r\n数字支持>、<、=、>=、<=、<>";
             this.tsbSearch.Click += new System.EventHandler(this.tsbSearch_Click);
             // 
             // tsbImport
@@ -151,6 +159,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.msMaster);
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
@@ -180,8 +189,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.button1, 7, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnProductDate, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnEndDateTime, 7, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnStartDateTime, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label4, 2, 1);
@@ -197,14 +206,12 @@
             this.tableLayoutPanel1.Controls.Add(this.tbSeventhNum, 13, 1);
             this.tableLayoutPanel1.Controls.Add(this.label6, 6, 1);
             this.tableLayoutPanel1.Controls.Add(this.tbStartDateTime, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tbEndTimes, 13, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label11, 12, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tbStartTimes, 11, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tbTimes, 11, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 10, 0);
             this.tableLayoutPanel1.Controls.Add(this.label10, 4, 0);
             this.tableLayoutPanel1.Controls.Add(this.tbEndDateTime, 5, 0);
             this.tableLayoutPanel1.Controls.Add(this.tbThirdNum, 5, 1);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 22);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(9, 13);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
@@ -212,6 +219,32 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1169, 71);
             this.tableLayoutPanel1.TabIndex = 3;
+            // 
+            // btnEndDateTime
+            // 
+            this.btnEndDateTime.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnEndDateTime.Image = ((System.Drawing.Image)(resources.GetObject("btnEndDateTime.Image")));
+            this.btnEndDateTime.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnEndDateTime.Location = new System.Drawing.Point(587, 2);
+            this.btnEndDateTime.Margin = new System.Windows.Forms.Padding(2);
+            this.btnEndDateTime.Name = "btnEndDateTime";
+            this.btnEndDateTime.Size = new System.Drawing.Size(41, 31);
+            this.btnEndDateTime.TabIndex = 16;
+            this.btnEndDateTime.UseVisualStyleBackColor = true;
+            this.btnEndDateTime.Click += new System.EventHandler(this.btnEndDateTime_Click);
+            // 
+            // btnStartDateTime
+            // 
+            this.btnStartDateTime.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnStartDateTime.Image = ((System.Drawing.Image)(resources.GetObject("btnStartDateTime.Image")));
+            this.btnStartDateTime.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnStartDateTime.Location = new System.Drawing.Point(257, 2);
+            this.btnStartDateTime.Margin = new System.Windows.Forms.Padding(2);
+            this.btnStartDateTime.Name = "btnStartDateTime";
+            this.btnStartDateTime.Size = new System.Drawing.Size(41, 31);
+            this.btnStartDateTime.TabIndex = 15;
+            this.btnStartDateTime.UseVisualStyleBackColor = true;
+            this.btnStartDateTime.Click += new System.EventHandler(this.btnStartDateTime_Click);
             // 
             // label1
             // 
@@ -315,15 +348,6 @@
             this.tbSecondNum.TabIndex = 1;
             this.tbSecondNum.Enter += new System.EventHandler(this.TextBox_Enter);
             // 
-            // tbThirdNum
-            // 
-            this.tbThirdNum.Location = new System.Drawing.Point(424, 39);
-            this.tbThirdNum.Margin = new System.Windows.Forms.Padding(4);
-            this.tbThirdNum.Name = "tbThirdNum";
-            this.tbThirdNum.Size = new System.Drawing.Size(79, 28);
-            this.tbThirdNum.TabIndex = 1;
-            this.tbThirdNum.Enter += new System.EventHandler(this.TextBox_Enter);
-            // 
             // tbFourthNum
             // 
             this.tbFourthNum.Location = new System.Drawing.Point(589, 39);
@@ -372,17 +396,25 @@
             this.label6.Text = "第四数";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label10
+            // tbStartDateTime
             // 
-            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(390, 8);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(26, 18);
-            this.label10.TabIndex = 7;
-            this.label10.Text = "至";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tableLayoutPanel1.SetColumnSpan(this.tbStartDateTime, 2);
+            this.tbStartDateTime.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbStartDateTime.Location = new System.Drawing.Point(93, 3);
+            this.tbStartDateTime.Name = "tbStartDateTime";
+            this.tbStartDateTime.Size = new System.Drawing.Size(159, 28);
+            this.tbStartDateTime.TabIndex = 8;
+            this.tbStartDateTime.Enter += new System.EventHandler(this.TextBox_Enter);
+            // 
+            // tbTimes
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.tbTimes, 2);
+            this.tbTimes.Location = new System.Drawing.Point(919, 4);
+            this.tbTimes.Margin = new System.Windows.Forms.Padding(4);
+            this.tbTimes.Name = "tbTimes";
+            this.tbTimes.Size = new System.Drawing.Size(157, 28);
+            this.tbTimes.TabIndex = 1;
+            this.tbTimes.Enter += new System.EventHandler(this.TextBox_Enter);
             // 
             // label2
             // 
@@ -396,35 +428,35 @@
             this.label2.Text = "期数";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // tbStartTimes
+            // label10
             // 
-            this.tbStartTimes.Location = new System.Drawing.Point(919, 4);
-            this.tbStartTimes.Margin = new System.Windows.Forms.Padding(4);
-            this.tbStartTimes.Name = "tbStartTimes";
-            this.tbStartTimes.Size = new System.Drawing.Size(79, 28);
-            this.tbStartTimes.TabIndex = 1;
-            this.tbStartTimes.Enter += new System.EventHandler(this.TextBox_Enter);
+            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(390, 8);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(26, 18);
+            this.label10.TabIndex = 7;
+            this.label10.Text = "至";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label11
+            // tbEndDateTime
             // 
-            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(1050, 8);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(26, 18);
-            this.label11.TabIndex = 6;
-            this.label11.Text = "至";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tableLayoutPanel1.SetColumnSpan(this.tbEndDateTime, 2);
+            this.tbEndDateTime.Location = new System.Drawing.Point(423, 3);
+            this.tbEndDateTime.Name = "tbEndDateTime";
+            this.tbEndDateTime.Size = new System.Drawing.Size(159, 28);
+            this.tbEndDateTime.TabIndex = 9;
+            this.tbEndDateTime.Enter += new System.EventHandler(this.TextBox_Enter);
             // 
-            // tbEndTimes
+            // tbThirdNum
             // 
-            this.tbEndTimes.Location = new System.Drawing.Point(1084, 4);
-            this.tbEndTimes.Margin = new System.Windows.Forms.Padding(4);
-            this.tbEndTimes.Name = "tbEndTimes";
-            this.tbEndTimes.Size = new System.Drawing.Size(79, 28);
-            this.tbEndTimes.TabIndex = 4;
-            this.tbEndTimes.Enter += new System.EventHandler(this.TextBox_Enter);
+            this.tbThirdNum.Location = new System.Drawing.Point(424, 39);
+            this.tbThirdNum.Margin = new System.Windows.Forms.Padding(4);
+            this.tbThirdNum.Name = "tbThirdNum";
+            this.tbThirdNum.Size = new System.Drawing.Size(79, 28);
+            this.tbThirdNum.TabIndex = 1;
+            this.tbThirdNum.Enter += new System.EventHandler(this.TextBox_Enter);
             // 
             // bdnMarksixRecord
             // 
@@ -550,25 +582,6 @@
             this.tlscombo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyNumberControl_KeyPress);
             this.tlscombo.TextChanged += new System.EventHandler(this.tlscombo_TextChanged);
             // 
-            // tbStartDateTime
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.tbStartDateTime, 2);
-            this.tbStartDateTime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbStartDateTime.Location = new System.Drawing.Point(93, 3);
-            this.tbStartDateTime.Name = "tbStartDateTime";
-            this.tbStartDateTime.Size = new System.Drawing.Size(159, 28);
-            this.tbStartDateTime.TabIndex = 8;
-            this.tbStartDateTime.Enter += new System.EventHandler(this.TextBox_Enter);
-            // 
-            // tbEndDateTime
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.tbEndDateTime, 2);
-            this.tbEndDateTime.Location = new System.Drawing.Point(423, 3);
-            this.tbEndDateTime.Name = "tbEndDateTime";
-            this.tbEndDateTime.Size = new System.Drawing.Size(159, 28);
-            this.tbEndDateTime.TabIndex = 9;
-            this.tbEndDateTime.Enter += new System.EventHandler(this.TextBox_Enter);
-            // 
             // monthCalendar
             // 
             this.monthCalendar.Location = new System.Drawing.Point(73, 194);
@@ -577,29 +590,84 @@
             this.monthCalendar.Visible = false;
             this.monthCalendar.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_DateSelected);
             // 
-            // btnProductDate
+            // msMaster
             // 
-            this.btnProductDate.Image = ((System.Drawing.Image)(resources.GetObject("btnProductDate.Image")));
-            this.btnProductDate.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnProductDate.Location = new System.Drawing.Point(257, 2);
-            this.btnProductDate.Margin = new System.Windows.Forms.Padding(2);
-            this.btnProductDate.Name = "btnProductDate";
-            this.btnProductDate.Size = new System.Drawing.Size(41, 29);
-            this.btnProductDate.TabIndex = 15;
-            this.btnProductDate.UseVisualStyleBackColor = true;
-            this.btnProductDate.Click += new System.EventHandler(this.btnProductDate_Click);
+            this.msMaster.BackColor = System.Drawing.Color.Transparent;
+            this.msMaster.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.msMaster.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.文件ToolStripMenuItem});
+            this.msMaster.Location = new System.Drawing.Point(4, 25);
+            this.msMaster.Name = "msMaster";
+            this.msMaster.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            this.msMaster.Size = new System.Drawing.Size(1374, 34);
+            this.msMaster.TabIndex = 9;
+            this.msMaster.Text = "menuStrip1";
+            this.msMaster.Visible = false;
             // 
-            // button1
+            // 文件ToolStripMenuItem
             // 
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.button1.Location = new System.Drawing.Point(587, 2);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(41, 29);
-            this.button1.TabIndex = 16;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.文件ToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
+            this.文件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmAdd,
+            this.tsmSave,
+            this.tsmImport,
+            this.tsmStopImport,
+            this.tsmExport,
+            this.tsmSearch,
+            this.tsmExit});
+            this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
+            this.文件ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(58, 28);
+            this.文件ToolStripMenuItem.Text = "操作";
+            // 
+            // tsmAdd
+            // 
+            this.tsmAdd.Name = "tsmAdd";
+            this.tsmAdd.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.tsmAdd.Size = new System.Drawing.Size(225, 30);
+            this.tsmAdd.Text = "新增(&N)";
+            // 
+            // tsmSave
+            // 
+            this.tsmSave.Name = "tsmSave";
+            this.tsmSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.tsmSave.Size = new System.Drawing.Size(225, 30);
+            this.tsmSave.Text = "保存(&S)";
+            // 
+            // tsmImport
+            // 
+            this.tsmImport.Name = "tsmImport";
+            this.tsmImport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.tsmImport.Size = new System.Drawing.Size(225, 30);
+            this.tsmImport.Text = "导入(&I)";
+            // 
+            // tsmStopImport
+            // 
+            this.tsmStopImport.Name = "tsmStopImport";
+            this.tsmStopImport.Size = new System.Drawing.Size(225, 30);
+            this.tsmStopImport.Text = "停止导入记录";
+            this.tsmStopImport.Visible = false;
+            // 
+            // tsmExport
+            // 
+            this.tsmExport.Name = "tsmExport";
+            this.tsmExport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.tsmExport.Size = new System.Drawing.Size(225, 30);
+            this.tsmExport.Text = "导出(&E)";
+            // 
+            // tsmSearch
+            // 
+            this.tsmSearch.Name = "tsmSearch";
+            this.tsmSearch.ShortcutKeys = System.Windows.Forms.Keys.F7;
+            this.tsmSearch.Size = new System.Drawing.Size(225, 30);
+            this.tsmSearch.Text = "查询(&C)";
+            // 
+            // tsmExit
+            // 
+            this.tsmExit.Name = "tsmExit";
+            this.tsmExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.tsmExit.Size = new System.Drawing.Size(225, 30);
+            this.tsmExit.Text = "退出(&T)";
             // 
             // dgvMarksixRecordList
             // 
@@ -649,11 +717,14 @@
             this.tslMaster.ResumeLayout(false);
             this.tslMaster.PerformLayout();
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bdnMarksixRecord)).EndInit();
             this.bdnMarksixRecord.ResumeLayout(false);
             this.bdnMarksixRecord.PerformLayout();
+            this.msMaster.ResumeLayout(false);
+            this.msMaster.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMarksixRecordList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -677,7 +748,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox tbStartTimes;
+        private System.Windows.Forms.TextBox tbTimes;
         private System.Windows.Forms.TextBox tbFirstNum;
         private System.Windows.Forms.TextBox tbSecondNum;
         private System.Windows.Forms.TextBox tbThirdNum;
@@ -700,12 +771,19 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripComboBox tlscombo;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox tbEndTimes;
         private System.Windows.Forms.TextBox tbEndDateTime;
         private System.Windows.Forms.TextBox tbStartDateTime;
         private System.Windows.Forms.MonthCalendar monthCalendar;
-        internal System.Windows.Forms.Button button1;
-        internal System.Windows.Forms.Button btnProductDate;
+        internal System.Windows.Forms.Button btnEndDateTime;
+        internal System.Windows.Forms.Button btnStartDateTime;
+        private System.Windows.Forms.MenuStrip msMaster;
+        private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmAdd;
+        private System.Windows.Forms.ToolStripMenuItem tsmSave;
+        private System.Windows.Forms.ToolStripMenuItem tsmImport;
+        private System.Windows.Forms.ToolStripMenuItem tsmStopImport;
+        private System.Windows.Forms.ToolStripMenuItem tsmExport;
+        private System.Windows.Forms.ToolStripMenuItem tsmSearch;
+        private System.Windows.Forms.ToolStripMenuItem tsmExit;
     }
 }

@@ -20,14 +20,6 @@ namespace Winform
             InitializeComponent();
         }
 
-        private void ShowNewForm(object sender, EventArgs e)
-        {
-            Form childForm = new Form();
-            childForm.MdiParent = this;
-            childForm.Text = "窗口 " + childFormNumber++;
-            childForm.Show();
-        }
-
         private void OpenFile(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -39,16 +31,16 @@ namespace Winform
             }
         }
 
-        private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            saveFileDialog.Filter = "文本文件(*.txt)|*.txt|所有文件(*.*)|*.*";
-            if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
-            {
-                string FileName = saveFileDialog.FileName;
-            }
-        }
+        //private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    SaveFileDialog saveFileDialog = new SaveFileDialog();
+        //    saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+        //    saveFileDialog.Filter = "文本文件(*.txt)|*.txt|所有文件(*.*)|*.*";
+        //    if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
+        //    {
+        //        string FileName = saveFileDialog.FileName;
+        //    }
+        //}
 
         private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -120,14 +112,9 @@ namespace Winform
 
         }
 
-        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        private void statusBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void toolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-
+            ssMaster.Visible =statusBarToolStripMenuItem.Checked;
         }
     }
 }

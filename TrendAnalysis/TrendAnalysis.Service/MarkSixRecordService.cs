@@ -39,6 +39,11 @@ namespace TrendAnalysis.Service
                     dto.EndDateTime = dto.EndDateTime.Value.Date.AddDays(1);
                     source = source.Where(m => m.AwardingDate > dto.StartDateTime.Value && m.AwardingDate < dto.EndDateTime);
                 }
+
+                if (!string.IsNullOrWhiteSpace(dto.Times))
+                {
+                    source = source.Where(m => m.Times.Contains(dto.Times));
+                }
                 if (dto.IsGetTotalCount)
                 {
                     dto.TotalCount = source.Count();

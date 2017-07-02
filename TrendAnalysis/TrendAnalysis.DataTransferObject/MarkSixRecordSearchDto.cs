@@ -12,6 +12,7 @@ namespace TrendAnalysis.DataTransferObject
 
         public DateTime? EndDateTime { get; set; }
 
-
+        public string Times { get; set; }
+        
     }
 }

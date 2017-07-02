@@ -33,8 +33,8 @@
             this.msMaster = new System.Windows.Forms.MenuStrip();
             this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiMarksix = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsbMarksixRecord = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsbMarksixSpecifiedLocationAnalysis = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiMarksixRecord = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiMarksixSpecifiedLocationAnalysis = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,7 +52,6 @@
             this.toolsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tileVerticalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tileHorizontalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,24 +63,18 @@
             this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tslMaster = new System.Windows.Forms.ToolStrip();
+            this.tsbMarksix = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsbMarksixRecord = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsbMarksixSpecifiedLocationAnalysis = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsbExit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.ssMaster = new System.Windows.Forms.StatusStrip();
             this.tsslInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.tspbCompletePrecent = new System.Windows.Forms.ToolStripProgressBar();
-            this.tslMaster = new System.Windows.Forms.ToolStrip();
-            this.tsbRecord = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsbAnalysis = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsbAnalysisResult = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsbExit = new System.Windows.Forms.ToolStripMenuItem();
             this.msMaster.SuspendLayout();
-            this.toolStrip.SuspendLayout();
-            this.ssMaster.SuspendLayout();
             this.tslMaster.SuspendLayout();
+            this.ssMaster.SuspendLayout();
             this.SuspendLayout();
             // 
             // msMaster
@@ -116,33 +109,32 @@
             // tsmiMarksix
             // 
             this.tsmiMarksix.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbMarksixRecord,
-            this.tsbMarksixSpecifiedLocationAnalysis});
+            this.tsmiMarksixRecord,
+            this.tsmiMarksixSpecifiedLocationAnalysis});
             this.tsmiMarksix.Image = ((System.Drawing.Image)(resources.GetObject("tsmiMarksix.Image")));
             this.tsmiMarksix.ImageTransparentColor = System.Drawing.Color.Black;
             this.tsmiMarksix.Name = "tsmiMarksix";
             this.tsmiMarksix.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.tsmiMarksix.Size = new System.Drawing.Size(256, 30);
             this.tsmiMarksix.Text = "Marksix(&N)";
-            this.tsmiMarksix.Click += new System.EventHandler(this.ShowNewForm);
             // 
-            // tsbMarksixRecord
+            // tsmiMarksixRecord
             // 
-            this.tsbMarksixRecord.Image = global::Winform.Properties.Resources.记录;
-            this.tsbMarksixRecord.Name = "tsbMarksixRecord";
-            this.tsbMarksixRecord.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.tsbMarksixRecord.Size = new System.Drawing.Size(268, 30);
-            this.tsbMarksixRecord.Text = "记录";
-            this.tsbMarksixRecord.Click += new System.EventHandler(this.tsbMarksixRecord_Click);
+            this.tsmiMarksixRecord.Image = global::Winform.Properties.Resources.记录;
+            this.tsmiMarksixRecord.Name = "tsmiMarksixRecord";
+            this.tsmiMarksixRecord.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.tsmiMarksixRecord.Size = new System.Drawing.Size(268, 30);
+            this.tsmiMarksixRecord.Text = "记录";
+            this.tsmiMarksixRecord.Click += new System.EventHandler(this.tsbMarksixRecord_Click);
             // 
-            // tsbMarksixSpecifiedLocationAnalysis
+            // tsmiMarksixSpecifiedLocationAnalysis
             // 
-            this.tsbMarksixSpecifiedLocationAnalysis.Image = global::Winform.Properties.Resources.分析;
-            this.tsbMarksixSpecifiedLocationAnalysis.Name = "tsbMarksixSpecifiedLocationAnalysis";
-            this.tsbMarksixSpecifiedLocationAnalysis.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.tsbMarksixSpecifiedLocationAnalysis.Size = new System.Drawing.Size(268, 30);
-            this.tsbMarksixSpecifiedLocationAnalysis.Text = "分析指定位置";
-            this.tsbMarksixSpecifiedLocationAnalysis.Click += new System.EventHandler(this.tsbMarksixSpecifiedLocationAnalysis_Click);
+            this.tsmiMarksixSpecifiedLocationAnalysis.Image = global::Winform.Properties.Resources.分析;
+            this.tsmiMarksixSpecifiedLocationAnalysis.Name = "tsmiMarksixSpecifiedLocationAnalysis";
+            this.tsmiMarksixSpecifiedLocationAnalysis.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.tsmiMarksixSpecifiedLocationAnalysis.Size = new System.Drawing.Size(268, 30);
+            this.tsmiMarksixSpecifiedLocationAnalysis.Text = "分析指定位置";
+            this.tsmiMarksixSpecifiedLocationAnalysis.Click += new System.EventHandler(this.tsbMarksixSpecifiedLocationAnalysis_Click);
             // 
             // toolStripSeparator5
             // 
@@ -251,7 +243,7 @@
             this.toolBarToolStripMenuItem.CheckOnClick = true;
             this.toolBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolBarToolStripMenuItem.Name = "toolBarToolStripMenuItem";
-            this.toolBarToolStripMenuItem.Size = new System.Drawing.Size(169, 30);
+            this.toolBarToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.toolBarToolStripMenuItem.Text = "工具栏(&T)";
             this.toolBarToolStripMenuItem.Click += new System.EventHandler(this.ToolBarToolStripMenuItem_Click);
             // 
@@ -261,8 +253,9 @@
             this.statusBarToolStripMenuItem.CheckOnClick = true;
             this.statusBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.statusBarToolStripMenuItem.Name = "statusBarToolStripMenuItem";
-            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(169, 30);
+            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.statusBarToolStripMenuItem.Text = "状态栏(&S)";
+            this.statusBarToolStripMenuItem.Click += new System.EventHandler(this.statusBarToolStripMenuItem_Click);
             // 
             // toolsMenu
             // 
@@ -275,13 +268,12 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(156, 30);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.optionsToolStripMenuItem.Text = "选项(&O)";
             // 
             // windowsMenu
             // 
             this.windowsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newWindowToolStripMenuItem,
             this.cascadeToolStripMenuItem,
             this.tileVerticalToolStripMenuItem,
             this.tileHorizontalToolStripMenuItem,
@@ -291,45 +283,38 @@
             this.windowsMenu.Size = new System.Drawing.Size(88, 28);
             this.windowsMenu.Text = "窗口(&W)";
             // 
-            // newWindowToolStripMenuItem
-            // 
-            this.newWindowToolStripMenuItem.Name = "newWindowToolStripMenuItem";
-            this.newWindowToolStripMenuItem.Size = new System.Drawing.Size(192, 30);
-            this.newWindowToolStripMenuItem.Text = "新建窗口(&N)";
-            this.newWindowToolStripMenuItem.Click += new System.EventHandler(this.ShowNewForm);
-            // 
             // cascadeToolStripMenuItem
             // 
             this.cascadeToolStripMenuItem.Name = "cascadeToolStripMenuItem";
-            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(192, 30);
+            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.cascadeToolStripMenuItem.Text = "层叠(&C)";
             this.cascadeToolStripMenuItem.Click += new System.EventHandler(this.CascadeToolStripMenuItem_Click);
             // 
             // tileVerticalToolStripMenuItem
             // 
             this.tileVerticalToolStripMenuItem.Name = "tileVerticalToolStripMenuItem";
-            this.tileVerticalToolStripMenuItem.Size = new System.Drawing.Size(192, 30);
+            this.tileVerticalToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.tileVerticalToolStripMenuItem.Text = "垂直平铺(&V)";
             this.tileVerticalToolStripMenuItem.Click += new System.EventHandler(this.TileVerticalToolStripMenuItem_Click);
             // 
             // tileHorizontalToolStripMenuItem
             // 
             this.tileHorizontalToolStripMenuItem.Name = "tileHorizontalToolStripMenuItem";
-            this.tileHorizontalToolStripMenuItem.Size = new System.Drawing.Size(192, 30);
+            this.tileHorizontalToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.tileHorizontalToolStripMenuItem.Text = "水平平铺(&H)";
             this.tileHorizontalToolStripMenuItem.Click += new System.EventHandler(this.TileHorizontalToolStripMenuItem_Click);
             // 
             // closeAllToolStripMenuItem
             // 
             this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
-            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(192, 30);
+            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.closeAllToolStripMenuItem.Text = "全部关闭(&L)";
             this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.CloseAllToolStripMenuItem_Click);
             // 
             // arrangeIconsToolStripMenuItem
             // 
             this.arrangeIconsToolStripMenuItem.Name = "arrangeIconsToolStripMenuItem";
-            this.arrangeIconsToolStripMenuItem.Size = new System.Drawing.Size(192, 30);
+            this.arrangeIconsToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.arrangeIconsToolStripMenuItem.Text = "排列图标(&A)";
             this.arrangeIconsToolStripMenuItem.Click += new System.EventHandler(this.ArrangeIconsToolStripMenuItem_Click);
             // 
@@ -379,55 +364,56 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(228, 30);
             this.aboutToolStripMenuItem.Text = "关于(&A) ... ...";
             // 
-            // toolStrip
+            // tslMaster
             // 
-            this.toolStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.toolStripMenuItem4});
-            this.toolStrip.Location = new System.Drawing.Point(0, 34);
-            this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStrip.Size = new System.Drawing.Size(948, 28);
-            this.toolStrip.TabIndex = 1;
-            this.toolStrip.Text = "ToolStrip";
+            this.tslMaster.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.tslMaster.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbMarksix,
+            this.tsbExit});
+            this.tslMaster.Location = new System.Drawing.Point(0, 34);
+            this.tslMaster.Name = "tslMaster";
+            this.tslMaster.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.tslMaster.Size = new System.Drawing.Size(948, 28);
+            this.tslMaster.TabIndex = 1;
+            this.tslMaster.Text = "ToolStrip";
             // 
-            // toolStripMenuItem1
+            // tsbMarksix
             // 
-            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3});
-            this.toolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem1.Image")));
-            this.toolStripMenuItem1.ImageTransparentColor = System.Drawing.Color.Black;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(140, 28);
-            this.toolStripMenuItem1.Text = "Marksix(&N)";
+            this.tsbMarksix.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbMarksixRecord,
+            this.tsbMarksixSpecifiedLocationAnalysis});
+            this.tsbMarksix.Image = ((System.Drawing.Image)(resources.GetObject("tsbMarksix.Image")));
+            this.tsbMarksix.ImageTransparentColor = System.Drawing.Color.Black;
+            this.tsbMarksix.Name = "tsbMarksix";
+            this.tsbMarksix.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.tsbMarksix.Size = new System.Drawing.Size(140, 28);
+            this.tsbMarksix.Text = "Marksix(&N)";
             // 
-            // toolStripMenuItem2
+            // tsbMarksixRecord
             // 
-            this.toolStripMenuItem2.Image = global::Winform.Properties.Resources.记录;
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(268, 30);
-            this.toolStripMenuItem2.Text = "记录";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            this.tsbMarksixRecord.Image = global::Winform.Properties.Resources.记录;
+            this.tsbMarksixRecord.Name = "tsbMarksixRecord";
+            this.tsbMarksixRecord.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.tsbMarksixRecord.Size = new System.Drawing.Size(268, 30);
+            this.tsbMarksixRecord.Text = "记录";
+            this.tsbMarksixRecord.Click += new System.EventHandler(this.tsbMarksixRecord_Click);
             // 
-            // toolStripMenuItem3
+            // tsbMarksixSpecifiedLocationAnalysis
             // 
-            this.toolStripMenuItem3.Image = global::Winform.Properties.Resources.分析;
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(268, 30);
-            this.toolStripMenuItem3.Text = "分析指定位置";
+            this.tsbMarksixSpecifiedLocationAnalysis.Image = global::Winform.Properties.Resources.分析;
+            this.tsbMarksixSpecifiedLocationAnalysis.Name = "tsbMarksixSpecifiedLocationAnalysis";
+            this.tsbMarksixSpecifiedLocationAnalysis.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.tsbMarksixSpecifiedLocationAnalysis.Size = new System.Drawing.Size(268, 30);
+            this.tsbMarksixSpecifiedLocationAnalysis.Text = "分析指定位置";
+            this.tsbMarksixSpecifiedLocationAnalysis.Click += new System.EventHandler(this.tsbMarksixSpecifiedLocationAnalysis_Click);
             // 
-            // toolStripMenuItem4
+            // tsbExit
             // 
-            this.toolStripMenuItem4.Image = global::Winform.Properties.Resources.离开;
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(106, 28);
-            this.toolStripMenuItem4.Text = "退出(&X)";
-            this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
+            this.tsbExit.Image = global::Winform.Properties.Resources.离开;
+            this.tsbExit.Name = "tsbExit";
+            this.tsbExit.Size = new System.Drawing.Size(106, 28);
+            this.tsbExit.Text = "退出(&X)";
+            this.tsbExit.Click += new System.EventHandler(this.ExitToolsStripMenuItem_Click);
             // 
             // ssMaster
             // 
@@ -435,10 +421,10 @@
             this.ssMaster.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsslInfo,
             this.tspbCompletePrecent});
-            this.ssMaster.Location = new System.Drawing.Point(0, 598);
+            this.ssMaster.Location = new System.Drawing.Point(0, 597);
             this.ssMaster.Name = "ssMaster";
             this.ssMaster.Padding = new System.Windows.Forms.Padding(2, 0, 21, 0);
-            this.ssMaster.Size = new System.Drawing.Size(948, 29);
+            this.ssMaster.Size = new System.Drawing.Size(948, 30);
             this.ssMaster.TabIndex = 8;
             this.ssMaster.Text = "statusStrip1";
             // 
@@ -456,49 +442,6 @@
             this.tspbCompletePrecent.Step = 1;
             this.tspbCompletePrecent.Visible = false;
             // 
-            // tslMaster
-            // 
-            this.tslMaster.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.tslMaster.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbRecord,
-            this.tsbAnalysis,
-            this.tsbAnalysisResult,
-            this.tsbExit});
-            this.tslMaster.Location = new System.Drawing.Point(0, 62);
-            this.tslMaster.Name = "tslMaster";
-            this.tslMaster.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.tslMaster.Size = new System.Drawing.Size(948, 28);
-            this.tslMaster.TabIndex = 6;
-            this.tslMaster.Text = "toolStrip1";
-            // 
-            // tsbRecord
-            // 
-            this.tsbRecord.Name = "tsbRecord";
-            this.tsbRecord.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.tsbRecord.Size = new System.Drawing.Size(58, 28);
-            this.tsbRecord.Text = "记录";
-            // 
-            // tsbAnalysis
-            // 
-            this.tsbAnalysis.Name = "tsbAnalysis";
-            this.tsbAnalysis.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.tsbAnalysis.Size = new System.Drawing.Size(58, 28);
-            this.tsbAnalysis.Text = "分析";
-            // 
-            // tsbAnalysisResult
-            // 
-            this.tsbAnalysisResult.Name = "tsbAnalysisResult";
-            this.tsbAnalysisResult.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.tsbAnalysisResult.Size = new System.Drawing.Size(94, 28);
-            this.tsbAnalysisResult.Text = "分析结果";
-            // 
-            // tsbExit
-            // 
-            this.tsbExit.Name = "tsbExit";
-            this.tsbExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.tsbExit.Size = new System.Drawing.Size(58, 28);
-            this.tsbExit.Text = "退出";
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -506,7 +449,6 @@
             this.ClientSize = new System.Drawing.Size(948, 627);
             this.Controls.Add(this.ssMaster);
             this.Controls.Add(this.tslMaster);
-            this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.msMaster);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
@@ -517,12 +459,10 @@
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.msMaster.ResumeLayout(false);
             this.msMaster.PerformLayout();
-            this.toolStrip.ResumeLayout(false);
-            this.toolStrip.PerformLayout();
-            this.ssMaster.ResumeLayout(false);
-            this.ssMaster.PerformLayout();
             this.tslMaster.ResumeLayout(false);
             this.tslMaster.PerformLayout();
+            this.ssMaster.ResumeLayout(false);
+            this.ssMaster.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -531,7 +471,7 @@
 
 
         private System.Windows.Forms.MenuStrip msMaster;
-        private System.Windows.Forms.ToolStrip toolStrip;
+        private System.Windows.Forms.ToolStrip tslMaster;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
@@ -554,7 +494,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolsMenu;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem windowsMenu;
-        private System.Windows.Forms.ToolStripMenuItem newWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cascadeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tileVerticalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
@@ -564,20 +503,15 @@
         private System.Windows.Forms.ToolStripMenuItem indexToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem searchToolStripMenuItem;
         private System.Windows.Forms.ToolTip toolTip;
+        internal System.Windows.Forms.ToolStripMenuItem tsmiMarksixRecord;
+        internal System.Windows.Forms.ToolStripMenuItem tsmiMarksixSpecifiedLocationAnalysis;
+        private System.Windows.Forms.ToolStripMenuItem tsbMarksix;
         internal System.Windows.Forms.ToolStripMenuItem tsbMarksixRecord;
         internal System.Windows.Forms.ToolStripMenuItem tsbMarksixSpecifiedLocationAnalysis;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        internal System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        internal System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem tsbExit;
         private System.Windows.Forms.StatusStrip ssMaster;
         internal System.Windows.Forms.ToolStripStatusLabel tsslInfo;
         internal System.Windows.Forms.ToolStripProgressBar tspbCompletePrecent;
-        private System.Windows.Forms.ToolStrip tslMaster;
-        internal System.Windows.Forms.ToolStripMenuItem tsbRecord;
-        internal System.Windows.Forms.ToolStripMenuItem tsbAnalysis;
-        internal System.Windows.Forms.ToolStripMenuItem tsbAnalysisResult;
-        internal System.Windows.Forms.ToolStripMenuItem tsbExit;
     }
 }
 
