@@ -133,8 +133,9 @@
             // 
             // tsbStopImport
             // 
+            this.tsbStopImport.Image = global::Winform.Properties.Resources.停止small;
             this.tsbStopImport.Name = "tsbStopImport";
-            this.tsbStopImport.Size = new System.Drawing.Size(130, 28);
+            this.tsbStopImport.Size = new System.Drawing.Size(154, 28);
             this.tsbStopImport.Text = "停止导入记录";
             this.tsbStopImport.Visible = false;
             this.tsbStopImport.Click += new System.EventHandler(this.tsbStopImport_Click);

@@ -19,6 +19,17 @@ namespace TrendAnalysis.Service
     {
         public event EventHandler<EventArgs> ImportingEvent;
 
+        public event EventHandler<EventArgs> BeforeImportEvent;
+
+        /// <summary>
+        /// 记录条数
+        /// </summary>
+        public int RecordCount { get; set; }
+        /// <summary>
+        /// 是否停止导入
+        /// </summary>
+        public bool IsStopImporting { get; set; }
+
         public List<MarkSixRecord> Search(MarkSixRecordSearchDto dto)
         {
             using(var dao=new TrendDbContext())
@@ -73,17 +84,25 @@ namespace TrendAnalysis.Service
                 return null;
         }
 
-        protected void OnGetingRecord(EventArgs e)
+        protected void OnImportingEvent(EventArgs e)
         {
             if (ImportingEvent != null)
             {
                 ImportingEvent(this, e);
             }
         }
+
+        protected void OnBeforeImportEvent(EventArgs e)
+        {
+            if (BeforeImportEvent != null)
+            {
+                BeforeImportEvent(this, e);
+            }
+        }
         /// <summary>
         /// 导入
         /// </summary>
-        public void Import(string fileName)
+        public int Import(string fileName)
         {
             //数组列表
             List<MarkSixRecord> records = new List<MarkSixRecord>();
@@ -118,8 +137,6 @@ namespace TrendAnalysis.Service
                     //遍历所有行
                     for (int r = 2; r < endRow; r++)
                     {
-                        //处理正在导入事件
-                        OnGetingRecord(null);
 
                         try
                         {
@@ -155,26 +172,45 @@ namespace TrendAnalysis.Service
             }
             if (records.Count > 0)
             {
+                this.RecordCount = records.Count;
+                OnBeforeImportEvent(null);
                 using(var dao=new TrendDbContext())
                 {
-                    var timeses = records.Select(r => r.Times).ToList();
-                    var originalRecords = dao.Set<MarkSixRecord>().Where(m => timeses.Any(times => times == m.Times));
-                    dao.Set<MarkSixRecord>().RemoveRange(originalRecords);
-                    dao.Set<MarkSixRecord>().AddRange(records);
-                    //foreach (var record in records)
-                    //{
-                    //    var originalRecord = dao.Set<MarkSixRecord>().FirstOrDefault(m => m.Times == record.Times);
-                    //    if (originalRecord != null)
-                    //    {
-                    //        dao.Set<MarkSixRecord>().Remove(originalRecord);
-                    //    }
-                    //    dao.Set<MarkSixRecord>().Add(record);
-                    //}
+                    //var timeses = records.Select(r => r.Times).ToList();
+                    //var originalRecords = dao.Set<MarkSixRecord>().Where(m => timeses.Any(times => times == m.Times));
+                    //dao.Set<MarkSixRecord>().RemoveRange(originalRecords);
+                    //dao.Set<MarkSixRecord>().AddRange(records);
+                    foreach (var record in records)
+                    {
+                        //处理正在导入事件
+                        OnImportingEvent(null);
+
+                        if (IsStopImporting)
+                            return 0;
+                        var originalRecord = dao.Set<MarkSixRecord>().FirstOrDefault(m => m.Times == record.Times);
+                        if (originalRecord != null)
+                        {
+                            originalRecord.AwardingDate = record.AwardingDate;
+                            originalRecord.FirstNum = record.FirstNum;
+                            originalRecord.SecondNum = record.SecondNum;
+                            originalRecord.ThirdNum = record.ThirdNum;
+                            originalRecord.FourthNum = record.FourthNum;
+                            originalRecord.FifthNum = record.FifthNum;
+                            originalRecord.SixthNum = record.SixthNum;
+                            originalRecord.SeventhNum = record.SeventhNum;
+                            dao.Entry(originalRecord).State = System.Data.Entity.EntityState.Modified;
+                        }
+                        else
+                        {
+                            dao.Set<MarkSixRecord>().Add(record);
+                        }
+                    }
 
 
                     dao.SaveChanges();
                 }
             }
+            return records.Count();
         }
 
         /// <summary>

@@ -19,6 +19,12 @@ namespace Winform
         /// 导入的记录条数
         /// </summary>
         private int importCount = 0;
+
+
+        /// <summary>
+        /// 记录总条数
+        /// </summary>
+        private int recordCount = 0;
         /// <summary>
         /// 是否停止导入记录
         /// </summary>
@@ -242,10 +248,11 @@ namespace Winform
         {
             string fileName = e.Argument.ToString();
             var service = new MarkSixRecordService();
+            service.BeforeImportEvent += Service_BeforeImportEvent;
             service.ImportingEvent += Service_ImportingEvent;
             try
             {
-                service.Import(fileName);
+               importCount= service.Import(fileName);
             }
             catch (Exception ex)
             {
@@ -254,52 +261,41 @@ namespace Winform
             }
         }
 
-        private void Service_ImportingEvent(object sender, EventArgs e)
+        private void Service_BeforeImportEvent(object sender, EventArgs e)
         {
-            
+            var recordService = sender as MarkSixRecordService;
+            if (recordService != null)
+            {
+                if (bgwImport.CancellationPending == true)
+                {
+                    recordService.IsStopImporting = true;
+                    return;
+                }
+            }
+            //frmMdi.tspbCompletePrecent.Maximum = recordService.RecordCount;
+            this.recordCount = recordService.RecordCount;
         }
 
-        /// <summary>
-        /// 增加记录，此方法作为业务层添加列表内容的参数
-        /// </summary>
-        /// <returns>是否停止批量保存</returns>
-        private bool AddRecord()
+        private void Service_ImportingEvent(object sender, EventArgs e)
         {
-            if (bgwImport.CancellationPending == true)
+            var  recordService = sender as MarkSixRecordService;
+            if (recordService != null)
             {
-                return true;
-            }
-            else
-            {
-                int value = frmMdi.tspbCompletePrecent.Value + 1;
-                int max = frmMdi.tspbCompletePrecent.Maximum;
-                if (value > max)
+                if (bgwImport.CancellationPending == true)
                 {
-                    value = value - max;
+                    recordService.IsStopImporting = true;
+                    return;
                 }
-                bgwImport.ReportProgress(value);
-                return false;
             }
+            int value = frmMdi.tspbCompletePrecent.Value + 1;
+            int max = frmMdi.tspbCompletePrecent.Maximum;
+            if (value > max)
+            {
+                value = value - max;
+            }
+            bgwImport.ReportProgress(value);
         }
-        void helper_GetingRecord(object sender, EventArgs e)
-        {
-            //ExcelHelper helper = sender as ExcelHelper;
-            //if (helper != null)
-            //{
-            //    if (bgwImport.CancellationPending == true)
-            //    {
-            //        helper.IsStop = true;
-            //        return;
-            //    }
-            //}
-            //int value = frmMdi.tspbCompletePrecent.Value + 1;
-            //int max = frmMdi.tspbCompletePrecent.Maximum;
-            //if (value > max)
-            //{
-            //    value = value - max;
-            //}
-            //bgwImport.ReportProgress(value);
-        }
+
         #endregion
 
         private void tsbExport_Click(object sender, EventArgs e)
@@ -326,12 +322,15 @@ namespace Winform
 
         private void tsbExit_Click(object sender, EventArgs e)
         {
-
+            Application.DoEvents();
+            this.Close();
+            this.Dispose();
         }
 
         private void tsbStopImport_Click(object sender, EventArgs e)
         {
-
+            bgwImport.CancelAsync();
+            isStopImport = true;
         }
 
         private void frmMarksixRecord_Load(object sender, EventArgs e)
