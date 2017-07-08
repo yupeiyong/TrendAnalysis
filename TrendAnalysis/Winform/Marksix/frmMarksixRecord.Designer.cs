@@ -39,6 +39,15 @@
             this.tsbExport = new System.Windows.Forms.ToolStripMenuItem();
             this.tsbExit = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.msMaster = new System.Windows.Forms.MenuStrip();
+            this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmImport = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmStopImport = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmExport = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSearch = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnEndDateTime = new System.Windows.Forms.Button();
             this.btnStartDateTime = new System.Windows.Forms.Button();
@@ -75,22 +84,13 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.tlscombo = new System.Windows.Forms.ToolStripComboBox();
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
-            this.msMaster = new System.Windows.Forms.MenuStrip();
-            this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmSave = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmImport = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmStopImport = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmExport = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmSearch = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmExit = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvMarksixRecordList = new Winform.Common.myDataGridView();
             this.tslMaster.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.msMaster.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bdnMarksixRecord)).BeginInit();
             this.bdnMarksixRecord.SuspendLayout();
-            this.msMaster.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMarksixRecordList)).BeginInit();
             this.SuspendLayout();
             // 
@@ -170,6 +170,85 @@
             this.groupBox1.Size = new System.Drawing.Size(1382, 101);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
+            // 
+            // msMaster
+            // 
+            this.msMaster.BackColor = System.Drawing.Color.Transparent;
+            this.msMaster.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.msMaster.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.文件ToolStripMenuItem});
+            this.msMaster.Location = new System.Drawing.Point(4, 25);
+            this.msMaster.Name = "msMaster";
+            this.msMaster.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            this.msMaster.Size = new System.Drawing.Size(1374, 34);
+            this.msMaster.TabIndex = 9;
+            this.msMaster.Text = "menuStrip1";
+            this.msMaster.Visible = false;
+            // 
+            // 文件ToolStripMenuItem
+            // 
+            this.文件ToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
+            this.文件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmAdd,
+            this.tsmSave,
+            this.tsmImport,
+            this.tsmStopImport,
+            this.tsmExport,
+            this.tsmSearch,
+            this.tsmExit});
+            this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
+            this.文件ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(58, 28);
+            this.文件ToolStripMenuItem.Text = "操作";
+            // 
+            // tsmAdd
+            // 
+            this.tsmAdd.Name = "tsmAdd";
+            this.tsmAdd.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.tsmAdd.Size = new System.Drawing.Size(225, 30);
+            this.tsmAdd.Text = "新增(&N)";
+            // 
+            // tsmSave
+            // 
+            this.tsmSave.Name = "tsmSave";
+            this.tsmSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.tsmSave.Size = new System.Drawing.Size(225, 30);
+            this.tsmSave.Text = "保存(&S)";
+            // 
+            // tsmImport
+            // 
+            this.tsmImport.Name = "tsmImport";
+            this.tsmImport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.tsmImport.Size = new System.Drawing.Size(225, 30);
+            this.tsmImport.Text = "导入(&I)";
+            // 
+            // tsmStopImport
+            // 
+            this.tsmStopImport.Name = "tsmStopImport";
+            this.tsmStopImport.Size = new System.Drawing.Size(225, 30);
+            this.tsmStopImport.Text = "停止导入记录";
+            this.tsmStopImport.Visible = false;
+            // 
+            // tsmExport
+            // 
+            this.tsmExport.Name = "tsmExport";
+            this.tsmExport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.tsmExport.Size = new System.Drawing.Size(225, 30);
+            this.tsmExport.Text = "导出(&E)";
+            // 
+            // tsmSearch
+            // 
+            this.tsmSearch.Name = "tsmSearch";
+            this.tsmSearch.ShortcutKeys = System.Windows.Forms.Keys.F7;
+            this.tsmSearch.Size = new System.Drawing.Size(225, 30);
+            this.tsmSearch.Text = "查询(&C)";
+            // 
+            // tsmExit
+            // 
+            this.tsmExit.Name = "tsmExit";
+            this.tsmExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.tsmExit.Size = new System.Drawing.Size(225, 30);
+            this.tsmExit.Text = "退出(&T)";
             // 
             // tableLayoutPanel1
             // 
@@ -591,85 +670,6 @@
             this.monthCalendar.Visible = false;
             this.monthCalendar.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_DateSelected);
             // 
-            // msMaster
-            // 
-            this.msMaster.BackColor = System.Drawing.Color.Transparent;
-            this.msMaster.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.msMaster.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.文件ToolStripMenuItem});
-            this.msMaster.Location = new System.Drawing.Point(4, 25);
-            this.msMaster.Name = "msMaster";
-            this.msMaster.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
-            this.msMaster.Size = new System.Drawing.Size(1374, 34);
-            this.msMaster.TabIndex = 9;
-            this.msMaster.Text = "menuStrip1";
-            this.msMaster.Visible = false;
-            // 
-            // 文件ToolStripMenuItem
-            // 
-            this.文件ToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
-            this.文件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmAdd,
-            this.tsmSave,
-            this.tsmImport,
-            this.tsmStopImport,
-            this.tsmExport,
-            this.tsmSearch,
-            this.tsmExit});
-            this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
-            this.文件ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(58, 28);
-            this.文件ToolStripMenuItem.Text = "操作";
-            // 
-            // tsmAdd
-            // 
-            this.tsmAdd.Name = "tsmAdd";
-            this.tsmAdd.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.tsmAdd.Size = new System.Drawing.Size(225, 30);
-            this.tsmAdd.Text = "新增(&N)";
-            // 
-            // tsmSave
-            // 
-            this.tsmSave.Name = "tsmSave";
-            this.tsmSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.tsmSave.Size = new System.Drawing.Size(225, 30);
-            this.tsmSave.Text = "保存(&S)";
-            // 
-            // tsmImport
-            // 
-            this.tsmImport.Name = "tsmImport";
-            this.tsmImport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.tsmImport.Size = new System.Drawing.Size(225, 30);
-            this.tsmImport.Text = "导入(&I)";
-            // 
-            // tsmStopImport
-            // 
-            this.tsmStopImport.Name = "tsmStopImport";
-            this.tsmStopImport.Size = new System.Drawing.Size(225, 30);
-            this.tsmStopImport.Text = "停止导入记录";
-            this.tsmStopImport.Visible = false;
-            // 
-            // tsmExport
-            // 
-            this.tsmExport.Name = "tsmExport";
-            this.tsmExport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.tsmExport.Size = new System.Drawing.Size(225, 30);
-            this.tsmExport.Text = "导出(&E)";
-            // 
-            // tsmSearch
-            // 
-            this.tsmSearch.Name = "tsmSearch";
-            this.tsmSearch.ShortcutKeys = System.Windows.Forms.Keys.F7;
-            this.tsmSearch.Size = new System.Drawing.Size(225, 30);
-            this.tsmSearch.Text = "查询(&C)";
-            // 
-            // tsmExit
-            // 
-            this.tsmExit.Name = "tsmExit";
-            this.tsmExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.tsmExit.Size = new System.Drawing.Size(225, 30);
-            this.tsmExit.Text = "退出(&T)";
-            // 
             // dgvMarksixRecordList
             // 
             this.dgvMarksixRecordList.AllowUserToAddRows = false;
@@ -719,13 +719,13 @@
             this.tslMaster.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.msMaster.ResumeLayout(false);
+            this.msMaster.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bdnMarksixRecord)).EndInit();
             this.bdnMarksixRecord.ResumeLayout(false);
             this.bdnMarksixRecord.PerformLayout();
-            this.msMaster.ResumeLayout(false);
-            this.msMaster.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMarksixRecordList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

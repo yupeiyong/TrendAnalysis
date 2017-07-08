@@ -109,7 +109,7 @@ namespace Winform
 
         private void tsbMarksixSpecifiedLocationAnalysis_Click(object sender, EventArgs e)
         {
-
+            FormHelper.OpenForm<frmMarkSixSpecifiedLocationAnalysis>(this);
         }
 
         private void statusBarToolStripMenuItem_Click(object sender, EventArgs e)
