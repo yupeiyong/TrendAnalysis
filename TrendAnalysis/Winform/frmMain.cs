@@ -13,7 +13,6 @@ namespace Winform
 {
     public partial class frmMain : Form
     {
-        private int childFormNumber = 0;
 
         public frmMain()
         {

@@ -58,7 +58,7 @@ namespace Winform
             Search();
         }
 
-        private void Search()
+        private DataTable Search()
         {
             //每页数量
             var pageSize = 0;
@@ -93,47 +93,78 @@ namespace Winform
 
             searchDto.Times = tbTimes.Text;
             var service = new MarkSixRecordService();
-            var rows = service.Search(searchDto);
-            var table = rows.ConvertDataTable(properties =>
+            try
             {
-                var rowVersionProperty = properties.FirstOrDefault(p => p.Name == nameof(MarkSixRecord.RowVersion));
-                if (rowVersionProperty != null)
+                var rows = service.Search(searchDto);
+                if (rows.Count == 0)
                 {
-                    properties.Remove(rowVersionProperty);
+                    MessageBox.Show(
+                        "没有找到符合条件的数据！",
+                        "失败",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                        );
+                    frmMdi.tsslInfo.Text = "查询内容为空！";
+                    frmMdi.tsslInfo.BackColor = Color.Yellow;
+                    return null;
                 }
-                var idProperty = properties.FirstOrDefault(p => p.Name == nameof(MarkSixRecord.Id));
-                if (idProperty != null)
+                frmMdi.tsslInfo.Text = "查询完成！";
+                frmMdi.tsslInfo.BackColor = frmMdi.BackColor;
+                var table = rows.ConvertDataTable(properties =>
                 {
-                    properties.Remove(idProperty);
+                    var rowVersionProperty = properties.FirstOrDefault(p => p.Name == nameof(MarkSixRecord.RowVersion));
+                    if (rowVersionProperty != null)
+                    {
+                        properties.Remove(rowVersionProperty);
+                    }
+                    var idProperty = properties.FirstOrDefault(p => p.Name == nameof(MarkSixRecord.Id));
+                    if (idProperty != null)
+                    {
+                        properties.Remove(idProperty);
+                    }
+                    properties.Insert(0, idProperty);
+                });
+                dgvMarksixRecordList.DataSource = table;
+
+                var pageCount = searchDto.PageCount;
+                bdnCountItem.Text = pageCount.ToString();
+
+                if (pageIndex <= 1)
+                {
+                    bdnMoveFirstItem.Enabled = false;
+                    bdnMovePreviousItem.Enabled = false;
                 }
-                properties.Insert(0, idProperty);
-            });
-            dgvMarksixRecordList.DataSource = table;
+                else
+                {
+                    bdnMoveFirstItem.Enabled = true;
+                    bdnMovePreviousItem.Enabled = true;
+                }
 
-            var pageCount = searchDto.PageCount;
-            bdnCountItem.Text = pageCount.ToString();
-
-            if (pageIndex <= 1)
-            {
-                bdnMoveFirstItem.Enabled = false;
-                bdnMovePreviousItem.Enabled = false;
+                if (pageIndex == pageCount)
+                {
+                    bdnMoveNextItem.Enabled = false;
+                    bdnMoveLastItem.Enabled = false;
+                }
+                else
+                {
+                    bdnMoveNextItem.Enabled = true;
+                    bdnMoveLastItem.Enabled = true;
+                }
+                return table;
             }
-            else
+            catch(Exception ex)
             {
-                bdnMoveFirstItem.Enabled = true;
-                bdnMovePreviousItem.Enabled = true;
+                MessageBox.Show(
+                    "查询发生错误，" + ex.Message,
+                    "错误",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                    );
+                frmMdi.tsslInfo.Text = "查询失败！";
+                frmMdi.tsslInfo.BackColor = Color.Yellow;
+                return null;
             }
-
-            if (pageIndex == pageCount)
-            {
-                bdnMoveNextItem.Enabled = false;
-                bdnMoveLastItem.Enabled = false;
-            }
-            else
-            {
-                bdnMoveNextItem.Enabled = true;
-                bdnMoveLastItem.Enabled = true;
-            }
+                   
         }
         private void tsbImport_Click(object sender, EventArgs e)
         {
@@ -308,24 +339,27 @@ namespace Winform
 
         private void tsbExport_Click(object sender, EventArgs e)
         {
-            var service = new MarkSixRecordService();
-            var rows = service.Search(new MarkSixRecordSearchDto { StartIndex = 0, PageSize = 20 });
-            var table = rows.ConvertDataTable(properties =>
+            using(var saveFileDialog = new SaveFileDialog())
             {
-                var rowVersionProperty = properties.FirstOrDefault(p => p.Name == nameof(MarkSixRecord.RowVersion));
-                if (rowVersionProperty != null)
+                saveFileDialog.Filter = "Execl 2007files(*.xlsx)|*.xlsx";
+                saveFileDialog.FilterIndex = 0;
+                saveFileDialog.RestoreDirectory = true; //保存对话框是否记忆上次打开的目录 
+                                                        //saveFileDialog.CreatePrompt = true;
+                saveFileDialog.Title = "导出Excel文件到";
+                saveFileDialog.FileName = "MarksixRecord.xlsx";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    properties.Remove(rowVersionProperty);
+                    var fileName = saveFileDialog.FileName;
+                    var table = Search();
+                    if (table != null)
+                    {
+                        var service = new MarkSixRecordService();
+                        service.Export(table,fileName);
+                        frmMdi.tsslInfo.Text = "导出成功！";
+                        frmMdi.tsslInfo.BackColor = Color.Yellow;
+                    }
                 }
-                var idProperty = properties.FirstOrDefault(p => p.Name == nameof(MarkSixRecord.Id));
-                if (idProperty != null)
-                {
-                    properties.Remove(idProperty);
-                }
-                properties.Insert(0, idProperty);
-            });
-            service.Export(table);
-
+            }
         }
 
         private void tsbExit_Click(object sender, EventArgs e)

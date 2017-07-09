@@ -1,11 +1,10 @@
-﻿using OfficeOpenXml;
+﻿using OfficeLibrary;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TrendAnalysis.Data;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Models;
@@ -72,24 +71,12 @@ namespace TrendAnalysis.Service
         /// 导出
         /// </summary>
         /// <returns></returns>
-        public List<MarkSixRecord> Export(DataTable table)
+        public void Export(DataTable table,string fileName)
         {
-            FileInfo newFile = new FileInfo(@"d:\test.xlsx");
-            if (newFile.Exists)
-            {
-                newFile.Delete();
-                newFile = new FileInfo(@"d:\test.xlsx");
-            }
-            using (var package = new ExcelPackage(newFile))
-            {
-                var workbook=package.Workbook;
-                var sht = workbook.Worksheets.Add("MarksixRecord");
-                sht.Cells[1, 1].LoadFromDataTable(table, true);
-                package.Save();
-            }
-                return null;
+            table.TableName = "MarksixRecord";
+            var toExcel = new DataTableToExcel();
+            toExcel.Export(table, fileName,"MarksixRecord");
         }
-
         protected void OnImportingEvent(EventArgs e)
         {
             if (ImportingEvent != null)
