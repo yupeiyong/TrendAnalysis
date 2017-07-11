@@ -38,8 +38,8 @@
             this.tbBeforeTimesCount = new System.Windows.Forms.TextBox();
             this.btnAnalysisBefore = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnPurchase = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.dgvBeforeAnalysis = new Winform.Common.myDataGridView();
             this.groupBox1.SuspendLayout();
@@ -97,6 +97,7 @@
             this.btnAnalysis.TabIndex = 2;
             this.btnAnalysis.Text = "分析";
             this.btnAnalysis.UseVisualStyleBackColor = true;
+            this.btnAnalysis.Click += new System.EventHandler(this.btnAnalysis_Click);
             // 
             // tbResult
             // 
@@ -121,6 +122,7 @@
             this.tbBeforeTimesCount.Name = "tbBeforeTimesCount";
             this.tbBeforeTimesCount.Size = new System.Drawing.Size(100, 28);
             this.tbBeforeTimesCount.TabIndex = 5;
+            this.tbBeforeTimesCount.Text = "50";
             // 
             // btnAnalysisBefore
             // 
@@ -130,6 +132,7 @@
             this.btnAnalysisBefore.TabIndex = 6;
             this.btnAnalysisBefore.Text = "分析";
             this.btnAnalysisBefore.UseVisualStyleBackColor = true;
+            this.btnAnalysisBefore.Click += new System.EventHandler(this.btnAnalysisBefore_Click);
             // 
             // groupBox1
             // 
@@ -150,6 +153,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "分析指定位置号码";
             // 
+            // btnPurchase
+            // 
+            this.btnPurchase.Location = new System.Drawing.Point(20, 458);
+            this.btnPurchase.Name = "btnPurchase";
+            this.btnPurchase.Size = new System.Drawing.Size(80, 38);
+            this.btnPurchase.TabIndex = 2;
+            this.btnPurchase.Text = "购买";
+            this.btnPurchase.UseVisualStyleBackColor = true;
+            this.btnPurchase.Click += new System.EventHandler(this.btnPurchase_Click);
+            // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -169,15 +182,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "指定位置号码以前期次分析";
             // 
-            // btnPurchase
-            // 
-            this.btnPurchase.Location = new System.Drawing.Point(20, 458);
-            this.btnPurchase.Name = "btnPurchase";
-            this.btnPurchase.Size = new System.Drawing.Size(80, 38);
-            this.btnPurchase.TabIndex = 2;
-            this.btnPurchase.Text = "购买";
-            this.btnPurchase.UseVisualStyleBackColor = true;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -193,7 +197,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvBeforeAnalysis.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBeforeAnalysis.Location = new System.Drawing.Point(21, 84);
+            this.dgvBeforeAnalysis.Location = new System.Drawing.Point(9, 89);
             this.dgvBeforeAnalysis.Name = "dgvBeforeAnalysis";
             this.dgvBeforeAnalysis.RowTemplate.Height = 30;
             this.dgvBeforeAnalysis.Size = new System.Drawing.Size(730, 547);

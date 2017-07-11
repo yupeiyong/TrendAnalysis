@@ -16,5 +16,20 @@ namespace Winform
         {
             InitializeComponent();
         }
+
+        private void btnAnalysis_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnPurchase_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAnalysisBefore_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
