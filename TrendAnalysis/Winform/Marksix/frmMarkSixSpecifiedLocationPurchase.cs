@@ -36,7 +36,7 @@ namespace Winform.Marksix
                 var rowHeight = 30;
 
                 //列宽
-                var columnWidth = 100;
+                var columnWidth = 110;
 
                 //每行显示5个
                 var columnCountEveryRow = 5;
@@ -75,7 +75,6 @@ namespace Winform.Marksix
                     }
                 }
             }
-            this.DialogResult = DialogResult.OK;
         }
 
         //public event EventHandler<EventArgs> ShowDialogEvent;
