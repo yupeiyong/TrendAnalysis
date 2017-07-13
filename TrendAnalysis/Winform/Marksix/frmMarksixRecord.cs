@@ -11,7 +11,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using Winform.Common;
 
-namespace Winform
+namespace Winform.Marksix
 {
     public partial class frmMarksixRecord : Form
     {

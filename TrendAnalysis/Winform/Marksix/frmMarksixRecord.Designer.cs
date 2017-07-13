@@ -1,4 +1,4 @@
-﻿namespace Winform
+﻿namespace Winform.Marksix
 {
     partial class frmMarksixRecord
     {

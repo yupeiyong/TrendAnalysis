@@ -1,4 +1,4 @@
-﻿namespace Winform
+﻿namespace Winform.Marksix
 {
     partial class frmMarkSixSpecifiedLocationAnalysis
     {
@@ -213,6 +213,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "frmMarkSixSpecifiedLocationAnalysis";
             this.Text = "MarkSix指定位置号码分析";
+            this.Load += new System.EventHandler(this.frmMarkSixSpecifiedLocationAnalysis_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
