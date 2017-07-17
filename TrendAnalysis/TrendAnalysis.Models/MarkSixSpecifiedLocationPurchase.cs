@@ -9,10 +9,14 @@ namespace TrendAnalysis.Models
     /// <summary>
     /// MarkSix指定位置购买
     /// </summary>
-    public class MarkSixSpecifiedLocationPurchase:BaseEntity
+    public class MarkSixSpecifiedLocationPurchase : BaseEntity
     {
         public string Times { get; set; }
 
+        /// <summary>
+        /// 赔率
+        /// </summary>
+        public int Odds { get; set; }
         /// <summary>
         /// 指定的位置
         /// </summary>

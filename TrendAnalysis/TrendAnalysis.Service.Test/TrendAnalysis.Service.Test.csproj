@@ -63,6 +63,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTestfrmMarkPurchaseService.cs" />
     <Compile Include="UnitTestMarkSixReportService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +74,10 @@
     <ProjectReference Include="..\TrendAnalysis.DataTransferObject\TrendAnalysis.DataTransferObject.csproj">
       <Project>{c123654f-4c3c-469e-9d5f-b769137d0efc}</Project>
       <Name>TrendAnalysis.DataTransferObject</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TrendAnalysis.Data\TrendAnalysis.Data.csproj">
+      <Project>{267bb916-a300-47da-b054-22e89f463f4b}</Project>
+      <Name>TrendAnalysis.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\TrendAnalysis.Models\TrendAnalysis.Models.csproj">
       <Project>{409059f6-03a5-4fad-a5c6-3ae7076e078d}</Project>
