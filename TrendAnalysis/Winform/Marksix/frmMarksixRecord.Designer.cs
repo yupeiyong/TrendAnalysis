@@ -33,11 +33,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tslMaster = new System.Windows.Forms.ToolStrip();
-            this.tsbSearch = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsbImport = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsbStopImport = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsbExport = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsbExit = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.msMaster = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,8 +44,6 @@
             this.tsmSearch = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnEndDateTime = new System.Windows.Forms.Button();
-            this.btnStartDateTime = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -73,17 +66,24 @@
             this.tbThirdNum = new System.Windows.Forms.TextBox();
             this.bdnMarksixRecord = new System.Windows.Forms.BindingNavigator(this.components);
             this.bdnCountItem = new System.Windows.Forms.ToolStripLabel();
-            this.bdnMoveFirstItem = new System.Windows.Forms.ToolStripButton();
-            this.bdnMovePreviousItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.bdnPositionItem = new System.Windows.Forms.ToolStripTextBox();
             this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.bdnMoveNextItem = new System.Windows.Forms.ToolStripButton();
-            this.bdnMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.tlscombo = new System.Windows.Forms.ToolStripComboBox();
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
+            this.bdnMoveFirstItem = new System.Windows.Forms.ToolStripButton();
+            this.bdnMovePreviousItem = new System.Windows.Forms.ToolStripButton();
+            this.bdnMoveNextItem = new System.Windows.Forms.ToolStripButton();
+            this.bdnMoveLastItem = new System.Windows.Forms.ToolStripButton();
+            this.btnEndDateTime = new System.Windows.Forms.Button();
+            this.btnStartDateTime = new System.Windows.Forms.Button();
+            this.tsbSearch = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsbImport = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsbStopImport = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsbExport = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsbExit = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvMarksixRecordList = new Winform.Common.myDataGridView();
             this.tslMaster.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -108,55 +108,9 @@
             this.tslMaster.Location = new System.Drawing.Point(9, 105);
             this.tslMaster.Name = "tslMaster";
             this.tslMaster.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.tslMaster.Size = new System.Drawing.Size(341, 28);
+            this.tslMaster.Size = new System.Drawing.Size(495, 28);
             this.tslMaster.TabIndex = 2;
             this.tslMaster.Text = "toolStrip1";
-            // 
-            // tsbSearch
-            // 
-            this.tsbSearch.Image = global::Winform.Properties.Resources.search;
-            this.tsbSearch.Name = "tsbSearch";
-            this.tsbSearch.ShortcutKeys = System.Windows.Forms.Keys.F7;
-            this.tsbSearch.Size = new System.Drawing.Size(82, 28);
-            this.tsbSearch.Text = "查询";
-            this.tsbSearch.ToolTipText = "按F7可以执行查询\r\n数字支持>、<、=、>=、<=、<>";
-            this.tsbSearch.Click += new System.EventHandler(this.tsbSearch_Click);
-            // 
-            // tsbImport
-            // 
-            this.tsbImport.Image = global::Winform.Properties.Resources.导入;
-            this.tsbImport.Name = "tsbImport";
-            this.tsbImport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.tsbImport.Size = new System.Drawing.Size(82, 28);
-            this.tsbImport.Text = "导入";
-            this.tsbImport.Click += new System.EventHandler(this.tsbImport_Click);
-            // 
-            // tsbStopImport
-            // 
-            this.tsbStopImport.Image = global::Winform.Properties.Resources.停止small;
-            this.tsbStopImport.Name = "tsbStopImport";
-            this.tsbStopImport.Size = new System.Drawing.Size(154, 28);
-            this.tsbStopImport.Text = "停止导入记录";
-            this.tsbStopImport.Visible = false;
-            this.tsbStopImport.Click += new System.EventHandler(this.tsbStopImport_Click);
-            // 
-            // tsbExport
-            // 
-            this.tsbExport.Image = global::Winform.Properties.Resources.excel;
-            this.tsbExport.Name = "tsbExport";
-            this.tsbExport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.tsbExport.Size = new System.Drawing.Size(82, 28);
-            this.tsbExport.Text = "导出";
-            this.tsbExport.Click += new System.EventHandler(this.tsbExport_Click);
-            // 
-            // tsbExit
-            // 
-            this.tsbExit.Image = global::Winform.Properties.Resources.离开;
-            this.tsbExit.Name = "tsbExit";
-            this.tsbExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.tsbExit.Size = new System.Drawing.Size(82, 28);
-            this.tsbExit.Text = "退出";
-            this.tsbExit.Click += new System.EventHandler(this.tsbExit_Click);
             // 
             // groupBox1
             // 
@@ -299,32 +253,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1169, 71);
             this.tableLayoutPanel1.TabIndex = 3;
-            // 
-            // btnEndDateTime
-            // 
-            this.btnEndDateTime.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnEndDateTime.Image = ((System.Drawing.Image)(resources.GetObject("btnEndDateTime.Image")));
-            this.btnEndDateTime.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnEndDateTime.Location = new System.Drawing.Point(587, 2);
-            this.btnEndDateTime.Margin = new System.Windows.Forms.Padding(2);
-            this.btnEndDateTime.Name = "btnEndDateTime";
-            this.btnEndDateTime.Size = new System.Drawing.Size(41, 31);
-            this.btnEndDateTime.TabIndex = 16;
-            this.btnEndDateTime.UseVisualStyleBackColor = true;
-            this.btnEndDateTime.Click += new System.EventHandler(this.btnEndDateTime_Click);
-            // 
-            // btnStartDateTime
-            // 
-            this.btnStartDateTime.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnStartDateTime.Image = ((System.Drawing.Image)(resources.GetObject("btnStartDateTime.Image")));
-            this.btnStartDateTime.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnStartDateTime.Location = new System.Drawing.Point(257, 2);
-            this.btnStartDateTime.Margin = new System.Windows.Forms.Padding(2);
-            this.btnStartDateTime.Name = "btnStartDateTime";
-            this.btnStartDateTime.Size = new System.Drawing.Size(41, 31);
-            this.btnStartDateTime.TabIndex = 15;
-            this.btnStartDateTime.UseVisualStyleBackColor = true;
-            this.btnStartDateTime.Click += new System.EventHandler(this.btnStartDateTime_Click);
             // 
             // label1
             // 
@@ -577,26 +505,6 @@
             this.bdnCountItem.Text = "/ 1";
             this.bdnCountItem.ToolTipText = "总项数";
             // 
-            // bdnMoveFirstItem
-            // 
-            this.bdnMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bdnMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bdnMoveFirstItem.Image")));
-            this.bdnMoveFirstItem.Name = "bdnMoveFirstItem";
-            this.bdnMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.bdnMoveFirstItem.Size = new System.Drawing.Size(28, 29);
-            this.bdnMoveFirstItem.Text = "移到第一条记录";
-            this.bdnMoveFirstItem.Click += new System.EventHandler(this.bdnMoveFirstItem_Click);
-            // 
-            // bdnMovePreviousItem
-            // 
-            this.bdnMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bdnMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bdnMovePreviousItem.Image")));
-            this.bdnMovePreviousItem.Name = "bdnMovePreviousItem";
-            this.bdnMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.bdnMovePreviousItem.Size = new System.Drawing.Size(28, 29);
-            this.bdnMovePreviousItem.Text = "移到上一条记录";
-            this.bdnMovePreviousItem.Click += new System.EventHandler(this.bdnMovePreviousItem_Click);
-            // 
             // bindingNavigatorSeparator
             // 
             this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
@@ -617,26 +525,6 @@
             // 
             this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
             this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 32);
-            // 
-            // bdnMoveNextItem
-            // 
-            this.bdnMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bdnMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bdnMoveNextItem.Image")));
-            this.bdnMoveNextItem.Name = "bdnMoveNextItem";
-            this.bdnMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.bdnMoveNextItem.Size = new System.Drawing.Size(28, 29);
-            this.bdnMoveNextItem.Text = "移到下一条记录";
-            this.bdnMoveNextItem.Click += new System.EventHandler(this.bdnMoveNextItem_Click);
-            // 
-            // bdnMoveLastItem
-            // 
-            this.bdnMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bdnMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bdnMoveLastItem.Image")));
-            this.bdnMoveLastItem.Name = "bdnMoveLastItem";
-            this.bdnMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.bdnMoveLastItem.Size = new System.Drawing.Size(28, 29);
-            this.bdnMoveLastItem.Text = "移到最后一条记录";
-            this.bdnMoveLastItem.Click += new System.EventHandler(this.bdnMoveLastItem_Click);
             // 
             // bindingNavigatorSeparator2
             // 
@@ -669,6 +557,118 @@
             this.monthCalendar.TabIndex = 8;
             this.monthCalendar.Visible = false;
             this.monthCalendar.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_DateSelected);
+            // 
+            // bdnMoveFirstItem
+            // 
+            this.bdnMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bdnMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bdnMoveFirstItem.Image")));
+            this.bdnMoveFirstItem.Name = "bdnMoveFirstItem";
+            this.bdnMoveFirstItem.RightToLeftAutoMirrorImage = true;
+            this.bdnMoveFirstItem.Size = new System.Drawing.Size(28, 29);
+            this.bdnMoveFirstItem.Text = "移到第一条记录";
+            this.bdnMoveFirstItem.Click += new System.EventHandler(this.bdnMoveFirstItem_Click);
+            // 
+            // bdnMovePreviousItem
+            // 
+            this.bdnMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bdnMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bdnMovePreviousItem.Image")));
+            this.bdnMovePreviousItem.Name = "bdnMovePreviousItem";
+            this.bdnMovePreviousItem.RightToLeftAutoMirrorImage = true;
+            this.bdnMovePreviousItem.Size = new System.Drawing.Size(28, 29);
+            this.bdnMovePreviousItem.Text = "移到上一条记录";
+            this.bdnMovePreviousItem.Click += new System.EventHandler(this.bdnMovePreviousItem_Click);
+            // 
+            // bdnMoveNextItem
+            // 
+            this.bdnMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bdnMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bdnMoveNextItem.Image")));
+            this.bdnMoveNextItem.Name = "bdnMoveNextItem";
+            this.bdnMoveNextItem.RightToLeftAutoMirrorImage = true;
+            this.bdnMoveNextItem.Size = new System.Drawing.Size(28, 29);
+            this.bdnMoveNextItem.Text = "移到下一条记录";
+            this.bdnMoveNextItem.Click += new System.EventHandler(this.bdnMoveNextItem_Click);
+            // 
+            // bdnMoveLastItem
+            // 
+            this.bdnMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bdnMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bdnMoveLastItem.Image")));
+            this.bdnMoveLastItem.Name = "bdnMoveLastItem";
+            this.bdnMoveLastItem.RightToLeftAutoMirrorImage = true;
+            this.bdnMoveLastItem.Size = new System.Drawing.Size(28, 29);
+            this.bdnMoveLastItem.Text = "移到最后一条记录";
+            this.bdnMoveLastItem.Click += new System.EventHandler(this.bdnMoveLastItem_Click);
+            // 
+            // btnEndDateTime
+            // 
+            this.btnEndDateTime.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnEndDateTime.Image = ((System.Drawing.Image)(resources.GetObject("btnEndDateTime.Image")));
+            this.btnEndDateTime.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnEndDateTime.Location = new System.Drawing.Point(587, 2);
+            this.btnEndDateTime.Margin = new System.Windows.Forms.Padding(2);
+            this.btnEndDateTime.Name = "btnEndDateTime";
+            this.btnEndDateTime.Size = new System.Drawing.Size(41, 31);
+            this.btnEndDateTime.TabIndex = 16;
+            this.btnEndDateTime.UseVisualStyleBackColor = true;
+            this.btnEndDateTime.Click += new System.EventHandler(this.btnEndDateTime_Click);
+            // 
+            // btnStartDateTime
+            // 
+            this.btnStartDateTime.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnStartDateTime.Image = ((System.Drawing.Image)(resources.GetObject("btnStartDateTime.Image")));
+            this.btnStartDateTime.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnStartDateTime.Location = new System.Drawing.Point(257, 2);
+            this.btnStartDateTime.Margin = new System.Windows.Forms.Padding(2);
+            this.btnStartDateTime.Name = "btnStartDateTime";
+            this.btnStartDateTime.Size = new System.Drawing.Size(41, 31);
+            this.btnStartDateTime.TabIndex = 15;
+            this.btnStartDateTime.UseVisualStyleBackColor = true;
+            this.btnStartDateTime.Click += new System.EventHandler(this.btnStartDateTime_Click);
+            // 
+            // tsbSearch
+            // 
+            this.tsbSearch.Image = global::Winform.Properties.Resources.search;
+            this.tsbSearch.Name = "tsbSearch";
+            this.tsbSearch.ShortcutKeys = System.Windows.Forms.Keys.F7;
+            this.tsbSearch.Size = new System.Drawing.Size(82, 28);
+            this.tsbSearch.Text = "查询";
+            this.tsbSearch.ToolTipText = "按F7可以执行查询\r\n数字支持>、<、=、>=、<=、<>";
+            this.tsbSearch.Click += new System.EventHandler(this.tsbSearch_Click);
+            // 
+            // tsbImport
+            // 
+            this.tsbImport.Image = global::Winform.Properties.Resources.导入;
+            this.tsbImport.Name = "tsbImport";
+            this.tsbImport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.tsbImport.Size = new System.Drawing.Size(82, 28);
+            this.tsbImport.Text = "导入";
+            this.tsbImport.Click += new System.EventHandler(this.tsbImport_Click);
+            // 
+            // tsbStopImport
+            // 
+            this.tsbStopImport.Image = global::Winform.Properties.Resources.停止small;
+            this.tsbStopImport.Name = "tsbStopImport";
+            this.tsbStopImport.Size = new System.Drawing.Size(154, 28);
+            this.tsbStopImport.Text = "停止导入记录";
+            this.tsbStopImport.Visible = false;
+            this.tsbStopImport.Click += new System.EventHandler(this.tsbStopImport_Click);
+            // 
+            // tsbExport
+            // 
+            this.tsbExport.Image = global::Winform.Properties.Resources.excel;
+            this.tsbExport.Name = "tsbExport";
+            this.tsbExport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.tsbExport.Size = new System.Drawing.Size(82, 28);
+            this.tsbExport.Text = "导出";
+            this.tsbExport.Click += new System.EventHandler(this.tsbExport_Click);
+            // 
+            // tsbExit
+            // 
+            this.tsbExit.Image = global::Winform.Properties.Resources.离开;
+            this.tsbExit.Name = "tsbExit";
+            this.tsbExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.tsbExit.Size = new System.Drawing.Size(82, 28);
+            this.tsbExit.Text = "退出";
+            this.tsbExit.Click += new System.EventHandler(this.tsbExit_Click);
             // 
             // dgvMarksixRecordList
             // 

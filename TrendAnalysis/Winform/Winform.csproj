@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ControlHelper.cs" />
+    <Compile Include="Common\DataGridViewActionButtonColumn.cs" />
     <Compile Include="Common\FormHelper.cs" />
     <Compile Include="Common\myDataGridView.cs">
       <SubType>Component</SubType>
@@ -218,6 +219,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\粘贴1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnDelete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnDelete02.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnModify.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BtnModify02.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

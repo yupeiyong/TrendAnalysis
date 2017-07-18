@@ -25,7 +25,7 @@ namespace TrendAnalysis.Service.Test
             {
                 var beforeCount = dao.Set<MarkSixSpecifiedLocationPurchase>().Count();
                 var service = new MarkSixPurchaseService();
-                var addDto = new MarkSixSpecifiedLocationPurchaseSaveDto
+                var addDto = new MarkSixSpecifiedLocationPurchase
                 {
                     Times = "2017001",
                     Odds = 40,
@@ -49,7 +49,7 @@ namespace TrendAnalysis.Service.Test
             {
                 var beforeCount = dao.Set<MarkSixSpecifiedLocationPurchase>().Count();
                 var service = new MarkSixPurchaseService();
-                var addDto = new MarkSixSpecifiedLocationPurchaseSaveDto
+                var addDto = new MarkSixSpecifiedLocationPurchase
                 {
                     Times = "2017001",
                     Odds = 40,

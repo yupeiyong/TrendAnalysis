@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TrendAnalysis.Models;
+using TrendAnalysis.Service;
 
 namespace Winform.Marksix
 {
@@ -33,19 +35,57 @@ namespace Winform.Marksix
         private void btnPurchase_Click(object sender, EventArgs e)
         {
             var frm = new frmMarkSixSpecifiedLocationPurchase();
-            var location = 7;
-            if(int.TryParse(cboNumberLocation.Text,out location))
+
+            byte location = 1;
+            if (!byte.TryParse(cboNumberLocation.Text, out location) || location < 1 || location > 7)
             {
-                frm.Text = string.Format("第{0}位 号码清单",location);
-                frm.Numbers = new byte[] { 3, 6, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 88, 99 }.ToDictionary(key => key, value => 0D); ;
-                if (frm.ShowDialog() == DialogResult.OK)
+                MessageBox.Show("请选择1-7的号码位置！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cboNumberLocation.Focus();
+                return;
+            }
+            var times = cboTimes.Text;
+            if (string.IsNullOrWhiteSpace(times))
+            {
+                MessageBox.Show("期次不能为空！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cboTimes.Focus();
+                return;
+            }
+            var purchase = new MarkSixSpecifiedLocationPurchase { Times = times, Location = location };
+
+            frm.MarkSixSpecifiedLocationPurchase = purchase;
+            frm.Text = string.Format("第{0}期第{0}位 号码清单", times, location);
+            frm.Numbers = new byte[] { 3, 6, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 88, 99 }.ToList();
+
+            try
+            {
+
+                if (frm.ShowDialog() != DialogResult.OK)
                 {
-                    if(frm.Numbers!=null && frm.Numbers.Count > 0)
-                    {
-                        var resultDict = frm.Numbers.Where(m => m.Value > 0).ToDictionary(m=>m.Key,m=>m.Value);
-                        //保存到数据库
-                    }
+                    frmMdi.tsslInfo.Text = "取消购买";
+                    frmMdi.tsslInfo.BackColor = Color.Yellow;
+                    return;
                 }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("生成购买时，发生错误：" + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                frmMdi.tsslInfo.Text = "购买失败";
+                frmMdi.tsslInfo.BackColor = Color.Red;
+                return;
+            }
+            var purchaseService = new MarkSixPurchaseService();
+            try
+            {
+                purchaseService.SaveSpecifiedLocation(frm.MarkSixSpecifiedLocationPurchase);
+                frmMdi.tsslInfo.Text = "保存成功！";
+                frmMdi.tsslInfo.BackColor = Color.Green;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("保存时，发生错误：" + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                frmMdi.tsslInfo.Text = "保存失败";
+                frmMdi.tsslInfo.BackColor = Color.Red;
             }
         }
 

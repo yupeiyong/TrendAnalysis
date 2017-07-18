@@ -48,7 +48,7 @@ namespace TrendAnalysis.Service
             }
         }
 
-        public void SeveSpecifiedLocation(MarkSixSpecifiedLocationPurchaseSaveDto dto)
+        public void SaveSpecifiedLocation(MarkSixSpecifiedLocationPurchase dto)
         {
             if (string.IsNullOrWhiteSpace(dto.Times))
             {
@@ -74,7 +74,7 @@ namespace TrendAnalysis.Service
                     if (purchase == null)
                     {
                         throw new Exception(string.Format("错误，购买记录不存在！（Id:{0}）", dto.Id));
-                    }
+                    }                    
                     purchase.Times = dto.Times;
                     purchase.PurchaseList = dto.PurchaseList;
                     purchase.Odds = dto.Odds;
@@ -84,17 +84,8 @@ namespace TrendAnalysis.Service
                 }
                 else
                 {
-                    var purchase = new MarkSixSpecifiedLocationPurchase
-                    {
-                        Times = dto.Times,
-                        PurchaseList = dto.PurchaseList,
-                        Odds = dto.Odds,
-                        Location = dto.Location,
-                        PurchaseAmount = dto.PurchaseAmount,
-                        OnCreated = DateTime.Now,
-                        OnModified = DateTime.Now
-                    };
-                    dao.Set<MarkSixSpecifiedLocationPurchase>().Add(purchase);
+                    dto.OnCreated =dto.OnModified= DateTime.Now;
+                    dao.Set<MarkSixSpecifiedLocationPurchase>().Add(dto);
                 }
                 dao.SaveChanges();
             }

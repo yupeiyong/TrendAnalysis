@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TrendAnalysis.Models;
 
 namespace Winform.Marksix
 {
     public partial class frmMarkSixSpecifiedLocationPurchase : Form
     {
-        public Dictionary<byte, double> Numbers { get; set; }
+        public MarkSixSpecifiedLocationPurchase MarkSixSpecifiedLocationPurchase { get; set; }
+        public List<byte> Numbers { get; set; }
 
         private Dictionary<byte, TextBox> _textBoxs = new Dictionary<byte, TextBox>();
         public frmMarkSixSpecifiedLocationPurchase()
@@ -40,10 +42,9 @@ namespace Winform.Marksix
 
                 //每行显示5个
                 var columnCountEveryRow = 5;
-                var keys = Numbers.Keys.ToList();
-                for (int i = 0, len = keys.Count; i < len; i++)
+                for (int i = 0, len = Numbers.Count; i < len; i++)
                 {
-                    var number = keys[i];
+                    var number = Numbers[i];
                     var rowIndex = i / columnCountEveryRow;
                     var columnIndex = i % columnCountEveryRow;
                     var yPoint = marginTop + rowIndex * rowHeight;
@@ -63,17 +64,49 @@ namespace Winform.Marksix
         {
             if (Numbers != null && Numbers.Count > 0)
             {
-                var keys = Numbers.Keys.ToList();
-                foreach(var key in keys)
+                var totalAmount = 0;
+                var numberAmountListString = string.Empty;
+                foreach (var number in Numbers)
                 {
                     //购买金额文本框
-                    var tb = _textBoxs[key];
-                    var amount = 0D;
-                    if(double.TryParse(tb.Text,out amount))
+                    var tb = _textBoxs[number];
+                    var str = tb.Text;
+                    if (string.IsNullOrWhiteSpace(str))
                     {
-                        Numbers[key] = amount;
+                        continue;
                     }
+                    var amount = 0;
+                    if (!int.TryParse(tb.Text, out amount))
+                    {
+                        MessageBox.Show("请选择1-7的号码位置！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        tb.Focus();
+                        return;
+                    }
+                    numberAmountListString += string.Format("{0}:{1};", number, amount);
+                    totalAmount += amount;
                 }
+                if (MarkSixSpecifiedLocationPurchase == null)
+                {
+                    throw new Exception("对象：MarkSixSpecifiedLocationPurchase为空！");
+                }
+                if (string.IsNullOrWhiteSpace(numberAmountListString))
+                {
+                    MessageBox.Show("购买清单为空！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                var oddsString = tbOdds.Text;
+               
+                var odds = 0;
+                if(!int.TryParse(oddsString,out odds)||odds<1)
+                {
+                    MessageBox.Show("赔率必须为大于0的整数！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                MarkSixSpecifiedLocationPurchase.PurchaseAmount = totalAmount;
+                MarkSixSpecifiedLocationPurchase.PurchaseList = numberAmountListString;
+                MarkSixSpecifiedLocationPurchase.Odds = odds;
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
         }
 
