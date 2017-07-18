@@ -74,7 +74,7 @@ namespace Winform.Marksix
                 frmMdi.tsslInfo.BackColor = Color.Red;
                 return;
             }
-            var purchaseService = new MarkSixPurchaseService();
+            var purchaseService = new MarkSixPurchaseService(); 
             try
             {
                 purchaseService.SaveSpecifiedLocation(frm.MarkSixSpecifiedLocationPurchase);
