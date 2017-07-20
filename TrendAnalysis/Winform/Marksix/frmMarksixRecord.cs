@@ -52,6 +52,20 @@ namespace Winform.Marksix
             monthCalendar.LostFocus += MonthCalendar_LostFocus;
         }
 
+        private void frmMarksixRecord_Load(object sender, EventArgs e)
+        {
+            //取得MDI窗体的引用
+            frmMdi = this.MdiParent as frmMain;
+            //设置默认页数
+            if (tlscombo.Items.Count > 1)
+            {
+                tlscombo.SelectedIndex = 1;
+            }
+            bdnPositionItem.Enabled = true;
+            bdnPositionItem.Text = "1";
+            enableEvent = true;
+            tsbSearch_Click(null, e);
+        }
 
         private void tsbSearch_Click(object sender, EventArgs e)
         {
@@ -373,21 +387,6 @@ namespace Winform.Marksix
         {
             bgwImport.CancelAsync();
             isStopImport = true;
-        }
-
-        private void frmMarksixRecord_Load(object sender, EventArgs e)
-        {
-            //取得MDI窗体的引用
-            frmMdi = this.MdiParent as frmMain;
-            //设置默认页数
-            if (tlscombo.Items.Count > 1)
-            {
-                tlscombo.SelectedIndex = 1;
-            }
-            bdnPositionItem.Enabled = true;
-            bdnPositionItem.Text = "1";
-            enableEvent = true;
-            tsbSearch_Click(null, e);
         }
 
         private void dgvList_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
