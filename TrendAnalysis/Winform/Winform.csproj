@@ -85,6 +85,12 @@
     <Compile Include="Marksix\frmMarkSixSpecifiedLocationPurchase.Designer.cs">
       <DependentUpon>frmMarkSixSpecifiedLocationPurchase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Marksix\frmMarkSixSpecifiedLocationPurchaseRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Marksix\frmMarkSixSpecifiedLocationPurchaseRecord.Designer.cs">
+      <DependentUpon>frmMarkSixSpecifiedLocationPurchaseRecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmMain.resx">
@@ -98,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Marksix\frmMarkSixSpecifiedLocationPurchase.resx">
       <DependentUpon>frmMarkSixSpecifiedLocationPurchase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Marksix\frmMarkSixSpecifiedLocationPurchaseRecord.resx">
+      <DependentUpon>frmMarkSixSpecifiedLocationPurchaseRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -231,6 +240,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\BtnModify02.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\partition.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

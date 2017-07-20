@@ -116,5 +116,10 @@ namespace Winform
         {
             ssMaster.Visible =statusBarToolStripMenuItem.Checked;
         }
+
+        private void tsmiMarksixSpecifiedLocationPurchase_Click(object sender, EventArgs e)
+        {
+            FormHelper.OpenForm<frmMarkSixSpecifiedLocationPurchaseRecord>(this);
+        }
     }
 }
