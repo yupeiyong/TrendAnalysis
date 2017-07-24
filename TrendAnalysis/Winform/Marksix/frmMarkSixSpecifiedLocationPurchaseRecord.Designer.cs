@@ -82,12 +82,14 @@
             this.tlscombo = new System.Windows.Forms.ToolStripComboBox();
             this.dgvMarksixPurchaseRecordList = new Winform.Common.myDataGridView();
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.msMaster.SuspendLayout();
             this.tslMaster.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bdnMarksixRecord)).BeginInit();
             this.bdnMarksixRecord.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMarksixPurchaseRecordList)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -131,7 +133,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label10, 4, 0);
             this.tableLayoutPanel1.Controls.Add(this.tbEndDateTime, 5, 0);
             this.tableLayoutPanel1.Controls.Add(this.tbThirdNum, 5, 1);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(9, 3);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 18);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
@@ -454,7 +456,7 @@
             this.tsbSearch,
             this.tsbExport,
             this.tsbExit});
-            this.tslMaster.Location = new System.Drawing.Point(9, 94);
+            this.tslMaster.Location = new System.Drawing.Point(7, 95);
             this.tslMaster.Name = "tslMaster";
             this.tslMaster.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.tslMaster.Size = new System.Drawing.Size(259, 28);
@@ -635,8 +637,9 @@
             this.dgvMarksixPurchaseRecordList.Name = "dgvMarksixPurchaseRecordList";
             this.dgvMarksixPurchaseRecordList.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvMarksixPurchaseRecordList.RowTemplate.Height = 30;
-            this.dgvMarksixPurchaseRecordList.Size = new System.Drawing.Size(1238, 538);
+            this.dgvMarksixPurchaseRecordList.Size = new System.Drawing.Size(1238, 524);
             this.dgvMarksixPurchaseRecordList.TabIndex = 13;
+            this.dgvMarksixPurchaseRecordList.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMarksixPurchaseRecordList_CellMouseClick);
             this.dgvMarksixPurchaseRecordList.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvMarksixPurchaseRecordList_DataBindingComplete);
             // 
             // monthCalendar
@@ -646,18 +649,29 @@
             this.monthCalendar.TabIndex = 14;
             this.monthCalendar.Visible = false;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.tableLayoutPanel1);
+            this.groupBox1.Location = new System.Drawing.Point(8, -6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(1218, 95);
+            this.groupBox1.TabIndex = 15;
+            this.groupBox1.TabStop = false;
+            // 
             // frmMarkSixSpecifiedLocationPurchaseRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Snow;
+            this.BackColor = System.Drawing.Color.PaleTurquoise;
             this.ClientSize = new System.Drawing.Size(1238, 707);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.monthCalendar);
             this.Controls.Add(this.dgvMarksixPurchaseRecordList);
             this.Controls.Add(this.bdnMarksixRecord);
             this.Controls.Add(this.tslMaster);
             this.Controls.Add(this.msMaster);
-            this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "frmMarkSixSpecifiedLocationPurchaseRecord";
             this.Text = "frmMarkSixSpecifiedLocationPurchaseRecord";
             this.Load += new System.EventHandler(this.frmMarkSixSpecifiedLocationPurchaseRecord_Load);
@@ -671,6 +685,7 @@
             this.bdnMarksixRecord.ResumeLayout(false);
             this.bdnMarksixRecord.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMarksixPurchaseRecordList)).EndInit();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -728,5 +743,6 @@
         private System.Windows.Forms.ToolStripComboBox tlscombo;
         private Common.myDataGridView dgvMarksixPurchaseRecordList;
         private System.Windows.Forms.MonthCalendar monthCalendar;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

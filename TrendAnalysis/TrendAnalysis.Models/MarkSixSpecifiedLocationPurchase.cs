@@ -34,6 +34,22 @@ namespace TrendAnalysis.Models
 
 
         /// <summary>
+        /// 购买清单，键为号码，值为购买金额
+        /// </summary>
+        public Dictionary<byte, string> Purchases {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(PurchaseList))
+                    return new Dictionary<byte, string>();
+
+                var arr = PurchaseList.Split(';').ToList();
+                arr.RemoveAll(s=>string.IsNullOrWhiteSpace(s));
+                return arr.Select(a => a.Split(':')).ToDictionary(k => byte.Parse(k[0]), v => v.Length == 2 ? v[1] : "");
+            }
+        }
+
+
+        /// <summary>
         /// 购买金额
         /// </summary>
         [Description("购买金额")]

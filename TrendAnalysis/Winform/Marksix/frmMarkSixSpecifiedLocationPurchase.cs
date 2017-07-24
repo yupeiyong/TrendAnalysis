@@ -8,13 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TrendAnalysis.Models;
+using TrendAnalysis.Service;
 
 namespace Winform.Marksix
 {
     public partial class frmMarkSixSpecifiedLocationPurchase : Form
     {
         public MarkSixSpecifiedLocationPurchase MarkSixSpecifiedLocationPurchase { get; set; }
-        public List<byte> Numbers { get; set; }
 
         private Dictionary<byte, TextBox> _textBoxs = new Dictionary<byte, TextBox>();
         public frmMarkSixSpecifiedLocationPurchase()
@@ -24,8 +24,13 @@ namespace Winform.Marksix
 
         private void frmMarkSixSpecifiedLocationPurchase_Load(object sender, EventArgs e)
         {
+            if (MarkSixSpecifiedLocationPurchase == null)
+            {
+                return;
+            }
+            var purchaseNumbers = MarkSixSpecifiedLocationPurchase.Purchases;
             //OnShowDialogEvent(null);
-            if (Numbers != null && Numbers.Count > 0)
+            if (purchaseNumbers != null && purchaseNumbers.Count > 0)
             {
                 //按行列设置文本框和标签
                 //顶距
@@ -42,9 +47,10 @@ namespace Winform.Marksix
 
                 //每行显示5个
                 var columnCountEveryRow = 5;
-                for (int i = 0, len = Numbers.Count; i < len; i++)
+                var numbers = purchaseNumbers.Keys.ToList();
+                for (int i = 0, len = numbers.Count; i < len; i++)
                 {
-                    var number = Numbers[i];
+                    var number = numbers[i];
                     var rowIndex = i / columnCountEveryRow;
                     var columnIndex = i % columnCountEveryRow;
                     var yPoint = marginTop + rowIndex * rowHeight;
@@ -52,7 +58,9 @@ namespace Winform.Marksix
                     var labelLocation = new Point(xPoint, yPoint + 3);
                     var textboxLocation = new Point(xPoint + 23, yPoint);
                     var label = new Label { Text = number.ToString("00"), Location = labelLocation, Width = 17, Height = 12 };
-                    var tb = new TextBox { Location = textboxLocation, Width = 50, Height = 20 };
+
+                    var amount = purchaseNumbers[number];
+                    var tb = new TextBox { Location = textboxLocation, Width = 50, Height = 20 ,Text=amount};
                     _textBoxs.Add(number, tb);
                     gbNumberList.Controls.Add(label);
                     gbNumberList.Controls.Add(tb);
@@ -62,11 +70,17 @@ namespace Winform.Marksix
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (Numbers != null && Numbers.Count > 0)
+            if (MarkSixSpecifiedLocationPurchase == null)
+            {
+                return;
+            }
+            var purchaseNumbers = MarkSixSpecifiedLocationPurchase.Purchases;
+            //OnShowDialogEvent(null);
+            if (purchaseNumbers != null && purchaseNumbers.Count > 0)
             {
                 var totalAmount = 0;
                 var numberAmountListString = string.Empty;
-                foreach (var number in Numbers)
+                foreach (var number in purchaseNumbers.Keys)
                 {
                     //购买金额文本框
                     var tb = _textBoxs[number];
@@ -95,9 +109,9 @@ namespace Winform.Marksix
                     return;
                 }
                 var oddsString = tbOdds.Text;
-               
+
                 var odds = 0;
-                if(!int.TryParse(oddsString,out odds)||odds<1)
+                if (!int.TryParse(oddsString, out odds) || odds < 1)
                 {
                     MessageBox.Show("赔率必须为大于0的整数！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -105,6 +119,10 @@ namespace Winform.Marksix
                 MarkSixSpecifiedLocationPurchase.PurchaseAmount = totalAmount;
                 MarkSixSpecifiedLocationPurchase.PurchaseList = numberAmountListString;
                 MarkSixSpecifiedLocationPurchase.Odds = odds;
+
+                var purchaseService = new MarkSixPurchaseService();
+                purchaseService.SaveSpecifiedLocation(MarkSixSpecifiedLocationPurchase);
+
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

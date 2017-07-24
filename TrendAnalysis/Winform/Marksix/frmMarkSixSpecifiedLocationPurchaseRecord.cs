@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Models;
 using TrendAnalysis.Service;
+using Winform.Common;
 
 namespace Winform.Marksix
 {
@@ -106,11 +107,17 @@ namespace Winform.Marksix
                     {
                         properties.Remove(rowVersionProperty);
                     }
+                    var purchasesProperty = properties.FirstOrDefault(p => p.Name == nameof(MarkSixSpecifiedLocationPurchase.Purchases));
+                    if (purchasesProperty != null)
+                    {
+                        properties.Remove(purchasesProperty);
+                    }
                     var idProperty = properties.FirstOrDefault(p => p.Name == nameof(MarkSixSpecifiedLocationPurchase.Id));
                     if (idProperty != null)
                     {
                         properties.Remove(idProperty);
                     }
+                    //Id列移动到首位
                     properties.Insert(0, idProperty);
                 });
                 dgvMarksixPurchaseRecordList.DataSource = table;
@@ -169,9 +176,83 @@ namespace Winform.Marksix
             dgvMarksixPurchaseRecordList.Columns["录入时间"].DefaultCellStyle.Format = "yyyy-MM-dd";
             dgvMarksixPurchaseRecordList.Columns["修改时间"].DefaultCellStyle.Format = "yyyy-MM-dd";
 
+            var name = "actionButtonColumn";
+            var column = new DataGridViewActionButtonColumn { Name = name, Width = 130 };
+            if (!dgvMarksixPurchaseRecordList.Columns.Contains(name))
+            {
+                dgvMarksixPurchaseRecordList.Columns.Add(column);
+            }
         }
 
+        private void dgvMarksixPurchaseRecordList_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            //用户单击DataGridView“操作”列中的“修改”按钮。
+            if (DataGridViewActionButtonCell.IsModifyButtonClick(sender, e))
+            {
+                string id = dgvMarksixPurchaseRecordList[nameof(MarkSixSpecifiedLocationPurchase.Id), e.RowIndex].Value.ToString(); // 获取所要修改关联对象的主键。
+                PurchaseUpdate(id);
+            }
 
+            //用户单击DataGridView“操作”列中的“删除”按钮。
+            if (DataGridViewActionButtonCell.IsDeleteButtonClick(sender, e))
+            {
+                string id = dgvMarksixPurchaseRecordList[nameof(MarkSixSpecifiedLocationPurchase.Id), e.RowIndex].Value.ToString(); // 获取所要删除关联对象的主键。
+                PurchaseDelete(id);
+            }
+        }
+
+        private void PurchaseUpdate(string id)
+        {
+            var service = new MarkSixPurchaseService();
+            try
+            {
+                var recordId = long.Parse(id);
+
+                var frm = new frmMarkSixSpecifiedLocationPurchase();
+                var purchase = service.GetSpecifiedLocationPurchaseById(recordId);
+                if(purchase==null)
+                    throw new Exception(string.Format("错误，购买记录不存在！(Id:{0})", id));
+                frm.MarkSixSpecifiedLocationPurchase = purchase;
+                frm.Text = string.Format("编辑 第{0}期第{0}位 购买记录", purchase.Times,purchase.Location);
+
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    Search();
+                    frmMdi.tsslInfo.Text = "修改成功！";
+                    frmMdi.tsslInfo.BackColor = Color.Yellow;
+                }
+                else
+                {
+                    frmMdi.tsslInfo.Text = "取消修改";
+                    frmMdi.tsslInfo.BackColor = Color.Yellow;
+                }                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("修改Id:{0}的购买记录失败！{1}", id, ex.Message), "修改失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                frmMdi.tsslInfo.Text = "修改失败！";
+                frmMdi.tsslInfo.BackColor = Color.Red;
+            }
+        }
+
+        private void PurchaseDelete(string id)
+        {
+            var service = new MarkSixPurchaseService();
+            try
+            {
+                var recordId = long.Parse(id);
+                service.RemoveSpecifiedLocation(recordId);
+                Search();
+                frmMdi.tsslInfo.Text = "删除成功！";
+                frmMdi.tsslInfo.BackColor = Color.Yellow;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("删除Id:{0}的购买记录失败！{1}", id, ex.Message), "删除失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                frmMdi.tsslInfo.Text = "删除失败！";
+                frmMdi.tsslInfo.BackColor = Color.Red;
+            }
+        }
         private void bdnMoveFirstItem_Click(object sender, EventArgs e)
         {
             //页码开始数
@@ -253,7 +334,6 @@ namespace Winform.Marksix
                 e.Handled = true;
             }
         }
-
 
     }
 }

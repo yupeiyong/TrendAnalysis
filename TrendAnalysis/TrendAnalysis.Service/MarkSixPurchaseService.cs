@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TrendAnalysis.Models;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Data;
+using System.Data.Entity;
 
 namespace TrendAnalysis.Service
 {
@@ -92,9 +93,28 @@ namespace TrendAnalysis.Service
 
         }
 
+        public MarkSixSpecifiedLocationPurchase GetSpecifiedLocationPurchaseById(long id)
+        {
+            using (var dao = new TrendDbContext())
+            {
+                return dao.Set<MarkSixSpecifiedLocationPurchase>().FirstOrDefault(m => m.Id == id);
+            }
+        }
+
+
         public void RemoveSpecifiedLocation(params long[] ids)
         {
-
+            using (var dao = new TrendDbContext())
+            {
+                foreach(var id in ids)
+                {
+                    var record = dao.Set<MarkSixSpecifiedLocationPurchase>().FirstOrDefault(m => m.Id == id);
+                    if (record == null)
+                        throw new Exception(string.Format("错误，购买记录不存在！(Id:{0})",id));
+                    dao.Entry(record).State = EntityState.Deleted;
+                }
+                dao.SaveChanges();
+            }
         }
     }
 }
