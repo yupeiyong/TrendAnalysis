@@ -58,7 +58,7 @@ namespace TrendAnalysis.Service
             else
             {
                 var greaterThanOrEqualExpr = Expression.GreaterThanOrEqual(propertyAccessExpr, Expression.Constant(start));//m.OnLastUpdated >=start
-                var lessThanExpr = Expression.LessThan(parameterExpr, Expression.Constant(end));//m.OnLastUpdated <end
+                var lessThanExpr = Expression.LessThan(propertyAccessExpr, Expression.Constant(end));//m.OnLastUpdated <end
                 var whereExpr = Expression.AndAlso(greaterThanOrEqualExpr, lessThanExpr);//m.OnLastUpdated >= start && m.OnLastUpdated < end
                 var lambdaExpr = Expression.Lambda(whereExpr, parameterExpr);
                 var resultExpression = Expression.Call(typeof(Queryable), "Where", new[] { type }, source.Expression, Expression.Quote(lambdaExpr));

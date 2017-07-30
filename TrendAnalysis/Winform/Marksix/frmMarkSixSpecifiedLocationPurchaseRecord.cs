@@ -34,6 +34,7 @@ namespace Winform.Marksix
         }
         private void frmMarkSixSpecifiedLocationPurchaseRecord_Load(object sender, EventArgs e)
         {
+            monthCalendar.LostFocus += MonthCalendar_LostFocus;
             //取得MDI窗体的引用
             frmMdi = this.MdiParent as frmMain;
             //设置默认页数
@@ -76,11 +77,6 @@ namespace Winform.Marksix
                     searchDto.StartDateTime = dt;
                 }
             }
-            var selectedLocation = cboLocation.SelectedItem as ComboBoxItem<int>;
-            if (selectedLocation != null)
-            {
-                searchDto.Location = selectedLocation.Value;
-            }
             if (tbEndDateTime.Text.Trim().Length > 0)
             {
                 var strDate = tbEndDateTime.Text.Trim();
@@ -89,6 +85,11 @@ namespace Winform.Marksix
                 {
                     searchDto.EndDateTime = dt;
                 }
+            }
+            var selectedLocation = cboLocation.SelectedItem as ComboBoxItem<int>;
+            if (selectedLocation != null)
+            {
+                searchDto.Location = selectedLocation.Value;
             }
 
             searchDto.Times = tbTimes.Text;
@@ -106,7 +107,13 @@ namespace Winform.Marksix
                         );
                     frmMdi.tsslInfo.Text = "查询内容为空！";
                     frmMdi.tsslInfo.BackColor = Color.Yellow;
-                    //dgvMarksixPurchaseRecordList.DataSource = null;
+                    //重新绑定数据
+                    var sourceTable = dgvMarksixPurchaseRecordList.DataSource as DataTable;
+                    if (sourceTable != null)
+                    {
+                        sourceTable.Rows.Clear();
+                        dgvMarksixPurchaseRecordList.DataSource = sourceTable;
+                    }
                     return null;
                 }
                 frmMdi.tsslInfo.Text = "查询完成！";
@@ -346,5 +353,34 @@ namespace Winform.Marksix
             }
         }
 
+        private void btnStartDateTime_Click(object sender, EventArgs e)
+        {
+            //日期选择
+            ControlHelper.SetMonthCalendarPosition(monthCalendar, tbStartDateTime, true);
+        }
+
+        private void btnEndDateTime_Click(object sender, EventArgs e)
+        {
+            //日期选择
+            ControlHelper.SetMonthCalendarPosition(monthCalendar, tbEndDateTime, true);
+        }
+
+        private void monthCalendar_DateSelected(object sender, DateRangeEventArgs e)
+        {
+            var mc = sender as MonthCalendar;
+            if (mc == null)
+                return;
+            var tb = mc.Tag as Control;
+            if (tb != null)
+            {
+                tb.Text = mc.SelectionStart.ToString("yyyy-MM-dd");
+                tb.Focus();
+            }
+        }
+        private void MonthCalendar_LostFocus(object sender, EventArgs e)
+        {
+            //失去焦点就隐藏日期选择控件
+            monthCalendar.Visible = false;
+        }
     }
 }

@@ -30,17 +30,20 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMarkSixSpecifiedLocationPurchaseRecord));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnEndDateTime = new System.Windows.Forms.Button();
+            this.tbTimes = new System.Windows.Forms.TextBox();
             this.btnStartDateTime = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tbStartDateTime = new System.Windows.Forms.TextBox();
-            this.tbTimes = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.tbEndDateTime = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.cboLocation = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.msMaster = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAdd = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,9 +72,6 @@
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvMarksixPurchaseRecordList = new Winform.Common.myDataGridView();
-            this.label11 = new System.Windows.Forms.Label();
-            this.cboLocation = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.msMaster.SuspendLayout();
             this.tslMaster.SuspendLayout();
@@ -97,7 +97,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Controls.Add(this.btnEndDateTime, 7, 0);
@@ -116,7 +116,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1171, 34);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
@@ -131,6 +131,16 @@
             this.btnEndDateTime.Size = new System.Drawing.Size(41, 30);
             this.btnEndDateTime.TabIndex = 16;
             this.btnEndDateTime.UseVisualStyleBackColor = true;
+            this.btnEndDateTime.Click += new System.EventHandler(this.btnEndDateTime_Click);
+            // 
+            // tbTimes
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.tbTimes, 2);
+            this.tbTimes.Location = new System.Drawing.Point(1009, 4);
+            this.tbTimes.Margin = new System.Windows.Forms.Padding(4);
+            this.tbTimes.Name = "tbTimes";
+            this.tbTimes.Size = new System.Drawing.Size(157, 28);
+            this.tbTimes.TabIndex = 1;
             // 
             // btnStartDateTime
             // 
@@ -143,6 +153,7 @@
             this.btnStartDateTime.Size = new System.Drawing.Size(41, 30);
             this.btnStartDateTime.TabIndex = 15;
             this.btnStartDateTime.UseVisualStyleBackColor = true;
+            this.btnStartDateTime.Click += new System.EventHandler(this.btnStartDateTime_Click);
             // 
             // label1
             // 
@@ -165,27 +176,6 @@
             this.tbStartDateTime.Size = new System.Drawing.Size(159, 28);
             this.tbStartDateTime.TabIndex = 8;
             // 
-            // tbTimes
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.tbTimes, 2);
-            this.tbTimes.Location = new System.Drawing.Point(1009, 4);
-            this.tbTimes.Margin = new System.Windows.Forms.Padding(4);
-            this.tbTimes.Name = "tbTimes";
-            this.tbTimes.Size = new System.Drawing.Size(157, 28);
-            this.tbTimes.TabIndex = 1;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(957, 8);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 18);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "期数";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // label10
             // 
             this.label10.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -205,6 +195,50 @@
             this.tbEndDateTime.Name = "tbEndDateTime";
             this.tbEndDateTime.Size = new System.Drawing.Size(159, 28);
             this.tbEndDateTime.TabIndex = 9;
+            // 
+            // label11
+            // 
+            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(720, 8);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(26, 18);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "第";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // cboLocation
+            // 
+            this.cboLocation.FormattingEnabled = true;
+            this.cboLocation.Location = new System.Drawing.Point(753, 3);
+            this.cboLocation.Name = "cboLocation";
+            this.cboLocation.Size = new System.Drawing.Size(84, 26);
+            this.cboLocation.TabIndex = 17;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(957, 8);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(44, 18);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "期数";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(844, 8);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(26, 18);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "位";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // msMaster
             // 
@@ -457,6 +491,7 @@
             this.monthCalendar.Name = "monthCalendar";
             this.monthCalendar.TabIndex = 14;
             this.monthCalendar.Visible = false;
+            this.monthCalendar.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_DateSelected);
             // 
             // groupBox1
             // 
@@ -475,19 +510,19 @@
             this.dgvMarksixPurchaseRecordList.AllowUserToDeleteRows = false;
             this.dgvMarksixPurchaseRecordList.AllowUserToResizeColumns = false;
             this.dgvMarksixPurchaseRecordList.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dgvMarksixPurchaseRecordList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dgvMarksixPurchaseRecordList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvMarksixPurchaseRecordList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMarksixPurchaseRecordList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMarksixPurchaseRecordList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvMarksixPurchaseRecordList.ColumnHeadersHeight = 25;
             this.dgvMarksixPurchaseRecordList.Location = new System.Drawing.Point(0, 118);
             this.dgvMarksixPurchaseRecordList.Name = "dgvMarksixPurchaseRecordList";
@@ -497,38 +532,6 @@
             this.dgvMarksixPurchaseRecordList.TabIndex = 13;
             this.dgvMarksixPurchaseRecordList.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMarksixPurchaseRecordList_CellMouseClick);
             this.dgvMarksixPurchaseRecordList.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvMarksixPurchaseRecordList_DataBindingComplete);
-            // 
-            // label11
-            // 
-            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(720, 8);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(26, 18);
-            this.label11.TabIndex = 0;
-            this.label11.Text = "第";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // cboLocation
-            // 
-            this.cboLocation.FormattingEnabled = true;
-            this.cboLocation.Location = new System.Drawing.Point(753, 3);
-            this.cboLocation.Name = "cboLocation";
-            this.cboLocation.Size = new System.Drawing.Size(84, 26);
-            this.cboLocation.TabIndex = 17;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(844, 8);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(26, 18);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "位";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // frmMarkSixSpecifiedLocationPurchaseRecord
             // 
