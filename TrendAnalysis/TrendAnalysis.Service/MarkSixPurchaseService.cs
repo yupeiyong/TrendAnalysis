@@ -7,6 +7,8 @@ using TrendAnalysis.Models;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Data;
 using System.Data.Entity;
+using System.Data;
+using OfficeLibrary;
 
 namespace TrendAnalysis.Service
 {
@@ -107,5 +109,16 @@ namespace TrendAnalysis.Service
                 dao.SaveChanges();
             }
         }
+        /// <summary>
+        /// 导出
+        /// </summary>
+        /// <returns></returns>
+        public void Export(DataTable table, string fileName)
+        {
+            table.TableName = "MarksixRecord";
+            var toExcel = new DataTableToExcel();
+            toExcel.Export(table, fileName, "MarksixRecord");
+        }
+
     }
 }

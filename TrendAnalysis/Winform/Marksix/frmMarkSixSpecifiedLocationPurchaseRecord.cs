@@ -382,5 +382,37 @@ namespace Winform.Marksix
             //失去焦点就隐藏日期选择控件
             monthCalendar.Visible = false;
         }
+
+        private void tsbExit_Click(object sender, EventArgs e)
+        {
+            Application.DoEvents();
+            this.Close();
+            this.Dispose();
+        }
+
+        private void tsbExport_Click(object sender, EventArgs e)
+        {
+            using (var saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = "Execl 2007files(*.xlsx)|*.xlsx";
+                saveFileDialog.FilterIndex = 0;
+                saveFileDialog.RestoreDirectory = true; //保存对话框是否记忆上次打开的目录 
+                                                        //saveFileDialog.CreatePrompt = true;
+                saveFileDialog.Title = "导出Excel文件到";
+                saveFileDialog.FileName = "MarksixPurchaseRecord.xlsx";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var fileName = saveFileDialog.FileName;
+                    var table = Search();
+                    if (table != null)
+                    {
+                        var service = new MarkSixPurchaseService();
+                        service.Export(table, fileName);
+                        frmMdi.tsslInfo.Text = "导出成功！";
+                        frmMdi.tsslInfo.BackColor = Color.Yellow;
+                    }
+                }
+            }
+        }
     }
 }

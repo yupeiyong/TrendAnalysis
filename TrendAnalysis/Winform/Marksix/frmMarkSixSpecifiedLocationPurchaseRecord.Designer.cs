@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMarkSixSpecifiedLocationPurchaseRecord));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnEndDateTime = new System.Windows.Forms.Button();
             this.tbTimes = new System.Windows.Forms.TextBox();
@@ -331,7 +331,7 @@
             this.tslMaster.Location = new System.Drawing.Point(7, 76);
             this.tslMaster.Name = "tslMaster";
             this.tslMaster.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.tslMaster.Size = new System.Drawing.Size(259, 28);
+            this.tslMaster.Size = new System.Drawing.Size(305, 28);
             this.tslMaster.TabIndex = 11;
             this.tslMaster.Text = "toolStrip1";
             // 
@@ -352,6 +352,7 @@
             this.tsbExport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
             this.tsbExport.Size = new System.Drawing.Size(82, 28);
             this.tsbExport.Text = "导出";
+            this.tsbExport.Click += new System.EventHandler(this.tsbExport_Click);
             // 
             // tsbExit
             // 
@@ -360,6 +361,7 @@
             this.tsbExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
             this.tsbExit.Size = new System.Drawing.Size(82, 28);
             this.tsbExit.Text = "退出";
+            this.tsbExit.Click += new System.EventHandler(this.tsbExit_Click);
             // 
             // bdnMarksixRecord
             // 
@@ -510,19 +512,19 @@
             this.dgvMarksixPurchaseRecordList.AllowUserToDeleteRows = false;
             this.dgvMarksixPurchaseRecordList.AllowUserToResizeColumns = false;
             this.dgvMarksixPurchaseRecordList.AllowUserToResizeRows = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dgvMarksixPurchaseRecordList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dgvMarksixPurchaseRecordList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvMarksixPurchaseRecordList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMarksixPurchaseRecordList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMarksixPurchaseRecordList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dgvMarksixPurchaseRecordList.ColumnHeadersHeight = 25;
             this.dgvMarksixPurchaseRecordList.Location = new System.Drawing.Point(0, 118);
             this.dgvMarksixPurchaseRecordList.Name = "dgvMarksixPurchaseRecordList";
