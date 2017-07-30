@@ -255,6 +255,10 @@ namespace Winform.Marksix
 
         private void PurchaseDelete(string id)
         {
+            if (MessageBox.Show($"你确定删除第{id}条记录吗？", "确认删除", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) != DialogResult.OK)
+            {
+                return;
+            }
             var service = new MarkSixPurchaseService();
             try
             {
