@@ -36,25 +36,11 @@
             this.btnEndDateTime = new System.Windows.Forms.Button();
             this.btnStartDateTime = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.tbFirstNum = new System.Windows.Forms.TextBox();
-            this.tbSecondNum = new System.Windows.Forms.TextBox();
-            this.tbFourthNum = new System.Windows.Forms.TextBox();
-            this.tbFifthNum = new System.Windows.Forms.TextBox();
-            this.tbSixthNum = new System.Windows.Forms.TextBox();
-            this.tbSeventhNum = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.tbStartDateTime = new System.Windows.Forms.TextBox();
             this.tbTimes = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.tbEndDateTime = new System.Windows.Forms.TextBox();
-            this.tbThirdNum = new System.Windows.Forms.TextBox();
             this.msMaster = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAdd = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,16 +66,19 @@
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.tlscombo = new System.Windows.Forms.ToolStripComboBox();
-            this.dgvMarksixPurchaseRecordList = new Winform.Common.myDataGridView();
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dgvMarksixPurchaseRecordList = new Winform.Common.myDataGridView();
+            this.label11 = new System.Windows.Forms.Label();
+            this.cboLocation = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.msMaster.SuspendLayout();
             this.tslMaster.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bdnMarksixRecord)).BeginInit();
             this.bdnMarksixRecord.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMarksixPurchaseRecordList)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMarksixPurchaseRecordList)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -112,34 +101,23 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Controls.Add(this.btnEndDateTime, 7, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tbTimes, 12, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnStartDateTime, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 4, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label7, 8, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label8, 10, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label9, 12, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tbFirstNum, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tbSecondNum, 3, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tbFourthNum, 7, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tbFifthNum, 9, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tbSixthNum, 11, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tbSeventhNum, 13, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label6, 6, 1);
             this.tableLayoutPanel1.Controls.Add(this.tbStartDateTime, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tbTimes, 11, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 10, 0);
             this.tableLayoutPanel1.Controls.Add(this.label10, 4, 0);
             this.tableLayoutPanel1.Controls.Add(this.tbEndDateTime, 5, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tbThirdNum, 5, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label11, 8, 0);
+            this.tableLayoutPanel1.Controls.Add(this.cboLocation, 9, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label2, 11, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label3, 10, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 18);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1169, 71);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1171, 34);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // btnEndDateTime
@@ -150,7 +128,7 @@
             this.btnEndDateTime.Location = new System.Drawing.Point(587, 2);
             this.btnEndDateTime.Margin = new System.Windows.Forms.Padding(2);
             this.btnEndDateTime.Name = "btnEndDateTime";
-            this.btnEndDateTime.Size = new System.Drawing.Size(41, 31);
+            this.btnEndDateTime.Size = new System.Drawing.Size(41, 30);
             this.btnEndDateTime.TabIndex = 16;
             this.btnEndDateTime.UseVisualStyleBackColor = true;
             // 
@@ -162,7 +140,7 @@
             this.btnStartDateTime.Location = new System.Drawing.Point(257, 2);
             this.btnStartDateTime.Margin = new System.Windows.Forms.Padding(2);
             this.btnStartDateTime.Name = "btnStartDateTime";
-            this.btnStartDateTime.Size = new System.Drawing.Size(41, 31);
+            this.btnStartDateTime.Size = new System.Drawing.Size(41, 30);
             this.btnStartDateTime.TabIndex = 15;
             this.btnStartDateTime.UseVisualStyleBackColor = true;
             // 
@@ -175,140 +153,8 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 18);
             this.label1.TabIndex = 0;
-            this.label1.Text = "开奖日期";
+            this.label1.Text = "录入日期";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(24, 44);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(62, 18);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "第一数";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label4
-            // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(189, 44);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(62, 18);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "第二数";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(354, 44);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(62, 18);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "第三数";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label7
-            // 
-            this.label7.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(684, 44);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(62, 18);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "第五数";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label8
-            // 
-            this.label8.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(849, 44);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(62, 18);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "第六数";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label9
-            // 
-            this.label9.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(1014, 44);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(62, 18);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "第七数";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tbFirstNum
-            // 
-            this.tbFirstNum.Location = new System.Drawing.Point(94, 39);
-            this.tbFirstNum.Margin = new System.Windows.Forms.Padding(4);
-            this.tbFirstNum.Name = "tbFirstNum";
-            this.tbFirstNum.Size = new System.Drawing.Size(79, 28);
-            this.tbFirstNum.TabIndex = 1;
-            // 
-            // tbSecondNum
-            // 
-            this.tbSecondNum.Location = new System.Drawing.Point(259, 39);
-            this.tbSecondNum.Margin = new System.Windows.Forms.Padding(4);
-            this.tbSecondNum.Name = "tbSecondNum";
-            this.tbSecondNum.Size = new System.Drawing.Size(79, 28);
-            this.tbSecondNum.TabIndex = 1;
-            // 
-            // tbFourthNum
-            // 
-            this.tbFourthNum.Location = new System.Drawing.Point(589, 39);
-            this.tbFourthNum.Margin = new System.Windows.Forms.Padding(4);
-            this.tbFourthNum.Name = "tbFourthNum";
-            this.tbFourthNum.Size = new System.Drawing.Size(79, 28);
-            this.tbFourthNum.TabIndex = 1;
-            // 
-            // tbFifthNum
-            // 
-            this.tbFifthNum.Location = new System.Drawing.Point(754, 39);
-            this.tbFifthNum.Margin = new System.Windows.Forms.Padding(4);
-            this.tbFifthNum.Name = "tbFifthNum";
-            this.tbFifthNum.Size = new System.Drawing.Size(79, 28);
-            this.tbFifthNum.TabIndex = 1;
-            // 
-            // tbSixthNum
-            // 
-            this.tbSixthNum.Location = new System.Drawing.Point(919, 39);
-            this.tbSixthNum.Margin = new System.Windows.Forms.Padding(4);
-            this.tbSixthNum.Name = "tbSixthNum";
-            this.tbSixthNum.Size = new System.Drawing.Size(79, 28);
-            this.tbSixthNum.TabIndex = 1;
-            // 
-            // tbSeventhNum
-            // 
-            this.tbSeventhNum.Location = new System.Drawing.Point(1084, 39);
-            this.tbSeventhNum.Margin = new System.Windows.Forms.Padding(4);
-            this.tbSeventhNum.Name = "tbSeventhNum";
-            this.tbSeventhNum.Size = new System.Drawing.Size(79, 28);
-            this.tbSeventhNum.TabIndex = 1;
-            // 
-            // label6
-            // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(519, 44);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(62, 18);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "第四数";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tbStartDateTime
             // 
@@ -322,7 +168,7 @@
             // tbTimes
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.tbTimes, 2);
-            this.tbTimes.Location = new System.Drawing.Point(919, 4);
+            this.tbTimes.Location = new System.Drawing.Point(1009, 4);
             this.tbTimes.Margin = new System.Windows.Forms.Padding(4);
             this.tbTimes.Name = "tbTimes";
             this.tbTimes.Size = new System.Drawing.Size(157, 28);
@@ -332,7 +178,7 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(867, 8);
+            this.label2.Location = new System.Drawing.Point(957, 8);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 18);
@@ -359,14 +205,6 @@
             this.tbEndDateTime.Name = "tbEndDateTime";
             this.tbEndDateTime.Size = new System.Drawing.Size(159, 28);
             this.tbEndDateTime.TabIndex = 9;
-            // 
-            // tbThirdNum
-            // 
-            this.tbThirdNum.Location = new System.Drawing.Point(424, 39);
-            this.tbThirdNum.Margin = new System.Windows.Forms.Padding(4);
-            this.tbThirdNum.Name = "tbThirdNum";
-            this.tbThirdNum.Size = new System.Drawing.Size(79, 28);
-            this.tbThirdNum.TabIndex = 1;
             // 
             // msMaster
             // 
@@ -456,7 +294,7 @@
             this.tsbSearch,
             this.tsbExport,
             this.tsbExit});
-            this.tslMaster.Location = new System.Drawing.Point(7, 95);
+            this.tslMaster.Location = new System.Drawing.Point(7, 76);
             this.tslMaster.Name = "tslMaster";
             this.tslMaster.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.tslMaster.Size = new System.Drawing.Size(259, 28);
@@ -613,6 +451,24 @@
             this.tlscombo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnlyNumberControl_KeyPress);
             this.tlscombo.TextChanged += new System.EventHandler(this.tlscombo_TextChanged);
             // 
+            // monthCalendar
+            // 
+            this.monthCalendar.Location = new System.Drawing.Point(467, 232);
+            this.monthCalendar.Name = "monthCalendar";
+            this.monthCalendar.TabIndex = 14;
+            this.monthCalendar.Visible = false;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.tableLayoutPanel1);
+            this.groupBox1.Location = new System.Drawing.Point(8, -6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(1218, 76);
+            this.groupBox1.TabIndex = 15;
+            this.groupBox1.TabStop = false;
+            // 
             // dgvMarksixPurchaseRecordList
             // 
             this.dgvMarksixPurchaseRecordList.AllowUserToAddRows = false;
@@ -633,32 +489,46 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvMarksixPurchaseRecordList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvMarksixPurchaseRecordList.ColumnHeadersHeight = 25;
-            this.dgvMarksixPurchaseRecordList.Location = new System.Drawing.Point(0, 134);
+            this.dgvMarksixPurchaseRecordList.Location = new System.Drawing.Point(0, 118);
             this.dgvMarksixPurchaseRecordList.Name = "dgvMarksixPurchaseRecordList";
             this.dgvMarksixPurchaseRecordList.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvMarksixPurchaseRecordList.RowTemplate.Height = 30;
-            this.dgvMarksixPurchaseRecordList.Size = new System.Drawing.Size(1238, 524);
+            this.dgvMarksixPurchaseRecordList.Size = new System.Drawing.Size(1238, 540);
             this.dgvMarksixPurchaseRecordList.TabIndex = 13;
             this.dgvMarksixPurchaseRecordList.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMarksixPurchaseRecordList_CellMouseClick);
             this.dgvMarksixPurchaseRecordList.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvMarksixPurchaseRecordList_DataBindingComplete);
             // 
-            // monthCalendar
+            // label11
             // 
-            this.monthCalendar.Location = new System.Drawing.Point(467, 232);
-            this.monthCalendar.Name = "monthCalendar";
-            this.monthCalendar.TabIndex = 14;
-            this.monthCalendar.Visible = false;
+            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(720, 8);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(26, 18);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "第";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // groupBox1
+            // cboLocation
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.tableLayoutPanel1);
-            this.groupBox1.Location = new System.Drawing.Point(8, -6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1218, 95);
-            this.groupBox1.TabIndex = 15;
-            this.groupBox1.TabStop = false;
+            this.cboLocation.FormattingEnabled = true;
+            this.cboLocation.Location = new System.Drawing.Point(753, 3);
+            this.cboLocation.Name = "cboLocation";
+            this.cboLocation.Size = new System.Drawing.Size(84, 26);
+            this.cboLocation.TabIndex = 17;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(844, 8);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(26, 18);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "位";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // frmMarkSixSpecifiedLocationPurchaseRecord
             // 
@@ -673,7 +543,7 @@
             this.Controls.Add(this.tslMaster);
             this.Controls.Add(this.msMaster);
             this.Name = "frmMarkSixSpecifiedLocationPurchaseRecord";
-            this.Text = "frmMarkSixSpecifiedLocationPurchaseRecord";
+            this.Text = "购买记录";
             this.Load += new System.EventHandler(this.frmMarkSixSpecifiedLocationPurchaseRecord_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -684,8 +554,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.bdnMarksixRecord)).EndInit();
             this.bdnMarksixRecord.ResumeLayout(false);
             this.bdnMarksixRecord.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMarksixPurchaseRecordList)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMarksixPurchaseRecordList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -697,25 +567,11 @@
         internal System.Windows.Forms.Button btnEndDateTime;
         internal System.Windows.Forms.Button btnStartDateTime;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox tbFirstNum;
-        private System.Windows.Forms.TextBox tbSecondNum;
-        private System.Windows.Forms.TextBox tbFourthNum;
-        private System.Windows.Forms.TextBox tbFifthNum;
-        private System.Windows.Forms.TextBox tbSixthNum;
-        private System.Windows.Forms.TextBox tbSeventhNum;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox tbStartDateTime;
         private System.Windows.Forms.TextBox tbTimes;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox tbEndDateTime;
-        private System.Windows.Forms.TextBox tbThirdNum;
         private System.Windows.Forms.MenuStrip msMaster;
         private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmAdd;
@@ -744,5 +600,8 @@
         private Common.myDataGridView dgvMarksixPurchaseRecordList;
         private System.Windows.Forms.MonthCalendar monthCalendar;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox cboLocation;
+        private System.Windows.Forms.Label label3;
     }
 }

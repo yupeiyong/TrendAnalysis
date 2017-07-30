@@ -12,7 +12,15 @@ namespace TrendAnalysis.DataTransferObject
 
         public DateTime? EndDateTime { get; set; }
 
+        /// <summary>
+        /// 期次
+        /// </summary>
         public string Times { get; set; }
+
+        /// <summary>
+        /// 第几个号码
+        /// </summary>
+        public int Location { get; set; }
 
     }
 }

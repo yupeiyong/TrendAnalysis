@@ -22,21 +22,12 @@ namespace TrendAnalysis.Service
             {
                 var source = dao.Set<MarkSixSpecifiedLocationPurchase>().AsQueryable();
 
-                if (dto.StartDateTime.HasValue || dto.EndDateTime.HasValue)
-                {
-                    if (!dto.StartDateTime.HasValue)
-                    {
-                        dto.StartDateTime = DateTime.MinValue.AddDays(1);
-                    }
-                    if (!dto.EndDateTime.HasValue)
-                    {
-                        dto.EndDateTime = DateTime.MaxValue.AddDays(-1);
-                    }
-                    dto.StartDateTime = dto.StartDateTime.Value.Date.AddDays(-1);
-                    dto.EndDateTime = dto.EndDateTime.Value.Date.AddDays(1);
-                    source = source.Where(m => m.OnModified > dto.StartDateTime.Value && m.OnModified < dto.EndDateTime);
-                }
+                source = source.WhereDateTime(nameof(MarkSixSpecifiedLocationPurchase.OnCreated), dto.StartDateTime, dto.EndDateTime);
 
+                if(dto.Location>0)
+                {
+                    source = source.Where(m => m.Location == dto.Location);
+                }
                 if (!string.IsNullOrWhiteSpace(dto.Times))
                 {
                     source = source.Where(m => m.Times.Contains(dto.Times));

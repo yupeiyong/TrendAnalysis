@@ -5,6 +5,7 @@ using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Data;
 using TrendAnalysis.Models;
 using System.Linq;
+using TrendAnalysis.Service;
 
 namespace TrendAnalysis.Service.Test
 {
@@ -32,7 +33,7 @@ namespace TrendAnalysis.Service.Test
                     Location = 7,
                     PurchaseList = "12:50;36:100"
                 };
-                service.SeveSpecifiedLocation(addDto);
+                service.SaveSpecifiedLocation(addDto);
                 var afterCount = dao.Set<MarkSixSpecifiedLocationPurchase>().Count();
                 Assert.IsTrue(beforeCount + 1==afterCount);
                 var purchase = dao.Set<MarkSixSpecifiedLocationPurchase>().OrderByDescending(m => m.Id).FirstOrDefault();
@@ -56,7 +57,7 @@ namespace TrendAnalysis.Service.Test
                     Location = 7,
                     PurchaseList = "12:50;36:100"
                 };
-                service.SeveSpecifiedLocation(addDto);
+                service.SaveSpecifiedLocation(addDto);
                 var afterCount = dao.Set<MarkSixSpecifiedLocationPurchase>().Count();
                 Assert.IsTrue(beforeCount + 1 == afterCount);
                 var purchase = dao.Set<MarkSixSpecifiedLocationPurchase>().OrderByDescending(m => m.Id).FirstOrDefault();
@@ -65,7 +66,7 @@ namespace TrendAnalysis.Service.Test
 
                 addDto.Id = purchase.Id;
                 addDto.Location = 6;
-                service.SeveSpecifiedLocation(addDto);
+                service.SaveSpecifiedLocation(addDto);
                 purchase=dao.Set<MarkSixSpecifiedLocationPurchase>().AsNoTracking().FirstOrDefault(m=>m.Id==purchase.Id);
                 Assert.IsTrue(purchase.Location==addDto.Location);
             }

@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EFSearchExtend.cs" />
     <Compile Include="MarkSixPurchaseService.cs" />
     <Compile Include="MarkSixAnalysisService.cs" />
     <Compile Include="MarkSixRecordService.cs" />

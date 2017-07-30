@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ComboBoxItem.cs" />
     <Compile Include="Common\ControlHelper.cs" />
     <Compile Include="Common\DataGridViewActionButtonColumn.cs" />
     <Compile Include="Common\FormHelper.cs" />

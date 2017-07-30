@@ -172,7 +172,8 @@ namespace Winform.Common
                 paintCellBounds.Width = DataGridView.Columns[nowColIndex].Width;
                 paintCellBounds.Height = DataGridView.Rows[nowRowIndex].Height;
 
-                PrivatePaint(this.DataGridView.CreateGraphics(), paintCellBounds, nowRowIndex, this.DataGridView.RowTemplate.DefaultCellStyle, false);
+                //此名代码注释，因为点击个性按钮后，重新渲染后，会出现渲染到前一列的错误
+                //PrivatePaint(this.DataGridView.CreateGraphics(), paintCellBounds, nowRowIndex, this.DataGridView.RowTemplate.DefaultCellStyle, false);
                 DataGridView.Cursor = Cursors.Default;
             }
         }

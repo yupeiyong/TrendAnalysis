@@ -41,20 +41,7 @@ namespace TrendAnalysis.Service
             {
                 var source = dao.Set<MarkSixRecord>().AsQueryable();
 
-                if (dto.StartDateTime.HasValue || dto.EndDateTime.HasValue)
-                {
-                    if (!dto.StartDateTime.HasValue)
-                    {
-                        dto.StartDateTime = DateTime.MinValue.AddDays(1);
-                    }
-                    if (!dto.EndDateTime.HasValue)
-                    {
-                        dto.EndDateTime = DateTime.MaxValue.AddDays(-1);
-                    }
-                    dto.StartDateTime = dto.StartDateTime.Value.Date.AddDays(-1);
-                    dto.EndDateTime = dto.EndDateTime.Value.Date.AddDays(1);
-                    source = source.Where(m => m.AwardingDate > dto.StartDateTime.Value && m.AwardingDate < dto.EndDateTime);
-                }
+                source = source.WhereDateTime(nameof(MarkSixRecord.AwardingDate), dto.StartDateTime, dto.EndDateTime);
 
                 if (!string.IsNullOrWhiteSpace(dto.Times))
                 {

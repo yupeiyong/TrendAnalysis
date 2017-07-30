@@ -44,6 +44,12 @@ namespace Winform.Marksix
             bdnPositionItem.Enabled = true;
             bdnPositionItem.Text = "1";
             enableEvent = true;
+            cboLocation.Items.Add(new ComboBoxItem<int> { Text = "全部", Value = 0 });
+            for (var i = 1; i <= 7; i++)
+            {
+                cboLocation.Items.Add(new ComboBoxItem<int> { Text = i.ToString(), Value = i });
+            }
+            cboLocation.SelectedIndex = 0;
             tsbSearch_Click(null, e);
 
         }
@@ -70,7 +76,11 @@ namespace Winform.Marksix
                     searchDto.StartDateTime = dt;
                 }
             }
-
+            var selectedLocation = cboLocation.SelectedItem as ComboBoxItem<int>;
+            if (selectedLocation != null)
+            {
+                searchDto.Location = selectedLocation.Value;
+            }
             if (tbEndDateTime.Text.Trim().Length > 0)
             {
                 var strDate = tbEndDateTime.Text.Trim();
@@ -96,6 +106,7 @@ namespace Winform.Marksix
                         );
                     frmMdi.tsslInfo.Text = "查询内容为空！";
                     frmMdi.tsslInfo.BackColor = Color.Yellow;
+                    //dgvMarksixPurchaseRecordList.DataSource = null;
                     return null;
                 }
                 frmMdi.tsslInfo.Text = "查询完成！";
@@ -210,10 +221,10 @@ namespace Winform.Marksix
 
                 var frm = new frmMarkSixSpecifiedLocationPurchase();
                 var purchase = service.GetSpecifiedLocationPurchaseById(recordId);
-                if(purchase==null)
+                if (purchase == null)
                     throw new Exception(string.Format("错误，购买记录不存在！(Id:{0})", id));
                 frm.MarkSixSpecifiedLocationPurchase = purchase;
-                frm.Text = string.Format("编辑 第{0}期第{0}位 购买记录", purchase.Times,purchase.Location);
+                frm.Text = string.Format("编辑 第{0}期第{0}位 购买记录", purchase.Times, purchase.Location);
 
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
@@ -225,7 +236,7 @@ namespace Winform.Marksix
                 {
                     frmMdi.tsslInfo.Text = "取消修改";
                     frmMdi.tsslInfo.BackColor = Color.Yellow;
-                }                
+                }
             }
             catch (Exception ex)
             {
