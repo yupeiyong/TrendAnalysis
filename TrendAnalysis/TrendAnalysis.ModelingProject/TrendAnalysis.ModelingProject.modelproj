@@ -22,19 +22,19 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
-    <Content Include="ExportReport.sequencediagram">
+    <Content Include="ExportRecord.sequencediagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="ExportReport.sequencediagram.layout">
+    <Content Include="ExportRecord.sequencediagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>ExportReport.sequencediagram</DependentUpon>
+      <DependentUpon>ExportRecord.sequencediagram</DependentUpon>
     </Content>
-    <Content Include="ImportExport.sequencediagram">
+    <Content Include="ImportRecord.sequencediagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="ImportExport.sequencediagram.layout">
+    <Content Include="ImportRecord.sequencediagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>ImportExport.sequencediagram</DependentUpon>
+      <DependentUpon>ImportRecord.sequencediagram</DependentUpon>
     </Content>
     <Content Include="MarkSixBusiness.classdiagram">
       <SubType>Content</SubType>
