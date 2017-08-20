@@ -16,7 +16,7 @@ namespace TrendAnalysis.Service
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="arr"></param>
-        /// <param name="middleIndex"></param>
+        /// <param name="middleIndex">进行二分组合时，从0开始的索引位置</param>
         /// <returns></returns>
         public List<BinaryNode<T>> CreateBinaryCombinations<T>(List<T> arr, int middleIndex = 0) where T : struct
         {
@@ -25,11 +25,12 @@ namespace TrendAnalysis.Service
 
             var nodes = new List<BinaryNode<T>>();
             var length = arr.Count();
-            if (length==1)
+            if (length == 1)
             {
-                nodes.Add(new BinaryNode<T> { Left = new List<T>() { arr[0] },Right=new List<T>() });
+                nodes.Add(new BinaryNode<T> { Left = new List<T>() { arr[0] }, Right = new List<T>() });
                 return nodes;
-            }else if (length == 2)
+            }
+            else if (length == 2)
             {
                 nodes.Add(new BinaryNode<T> { Left = new List<T>() { arr[0] }, Right = new List<T>() { arr[1] } });
                 return nodes;
@@ -71,23 +72,23 @@ namespace TrendAnalysis.Service
                 if (currentIndex >= top)
                 {
                     var indexValue = leftIndexArray[currentIndex];
-                    for (var i = currentIndex; i < middleIndex; i++)
+                    for (var i = currentIndex; i <= middleIndex; i++)
                     {
                         leftIndexArray[i] = ++indexValue;
                     }
                     currentIndex = middleIndex;
                 }
 
-            } while (currentIndex >=top);     
+            } while (currentIndex >= top);
             return nodes;
         }
 
-        private BinaryNode<T>CreateNode<T>(List<T> arr, int[] leftIndexArray) where T : struct
+        private BinaryNode<T> CreateNode<T>(List<T> arr, int[] leftIndexArray) where T : struct
         {
 
             var leftArry = new List<T>();
             var rightArray = new List<T>();
-            for(var i = 0; i < arr.Count; i++)
+            for (var i = 0; i < arr.Count; i++)
             {
                 var item = arr[i];
                 if (leftIndexArray.Contains(i))
@@ -99,7 +100,7 @@ namespace TrendAnalysis.Service
                     rightArray.Add(item);
                 }
             }
-            return new BinaryNode<T>() {Left=leftArry,Right=rightArray };
+            return new BinaryNode<T>() { Left = leftArry, Right = rightArray };
         }
     }
 

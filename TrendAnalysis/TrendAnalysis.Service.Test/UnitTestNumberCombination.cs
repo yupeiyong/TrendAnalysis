@@ -45,6 +45,24 @@ namespace TrendAnalysis.Service.Test
         }
 
         [TestMethod]
+        public void TestCreateBinaryCombinations_Length_Three2()
+        {
+            var combination = new NumberCombination();
+            var arr = new List<int>() { 1, 2, 3};
+            var nodes = combination.CreateBinaryCombinations<int>(arr,1);
+            Assert.IsNotNull(nodes);
+            Assert.IsTrue(nodes.Count == 3);
+            Assert.IsTrue(nodes[0].Left != null && nodes[0].Left.Count == 2 && nodes[0].Left[0] == 1 && nodes[0].Left[1] == 2);
+            Assert.IsTrue(nodes[0].Right != null && nodes[0].Right.Count == 1 && nodes[0].Right[0] == 3);
+
+            Assert.IsTrue(nodes[1].Left != null && nodes[1].Left.Count == 2 && nodes[1].Left[0] == 1 && nodes[1].Left[1] == 3);
+            Assert.IsTrue(nodes[1].Right != null && nodes[1].Right.Count == 1 && nodes[1].Right[0] == 2);
+
+            Assert.IsTrue(nodes[2].Left != null && nodes[2].Left.Count == 2 && nodes[2].Left[0] == 2 && nodes[2].Left[1] == 3);
+            Assert.IsTrue(nodes[2].Right != null && nodes[2].Right.Count == 1 && nodes[2].Right[0] == 1);
+        }
+
+        [TestMethod]
         public void TestCreateBinaryCombinations_Length1()
         {
             var combination = new NumberCombination();
