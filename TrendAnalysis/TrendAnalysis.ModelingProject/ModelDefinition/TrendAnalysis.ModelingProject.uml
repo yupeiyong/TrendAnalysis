@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm12="http://schemas.microsoft.com/dsltools/UseCaseModel"
   dslVersion="1.0.0.0"
   Id="157f3c16-3e6f-4d21-b55b-3345795bc7f0"
   name="TrendAnalysis.ModelingProject" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -30,7 +30,7 @@
       <annotatedElements>
         <opaqueActionMoniker
           Id="4e26f5d7-6a3c-4b02-a460-765c866cde79"
-          LastKnownName="声明新数组C"
+          LastKnownName="声明新数组leftIndexArray"
           LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
       </annotatedElements>
     </comment>
@@ -3257,41 +3257,41 @@
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="55d59276-28ea-4653-8b05-8a3001956a59"
+                Id="1081ab2d-aa44-4fc3-8ac2-b4bc2356503a"
                 isLeaf="false">
                 <opaqueActionMoniker
-                  Id="4a54ccd9-4fa6-4d43-b0b8-e0d8452db19f"
-                  LastKnownName="从0到中间索引取数组左部=左部数组"
+                  Id="4e26f5d7-6a3c-4b02-a460-765c866cde79"
+                  LastKnownName="声明新数组leftIndexArray"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
           </opaqueAction>
           <opaqueAction
             Id="4a54ccd9-4fa6-4d43-b0b8-e0d8452db19f"
-            name="从0到中间索引取数组左部=左部数组"
+            name="初始化leftIndexArray(值为索引值)"
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="9ef0ab2c-7841-454f-9ad7-c4ad1b69134b"
+                Id="dcd4096c-f248-4d00-a188-86f5573f7812"
                 isLeaf="false">
                 <opaqueActionMoniker
-                  Id="4e26f5d7-6a3c-4b02-a460-765c866cde79"
-                  LastKnownName="声明新数组C"
+                  Id="712a15c2-1e9a-47dd-963b-7d288e1bc68a"
+                  LastKnownName="生成组合数"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
           </opaqueAction>
           <opaqueAction
             Id="4e26f5d7-6a3c-4b02-a460-765c866cde79"
-            name="声明新数组C"
+            name="声明新数组leftIndexArray"
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="263def5e-8725-4772-8118-663920763437"
+                Id="cd66faac-b312-43b7-a2a0-e95bf7354336"
                 isLeaf="false">
                 <opaqueActionMoniker
-                  Id="712a15c2-1e9a-47dd-963b-7d288e1bc68a"
-                  LastKnownName="生成组合数"
+                  Id="4a54ccd9-4fa6-4d43-b0b8-e0d8452db19f"
+                  LastKnownName="初始化leftIndexArray(值为索引值)"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>

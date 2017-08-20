@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<activityRootModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm12="http://schemas.microsoft.com/dsltools/UseCaseModel" dslVersion="1.0.0.0" Id="627c33cb-04d3-48aa-9b85-0c1198a40e9d" name="Activity1" linkedPackageId="03f05b60-8914-4644-9e89-e215da968ddb" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner">
+<activityRootModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm12="http://schemas.microsoft.com/dsltools/UseCaseModel" dslVersion="1.0.0.0" Id="627c33cb-04d3-48aa-9b85-0c1198a40e9d" name="Activity1" linkedPackageId="03f05b60-8914-4644-9e89-e215da968ddb" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner">
   <ownedCommentsInternal>
     <comment Id="12ebb3bd-55f5-4ee2-9881-f28ee8639993">
       <elementDefinition Id="89b165a6-7ae1-4d15-8a30-a65d42659bf2" />
@@ -12,7 +12,7 @@
       <elementDefinition Id="ca4ff853-869a-4760-847c-4ef7085851a9" />
       <body>记录左部数组索引变化</body>
       <annotatedElements>
-        <opaqueActionMoniker Id="94352ca1-88cb-4e2f-b862-b058ff1475f6" LastKnownName="声明新数组C" />
+        <opaqueActionMoniker Id="94352ca1-88cb-4e2f-b862-b058ff1475f6" LastKnownName="声明新数组leftIndexArray" />
       </annotatedElements>
     </comment>
     <comment Id="ccb4c57d-09cd-4800-8170-939fb1e0dd14">
@@ -27,20 +27,6 @@
       <body>组合数因子第一位不会变化</body>
     </comment>
   </ownedCommentsInternal>
-  <profileInstances>
-    <packageHasProfileInstances Id="0dea7789-4f4f-4a8b-a4ae-4618d391c591">
-      <profileInstance Id="6da74e65-2d2b-4c4d-a3ac-2dd7e62a3c7c" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="86f4e463-a037-4ec4-81f9-3fa60d9de583">
-      <profileInstance Id="1c7f29fd-e480-4dc3-8234-321c5d677640" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-  </profileInstances>
   <packagedElements>
     <activityRootModelHasActivity>
       <activity Id="a0b993c5-231d-4911-8fbc-5ff271edeccd" name="Activity1" isAbstract="false" isLeaf="false" isActiveClass="false" isReentrant="false" isReadOnly="false" isSingleExecution="false">
@@ -114,27 +100,27 @@
           <opaqueAction Id="fd372794-07d9-446c-b2f2-1dea462cc241" name="中间索引-=1" isLeaf="false">
             <elementDefinition Id="c6d46220-7176-47aa-a6bc-7b5f9f9e9800" />
             <flowNodeTargets>
-              <controlFlow Id="4c55ff3a-f10b-4129-b17e-1da811374251" isLeaf="false">
-                <opaqueActionMoniker Id="f73067ac-09c3-4afa-97a1-f3a9a47c2256" LastKnownName="从0到中间索引取数组左部=左部数组" />
-                <elementDefinition Id="55d59276-28ea-4653-8b05-8a3001956a59" />
+              <controlFlow Id="48f6224b-6fd5-4fd8-b6c5-f2965e8a092c" isLeaf="false">
+                <opaqueActionMoniker Id="94352ca1-88cb-4e2f-b862-b058ff1475f6" LastKnownName="声明新数组leftIndexArray" />
+                <elementDefinition Id="1081ab2d-aa44-4fc3-8ac2-b4bc2356503a" />
               </controlFlow>
             </flowNodeTargets>
           </opaqueAction>
-          <opaqueAction Id="f73067ac-09c3-4afa-97a1-f3a9a47c2256" name="从0到中间索引取数组左部=左部数组" isLeaf="false">
+          <opaqueAction Id="f73067ac-09c3-4afa-97a1-f3a9a47c2256" name="初始化leftIndexArray(值为索引值)" isLeaf="false">
             <elementDefinition Id="4a54ccd9-4fa6-4d43-b0b8-e0d8452db19f" />
             <flowNodeTargets>
-              <controlFlow Id="e8971747-1e0e-4916-9090-4d0534d5979c" isLeaf="false">
-                <opaqueActionMoniker Id="94352ca1-88cb-4e2f-b862-b058ff1475f6" LastKnownName="声明新数组C" />
-                <elementDefinition Id="9ef0ab2c-7841-454f-9ad7-c4ad1b69134b" />
+              <controlFlow Id="d3fe523c-9df0-4615-98cc-3fe0f6cbc863" isLeaf="false">
+                <opaqueActionMoniker Id="e38cfbed-1075-4368-a753-cbecc695d015" LastKnownName="生成组合数" />
+                <elementDefinition Id="dcd4096c-f248-4d00-a188-86f5573f7812" />
               </controlFlow>
             </flowNodeTargets>
           </opaqueAction>
-          <opaqueAction Id="94352ca1-88cb-4e2f-b862-b058ff1475f6" name="声明新数组C" isLeaf="false">
+          <opaqueAction Id="94352ca1-88cb-4e2f-b862-b058ff1475f6" name="声明新数组leftIndexArray" isLeaf="false">
             <elementDefinition Id="4e26f5d7-6a3c-4b02-a460-765c866cde79" />
             <flowNodeTargets>
-              <controlFlow Id="ad139bd0-71f2-40fb-85ea-e68f9dd1549d" isLeaf="false">
-                <opaqueActionMoniker Id="e38cfbed-1075-4368-a753-cbecc695d015" LastKnownName="生成组合数" />
-                <elementDefinition Id="263def5e-8725-4772-8118-663920763437" />
+              <controlFlow Id="f4234af6-1239-44da-a8c3-eb3e4474fea0" isLeaf="false">
+                <opaqueActionMoniker Id="f73067ac-09c3-4afa-97a1-f3a9a47c2256" LastKnownName="初始化leftIndexArray(值为索引值)" />
+                <elementDefinition Id="cd66faac-b312-43b7-a2a0-e95bf7354336" />
               </controlFlow>
             </flowNodeTargets>
           </opaqueAction>
@@ -310,5 +296,19 @@
   </packagedElements>
   <package Id="03f05b60-8914-4644-9e89-e215da968ddb" name="TrendAnalysis.ModelingProject">
     <elementDefinition Id="157f3c16-3e6f-4d21-b55b-3345795bc7f0" />
+    <profileInstances>
+      <packageHasProfileInstances Id="0dea7789-4f4f-4a8b-a4ae-4618d391c591">
+        <profileInstance Id="6da74e65-2d2b-4c4d-a3ac-2dd7e62a3c7c" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="86f4e463-a037-4ec4-81f9-3fa60d9de583">
+        <profileInstance Id="1c7f29fd-e480-4dc3-8234-321c5d677640" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </activityRootModel>
