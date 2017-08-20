@@ -35,18 +35,24 @@
       </annotatedElements>
     </comment>
     <comment
-      Id="c0b6bf6b-9cef-4216-96aa-2fb2d1344d58">
-      <body>生成组合数</body>
+      Id="579604b6-fb0d-417c-9e4a-e4d6b938279f">
+      <body>当前位置索引</body>
       <annotatedElements>
         <opaqueActionMoniker
-          Id="25b76aab-1f99-4ef1-8dc9-ed52b578e565"
-          LastKnownName="遍历左部数组尾索引n, 从当前位置到数组最大索引"
+          Id="bde35cbb-c74d-41a9-950c-12d16bf61987"
+          LastKnownName="currentIndex=middleIndex"
           LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
       </annotatedElements>
     </comment>
     <comment
-      Id="4353e2a4-e46c-484e-bf17-852bb416ccfb">
-      <body>组合数因子第一位不会变化</body>
+      Id="dec8803c-1f38-4794-b043-565f637496ca">
+      <body>数组长度为奇数判断currentIndex &gt;=0，偶数currentIndex &gt; =1</body>
+      <annotatedElements>
+        <decisionNodeMoniker
+          Id="82a92137-b687-4e31-973b-371cb1b840cc"
+          LastKnownName="Decision7"
+          LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+      </annotatedElements>
     </comment>
   </ownedCommentsInternal>
   <profileInstances>
@@ -3331,254 +3337,255 @@
             </flowNodeTargets>
           </opaqueAction>
           <opaqueAction
-            Id="25b76aab-1f99-4ef1-8dc9-ed52b578e565"
-            name="遍历左部数组尾索引n, 从当前位置到数组最大索引"
+            Id="bde35cbb-c74d-41a9-950c-12d16bf61987"
+            name="currentIndex=middleIndex"
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="b4939daa-89dd-4c67-baa7-a0dc241abdf7"
+                Id="2e45d502-608d-4ad8-8021-03578559becd"
                 isLeaf="false">
-                <forkNodeMoniker
-                  Id="e6c0f26a-eac7-4a2d-9b7b-e7e93989de79"
-                  LastKnownName="Fork1"
+                <opaqueActionMoniker
+                  Id="dfa2ac8d-a523-46cf-bfaa-9721b29a77d3"
+                  LastKnownName="遍历左部数组尾索引n, 从当前位置到数组最大索引"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
           </opaqueAction>
           <opaqueAction
-            Id="f4d32678-b500-4bb7-a219-6ddf9863c487"
-            name="记录当前组合"
+            Id="dfa2ac8d-a523-46cf-bfaa-9721b29a77d3"
+            name="遍历左部数组尾索引n, 从当前位置到数组最大索引"
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="09c0a35b-f4bc-41d3-adcf-c8e9a279761e"
+                Id="fd86f64b-6a0e-46be-8b01-881b2eafae25"
                 isLeaf="false">
-                <joinNodeMoniker
-                  Id="c5b909a4-1408-4e12-ad0b-58b777b2f7e2"
-                  LastKnownName="Join1"
+                <opaqueActionMoniker
+                  Id="357000c7-969b-4dbe-89d2-1d14a251e975"
+                  LastKnownName="记录当前组合1"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="357000c7-969b-4dbe-89d2-1d14a251e975"
+            name="记录当前组合1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="2b809966-950c-4c71-869c-f91a2a27805b"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="a7b5e91b-bdb9-4c36-b94b-eb934699ae46"
+                  LastKnownName="数组C记录也作改变1"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="a7b5e91b-bdb9-4c36-b94b-eb934699ae46"
+            name="数组C记录也作改变1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="fce73b54-f03f-46af-a10d-208119e36d96"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="0c80daeb-f3b0-44f4-82de-8c8633d4ce9b"
+                  LastKnownName="Decision6"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
           </opaqueAction>
           <decisionNode
-            Id="f9af4f0c-6d0d-4a05-abbc-b40bee4f5012"
-            name="Decision3"
+            Id="0c80daeb-f3b0-44f4-82de-8c8633d4ce9b"
+            name="Decision6"
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="039db57d-fe5d-44ad-a15a-5d10220cf95f"
-                guard="i&lt;n"
+                Id="c0f79279-e7bd-4bdd-bc26-f93e3a2f8b1a"
+                guard="n&lt;0"
                 isLeaf="false">
                 <opaqueActionMoniker
-                  Id="25b76aab-1f99-4ef1-8dc9-ed52b578e565"
+                  Id="dfa2ac8d-a523-46cf-bfaa-9721b29a77d3"
                   LastKnownName="遍历左部数组尾索引n, 从当前位置到数组最大索引"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
               <controlFlow
-                Id="dc22a15f-70af-4d68-84df-cb66f4be6bd8"
+                Id="643bec47-65ee-4ce0-a87c-c72e5ccf7ae6"
                 isLeaf="false">
                 <opaqueActionMoniker
-                  Id="676eaaa1-8df7-4679-a865-a7b860fa8c16"
-                  LastKnownName="上一索引位置m=n-1"
+                  Id="cb753fe4-ba23-47aa-8650-91cb4611cf2b"
+                  LastKnownName="m=currentIndex-1"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
           </decisionNode>
           <opaqueAction
-            Id="63b5e955-616a-4000-86cd-9a56d79d1a6c"
-            name="数组C的m位置值++"
+            Id="cb753fe4-ba23-47aa-8650-91cb4611cf2b"
+            name="m=currentIndex-1"
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="f2671cca-ec65-4c98-8534-ccd7e29741f3"
-                isLeaf="false">
-                <opaqueActionMoniker
-                  Id="4b3a3540-2f50-4789-be45-a2232f8bbb20"
-                  LastKnownName="数组C从m位置开始累加"
-                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
-              </controlFlow>
-            </flowNodeTargets>
-          </opaqueAction>
-          <opaqueAction
-            Id="42f35158-1a90-4598-9f08-90c8ef1d1544"
-            name="回到数组C的m索引位置"
-            isLeaf="false">
-            <flowNodeTargets>
-              <controlFlow
-                Id="84ecaf45-905f-4325-9e27-d26b4d7acb04"
+                Id="702993f8-1f77-448a-b983-dc71c6c3c0cb"
                 isLeaf="false">
                 <decisionNodeMoniker
-                  Id="2255b6f7-54e2-4003-8641-ed85f950ff14"
-                  LastKnownName="Decision4"
+                  Id="82a92137-b687-4e31-973b-371cb1b840cc"
+                  LastKnownName="Decision7"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
           </opaqueAction>
           <decisionNode
-            Id="2255b6f7-54e2-4003-8641-ed85f950ff14"
-            name="Decision4"
+            Id="82a92137-b687-4e31-973b-371cb1b840cc"
+            name="Decision7"
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="cd0f9bf0-7c21-41ea-924e-a0343afa5630"
-                guard="数组C的m位置值&lt;指定值"
+                Id="ce8825fd-eea0-43b5-99e1-20a22c3c8518"
                 isLeaf="false">
                 <opaqueActionMoniker
-                  Id="63b5e955-616a-4000-86cd-9a56d79d1a6c"
-                  LastKnownName="数组C的m位置值++"
+                  Id="35d08def-b2a7-4b88-8971-82b0632441bc"
+                  LastKnownName="回到数组leftIndexArray的m索引位置"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
               <controlFlow
-                Id="20599b7e-fcad-416f-9a8f-9faa06b4b781"
+                Id="0d43166d-3b5c-4e1f-9fb3-afca8d7b3c89"
+                guard="m索引位置越界"
                 isLeaf="false">
                 <opaqueActionMoniker
-                  Id="61d7b0f4-48b4-4837-a244-8385e822923b"
+                  Id="f38fda48-d0a1-4b0b-8c4b-3e5172b54ec6"
+                  LastKnownName="返回结果"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <activityFinalNode
+            Id="1d78a03f-6990-43d0-917f-14d1455b46d0"
+            name="ActivityFinal4"
+            isLeaf="false" />
+          <opaqueAction
+            Id="35d08def-b2a7-4b88-8971-82b0632441bc"
+            name="回到数组leftIndexArray的m索引位置"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="d749d955-8265-4c9a-a1c4-c4a756aa16f7"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="668e9553-892d-4fbd-9d33-6f402c2ff9e7"
+                  LastKnownName="m位置值++"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="f38fda48-d0a1-4b0b-8c4b-3e5172b54ec6"
+            name="返回结果"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="1ed65aca-1cf3-4c94-b0b3-ec77f7d536bf"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="1d78a03f-6990-43d0-917f-14d1455b46d0"
+                  LastKnownName="ActivityFinal4"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="668e9553-892d-4fbd-9d33-6f402c2ff9e7"
+            name="m位置值++"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="de8df742-74c8-4c9a-a37a-d4cfe8b71de4"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="add3d94b-b71f-40cf-acf4-12bc3b35c24f"
+                  LastKnownName="数组C从m位置开始累加1"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="add3d94b-b71f-40cf-acf4-12bc3b35c24f"
+            name="数组C从m位置开始累加1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="dcf51780-1fd5-4749-a11b-8baa29126ea1"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="11d37856-450c-4c7f-adbc-20d328ab0c56"
+                  LastKnownName="Decision8"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="11d37856-450c-4c7f-adbc-20d328ab0c56"
+            name="Decision8"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="12a1eaa2-1d4c-4f18-8e67-51cf08c9f836"
+                guard="leftIndexArray的m位置值&lt;指定值"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="dfa2ac8d-a523-46cf-bfaa-9721b29a77d3"
+                  LastKnownName="遍历左部数组尾索引n, 从当前位置到数组最大索引"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="040ab161-3fdc-4c1a-9ae1-c24050f1511a"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="b210e483-bdb4-4a20-a7c7-80a409a9ed7b"
                   LastKnownName="m=m-1"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
           </decisionNode>
           <opaqueAction
-            Id="676eaaa1-8df7-4679-a865-a7b860fa8c16"
-            name="上一索引位置m=n-1"
-            isLeaf="false">
-            <flowNodeTargets>
-              <controlFlow
-                Id="64555441-0766-4333-8fa8-5e3359322f9a"
-                isLeaf="false">
-                <opaqueActionMoniker
-                  Id="42f35158-1a90-4598-9f08-90c8ef1d1544"
-                  LastKnownName="回到数组C的m索引位置"
-                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
-              </controlFlow>
-            </flowNodeTargets>
-          </opaqueAction>
-          <opaqueAction
-            Id="792e915e-e704-423a-a234-d639f94373fe"
-            name="数组C记录也作改变"
-            isLeaf="false">
-            <flowNodeTargets>
-              <controlFlow
-                Id="6ae61b63-2f8f-40c7-b466-726f134a0456"
-                isLeaf="false">
-                <joinNodeMoniker
-                  Id="c5b909a4-1408-4e12-ad0b-58b777b2f7e2"
-                  LastKnownName="Join1"
-                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
-              </controlFlow>
-            </flowNodeTargets>
-          </opaqueAction>
-          <opaqueAction
-            Id="4b3a3540-2f50-4789-be45-a2232f8bbb20"
-            name="数组C从m位置开始累加"
-            isLeaf="false">
-            <flowNodeTargets>
-              <controlFlow
-                Id="867aa664-b378-436e-b38f-eaf0f9a8074f"
-                isLeaf="false">
-                <opaqueActionMoniker
-                  Id="25b76aab-1f99-4ef1-8dc9-ed52b578e565"
-                  LastKnownName="遍历左部数组尾索引n, 从当前位置到数组最大索引"
-                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
-              </controlFlow>
-            </flowNodeTargets>
-          </opaqueAction>
-          <opaqueAction
-            Id="61d7b0f4-48b4-4837-a244-8385e822923b"
+            Id="b210e483-bdb4-4a20-a7c7-80a409a9ed7b"
             name="m=m-1"
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="52b1e304-2bde-45ef-9d19-8185abdcb457"
+                Id="4b6c4ce6-f854-4637-94b9-05715ca4775b"
                 isLeaf="false">
                 <decisionNodeMoniker
-                  Id="e7d47fc5-0053-41e6-bb4a-d1580fdf1286"
-                  LastKnownName="Decision5"
+                  Id="b11ad7ad-d9d7-49dc-a133-4fce88db9bb7"
+                  LastKnownName="Decision9"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
           </opaqueAction>
-          <forkNode
-            Id="e6c0f26a-eac7-4a2d-9b7b-e7e93989de79"
-            name="Fork1"
-            isLeaf="false">
-            <flowNodeTargets>
-              <controlFlow
-                Id="6b8d2993-c72a-4015-a3d4-4be884000a1c"
-                isLeaf="false">
-                <opaqueActionMoniker
-                  Id="792e915e-e704-423a-a234-d639f94373fe"
-                  LastKnownName="数组C记录也作改变"
-                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
-              </controlFlow>
-              <controlFlow
-                Id="fa0192be-7fbe-46ce-8176-0dd3956ed087"
-                isLeaf="false">
-                <opaqueActionMoniker
-                  Id="f4d32678-b500-4bb7-a219-6ddf9863c487"
-                  LastKnownName="记录当前组合"
-                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
-              </controlFlow>
-            </flowNodeTargets>
-          </forkNode>
-          <joinNode
-            Id="c5b909a4-1408-4e12-ad0b-58b777b2f7e2"
-            name="Join1"
-            isLeaf="false">
-            <flowNodeTargets>
-              <controlFlow
-                Id="6aff8790-c7fb-495c-a35e-198e6c5ccc6b"
-                isLeaf="false">
-                <decisionNodeMoniker
-                  Id="f9af4f0c-6d0d-4a05-abbc-b40bee4f5012"
-                  LastKnownName="Decision3"
-                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
-              </controlFlow>
-            </flowNodeTargets>
-          </joinNode>
           <decisionNode
-            Id="e7d47fc5-0053-41e6-bb4a-d1580fdf1286"
-            name="Decision5"
+            Id="b11ad7ad-d9d7-49dc-a133-4fce88db9bb7"
+            name="Decision9"
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="5c19aad9-248b-4075-9eea-0413416a3b5c"
+                Id="9c0328f9-c5bf-464a-a93c-50e67bf023d5"
+                guard="m索引位置越界"
                 isLeaf="false">
                 <opaqueActionMoniker
-                  Id="42f35158-1a90-4598-9f08-90c8ef1d1544"
-                  LastKnownName="回到数组C的m索引位置"
+                  Id="f38fda48-d0a1-4b0b-8c4b-3e5172b54ec6"
+                  LastKnownName="返回结果"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
               <controlFlow
-                Id="b5565f71-fc34-4c25-ad9a-1e7061a94ff0"
-                guard="m&lt;=0"
+                Id="42510c92-d3f3-4ec8-9d5a-c10ea9fae349"
                 isLeaf="false">
                 <opaqueActionMoniker
-                  Id="4b76ba51-1cc1-448f-89c1-04a306db9245"
-                  LastKnownName="返回组合数集合"
+                  Id="dfa2ac8d-a523-46cf-bfaa-9721b29a77d3"
+                  LastKnownName="遍历左部数组尾索引n, 从当前位置到数组最大索引"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
           </decisionNode>
-          <opaqueAction
-            Id="4b76ba51-1cc1-448f-89c1-04a306db9245"
-            name="返回组合数集合"
-            isLeaf="false">
-            <flowNodeTargets>
-              <controlFlow
-                Id="76cf90e2-0f0a-4cac-bf02-799a203e6f19"
-                isLeaf="false">
-                <activityFinalNodeMoniker
-                  Id="b5615e11-d4b4-433a-8de0-9c50455cc780"
-                  LastKnownName="ActivityFinal3"
-                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
-              </controlFlow>
-            </flowNodeTargets>
-          </opaqueAction>
-          <activityFinalNode
-            Id="b5615e11-d4b4-433a-8de0-9c50455cc780"
-            name="ActivityFinal3"
-            isLeaf="false" />
         </nodes>
       </activity>
     </packageHasNamedElement>

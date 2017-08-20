@@ -48,7 +48,9 @@ namespace TrendAnalysis.Service
 
             //当前位置
             var currentIndex = middleIndex;
-            while (currentIndex > 0)
+            //处理左部数组时，头部索引位置
+            var top = length % 2 == 0 ? 1 : 0;
+            do
             {
                 if (currentIndex == middleIndex)
                 {
@@ -60,25 +62,23 @@ namespace TrendAnalysis.Service
                     }
                 }
                 currentIndex -= 1;
-                while (currentIndex > 0)
+                while (currentIndex >= top)
                 {
                     var indexValue = leftIndexArray[currentIndex];
                     if (indexValue < length - currentIndex) break;
                     currentIndex--;
                 }
-                if (currentIndex > 0)
+                if (currentIndex >= top)
                 {
                     var indexValue = leftIndexArray[currentIndex];
-                    for(var i = currentIndex; i < middleIndex; i++)
+                    for (var i = currentIndex; i < middleIndex; i++)
                     {
                         leftIndexArray[i] = ++indexValue;
                     }
                     currentIndex = middleIndex;
                 }
-            }
-            
 
-            
+            } while (currentIndex >=top);     
             return nodes;
         }
 
