@@ -3744,7 +3744,7 @@
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="c48e6f3f-2607-4905-9967-5e3a0e79e47a"
+                Id="52807075-6f34-4d35-9f44-4bd5ae00fe4d"
                 isLeaf="false">
                 <forkNodeMoniker
                   Id="da353d87-5a4c-4af2-a9d9-e5eda31d8c09"
@@ -3827,11 +3827,11 @@
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="43b34835-1b38-48b8-b55a-c0a299274e08"
+                Id="6bdaf0f2-3a09-4711-8456-575990be967c"
                 isLeaf="false">
                 <opaqueActionMoniker
-                  Id="5b79a5ca-137d-473f-8b1b-7d7080a6f90b"
-                  LastKnownName="index=i"
+                  Id="2f8cee5b-0bd6-486a-a57b-aee4c6a0f1c9"
+                  LastKnownName="当前索引index=i"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
@@ -3842,7 +3842,7 @@
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="4851c0c4-f34b-4d4b-b9b1-66515a82603d"
+                Id="70bbc443-18cc-481b-9043-3f3b7e11c64b"
                 isLeaf="false">
                 <opaqueActionMoniker
                   Id="8f21fc8a-b53c-4eb8-9487-1c8eb6f96373"
@@ -3927,11 +3927,10 @@
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="814b8e53-9cc8-4f70-a932-9d4aff04d694"
+                Id="f1b0ac23-3cfe-4004-8eeb-01da0b7af6eb"
                 isLeaf="false">
                 <opaqueActionMoniker
-                  Id="8042a115-ca78-41b6-8b91-bd1fa8161fc2"
-                  LastKnownName="当前记录x=arr[i]"
+                  Id="27731cab-36d1-4b57-bc37-78ffd1a99739"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
@@ -3942,40 +3941,14 @@
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="8460e0ba-869b-43f5-89f0-2796eadbf00e"
+                Id="93ca3de2-2ff7-43c7-b1ce-8cc4ffbbe68a"
                 isLeaf="false">
-                <decisionNodeMoniker
-                  Id="271552bd-e12e-467c-b42d-9ee513d1a1c5"
-                  LastKnownName="Decision3"
+                <opaqueActionMoniker
+                  Id="27731cab-36d1-4b57-bc37-78ffd1a99739"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
           </opaqueAction>
-          <decisionNode
-            Id="271552bd-e12e-467c-b42d-9ee513d1a1c5"
-            name="Decision3"
-            isLeaf="false">
-            <flowNodeTargets>
-              <controlFlow
-                Id="c36340c0-747f-4158-8672-05847c175925"
-                guard="i&gt;=len"
-                isLeaf="false">
-                <opaqueActionMoniker
-                  Id="4f6a5d56-422d-4051-aa6a-5c4dc3b2ed57"
-                  LastKnownName="返回连续因子集合"
-                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
-              </controlFlow>
-              <controlFlow
-                Id="ef488928-91f7-43f5-9151-91734b8b9fd8"
-                guard="i&lt;len"
-                isLeaf="false">
-                <opaqueActionMoniker
-                  Id="8042a115-ca78-41b6-8b91-bd1fa8161fc2"
-                  LastKnownName="当前记录x=arr[i]"
-                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
-              </controlFlow>
-            </flowNodeTargets>
-          </decisionNode>
           <opaqueAction
             Id="4f6a5d56-422d-4051-aa6a-5c4dc3b2ed57"
             name="返回连续因子集合"
@@ -4041,11 +4014,11 @@
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="132a94fc-b547-416a-a4dd-32d9cc8c2d75"
+                Id="337162cb-3b82-40ec-8ef4-870543244789"
                 isLeaf="false">
-                <opaqueActionMoniker
-                  Id="5b79a5ca-137d-473f-8b1b-7d7080a6f90b"
-                  LastKnownName="index=i"
+                <joinNodeMoniker
+                  Id="175afad5-04f1-4c91-b734-1e624062f3e2"
+                  LastKnownName="Join2"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
@@ -4056,7 +4029,88 @@
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="0ee1e335-8dff-415f-85c0-2f1c50a10a72"
+                Id="69dda73a-5ee4-4a92-bbaa-bcac3136d9a3"
+                isLeaf="false">
+                <joinNodeMoniker
+                  Id="175afad5-04f1-4c91-b734-1e624062f3e2"
+                  LastKnownName="Join2"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="2f8cee5b-0bd6-486a-a57b-aee4c6a0f1c9"
+            name="当前索引index=i"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="adf30e29-6125-486c-a2a0-2c57170903f0"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="5d118ec3-8efd-4439-94db-cb625d66ed5e"
+                  LastKnownName="连续次数l=01"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="5d118ec3-8efd-4439-94db-cb625d66ed5e"
+            name="连续次数l=01"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="a532ec79-e5a3-463c-a27e-128b365714fa"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="27731cab-36d1-4b57-bc37-78ffd1a99739"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="3eaaeeb7-aff9-4cb0-8ceb-b715d62052a0"
+            name="Decision5"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="d667e66a-32ae-47f4-8bd9-1d3b2477e890"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="4f6a5d56-422d-4051-aa6a-5c4dc3b2ed57"
+                  LastKnownName="返回连续因子集合"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="1318fb3a-9c3c-49df-a858-48bf2b332b28"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="8042a115-ca78-41b6-8b91-bd1fa8161fc2"
+                  LastKnownName="当前记录x=arr[i]"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="27731cab-36d1-4b57-bc37-78ffd1a99739"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="d40a3d2c-ae9a-409b-a4de-bb25b9c96f56"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="3eaaeeb7-aff9-4cb0-8ceb-b715d62052a0"
+                  LastKnownName="Decision5"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <joinNode
+            Id="175afad5-04f1-4c91-b734-1e624062f3e2"
+            name="Join2"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="e6ed2d2d-e5ae-4d6f-9bbd-53d1aa9f1c79"
                 isLeaf="false">
                 <opaqueActionMoniker
                   Id="5b79a5ca-137d-473f-8b1b-7d7080a6f90b"
@@ -4064,7 +4118,7 @@
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
-          </opaqueAction>
+          </joinNode>
         </nodes>
       </activity>
     </packageHasNamedElement>
