@@ -71,12 +71,12 @@
       <SubType>Content</SubType>
       <DependentUpon>活动图-按组合因子分析记录.activitydiagram</DependentUpon>
     </Content>
-    <Content Include="活动图-生成二发组合集合.activitydiagram">
+    <Content Include="活动图-生成二维组合集合.activitydiagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="活动图-生成二发组合集合.activitydiagram.layout">
+    <Content Include="活动图-生成二维组合集合.activitydiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>活动图-生成二发组合集合.activitydiagram</DependentUpon>
+      <DependentUpon>活动图-生成二维组合集合.activitydiagram</DependentUpon>
     </Content>
     <Content Include="UMLUseCaseDiagram.usecasediagram">
       <SubType>Content</SubType>
