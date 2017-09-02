@@ -1,0 +1,5 @@
+E:\workspace\TrendAnalysis\TrendAnalysis\Config\bin\Debug\Config.dll
+E:\workspace\TrendAnalysis\TrendAnalysis\Config\bin\Debug\Config.pdb
+E:\workspace\TrendAnalysis\TrendAnalysis\Config\obj\Debug\Config.dll
+E:\workspace\TrendAnalysis\TrendAnalysis\Config\obj\Debug\Config.pdb
+E:\workspace\TrendAnalysis\TrendAnalysis\Config\obj\Debug\Config.csprojResolveAssemblyReference.cache

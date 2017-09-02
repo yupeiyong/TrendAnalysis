@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm12="http://schemas.microsoft.com/dsltools/UseCaseModel"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner"
   dslVersion="1.0.0.0"
   Id="157f3c16-3e6f-4d21-b55b-3345795bc7f0"
   name="TrendAnalysis.ModelingProject" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -53,6 +53,10 @@
           LastKnownName="Decision7"
           LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
       </annotatedElements>
+    </comment>
+    <comment
+      Id="e42fcd5c-80d4-4000-9a6f-52908515da25">
+      <body>解析最长连续记录</body>
     </comment>
   </ownedCommentsInternal>
   <profileInstances>
@@ -3586,6 +3590,481 @@
               </controlFlow>
             </flowNodeTargets>
           </decisionNode>
+        </nodes>
+      </activity>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <activity
+        Id="1b62ca7d-a257-4fb3-bfd9-91dc6e723568"
+        name="活动图-按组合因子分析记录"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <initialNode
+            Id="62d4dea7-5fbd-4a42-a948-7513a6448a71"
+            name="Initial1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="cd77e7b3-a7f1-4c2b-97d6-64c1b5ffeaa0"
+                isLeaf="false">
+                <callOperationActionMoniker
+                  Id="799bea16-3a47-4d6b-964f-5edcce530bcb"
+                  LastKnownName="获取号码组合"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <callOperationAction
+            Id="799bea16-3a47-4d6b-964f-5edcce530bcb"
+            name="获取号码组合"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="b4fcfbbc-4fd9-4908-8324-6588151840a7"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="4f341f74-772d-4fcf-93bf-d4f1bd4be728"
+                  LastKnownName="i=0"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </callOperationAction>
+          <opaqueAction
+            Id="4f341f74-772d-4fcf-93bf-d4f1bd4be728"
+            name="i=0"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="fe8d2059-e9a5-41c5-bd09-386a7dc323e2"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="5f369af8-a443-43c5-b3e4-636eef2e2143"
+                  LastKnownName="进行循环判断"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="25a7731b-3d18-450a-a5eb-2b7437d763d2"
+            name="i++"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="121cf89f-1dbe-4a48-9184-d9ec20d72c63"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="5f369af8-a443-43c5-b3e4-636eef2e2143"
+                  LastKnownName="进行循环判断"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="188f7de0-d848-4e3d-99d2-6adccd61eb01"
+            name="Decision1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="5f018f47-9367-48f1-9754-d646625ac6fb"
+                guard="i&lt;length"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="a80e03bc-9eb5-4555-b748-02ea1b39c9e6"
+                  LastKnownName="用当前组合分析记录"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="65c217db-fcd7-4f25-be1c-c8c7b559280a"
+                guard="i&gt;=length"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="95028234-336a-4809-8214-425d3eee6691"
+                  LastKnownName="返回分析结果"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="a80e03bc-9eb5-4555-b748-02ea1b39c9e6"
+            name="用当前组合分析记录"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="ddf01cd6-ddee-4869-bd7c-55f47f4c0f31"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="25a7731b-3d18-450a-a5eb-2b7437d763d2"
+                  LastKnownName="i++"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="95028234-336a-4809-8214-425d3eee6691"
+            name="返回分析结果"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="4af6367d-daca-4ca9-8c42-58f2e0e6f307"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="a554e607-12a8-4ff4-9ea3-6ffc1e94f846"
+                  LastKnownName="ActivityFinal1"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="5f369af8-a443-43c5-b3e4-636eef2e2143"
+            name="进行循环判断"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="af11d0a5-5ac0-43f3-bc61-7f0f40f3caf4"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="188f7de0-d848-4e3d-99d2-6adccd61eb01"
+                  LastKnownName="Decision1"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <activityFinalNode
+            Id="a554e607-12a8-4ff4-9ea3-6ffc1e94f846"
+            name="ActivityFinal1"
+            isLeaf="false" />
+          <initialNode
+            Id="af6c185c-ddc6-44d7-9c55-ef80ecc0d1d7"
+            name="Initial2"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="c48e6f3f-2607-4905-9967-5e3a0e79e47a"
+                isLeaf="false">
+                <forkNodeMoniker
+                  Id="da353d87-5a4c-4af2-a9d9-e5eda31d8c09"
+                  LastKnownName="Fork1"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <opaqueAction
+            Id="f85d14e6-f26f-4dbe-b28b-99db0a14e57d"
+            name="历史记录"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="13f305f9-e1c6-408e-912f-4981de66998f"
+                isLeaf="false">
+                <joinNodeMoniker
+                  Id="741dd21a-e65e-4751-b931-470d8c05d959"
+                  LastKnownName="Join1"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="ed0a3f95-2a3c-4a4c-bea4-4b992d9bc420"
+            name="初始化最长连续因子集合"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="98f82e0f-fe2d-4d6e-a3f0-f1b1319d8e7a"
+                isLeaf="false">
+                <joinNodeMoniker
+                  Id="741dd21a-e65e-4751-b931-470d8c05d959"
+                  LastKnownName="Join1"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <forkNode
+            Id="da353d87-5a4c-4af2-a9d9-e5eda31d8c09"
+            name="Fork1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="a8745bf5-2557-4e50-bed9-5e8fd70ffcaf"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="ed0a3f95-2a3c-4a4c-bea4-4b992d9bc420"
+                  LastKnownName="初始化最长连续因子集合"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="d5664072-c3e0-4b80-be46-1745751fe4f6"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="f85d14e6-f26f-4dbe-b28b-99db0a14e57d"
+                  LastKnownName="历史记录"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </forkNode>
+          <joinNode
+            Id="741dd21a-e65e-4751-b931-470d8c05d959"
+            name="Join1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="6cf576fb-5001-4f67-bff4-eef18f6cd6ba"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="dc3de1cb-59db-4b91-bf2f-ea5d88118047"
+                  LastKnownName="len=记录长度"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </joinNode>
+          <opaqueAction
+            Id="8f21fc8a-b53c-4eb8-9487-1c8eb6f96373"
+            name="i=0"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="43b34835-1b38-48b8-b55a-c0a299274e08"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="5b79a5ca-137d-473f-8b1b-7d7080a6f90b"
+                  LastKnownName="index=i"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="dc3de1cb-59db-4b91-bf2f-ea5d88118047"
+            name="len=记录长度"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="4851c0c4-f34b-4d4b-b9b1-66515a82603d"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="8f21fc8a-b53c-4eb8-9487-1c8eb6f96373"
+                  LastKnownName="i=0"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="5b79a5ca-137d-473f-8b1b-7d7080a6f90b"
+            name="index=i"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="1ed006a4-9dbd-4fa4-a544-883f21c43587"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="2d38b2cf-4fef-4aac-84bc-330a31dfd5d8"
+                  LastKnownName="连续次数l=0"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="8042a115-ca78-41b6-8b91-bd1fa8161fc2"
+            name="当前记录x=arr[i]"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="c482a28f-9111-4596-8df2-5a852fc127c5"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="6358d9eb-9e76-4954-8ae7-37e3513388cc"
+                  LastKnownName="Decision2"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="6358d9eb-9e76-4954-8ae7-37e3513388cc"
+            name="Decision2"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="b91387dc-3f74-4aa0-b894-6662ad865604"
+                guard="x不在左部因子中"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="6c3c84cb-6c19-4eba-a157-edbbc61ab00d"
+                  LastKnownName="i=index+1"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="8281112e-6147-46be-af47-9b4d60f202c5"
+                guard="x在左部因子中"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="aa0686eb-c7d5-49f1-b629-8dd52c6ddb93"
+                  LastKnownName="l=l+1"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="aa0686eb-c7d5-49f1-b629-8dd52c6ddb93"
+            name="l=l+1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="6b1f0cb8-94f3-474c-a46b-6ac906111236"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="52eab38a-32a6-4458-8f29-9fed84fe6b1e"
+                  LastKnownName="i++"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="2d38b2cf-4fef-4aac-84bc-330a31dfd5d8"
+            name="连续次数l=0"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="814b8e53-9cc8-4f70-a932-9d4aff04d694"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="8042a115-ca78-41b6-8b91-bd1fa8161fc2"
+                  LastKnownName="当前记录x=arr[i]"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="52eab38a-32a6-4458-8f29-9fed84fe6b1e"
+            name="i++"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="8460e0ba-869b-43f5-89f0-2796eadbf00e"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="271552bd-e12e-467c-b42d-9ee513d1a1c5"
+                  LastKnownName="Decision3"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="271552bd-e12e-467c-b42d-9ee513d1a1c5"
+            name="Decision3"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="c36340c0-747f-4158-8672-05847c175925"
+                guard="i&gt;=len"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="4f6a5d56-422d-4051-aa6a-5c4dc3b2ed57"
+                  LastKnownName="返回连续因子集合"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="ef488928-91f7-43f5-9151-91734b8b9fd8"
+                guard="i&lt;len"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="8042a115-ca78-41b6-8b91-bd1fa8161fc2"
+                  LastKnownName="当前记录x=arr[i]"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="4f6a5d56-422d-4051-aa6a-5c4dc3b2ed57"
+            name="返回连续因子集合"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="8881b32d-4c16-4fb8-86b0-b45be7e12518"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="af14171e-2879-4db1-abc0-86ec92069eca"
+                  LastKnownName="ActivityFinal2"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <activityFinalNode
+            Id="af14171e-2879-4db1-abc0-86ec92069eca"
+            name="ActivityFinal2"
+            isLeaf="false" />
+          <opaqueAction
+            Id="6c3c84cb-6c19-4eba-a157-edbbc61ab00d"
+            name="i=index+1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="f64e4ff0-b4d0-48d0-bb5b-580b2c6ba034"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="13170db8-e6c9-4f49-ad2a-45e79ed6445d"
+                  LastKnownName="Decision4"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="13170db8-e6c9-4f49-ad2a-45e79ed6445d"
+            name="Decision4"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="b7fcf912-ddab-441c-9738-b10d8675075c"
+                guard="连续次数不在集合中"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="0bb73b6a-aaee-425e-a1dd-1f975bcd1215"
+                  LastKnownName="现有长度的记录数+1"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="b767bbdd-65ad-4481-a4cf-b1276234a2f6"
+                guard="连续次数在集合中"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="4f67cfa2-0c36-46c3-a93a-850687587947"
+                  LastKnownName="添加新记录"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="0bb73b6a-aaee-425e-a1dd-1f975bcd1215"
+            name="现有长度的记录数+1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="132a94fc-b547-416a-a4dd-32d9cc8c2d75"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="5b79a5ca-137d-473f-8b1b-7d7080a6f90b"
+                  LastKnownName="index=i"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="4f67cfa2-0c36-46c3-a93a-850687587947"
+            name="添加新记录"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="0ee1e335-8dff-415f-85c0-2f1c50a10a72"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="5b79a5ca-137d-473f-8b1b-7d7080a6f90b"
+                  LastKnownName="index=i"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
         </nodes>
       </activity>
     </packageHasNamedElement>

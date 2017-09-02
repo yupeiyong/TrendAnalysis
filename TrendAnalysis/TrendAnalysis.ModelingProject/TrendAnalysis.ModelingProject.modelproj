@@ -64,6 +64,13 @@
       <SubType>Content</SubType>
       <DependentUpon>MarkSixSpecifiedLocationAnalysis.sequencediagram</DependentUpon>
     </Content>
+    <Content Include="活动图-按组合因子分析记录.activitydiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="活动图-按组合因子分析记录.activitydiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>活动图-按组合因子分析记录.activitydiagram</DependentUpon>
+    </Content>
     <Content Include="活动图-生成二发组合集合.activitydiagram">
       <SubType>Content</SubType>
     </Content>

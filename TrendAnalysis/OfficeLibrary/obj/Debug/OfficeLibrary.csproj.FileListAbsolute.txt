@@ -1,0 +1,7 @@
+E:\workspace\TrendAnalysis\TrendAnalysis\OfficeLibrary\bin\Debug\OfficeLibrary.dll
+E:\workspace\TrendAnalysis\TrendAnalysis\OfficeLibrary\bin\Debug\OfficeLibrary.pdb
+E:\workspace\TrendAnalysis\TrendAnalysis\OfficeLibrary\bin\Debug\EPPlus.dll
+E:\workspace\TrendAnalysis\TrendAnalysis\OfficeLibrary\bin\Debug\EPPlus.xml
+E:\workspace\TrendAnalysis\TrendAnalysis\OfficeLibrary\obj\Debug\OfficeLibrary.csprojResolveAssemblyReference.cache
+E:\workspace\TrendAnalysis\TrendAnalysis\OfficeLibrary\obj\Debug\OfficeLibrary.dll
+E:\workspace\TrendAnalysis\TrendAnalysis\OfficeLibrary\obj\Debug\OfficeLibrary.pdb

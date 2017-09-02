@@ -1,0 +1,5 @@
+E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Models\bin\Debug\TrendAnalysis.Models.dll
+E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Models\bin\Debug\TrendAnalysis.Models.pdb
+E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Models\obj\Debug\TrendAnalysis.Models.dll
+E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Models\obj\Debug\TrendAnalysis.Models.pdb
+E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Models\obj\Debug\TrendAnalysis.Models.csprojResolveAssemblyReference.cache

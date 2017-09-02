@@ -1,0 +1,2 @@
+1、历史记录页的主菜单，是要还是不要？如果要就要调整和设置事件等
+2、分析窗口datagridview和groupbox margin属性无效，设置anchor窗口没有边距
