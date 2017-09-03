@@ -15,5 +15,15 @@ namespace TrendAnalysis.Service.Test
             var analysis = new FactorAnalysis();
             var rows=analysis.Consecutives(numbers, ls);
         }
+
+        [TestMethod]
+        public void TestMethod2()
+        {
+            var ls = new List<BinaryNode<int>>() { new BinaryNode<int> { Left = new List<int> { 1,2,3 }, Right = new List<int> { } } };
+            var numbers = new List<int> { 3, 2, 1, 2, 0, 0, 1, 2, 3, 3, 4, 4, 2, 3, 3, 0, 2, 3, 3 };
+            var analysis = new FactorAnalysis();
+            var rows = analysis.Consecutives(numbers, ls);
+        }
+
     }
 }
