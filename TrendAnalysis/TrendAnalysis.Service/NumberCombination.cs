@@ -108,9 +108,16 @@ namespace TrendAnalysis.Service
     /// 二分节点
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class BinaryNode<T> where T : struct
+    public class BinaryNode<T> 
     {
+        /// <summary>
+        /// 左因子
+        /// </summary>
         public List<T> Left { get; set; }
+
+        /// <summary>
+        /// 右因子
+        /// </summary>
         public List<T> Right { get; set; }
     }
 }
