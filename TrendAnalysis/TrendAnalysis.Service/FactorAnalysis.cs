@@ -17,9 +17,9 @@ namespace TrendAnalysis.Service
         /// <param name="numbers"></param>
         /// <param name="position"></param>
         /// <param name="nodes"></param>
-        public List<Results<string>> Consecutives(List<string> numbers, List<BinaryNode<string>> nodes)
+        public List<Results<T>> Consecutives<T>(List<T> numbers, List<BinaryNode<T>> nodes)
         {
-            var resultList = new List<Results<string>>();
+            var resultList = new List<Results<T>>();
             foreach (var node in nodes)
             {
                 if (node.Left != null && node.Left.Count > 0)
@@ -34,9 +34,9 @@ namespace TrendAnalysis.Service
             return resultList;
         }
 
-        private Results<string> Consecutive(List<string> numbers, List<string> factor)
+        private Results<T> Consecutive<T>(List<T> numbers, List<T> factor)
         {
-            var curResult = new Results<string> { Factor = factor, ConsecutiveTimes = new SortedDictionary<int, int>() };
+            var curResult = new Results<T> { Factor = factor, ConsecutiveTimes = new SortedDictionary<int, int>() };
             var i = 0;
             //连续次数
             var times = 0;
