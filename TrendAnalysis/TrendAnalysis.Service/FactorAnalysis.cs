@@ -20,17 +20,23 @@ namespace TrendAnalysis.Service
         public List<Results<string>> Consecutives(List<string> numbers, List<BinaryNode<string>> nodes)
         {
             var resultList = new List<Results<string>>();
-            foreach(var node in nodes)
+            foreach (var node in nodes)
             {
-                resultList.Add(Consecutive(numbers, node.Left));
-                resultList.Add(Consecutive(numbers, node.Right));
+                if (node.Left != null && node.Left.Count > 0)
+                {
+                    resultList.Add(Consecutive(numbers, node.Left));
+                }
+                if (node.Right != null && node.Right.Count > 0)
+                {
+                    resultList.Add(Consecutive(numbers, node.Right));
+                }
             }
             return resultList;
         }
 
         private Results<string> Consecutive(List<string> numbers, List<string> factor)
         {
-            var curResult = new Results<string> { Factor = factor,ConsecutiveTimes=new Dictionary<int, int>() };
+            var curResult = new Results<string> { Factor = factor, ConsecutiveTimes = new SortedDictionary<int, int>() };
             var i = 0;
             //连续次数
             var times = 0;
@@ -40,29 +46,29 @@ namespace TrendAnalysis.Service
             while (i < length)
             {
                 var currentItem = numbers[i];
-                if (numbers.Exists(m => m.Equals(currentItem)))
+                if (factor.Exists(m => m.Equals(currentItem)))
                 {
                     times++;
-                    i++;
-                }else
+                }
+                else
                 {
                     if (curResult.ConsecutiveTimes.ContainsKey(times))
                     {
                         curResult.ConsecutiveTimes[times]++;
                     }
-                    else
+                    else if(times>0)
                     {
                         curResult.ConsecutiveTimes.Add(times, 1);
                     }
-                    i = index + 1;
-                    index = i;
                     times = 0;
                 }
+                i++;
             }
             if (curResult.ConsecutiveTimes.ContainsKey(times))
             {
                 curResult.ConsecutiveTimes[times]++;
-            }else
+            }
+            else if(times>0)
             {
                 curResult.ConsecutiveTimes.Add(times, 1);
             }
@@ -83,7 +89,7 @@ namespace TrendAnalysis.Service
         /// <summary>
         /// 连续次数,键为次数，值为数量
         /// </summary>
-        public Dictionary<int,int> ConsecutiveTimes { get; set; }
+        public SortedDictionary<int, int> ConsecutiveTimes { get; set; }
 
     }
 
