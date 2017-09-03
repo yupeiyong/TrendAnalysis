@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<activityRootModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="cf2da5b9-bf8b-4326-beb5-737fb3cf971d" name="活动图-按组合因子分析记录" linkedPackageId="5966f176-f76f-47d3-a06f-8367168be1af" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner">
+<activityRootModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm12="http://schemas.microsoft.com/dsltools/UseCaseModel" dslVersion="1.0.0.0" Id="cf2da5b9-bf8b-4326-beb5-737fb3cf971d" name="活动图-按组合因子分析记录" linkedPackageId="5966f176-f76f-47d3-a06f-8367168be1af" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner">
   <ownedCommentsInternal>
     <comment Id="9c928016-e20e-4b87-9111-4a423d7edc74">
       <elementDefinition Id="e42fcd5c-80d4-4000-9a6f-52908515da25" />
@@ -142,9 +142,9 @@
           <opaqueAction Id="b3ab1fb9-5531-489a-9203-b6b157bc0668" name="i=0" isLeaf="false">
             <elementDefinition Id="8f21fc8a-b53c-4eb8-9487-1c8eb6f96373" />
             <flowNodeTargets>
-              <controlFlow Id="c476da70-5981-4ad6-bb68-95a2707106e5" isLeaf="false">
-                <opaqueActionMoniker Id="6daa0baa-fd03-4dea-954e-c1109d50bd2c" LastKnownName="当前索引index=i" />
-                <elementDefinition Id="6bdaf0f2-3a09-4711-8456-575990be967c" />
+              <controlFlow Id="d2d5752f-e0de-44d0-b2be-1f62a39d505f" isLeaf="false">
+                <opaqueActionMoniker Id="ab6d6d8e-b54d-463b-88be-a821509fe443" LastKnownName="连续次数l=01" />
+                <elementDefinition Id="9a7fdd61-1a91-4334-a4b2-4ac9cac06133" />
               </controlFlow>
             </flowNodeTargets>
           </opaqueAction>
@@ -154,15 +154,6 @@
               <controlFlow Id="0450a8d7-82a2-4637-a1de-a569d53629e9" isLeaf="false">
                 <opaqueActionMoniker Id="b3ab1fb9-5531-489a-9203-b6b157bc0668" LastKnownName="i=0" />
                 <elementDefinition Id="70bbc443-18cc-481b-9043-3f3b7e11c64b" />
-              </controlFlow>
-            </flowNodeTargets>
-          </opaqueAction>
-          <opaqueAction Id="1b9f40b9-d111-4a24-8c1b-1c9900b90a1c" name="index=i" isLeaf="false">
-            <elementDefinition Id="5b79a5ca-137d-473f-8b1b-7d7080a6f90b" />
-            <flowNodeTargets>
-              <controlFlow Id="21300492-4883-4ca0-85c4-e74b21e896b1" isLeaf="false">
-                <opaqueActionMoniker Id="07f9e22c-a1e6-49d6-85a0-4a3c004f7a01" LastKnownName="连续次数l=0" />
-                <elementDefinition Id="1ed006a4-9dbd-4fa4-a544-883f21c43587" />
               </controlFlow>
             </flowNodeTargets>
           </opaqueAction>
@@ -178,13 +169,13 @@
           <decisionNode Id="375d8363-5763-4200-aa4d-f04abd1b62d5" name="Decision2" isLeaf="false">
             <elementDefinition Id="6358d9eb-9e76-4954-8ae7-37e3513388cc" />
             <flowNodeTargets>
-              <controlFlow Id="65817651-eead-49a7-86d3-ac4968fb5581" guard="x不在左部因子中" isLeaf="false">
-                <opaqueActionMoniker Id="c3b9ffd6-8ad1-4795-a651-b4ec84774c16" LastKnownName="i=index+1" />
-                <elementDefinition Id="b91387dc-3f74-4aa0-b894-6662ad865604" />
-              </controlFlow>
               <controlFlow Id="a0c072ef-3d7f-42a8-8835-0e24a625039a" guard="x在左部因子中" isLeaf="false">
                 <opaqueActionMoniker Id="a1143f34-3fd2-4f49-8a46-32e653d372bd" LastKnownName="l=l+1" />
                 <elementDefinition Id="8281112e-6147-46be-af47-9b4d60f202c5" />
+              </controlFlow>
+              <controlFlow Id="fdca5047-0460-4899-bd0e-53f21f2dc48b" guard="x不在左部因子中" isLeaf="false">
+                <decisionNodeMoniker Id="b0fa3870-33e7-4764-801e-2064746a692d" LastKnownName="Decision4" />
+                <elementDefinition Id="64253e00-0832-43a8-a1ef-76c774f3cdfa" />
               </controlFlow>
             </flowNodeTargets>
           </decisionNode>
@@ -200,9 +191,9 @@
           <opaqueAction Id="07f9e22c-a1e6-49d6-85a0-4a3c004f7a01" name="连续次数l=0" isLeaf="false">
             <elementDefinition Id="2d38b2cf-4fef-4aac-84bc-330a31dfd5d8" />
             <flowNodeTargets>
-              <controlFlow Id="af2fc66e-1dd2-4d86-95ca-67d705879366" isLeaf="false">
-                <opaqueActionMoniker Id="e5559e2b-8e43-49ea-9ced-d27648948752" />
-                <elementDefinition Id="f1b0ac23-3cfe-4004-8eeb-01da0b7af6eb" />
+              <controlFlow Id="2b280a0e-1495-41c9-ac91-ccc684bbefc0" isLeaf="false">
+                <opaqueActionMoniker Id="3a7ac1c1-77d3-46a0-bea6-f5974609346e" LastKnownName="i++" />
+                <elementDefinition Id="2e1b5ca0-6197-4cdb-adde-0de9a230c356" />
               </controlFlow>
             </flowNodeTargets>
           </opaqueAction>
@@ -227,15 +218,6 @@
           <activityFinalNode Id="d6fd5c8f-82a5-4f2b-a49c-bf210da795e2" name="ActivityFinal2" isLeaf="false">
             <elementDefinition Id="af14171e-2879-4db1-abc0-86ec92069eca" />
           </activityFinalNode>
-          <opaqueAction Id="c3b9ffd6-8ad1-4795-a651-b4ec84774c16" name="i=index+1" isLeaf="false">
-            <elementDefinition Id="6c3c84cb-6c19-4eba-a157-edbbc61ab00d" />
-            <flowNodeTargets>
-              <controlFlow Id="0b545edd-b09a-43c3-9d7d-fac933118866" isLeaf="false">
-                <decisionNodeMoniker Id="b0fa3870-33e7-4764-801e-2064746a692d" LastKnownName="Decision4" />
-                <elementDefinition Id="f64e4ff0-b4d0-48d0-bb5b-580b2c6ba034" />
-              </controlFlow>
-            </flowNodeTargets>
-          </opaqueAction>
           <decisionNode Id="b0fa3870-33e7-4764-801e-2064746a692d" name="Decision4" isLeaf="false">
             <elementDefinition Id="13170db8-e6c9-4f49-ad2a-45e79ed6445d" />
             <flowNodeTargets>
@@ -264,15 +246,6 @@
               <controlFlow Id="e295abbf-bb5b-4de9-854e-971f6cf6dfbe" isLeaf="false">
                 <joinNodeMoniker Id="19f50417-ef2e-4ba0-925b-af71e7aa7533" LastKnownName="Join2" />
                 <elementDefinition Id="69dda73a-5ee4-4a92-bbaa-bcac3136d9a3" />
-              </controlFlow>
-            </flowNodeTargets>
-          </opaqueAction>
-          <opaqueAction Id="6daa0baa-fd03-4dea-954e-c1109d50bd2c" name="当前索引index=i" isLeaf="false">
-            <elementDefinition Id="2f8cee5b-0bd6-486a-a57b-aee4c6a0f1c9" />
-            <flowNodeTargets>
-              <controlFlow Id="b0a8fb25-e98f-4f71-83f9-16f34aa940f1" isLeaf="false">
-                <opaqueActionMoniker Id="ab6d6d8e-b54d-463b-88be-a821509fe443" LastKnownName="连续次数l=01" />
-                <elementDefinition Id="adf30e29-6125-486c-a2a0-2c57170903f0" />
               </controlFlow>
             </flowNodeTargets>
           </opaqueAction>
@@ -310,9 +283,9 @@
           <joinNode Id="19f50417-ef2e-4ba0-925b-af71e7aa7533" name="Join2" isLeaf="false">
             <elementDefinition Id="175afad5-04f1-4c91-b734-1e624062f3e2" />
             <flowNodeTargets>
-              <controlFlow Id="8ac4407f-05f0-46f4-9d9b-43edf5b50f22" isLeaf="false">
-                <opaqueActionMoniker Id="1b9f40b9-d111-4a24-8c1b-1c9900b90a1c" LastKnownName="index=i" />
-                <elementDefinition Id="e6ed2d2d-e5ae-4d6f-9bbd-53d1aa9f1c79" />
+              <controlFlow Id="1715516e-392f-49f9-9b57-d96bb2bb7abc" isLeaf="false">
+                <opaqueActionMoniker Id="07f9e22c-a1e6-49d6-85a0-4a3c004f7a01" LastKnownName="连续次数l=0" />
+                <elementDefinition Id="541384db-d18a-47c0-b0e6-f431fd660a30" />
               </controlFlow>
             </flowNodeTargets>
           </joinNode>

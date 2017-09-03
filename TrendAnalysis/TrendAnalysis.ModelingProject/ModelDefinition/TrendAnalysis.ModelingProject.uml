@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm12="http://schemas.microsoft.com/dsltools/UseCaseModel"
   dslVersion="1.0.0.0"
   Id="157f3c16-3e6f-4d21-b55b-3345795bc7f0"
   name="TrendAnalysis.ModelingProject" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -3827,11 +3827,11 @@
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="6bdaf0f2-3a09-4711-8456-575990be967c"
+                Id="9a7fdd61-1a91-4334-a4b2-4ac9cac06133"
                 isLeaf="false">
                 <opaqueActionMoniker
-                  Id="2f8cee5b-0bd6-486a-a57b-aee4c6a0f1c9"
-                  LastKnownName="当前索引index=i"
+                  Id="5d118ec3-8efd-4439-94db-cb625d66ed5e"
+                  LastKnownName="连续次数l=01"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
@@ -3847,21 +3847,6 @@
                 <opaqueActionMoniker
                   Id="8f21fc8a-b53c-4eb8-9487-1c8eb6f96373"
                   LastKnownName="i=0"
-                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
-              </controlFlow>
-            </flowNodeTargets>
-          </opaqueAction>
-          <opaqueAction
-            Id="5b79a5ca-137d-473f-8b1b-7d7080a6f90b"
-            name="index=i"
-            isLeaf="false">
-            <flowNodeTargets>
-              <controlFlow
-                Id="1ed006a4-9dbd-4fa4-a544-883f21c43587"
-                isLeaf="false">
-                <opaqueActionMoniker
-                  Id="2d38b2cf-4fef-4aac-84bc-330a31dfd5d8"
-                  LastKnownName="连续次数l=0"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
@@ -3887,21 +3872,21 @@
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="b91387dc-3f74-4aa0-b894-6662ad865604"
-                guard="x不在左部因子中"
-                isLeaf="false">
-                <opaqueActionMoniker
-                  Id="6c3c84cb-6c19-4eba-a157-edbbc61ab00d"
-                  LastKnownName="i=index+1"
-                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
-              </controlFlow>
-              <controlFlow
                 Id="8281112e-6147-46be-af47-9b4d60f202c5"
                 guard="x在左部因子中"
                 isLeaf="false">
                 <opaqueActionMoniker
                   Id="aa0686eb-c7d5-49f1-b629-8dd52c6ddb93"
                   LastKnownName="l=l+1"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="64253e00-0832-43a8-a1ef-76c774f3cdfa"
+                guard="x不在左部因子中"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="13170db8-e6c9-4f49-ad2a-45e79ed6445d"
+                  LastKnownName="Decision4"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
@@ -3927,10 +3912,11 @@
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="f1b0ac23-3cfe-4004-8eeb-01da0b7af6eb"
+                Id="2e1b5ca0-6197-4cdb-adde-0de9a230c356"
                 isLeaf="false">
                 <opaqueActionMoniker
-                  Id="27731cab-36d1-4b57-bc37-78ffd1a99739"
+                  Id="52eab38a-32a6-4458-8f29-9fed84fe6b1e"
+                  LastKnownName="i++"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
@@ -3968,21 +3954,6 @@
             Id="af14171e-2879-4db1-abc0-86ec92069eca"
             name="ActivityFinal2"
             isLeaf="false" />
-          <opaqueAction
-            Id="6c3c84cb-6c19-4eba-a157-edbbc61ab00d"
-            name="i=index+1"
-            isLeaf="false">
-            <flowNodeTargets>
-              <controlFlow
-                Id="f64e4ff0-b4d0-48d0-bb5b-580b2c6ba034"
-                isLeaf="false">
-                <decisionNodeMoniker
-                  Id="13170db8-e6c9-4f49-ad2a-45e79ed6445d"
-                  LastKnownName="Decision4"
-                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
-              </controlFlow>
-            </flowNodeTargets>
-          </opaqueAction>
           <decisionNode
             Id="13170db8-e6c9-4f49-ad2a-45e79ed6445d"
             name="Decision4"
@@ -4034,21 +4005,6 @@
                 <joinNodeMoniker
                   Id="175afad5-04f1-4c91-b734-1e624062f3e2"
                   LastKnownName="Join2"
-                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
-              </controlFlow>
-            </flowNodeTargets>
-          </opaqueAction>
-          <opaqueAction
-            Id="2f8cee5b-0bd6-486a-a57b-aee4c6a0f1c9"
-            name="当前索引index=i"
-            isLeaf="false">
-            <flowNodeTargets>
-              <controlFlow
-                Id="adf30e29-6125-486c-a2a0-2c57170903f0"
-                isLeaf="false">
-                <opaqueActionMoniker
-                  Id="5d118ec3-8efd-4439-94db-cb625d66ed5e"
-                  LastKnownName="连续次数l=01"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>
@@ -4110,11 +4066,11 @@
             isLeaf="false">
             <flowNodeTargets>
               <controlFlow
-                Id="e6ed2d2d-e5ae-4d6f-9bbd-53d1aa9f1c79"
+                Id="541384db-d18a-47c0-b0e6-f431fd660a30"
                 isLeaf="false">
                 <opaqueActionMoniker
-                  Id="5b79a5ca-137d-473f-8b1b-7d7080a6f90b"
-                  LastKnownName="index=i"
+                  Id="2d38b2cf-4fef-4aac-84bc-330a31dfd5d8"
+                  LastKnownName="连续次数l=0"
                   LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
               </controlFlow>
             </flowNodeTargets>

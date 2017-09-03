@@ -41,8 +41,6 @@ namespace TrendAnalysis.Service
             //连续次数
             var times = 0;
             var length = numbers.Count;
-            //记录索引位置
-            var index = i;
             while (i < length)
             {
                 var currentItem = numbers[i];
