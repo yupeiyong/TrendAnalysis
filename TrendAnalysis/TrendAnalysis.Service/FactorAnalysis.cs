@@ -17,24 +17,24 @@ namespace TrendAnalysis.Service
         /// <param name="numbers"></param>
         /// <param name="position"></param>
         /// <param name="nodes"></param>
-        public List<Results<T>> Consecutives<T>(List<T> numbers, List<BinaryNode<T>> nodes)
+        public static List<Results<T>> Consecutives<T>(List<T> numbers, List<BinaryNode<T>> nodes,int allowMinTimes=1)
         {
             var resultList = new List<Results<T>>();
             foreach (var node in nodes)
             {
                 if (node.Left != null && node.Left.Count > 0)
                 {
-                    resultList.Add(Consecutive(numbers, node.Left));
+                    resultList.Add(Consecutive(numbers, node.Left, allowMinTimes));
                 }
                 if (node.Right != null && node.Right.Count > 0)
                 {
-                    resultList.Add(Consecutive(numbers, node.Right));
+                    resultList.Add(Consecutive(numbers, node.Right, allowMinTimes));
                 }
             }
             return resultList;
         }
 
-        private Results<T> Consecutive<T>(List<T> numbers, List<T> factor)
+        private static Results<T> Consecutive<T>(List<T> numbers, List<T> factor, int allowMinTimes = 1)
         {
             var curResult = new Results<T> { Factor = factor, ConsecutiveTimes = new SortedDictionary<int, int>() };
             var i = 0;
@@ -54,7 +54,7 @@ namespace TrendAnalysis.Service
                     {
                         curResult.ConsecutiveTimes[times]++;
                     }
-                    else if(times>0)
+                    else if(times>= allowMinTimes)
                     {
                         curResult.ConsecutiveTimes.Add(times, 1);
                     }
@@ -66,7 +66,7 @@ namespace TrendAnalysis.Service
             {
                 curResult.ConsecutiveTimes[times]++;
             }
-            else if(times>0)
+            else if(times >= allowMinTimes)
             {
                 curResult.ConsecutiveTimes.Add(times, 1);
             }

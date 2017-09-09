@@ -12,7 +12,7 @@ namespace TrendAnalysis.Service.Test
         {
             var combination = new NumberCombination();
             var arr = new List<int>() { 1, 2, 3, 4 };
-            var nodes = combination.CreateBinaryCombinations<int>(arr);
+            var nodes = NumberCombination.CreateBinaryCombinations<int>(arr);
             Assert.IsNotNull(nodes);
             Assert.IsTrue(nodes.Count == 3);
             Assert.IsTrue(nodes[0].Left != null && nodes[0].Left.Count == 2 && nodes[0].Left[0] == 1 && nodes[0].Left[1] == 2);
@@ -31,7 +31,7 @@ namespace TrendAnalysis.Service.Test
         {
             var combination = new NumberCombination();
             var arr = new List<int>() { 1, 2, 3};
-            var nodes = combination.CreateBinaryCombinations<int>(arr);
+            var nodes = NumberCombination.CreateBinaryCombinations<int>(arr);
             Assert.IsNotNull(nodes);
             Assert.IsTrue(nodes.Count == 3);
             Assert.IsTrue(nodes[0].Left != null && nodes[0].Left.Count == 1 && nodes[0].Left[0] == 1 );
@@ -49,7 +49,7 @@ namespace TrendAnalysis.Service.Test
         {
             var combination = new NumberCombination();
             var arr = new List<int>() { 1, 2, 3};
-            var nodes = combination.CreateBinaryCombinations<int>(arr,1);
+            var nodes = NumberCombination.CreateBinaryCombinations<int>(arr,1);
             Assert.IsNotNull(nodes);
             Assert.IsTrue(nodes.Count == 3);
             Assert.IsTrue(nodes[0].Left != null && nodes[0].Left.Count == 2 && nodes[0].Left[0] == 1 && nodes[0].Left[1] == 2);
@@ -67,7 +67,7 @@ namespace TrendAnalysis.Service.Test
         {
             var combination = new NumberCombination();
             var arr = new List<int>() { 1 };
-            var nodes = combination.CreateBinaryCombinations<int>(arr);
+            var nodes = NumberCombination.CreateBinaryCombinations<int>(arr);
             Assert.IsNotNull(nodes);
             Assert.IsTrue(nodes.Count == 1);
             Assert.IsTrue(nodes[0].Left != null && nodes[0].Left.Count == 1 && nodes[0].Left[0] == 1);
@@ -79,7 +79,7 @@ namespace TrendAnalysis.Service.Test
         {
             var combination = new NumberCombination();
             var arr = new List<int>() { 1, 2 };
-            var nodes = combination.CreateBinaryCombinations<int>(arr);
+            var nodes = NumberCombination.CreateBinaryCombinations<int>(arr);
             Assert.IsNotNull(nodes);
             Assert.IsTrue(nodes.Count == 1);
             Assert.IsTrue(nodes[0].Left != null && nodes[0].Left.Count == 1 && nodes[0].Left[0] == 1);

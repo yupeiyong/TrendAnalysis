@@ -18,7 +18,7 @@ namespace TrendAnalysis.Service
         /// <param name="arr"></param>
         /// <param name="middleIndex">进行二分组合时，从0开始的索引位置</param>
         /// <returns></returns>
-        public List<BinaryNode<T>> CreateBinaryCombinations<T>(List<T> arr, int middleIndex = 0) where T : struct
+        public static List<BinaryNode<T>> CreateBinaryCombinations<T>(List<T> arr, int middleIndex = 0) 
         {
             if (arr == null || arr.Count() == 0)
                 throw new Exception("错误，输入的集合为空！");
@@ -83,7 +83,7 @@ namespace TrendAnalysis.Service
             return nodes;
         }
 
-        private BinaryNode<T> CreateNode<T>(List<T> arr, int[] leftIndexArray) where T : struct
+        private static BinaryNode<T> CreateNode<T>(List<T> arr, int[] leftIndexArray) 
         {
 
             var leftArry = new List<T>();
