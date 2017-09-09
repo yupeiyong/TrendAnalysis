@@ -46,7 +46,7 @@ namespace TrendAnalysis.Service
         public List<Results<string>> AnalyseByTensDigit(List<byte> numbers, List<BinaryNode<string>> nodes, int allowMinTimes = 1)
         {
             //十位数号码列表
-            var tensDigitNumbers = numbers.Select(n => n.ToString("##").Substring(0, 1)).ToList();
+            var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).ToList();
             return FactorAnalysis.Consecutives(tensDigitNumbers, nodes, allowMinTimes); ;
         }
 

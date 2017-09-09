@@ -14,9 +14,11 @@ namespace TrendAnalysis.Service
         /// <summary>
         /// 解析连续在因子中的记录数
         /// </summary>
+        /// <typeparam name="T"></typeparam>
         /// <param name="numbers"></param>
-        /// <param name="position"></param>
         /// <param name="nodes"></param>
+        /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
+        /// <returns></returns>
         public static List<Results<T>> Consecutives<T>(List<T> numbers, List<BinaryNode<T>> nodes,int allowMinTimes=1)
         {
             var resultList = new List<Results<T>>();

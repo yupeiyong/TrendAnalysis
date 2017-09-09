@@ -16,7 +16,7 @@ namespace TrendAnalysis.Service
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="arr"></param>
-        /// <param name="middleIndex">进行二分组合时，从0开始的索引位置</param>
+        /// <param name="middleIndex">进行二分组合时，从0开始的中间位置索引</param>
         /// <returns></returns>
         public static List<BinaryNode<T>> CreateBinaryCombinations<T>(List<T> arr, int middleIndex = 0) 
         {
