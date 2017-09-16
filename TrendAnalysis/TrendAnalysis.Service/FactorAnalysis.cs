@@ -89,7 +89,18 @@ namespace TrendAnalysis.Service
         /// <summary>
         /// 连续次数,键为次数，值为数量
         /// </summary>
-        public SortedDictionary<int, int> ConsecutiveTimes { get; set; }
+        public SortedDictionary<int, int> ConsecutiveTimes { get; set; } = new SortedDictionary<int, int>();
+
+        /// <summary>
+        /// 指定期次此因子连续次数
+        /// </summary>
+        public int SpecifiedTimesConsecutiveTimes { get; set; }
+
+
+        /// <summary>
+        /// 最大连续期数-指定期次此因子连续次数
+        /// </summary>
+        public int Interval => ConsecutiveTimes.Max(k => k.Key) - SpecifiedTimesConsecutiveTimes;
 
     }
 
