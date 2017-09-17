@@ -16,9 +16,8 @@ namespace TrendAnalysis.Service.Test
             using (var dao = new TrendDbContext())
             {
                 var numbers = dao.Set<MarkSixRecord>().OrderBy(n=>n.Times).Take(20).Select(n=>n.SeventhNum).ToList();
-                var nodes=NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.Select(n=>n.ToString()).ToList());
                 var service = new MarkSixAnalysisService();
-                var result=service.AnalyseByOnesDigit(numbers, nodes,9);
+                var result=service.AnalyseByOnesDigit(numbers, 9);
                 result = result.Where(m => m.ConsecutiveTimes.Count > 0).ToList();
             }
 
@@ -30,12 +29,24 @@ namespace TrendAnalysis.Service.Test
             using (var dao = new TrendDbContext())
             {
                 var numbers = dao.Set<MarkSixRecord>().OrderBy(n => n.Times).Take(20).Select(n => n.SeventhNum).ToList();
-                var nodes = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4}.Select(n => n.ToString()).ToList());
                 var service = new MarkSixAnalysisService();
-                var result = service.AnalyseByTensDigit(numbers, nodes, 4);
+                var result = service.AnalyseByTensDigit(numbers,  4);
                 result = result.Where(m => m.ConsecutiveTimes.Count > 0).ToList();
             }
-
         }
+
+        [TestMethod]
+        public void TestMethod_AnalyseSpecifiedLocation()
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var service = new MarkSixAnalysisService();
+
+                var records=dao.Set<MarkSixRecord>().OrderByDescending(m=>m.Times).Take(10).ToList();
+                var result = service.AnalyseSpecifiedLocation(7, records[2].Times);
+                
+            }
+        }
+
     }
 }

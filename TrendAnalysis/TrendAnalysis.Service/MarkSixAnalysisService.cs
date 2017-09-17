@@ -19,17 +19,16 @@ namespace TrendAnalysis.Service
         {
             using (var dao = new TrendDbContext())
             {
-                var id = 0;
+                var source = dao.Set<MarkSixRecord>().AsQueryable();
                 if (!string.IsNullOrWhiteSpace(times))
                 {
                     var record = dao.Set<MarkSixRecord>().FirstOrDefault(m => m.Times == times);
+                    if(record==null)
+                        throw new Exception("错误，指定期次的记录不存在！");
+                    source = source.Where(m => m.TimesValue < record.TimesValue);
                 }
-                var source = dao.Set<MarkSixRecord>().AsQueryable();
-                if (id > 0)
-                {
-                    source = source.Where(m => m.Id < id);
-                }
-                source = source.OrderBy(m => m.Id);
+                
+                source = source.OrderBy(m => m.Times);
                 var numbers = new List<byte>();
                 switch (location)
                 {
@@ -61,8 +60,8 @@ namespace TrendAnalysis.Service
                 var tensDigitResult = AnalyseByTensDigit(numbers);
                 //个位
                 var onesDigitResult = AnalyseByOnesDigit(numbers);
+                return null;
             }
-            return null;
         }
 
         /// <summary>
@@ -90,8 +89,10 @@ namespace TrendAnalysis.Service
                 }
                 item.SpecifiedTimesConsecutiveTimes = times;
             }
+            onesDigitResult = onesDigitResult.Where(t => t.SpecifiedTimesConsecutiveTimes > 0).ToList();
             //先按间隔数升序再按最大连续数降序排列
-            onesDigitResult = onesDigitResult.OrderBy(r => r.Interval).OrderByDescending(r => r.ConsecutiveTimes.Max(k => k.Key)).ToList();
+            //onesDigitResult = onesDigitResult.OrderBy(r => r.Interval).OrderByDescending(r => r.ConsecutiveTimes.Max(k => k.Key)).ToList();
+            onesDigitResult = onesDigitResult.OrderBy(r => r.Interval).ToList();
             return onesDigitResult;
         }
 
@@ -122,6 +123,7 @@ namespace TrendAnalysis.Service
                 }
                 item.SpecifiedTimesConsecutiveTimes = times;
             }
+            tensDigitResult = tensDigitResult.Where(t => t.SpecifiedTimesConsecutiveTimes > 0).ToList();
             //先按间隔数升序再按最大连续数降序排列
             tensDigitResult = tensDigitResult.OrderBy(r => r.Interval).OrderByDescending(r => r.ConsecutiveTimes.Max(k => k.Key)).ToList();
             return tensDigitResult;

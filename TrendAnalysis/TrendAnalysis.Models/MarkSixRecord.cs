@@ -10,13 +10,19 @@ namespace TrendAnalysis.Models
     /// <summary>
     /// MarkSix历史记录
     /// </summary>
-    public class MarkSixRecord:BaseEntity
+    public class MarkSixRecord : BaseEntity
     {
         /// <summary>
         /// 期次
         /// </summary>
         [Description("期次")]
         public string Times { get; set; }
+
+        /// <summary>
+        /// 代表期次的整型值
+        /// </summary>
+        [Description("代表期次的整型值")]
+        public int TimesValue { get; set; }
 
         [Description("1")]
         public byte FirstNum { get; set; }

@@ -37,7 +37,7 @@ namespace TrendAnalysis.Service
 
         public List<MarkSixRecord> Search(MarkSixRecordSearchDto dto)
         {
-            using(var dao=new TrendDbContext())
+            using (var dao = new TrendDbContext())
             {
                 var source = dao.Set<MarkSixRecord>().AsQueryable();
 
@@ -51,18 +51,18 @@ namespace TrendAnalysis.Service
                 {
                     dto.TotalCount = source.Count();
                 }
-                return source.OrderBy(m=>m.Times).Skip(dto.StartIndex).Take(dto.PageSize).ToList();
+                return source.OrderBy(m => m.Times).Skip(dto.StartIndex).Take(dto.PageSize).ToList();
             }
         }
         /// <summary>
         /// 导出
         /// </summary>
         /// <returns></returns>
-        public void Export(DataTable table,string fileName)
+        public void Export(DataTable table, string fileName)
         {
             table.TableName = "MarksixRecord";
             var toExcel = new DataTableToExcel();
-            toExcel.Export(table, fileName,"MarksixRecord");
+            toExcel.Export(table, fileName, "MarksixRecord");
         }
         protected void OnImportingEvent(EventArgs e)
         {
@@ -87,18 +87,18 @@ namespace TrendAnalysis.Service
             //数组列表
             List<MarkSixRecord> records = new List<MarkSixRecord>();
             using (var stream = new FileStream(fileName, FileMode.Open))
-            using(var package=new ExcelPackage(stream))
+            using (var package = new ExcelPackage(stream))
             {
                 var workbook = package.Workbook;
-                for (int i = 1,len=workbook.Worksheets.Count; i <= len; i++)
+                for (int i = 1, len = workbook.Worksheets.Count; i <= len; i++)
                 {
                     //当前序号工作表
                     var sht = workbook.Worksheets[i];
-                    var startRow=sht.Dimension.Start.Row;
+                    var startRow = sht.Dimension.Start.Row;
                     var endRow = sht.Dimension.End.Row;
                     var startColumn = sht.Dimension.Start.Column;
                     var endColumn = sht.Dimension.End.Column;
-                    var cell=sht.Cells[startRow, startColumn, endRow, endColumn].FirstOrDefault(c => c.Text == "序号");
+                    var cell = sht.Cells[startRow, startColumn, endRow, endColumn].FirstOrDefault(c => c.Text == "序号");
                     //查找最后一个"序号"单元格
                     if (cell == null)
                     {
@@ -133,6 +133,7 @@ namespace TrendAnalysis.Service
                             }
                             //写入数据到记录对象
                             record.Times = strTimes;
+                            record.TimesValue = int.Parse(strTimes);
                             record.FirstNum = byte.Parse(sht.Cells[r, 4].Value.ToString());
                             record.SecondNum = byte.Parse(sht.Cells[r, 5].Value.ToString());
                             record.ThirdNum = byte.Parse(sht.Cells[r, 6].Value.ToString());
@@ -154,7 +155,7 @@ namespace TrendAnalysis.Service
             {
                 this.RecordCount = records.Count;
                 OnBeforeImportEvent(null);
-                using(var dao=new TrendDbContext())
+                using (var dao = new TrendDbContext())
                 {
                     //var timeses = records.Select(r => r.Times).ToList();
                     //var originalRecords = dao.Set<MarkSixRecord>().Where(m => timeses.Any(times => times == m.Times));
