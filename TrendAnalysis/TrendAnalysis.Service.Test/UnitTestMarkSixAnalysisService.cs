@@ -42,8 +42,8 @@ namespace TrendAnalysis.Service.Test
             {
                 var service = new MarkSixAnalysisService();
 
-                var records=dao.Set<MarkSixRecord>().OrderByDescending(m=>m.Times).Take(10).ToList();
-                var result = service.AnalyseSpecifiedLocation(7, records[2].Times);
+                var records=dao.Set<MarkSixRecord>().OrderByDescending(m=>m.Times).Take(20).ToList();
+                var result = service.AnalyseSpecifiedLocation(7, records[19].Times);
                 
             }
         }

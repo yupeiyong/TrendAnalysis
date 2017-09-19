@@ -17,8 +17,9 @@ namespace TrendAnalysis.Service
         /// <typeparam name="T"></typeparam>
         /// <param name="arr"></param>
         /// <param name="middleIndex">进行二分组合时，从0开始的中间位置索引</param>
+        /// <param name="OddLengthAllowZeroIndex">当数组长度为奇数，是否允许从索引位置0开始</param>
         /// <returns></returns>
-        public static List<BinaryNode<T>> CreateBinaryCombinations<T>(List<T> arr, int middleIndex = 0) 
+        public static List<BinaryNode<T>> CreateBinaryCombinations<T>(List<T> arr, int middleIndex = 0,bool OddLengthAllowZeroIndex = false)
         {
             if (arr == null || arr.Count() == 0)
                 throw new Exception("错误，输入的集合为空！");
@@ -50,7 +51,13 @@ namespace TrendAnalysis.Service
             //当前位置
             var currentIndex = middleIndex;
             //处理左部数组时，头部索引位置
-            var top = length % 2 == 0 ? 1 : 0;
+            //var top = length % 2 == 0 ? 1 : 0;
+            //统一为1，不论长度是奇数还是偶数
+            var top = 1;
+            if(length%2==1&& OddLengthAllowZeroIndex)
+            {
+                top = 0;
+            }
             do
             {
                 if (currentIndex == middleIndex)
@@ -83,7 +90,7 @@ namespace TrendAnalysis.Service
             return nodes;
         }
 
-        private static BinaryNode<T> CreateNode<T>(List<T> arr, int[] leftIndexArray) 
+        private static BinaryNode<T> CreateNode<T>(List<T> arr, int[] leftIndexArray)
         {
 
             var leftArry = new List<T>();
@@ -108,7 +115,7 @@ namespace TrendAnalysis.Service
     /// 二分节点
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class BinaryNode<T> 
+    public class BinaryNode<T>
     {
         /// <summary>
         /// 左因子

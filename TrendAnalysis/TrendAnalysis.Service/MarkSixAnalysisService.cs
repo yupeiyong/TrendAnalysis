@@ -23,11 +23,11 @@ namespace TrendAnalysis.Service
                 if (!string.IsNullOrWhiteSpace(times))
                 {
                     var record = dao.Set<MarkSixRecord>().FirstOrDefault(m => m.Times == times);
-                    if(record==null)
+                    if (record == null)
                         throw new Exception("错误，指定期次的记录不存在！");
                     source = source.Where(m => m.TimesValue < record.TimesValue);
                 }
-                
+
                 source = source.OrderBy(m => m.Times);
                 var numbers = new List<byte>();
                 switch (location)
@@ -59,7 +59,10 @@ namespace TrendAnalysis.Service
                 //十位
                 var tensDigitResult = AnalyseByTensDigit(numbers);
                 //个位
-                var onesDigitResult = AnalyseByOnesDigit(numbers);
+                var onesDigitResult = AnalyseByOnesDigit(numbers,5);
+
+                var max = onesDigitResult.Select(r => r.ConsecutiveTimes.Max(m => m.Key)).OrderByDescending(m => m);
+                //tensDigitResult[0].Factor;
                 return null;
             }
         }
@@ -69,8 +72,9 @@ namespace TrendAnalysis.Service
         /// </summary>
         /// <param name="numbers"></param>
         /// <param name="nodes"></param>
+        /// <param name="allowConsecutiveMinTimes">允许记录的从指定期次倒序在因子中的最小连续次数</param>
         /// <returns></returns>
-        public List<Results<string>> AnalyseByOnesDigit(List<byte> numbers, int allowMinTimes = 1)
+        public List<Results<string>> AnalyseByOnesDigit(List<byte> numbers, int allowConsecutiveMinTimes = 1, int allowMinTimes = 1)
         {
             var onesDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.Select(n => n.ToString()).ToList());
 
@@ -89,7 +93,7 @@ namespace TrendAnalysis.Service
                 }
                 item.SpecifiedTimesConsecutiveTimes = times;
             }
-            onesDigitResult = onesDigitResult.Where(t => t.SpecifiedTimesConsecutiveTimes > 0).ToList();
+            onesDigitResult = onesDigitResult.Where(t => t.SpecifiedTimesConsecutiveTimes >= allowConsecutiveMinTimes).ToList();
             //先按间隔数升序再按最大连续数降序排列
             //onesDigitResult = onesDigitResult.OrderBy(r => r.Interval).OrderByDescending(r => r.ConsecutiveTimes.Max(k => k.Key)).ToList();
             onesDigitResult = onesDigitResult.OrderBy(r => r.Interval).ToList();
@@ -103,7 +107,7 @@ namespace TrendAnalysis.Service
         /// <param name="numbers"></param>
         /// <param name="nodes"></param>
         /// <returns></returns>
-        public List<Results<string>> AnalyseByTensDigit(List<byte> numbers,int allowMinTimes = 1)
+        public List<Results<string>> AnalyseByTensDigit(List<byte> numbers, int allowMinTimes = 1)
         {
             //十位因子
             var tensDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4 }.Select(n => n.ToString()).ToList());
@@ -115,7 +119,7 @@ namespace TrendAnalysis.Service
             foreach (var item in tensDigitResult)
             {
                 var times = 0;
-                for(var i = tensDigitNumbers.Count - 1; i >= 0; i--)
+                for (var i = tensDigitNumbers.Count - 1; i >= 0; i--)
                 {
                     if (!item.Factor.Contains(tensDigitNumbers[i]))
                         break;

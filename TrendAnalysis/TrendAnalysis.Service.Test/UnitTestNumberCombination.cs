@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TrendAnalysis.Service.Test
 {
@@ -86,5 +87,31 @@ namespace TrendAnalysis.Service.Test
             Assert.IsTrue(nodes[0].Right != null && nodes[0].Right.Count == 1 && nodes[0].Right[0] == 2);
         }
 
+        [TestMethod]
+        public void TestCreateBinaryCombinations_Many_Odd()
+        {
+            var combination = new NumberCombination();
+            var arr = new List<int>();
+            for(var i = 1; i <= 7; i++)
+            {
+                arr.Add(i);
+            }
+            var nodes = NumberCombination.CreateBinaryCombinations<int>(arr);
+            Assert.IsNotNull(nodes);
+        }
+
+        [TestMethod]
+        public void TestCreateBinaryCombinations_49()
+        {
+            var combination = new NumberCombination();
+            var arr = new List<int>();
+            for (var i = 1; i <= 49; i++)
+            {
+                arr.Add(i);
+            }
+            var nodes = NumberCombination.CreateBinaryCombinations<int>(arr,3,true);
+            var node = nodes.FirstOrDefault(n => string.Join(",", n.Left) == "2,14,26,38");
+            Assert.IsNotNull(nodes);
+        }
     }
 }
