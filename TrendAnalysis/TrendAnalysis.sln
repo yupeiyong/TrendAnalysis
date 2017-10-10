@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "TrendAnalysis.ModelingProject", "TrendAnalysis.ModelingProject\TrendAnalysis.ModelingProject.modelproj", "{F3367A5C-CEB8-46A8-AB4C-830C20698BEA}"
 EndProject
