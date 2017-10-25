@@ -40,11 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MarkSixAnalyseSpecifiedLocationDto.cs" />
     <Compile Include="BaseSearchDto.cs" />
     <Compile Include="MarkSixRecordSearchDto.cs" />
     <Compile Include="MarkSixSpecifiedLocationPurchaseSaveDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MarkSixSpecifiedLocationPurchaseSearchDto.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TrendAnalysis.Models\TrendAnalysis.Models.csproj">
+      <Project>{409059F6-03A5-4FAD-A5C6-3AE7076E078D}</Project>
+      <Name>TrendAnalysis.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

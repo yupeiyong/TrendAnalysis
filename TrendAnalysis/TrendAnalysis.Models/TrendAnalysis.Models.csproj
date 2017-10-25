@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AnalysisBeforeResult.cs" />
     <Compile Include="BaseEntity.cs" />
+    <Compile Include="BinaryNode.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="MarkSixRecord.cs" />
     <Compile Include="MarkSixSpecifiedLocationPurchase.cs" />

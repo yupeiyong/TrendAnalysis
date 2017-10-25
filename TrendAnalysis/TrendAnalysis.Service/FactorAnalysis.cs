@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrendAnalysis.Models;
 
 namespace TrendAnalysis.Service
 {
@@ -196,7 +197,7 @@ namespace TrendAnalysis.Service
 
 
         /// <summary>
-        /// 最大连续期数-指定期次此因子连续次数
+        /// 最大连续期数-指定期次此因子连续次数的间隔数，数越小，表示变化的趋势越大
         /// </summary>
         public int Interval => ConsecutiveTimes.Max(k => k.Key) - SpecifiedTimesConsecutiveTimes;
 

@@ -3,6 +3,7 @@ using TrendAnalysis.Models;
 using System.Linq;
 using TrendAnalysis.Data;
 using System;
+using TrendAnalysis.DataTransferObject;
 
 namespace TrendAnalysis.Service
 {
@@ -15,22 +16,23 @@ namespace TrendAnalysis.Service
         /// <param name="location">指定的第几位</param>
         /// <param name="times">分析指定的期次</param>
         /// <returns></returns>
-        public List<byte> AnalyseSpecifiedLocation(int location, string times)
+        public List<byte> AnalyseSpecifiedLocation(MarkSixAnalyseSpecifiedLocationDto dto)
         {
             using (var dao = new TrendDbContext())
             {
                 var source = dao.Set<MarkSixRecord>().AsQueryable();
-                if (!string.IsNullOrWhiteSpace(times))
+                if (!string.IsNullOrWhiteSpace(dto.Times))
                 {
-                    var record = dao.Set<MarkSixRecord>().FirstOrDefault(m => m.Times == times);
+                    var record = dao.Set<MarkSixRecord>().FirstOrDefault(m => m.Times == dto.Times);
                     if (record == null)
                         throw new Exception("错误，指定期次的记录不存在！");
                     source = source.Where(m => m.TimesValue < record.TimesValue);
                 }
 
-                source = source.OrderBy(m => m.Times);
+                //按期次值升序排列
+                source = source.OrderBy(m => m.TimesValue);
                 var numbers = new List<byte>();
-                switch (location)
+                switch (dto.Location)
                 {
                     case 1:
                         numbers = source.Select(m => m.FirstNum).ToList();
@@ -56,86 +58,123 @@ namespace TrendAnalysis.Service
                     default:
                         throw new Exception("错误，指定的位置不是有效的号码位置！");
                 }
+                //个位数号码列表
+                var onesDigitNumbers = numbers.Select(n => n.ToString("00").Substring(1)).Select(n => byte.Parse(n)).ToList();
+                //个位因子
+                var onesDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
+
+                //十位数号码列表
+                var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).Select(n => byte.Parse(n)).ToList();
+                //十位因子
+                var tensDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
+
                 //按数字位置分析（十位/个位）
                 //十位
-                var tensDigitResult = AnalyseTensDigit(numbers);
+                var tensResults = new List<List<Results<byte>>>();
+                var tensDigitResult = AnalyseTensDigit(tensDigitNumbers, tensDigitFactors, dto.TensAllowMinTimes,dto.TensNumbersTailCutCount);
+                tensDigitResult = tensDigitResult.Where(m => m.SpecifiedTimesConsecutiveTimes >= dto.TensAllowMinSpecifiedTimesConsecutiveTimes && m.Interval <= dto.TensAllowMaxInterval).ToList();
+                if (tensDigitResult.Count > 0)
+                {
+                    tensResults.Add(tensDigitResult);
+                }
 
-                var tensDigitResult2 = AnalyseTensDigitAround(numbers, (n, factor, index) =>
-                {
-                    var length = n.Count;
-                    if (index >= length - 1)
-                    {
-                        return false;
-                    }
-                    var currentItem = (byte)((n[index] + n[index + 1]) % 4);
-                    var exists = factor.Exists(m => m.Equals(currentItem));
-                    return exists;
-                }, (n, factor, index) =>
-                {
-                    var sum = (byte)((n[index] + n[index - 1]) % 4);
-                    return factor.Contains(sum);
-                });
-                var tensDigitResult3 = AnalyseTensDigitAround(numbers, (n, factor, index) =>
-                {
-                    var length = n.Count;
-                    if (index >= length - 2)
-                    {
-                        return false;
-                    }
-                    var currentItem = (byte)((n[index] + n[index + 1] + n[index + 2]) % 4);
-                    var exists = factor.Exists(m => m.Equals(currentItem));
-                    return exists;
-                }, (n, factor, index) =>
-                {
-                    var sum = (byte)((n[index] + n[index - 1] + n[index - 2]) % 4);
-                    return factor.Contains(sum);
-                });
-                var tensDigitResult4 = AnalyseTensDigitAround(numbers, (n, factor, index) =>
-                {
-                    var length = n.Count;
-                    if (index >= length - 3)
-                    {
-                        return false;
-                    }
-                    var currentItem = (byte)((n[index] + n[index + 1] + n[index + 2] + n[index + 3]) % 4);
-                    var exists = factor.Exists(m => m.Equals(currentItem));
-                    return exists;
-                }, (n, factor, index) =>
-                {
-                    var sum = (byte)((n[index] + n[index - 1] + n[index - 2] + n[index - 3]) % 4);
-                    return factor.Contains(sum);
-                });
+
                 //个位
-                var onesDigitResult = AnalyseOnesDigit(numbers, 4);
+                var onesResults = new List<List<Results<byte>>>();
+                var onesDigitResult = AnalyseOnesDigit(onesDigitNumbers, onesDigitFactors, dto.OnesAllowMinTimes, dto.OnesNumbersTailCutCount);
+                onesDigitResult = onesDigitResult.Where(m => m.SpecifiedTimesConsecutiveTimes >= dto.OnesAllowMinSpecifiedTimesConsecutiveTimes && m.Interval <= dto.OnesAllowMaxInterval).ToList();
+                if (onesDigitResult.Count > 0)
+                {
+                    onesResults.Add(onesDigitResult);
+                }
+                if (tensResults.Count > 0 && onesResults.Count > 0)
+                {
+                    //选择最多连续次数
+                    var maxTens = tensResults.OrderByDescending(t => t.Max(m => m.SpecifiedTimesConsecutiveTimes)).FirstOrDefault();
+                    var maxOnes = onesResults.OrderByDescending(t => t.Max(m => m.SpecifiedTimesConsecutiveTimes)).FirstOrDefault();
+                    if (maxTens != null && maxOnes != null)
+                    {
+                        var tenFactor = maxTens[0].OppositeFactor;
+                        var onesFactor = maxOnes[0].OppositeFactor;
+                        return GetNumbers(tenFactor, onesFactor);
+                    }
+                }
+                return new List<byte>();
+                //var lastIndex = tensDigitNumbers.Count - 1;
 
-                ////分析数字本身
-                //var digitResult = AnalyseByDigit(numbers, 5);
+                ////几个连续期次的记录进行累加判断，
+                ////连续2个期次记录累加直到n个期次
+                //for (var i = 2; i <= dto.TensAroundCount; i++)
+                //{
+                //    var curTensDigitResult = AnalyseTensDigitAround(tensDigitNumbers, tensDigitFactors, i, dto.TensAllowMinTimes,dto.TensNumbersTailCutCount);
+                //    curTensDigitResult = curTensDigitResult.Where(m => m.SpecifiedTimesConsecutiveTimes >= dto.TensAllowMinSpecifiedTimesConsecutiveTimes && m.Interval <= dto.TensAllowMaxInterval).ToList();
+                //    if (curTensDigitResult.Count == 0)
+                //        continue;
 
-                //var max = onesDigitResult.Select(r => r.ConsecutiveTimes.Max(m => m.Key)).OrderByDescending(m => m);
+                //    //反向累加
+                //    var currentSum = 0;
+                //    var around = i - 1;
+                //    for (var n = 0; n < around; n++)
+                //    {
+                //        currentSum += tensDigitNumbers[lastIndex - n];
+                //    }
+                //    //取5的模
+                //    var sum = (byte)(currentSum % 5);
 
-                //digitResult = digitResult.OrderBy(d => d.Interval).ThenByDescending(d=>d.SpecifiedTimesConsecutiveTimes).ToList();
-
-                //var r1 = digitResult.Where(d => d.Interval<0).ToList();
-                //var r2 = digitResult.Where(d => d.OppositeFactor.Count <40).ToList();
-                //tensDigitResult[0].Factor;
-                return null;
+                //    foreach (var item in curTensDigitResult)
+                //    {
+                //        //反向因子为当前因子数-累加数取5的模（分析数字可能区域）
+                //        item.OppositeFactor.ForEach(f => { f = (byte)((f + 5 - sum) % 5); });
+                //    }
+                //    tensResults.Add(curTensDigitResult);
+                //}
             }
         }
 
+
+        /// <summary>
+        /// 通过10位和个位因子，获取最终数字
+        /// </summary>
+        /// <param name="tenFactor"></param>
+        /// <param name="onesFactor"></param>
+        /// <returns></returns>
+        private List<byte> GetNumbers(List<byte> tenFactor, List<byte> onesFactor)
+        {
+            var result = new List<byte>();
+            for (var i = 0; i < tenFactor.Count; i++)
+            {
+                for (var j = 0; j < onesFactor.Count; j++)
+                {
+                    var valueStr = tenFactor[i].ToString() + onesFactor[j].ToString();
+                    byte number;
+                    if (!byte.TryParse(valueStr, out number))
+                    {
+                        throw new Exception(string.Format("错误，{0}不是有效的byte类型数据！", valueStr));
+                    }
+                    result.Add(number);
+                }
+            }
+            return result;
+        }
         /// <summary>
         /// 分析列表个位数
         /// </summary>
-        /// <param name="numbers"></param>
-        /// <param name="nodes"></param>
-        /// <param name="allowConsecutiveMinTimes">允许记录的从指定期次倒序在因子中的最小连续次数</param>
+        /// <param name="numbers">记录集合</param>
+        /// <param name="tensDigitFactors">比较因子</param>
+        /// <param name="allowMinTimes">允许的最小连续次数，大于等于此数才记录</param>
         /// <returns></returns>
-        public List<Results<string>> AnalyseOnesDigit(List<byte> numbers, int allowConsecutiveMinTimes = 1, int allowMinTimes = 1)
+        public List<Results<byte>> AnalyseOnesDigit(List<byte> onesDigitNumbers, List<BinaryNode<byte>> onesDigitFactors, int allowMinTimes, int numbersTailCutCount)
         {
-            var onesDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.Select(n => n.ToString()).ToList());
-
-            //个位数号码列表
-            var onesDigitNumbers = numbers.Select(n => n.ToString("00").Substring(1)).ToList();
-            var onesDigitResult = FactorAnalysis.Consecutives(onesDigitNumbers, onesDigitFactors, allowMinTimes);
+            List<Results<byte>> onesDigitResult;
+            if (numbersTailCutCount > 0 && numbersTailCutCount < onesDigitNumbers.Count)
+            {
+                var numbers = onesDigitNumbers.Skip(0).Take(onesDigitNumbers.Count - numbersTailCutCount).ToList();
+                onesDigitResult = FactorAnalysis.Consecutives(numbers, onesDigitFactors, allowMinTimes);
+            }
+            else
+            {
+                onesDigitResult = FactorAnalysis.Consecutives(onesDigitNumbers, onesDigitFactors, allowMinTimes);
+            }
             onesDigitResult = onesDigitResult.Where(t => t.ConsecutiveTimes.Count > 0).ToList();
             foreach (var item in onesDigitResult)
             {
@@ -148,10 +187,11 @@ namespace TrendAnalysis.Service
                 }
                 item.SpecifiedTimesConsecutiveTimes = times;
             }
-            onesDigitResult = onesDigitResult.Where(t => t.SpecifiedTimesConsecutiveTimes >= allowConsecutiveMinTimes).ToList();
-            //先按间隔数升序再按最大连续数降序排列
-            //onesDigitResult = onesDigitResult.OrderBy(r => r.Interval).OrderByDescending(r => r.ConsecutiveTimes.Max(k => k.Key)).ToList();
-            onesDigitResult = onesDigitResult.OrderBy(r => r.Interval).ToList();
+            //先按最大连续次数然后按最小间隔次数排序
+            onesDigitResult = onesDigitResult
+                .OrderByDescending(t => t.SpecifiedTimesConsecutiveTimes)
+                .ThenBy(t => t.Interval).ToList();
+
             return onesDigitResult;
         }
 
@@ -159,17 +199,22 @@ namespace TrendAnalysis.Service
         /// <summary>
         /// 分析列表十位数
         /// </summary>
-        /// <param name="numbers"></param>
-        /// <param name="nodes"></param>
+        /// <param name="numbers">记录集合</param>
+        /// <param name="tensDigitFactors">比较因子</param>
+        /// <param name="allowMinTimes">允许的最小连续次数，大于等于此数才记录</param>
         /// <returns></returns>
-        public List<Results<string>> AnalyseTensDigit(List<byte> numbers, int allowMinTimes = 1)
+        public List<Results<byte>> AnalyseTensDigit(List<byte> tensDigitNumbers, List<BinaryNode<byte>> tensDigitFactors, int allowMinTimes, int numbersTailCutCount)
         {
-            //十位因子
-            var tensDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4 }.Select(n => n.ToString()).ToList());
-
-            //十位数号码列表
-            var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).ToList();
-            var tensDigitResult = FactorAnalysis.Consecutives(tensDigitNumbers, tensDigitFactors, allowMinTimes);
+            List<Results<byte>> tensDigitResult;
+            if (numbersTailCutCount > 0 && tensDigitNumbers.Count > 0)
+            {
+                var numbers = tensDigitNumbers.Skip(0).Take(tensDigitNumbers.Count - numbersTailCutCount).ToList();
+                tensDigitResult = FactorAnalysis.Consecutives(numbers, tensDigitFactors, allowMinTimes);
+            }
+            else
+            {
+                tensDigitResult = FactorAnalysis.Consecutives(tensDigitNumbers, tensDigitFactors, allowMinTimes);
+            }
             tensDigitResult = tensDigitResult.Where(t => t.ConsecutiveTimes.Count > 0).ToList();
             foreach (var item in tensDigitResult)
             {
@@ -182,88 +227,135 @@ namespace TrendAnalysis.Service
                 }
                 item.SpecifiedTimesConsecutiveTimes = times;
             }
-            tensDigitResult = tensDigitResult.Where(t => t.SpecifiedTimesConsecutiveTimes > 0).ToList();
-            //先按间隔数升序再按最大连续数降序排列
-            tensDigitResult = tensDigitResult.OrderBy(r => r.Interval).OrderByDescending(r => r.ConsecutiveTimes.Max(k => k.Key)).ToList();
+
+            //先按最大连续次数然后按最小间隔次数排序
+            tensDigitResult = tensDigitResult
+                .OrderByDescending(t => t.SpecifiedTimesConsecutiveTimes)
+                .ThenBy(t => t.Interval).ToList();
+
             return tensDigitResult;
         }
+
+
         /// <summary>
-        /// 分析列表十位数(前后几期一起分析)
+        /// 分析合数
         /// </summary>
-        /// <param name="numbers"></param>
-        /// <param name="compareFunc">用于分析历史记录的比较因子的委托方法,参数为历史记录列表，因子列表和当前索引，返回结果为bool</param>
-        /// <param name="curTimesCompareFunc">用于预测当前期次的比较因子的委托方法,参数为历史记录列表，因子列表和当前索引，返回结果为bool</param>
-        /// <param name="around"></param>
+        /// <param name="compositeNumbers"></param>
+        /// <param name="factors"></param>
         /// <param name="allowMinTimes"></param>
+        /// <param name="numbersTailCutCount"></param>
         /// <returns></returns>
-        public List<Results<byte>> AnalyseTensDigitAround(IReadOnlyList<byte> numbers, Func<IReadOnlyList<byte>, List<byte>, int, bool> compareFunc, Func<IReadOnlyList<byte>, List<byte>, int, bool> curTimesCompareFunc, int around = 1, int allowMinTimes = 1)
+        public List<Results<byte>> AnalyseCompositeNumber(List<byte> compositeNumbers, List<BinaryNode<byte>> factors, int allowMinTimes, int numbersTailCutCount)
         {
-            //十位数号码列表
-            var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).Select(n => byte.Parse(n)).ToList();
-
-            //十位因子
-            var tensDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4 }).ToList();
-
-            //分析结果
-            var tensDigitResult = FactorAnalysis.Consecutives(tensDigitNumbers, tensDigitFactors, compareFunc, allowMinTimes);
-            tensDigitResult = tensDigitResult.Where(t => t.ConsecutiveTimes.Count > 0).ToList();
-            foreach (var item in tensDigitResult)
+            List<Results<byte>> results;
+            if (numbersTailCutCount > 0 && compositeNumbers.Count > 0)
+            {
+                var numbers = compositeNumbers.Skip(0).Take(compositeNumbers.Count - numbersTailCutCount).ToList();
+                results = FactorAnalysis.Consecutives(numbers, factors, allowMinTimes);
+            }
+            else
+            {
+                results = FactorAnalysis.Consecutives(compositeNumbers, factors, allowMinTimes);
+            }
+            results = results.Where(t => t.ConsecutiveTimes.Count > 0).ToList();
+            foreach (var item in results)
             {
                 var times = 0;
-                for (var i = tensDigitNumbers.Count - 1; i >= 0; i--)
+                for (var i = compositeNumbers.Count - 1; i >= 0; i--)
                 {
-                    if (!curTimesCompareFunc(tensDigitNumbers, item.Factor, i))
+                    if (!item.Factor.Contains(compositeNumbers[i]))
                         break;
-
-                    //if (!item.Factor.Contains(tensDigitNumbers[i]))
-                    //    break;
                     times++;
                 }
                 item.SpecifiedTimesConsecutiveTimes = times;
             }
-            tensDigitResult = tensDigitResult.Where(t => t.SpecifiedTimesConsecutiveTimes > 0).ToList();
-            //先按间隔数升序再按最大连续数降序排列
-            tensDigitResult = tensDigitResult.OrderBy(r => r.Interval).OrderByDescending(r => r.ConsecutiveTimes.Max(k => k.Key)).ToList();
-            return tensDigitResult;
+
+            //先按最大连续次数然后按最小间隔次数排序
+            results = results
+                .OrderByDescending(t => t.SpecifiedTimesConsecutiveTimes)
+                .ThenBy(t => t.Interval).ToList();
+
+            return results;
         }
-
-        //around
-
         ///// <summary>
-        ///// 分析号码
+        ///// 分析列表十位数(前后几期一起分析)
         ///// </summary>
-        ///// <param name="numbers"></param>
-        ///// <param name="nodes"></param>
+        ///// <param name="numbers">记录集合</param>
+        ///// <param name="tensDigitFactors">比较因子</param>
+        ///// <param name="around">后面连续期次</param>
+        ///// <param name="allowMinTimes">允许的最小连续次数，大于等于此数才记录</param>
         ///// <returns></returns>
-        //public List<Results<byte>> AnalyseByDigit(List<byte> numbers, int allowMinTimes = 1)
+        //public List<Results<byte>> AnalyseTensDigitAround(List<byte> tensDigitNumbers, List<BinaryNode<byte>> tensDigitFactors, int around, int allowMinTimes, int numbersTailCutCount)
         //{
-        //    //生成因子组合
-        //    var arr = new List<byte>();
-        //    for (byte i = 1; i <= 49; i++)
+        //    /*
+        //     十位数相加组合
+        //     0+0=0，0+1=1，0+2=2，0+3=3，0+4=4
+        //     1+0=1，1+1=2，1+2=3，1+3=4，1+4=0
+        //     2+0=2，2+1=3，2+2=4，2+3=0，2+4=1
+        //     3+0=3，3+1=4，3+2=0，3+3=1，3+4=2
+        //     4+0=4，4+1=0，4+2=1，4+3=2，4+4=3
+        //     */
+        //    //用于分析历史记录的比较因子的委托方法,参数为历史记录列表，因子列表和当前索引，返回结果为bool
+        //    Func<IReadOnlyList<byte>, List<byte>, int, bool> compareFunc = (tenNumbers, factor, index) =>
+        //     {
+        //         var length = tenNumbers.Count;
+        //         if (index > length - around)
+        //         {
+        //             return false;
+        //         }
+        //         var currentSum = 0;
+        //         for (var i = 0; i < around; i++)
+        //         {
+        //             currentSum += tenNumbers[index + i];
+        //         }
+        //         //取5的模
+        //         var currentItem = (byte)(currentSum % 5);
+        //         var exists = factor.Exists(m => m.Equals(currentItem));
+        //         return exists;
+        //     };
+        //    //用于预测当前期次的比较因子的委托方法,参数为历史记录列表，因子列表和当前索引，返回结果为bool
+        //    Func<IReadOnlyList<byte>, List<byte>, int, bool> curTimesCompareFunc = (tenNumbers, factor, index) =>
+        //   {
+        //       var currentSum = 0;
+        //       for (var i = 0; i < around; i++)
+        //       {
+        //           currentSum += tenNumbers[index - i];
+        //       }
+        //       //取5的模
+        //       var sum = (byte)(currentSum % 5);
+        //       return factor.Contains(sum);
+        //   };
+        //    //分析结果
+        //    List<Results<byte>> tensDigitResult;
+        //    if (numbersTailCutCount > 0 && tensDigitNumbers.Count > 0)
         //    {
-        //        arr.Add(i);
+        //        var numbers = tensDigitNumbers.Skip(0).Take(tensDigitNumbers.Count - numbersTailCutCount).ToList();
+        //        tensDigitResult = FactorAnalysis.Consecutives(numbers, tensDigitFactors, compareFunc, allowMinTimes);
+
         //    }
-        //    //组合节点
-        //    var nodes = NumberCombination.CreateBinaryCombinations(arr, 2, true);
-        //    //返回数字结果
-        //    var digitResult = FactorAnalysis.Consecutives(numbers, nodes, allowMinTimes);
-        //    digitResult = digitResult.Where(t => t.ConsecutiveTimes.Count > 0).ToList();
-        //    foreach (var item in digitResult)
+        //    else
+        //    {
+        //        tensDigitResult = FactorAnalysis.Consecutives(tensDigitNumbers, tensDigitFactors, compareFunc, allowMinTimes);
+        //    }
+        //    tensDigitResult = tensDigitResult.Where(t => t.ConsecutiveTimes.Count > 0).ToList();
+        //    foreach (var item in tensDigitResult)
         //    {
         //        var times = 0;
-        //        for (var i = numbers.Count - 1; i >= 0; i--)
+        //        for (var i = tensDigitNumbers.Count - 1; i >= 0; i--)
         //        {
-        //            if (!item.Factor.Contains(numbers[i]))
+        //            if (!curTimesCompareFunc(tensDigitNumbers, item.Factor, i))
         //                break;
         //            times++;
         //        }
         //        item.SpecifiedTimesConsecutiveTimes = times;
         //    }
-        //    digitResult = digitResult.Where(t => t.SpecifiedTimesConsecutiveTimes > 0).ToList();
-        //    //先按间隔数升序再按最大连续数降序排列
-        //    digitResult = digitResult.OrderBy(r => r.Interval).OrderByDescending(r => r.ConsecutiveTimes.Max(k => k.Key)).ToList();
-        //    return digitResult;
+        //    tensDigitResult = tensDigitResult
+        //        .OrderByDescending(t => t.SpecifiedTimesConsecutiveTimes)
+        //        .ThenBy(t => t.Interval).ToList();
+
+        //    return tensDigitResult;
         //}
+
 
         /// <summary>
         /// 分析指定位置当前期之前的号码
