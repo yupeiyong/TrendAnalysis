@@ -57,9 +57,9 @@
     <Compile Include="FactorAnalysis.cs" />
     <Compile Include="NumberCombination.cs" />
     <Compile Include="EFSearchExtend.cs" />
-    <Compile Include="MarkSixPurchaseService.cs" />
-    <Compile Include="MarkSixAnalysisService.cs" />
-    <Compile Include="MarkSixRecordService.cs" />
+    <Compile Include="MarkSix\MarkSixPurchaseService.cs" />
+    <Compile Include="MarkSix\MarkSixAnalysisService.cs" />
+    <Compile Include="MarkSix\MarkSixRecordService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,9 +84,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MarkSix\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

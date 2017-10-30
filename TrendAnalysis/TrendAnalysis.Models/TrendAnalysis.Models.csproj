@@ -43,6 +43,8 @@
     <Compile Include="AnalysisBeforeResult.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="BinaryNode.cs" />
+    <Compile Include="HistoricalTrend.cs" />
+    <Compile Include="HistoricalTrendItem.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="MarkSix\MarkSixRecord.cs" />
     <Compile Include="MarkSix\MarkSixSpecifiedLocationPurchase.cs" />
