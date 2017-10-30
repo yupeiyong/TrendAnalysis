@@ -61,13 +61,13 @@ namespace TrendAnalysis.DataTransferObject
         /// <summary>
         /// 十位数，允许的最小指定期次此因子连续次数
         /// </summary>
-        public int TensAllowMinSpecifiedTimesConsecutiveTimes { get; set; } = 1;
+        public int TensAllowMinFactorCurrentConsecutiveTimes { get; set; } = 1;
 
 
         /// <summary>
         /// 个位数，允许的最小指定期次此因子连续次数
         /// </summary>
-        public int OnesAllowMinSpecifiedTimesConsecutiveTimes { get; set; } = 1;
+        public int OnesAllowMinFactorCurrentConsecutiveTimes { get; set; } = 1;
 
 
         /// <summary>

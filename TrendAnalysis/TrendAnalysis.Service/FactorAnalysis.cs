@@ -20,18 +20,18 @@ namespace TrendAnalysis.Service
         /// <param name="nodes">因子结点</param>
         /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
         /// <returns></returns>
-        public static List<Results<T>> Consecutives<T>(List<T> numbers, List<BinaryNode<T>> factors, int allowMinTimes = 1)
+        public static List<FactorResults<T>> AnalyseConsecutives<T>(List<T> numbers, List<BinaryNode<T>> factors, int allowMinTimes = 1)
         {
-            var resultList = new List<Results<T>>();
+            var resultList = new List<FactorResults<T>>();
             foreach (var factor in factors)
             {
                 if (factor.Left != null && factor.Left.Count > 0)
                 {
-                    resultList.Add(Consecutive(numbers, factor.Left, factor.Right, allowMinTimes));
+                    resultList.Add(AnalyseConsecutive(numbers, factor.Left, factor.Right, allowMinTimes));
                 }
                 if (factor.Right != null && factor.Right.Count > 0)
                 {
-                    resultList.Add(Consecutive(numbers, factor.Right, factor.Left, allowMinTimes));
+                    resultList.Add(AnalyseConsecutive(numbers, factor.Right, factor.Left, allowMinTimes));
                 }
             }
             return resultList;
@@ -46,18 +46,18 @@ namespace TrendAnalysis.Service
         /// <param name="compareFunc">比较因子的委托方法,参数为因子列表和当前索引，返回结果为bool</param>
         /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
         /// <returns></returns>
-        public static List<Results<T>> Consecutives<T>(IReadOnlyList<T> numbers, List<BinaryNode<T>> factors, Func<IReadOnlyList<T>, List<T>, int, bool> compareFunc, int allowMinTimes = 1)
+        public static List<FactorResults<T>> AnalyseConsecutives<T>(IReadOnlyList<T> numbers, List<BinaryNode<T>> factors, Func<IReadOnlyList<T>, List<T>, int, bool> compareFunc, int allowMinTimes = 1)
         {
-            var resultList = new List<Results<T>>();
+            var resultList = new List<FactorResults<T>>();
             foreach (var factor in factors)
             {
                 if (factor.Left != null && factor.Left.Count > 0)
                 {
-                    resultList.Add(Consecutive(numbers, factor.Left, factor.Right, compareFunc, allowMinTimes));
+                    resultList.Add(AnalyseConsecutive(numbers, factor.Left, factor.Right, compareFunc, allowMinTimes));
                 }
                 if (factor.Right != null && factor.Right.Count > 0)
                 {
-                    resultList.Add(Consecutive(numbers, factor.Right, factor.Left, compareFunc, allowMinTimes));
+                    resultList.Add(AnalyseConsecutive(numbers, factor.Right, factor.Left, compareFunc, allowMinTimes));
                 }
             }
             return resultList;
@@ -73,49 +73,13 @@ namespace TrendAnalysis.Service
         /// <param name="compareFunc">比较因子的委托方法</param>
         /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
         /// <returns></returns>
-        private static Results<T> Consecutive<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> oppositeFactor, int allowMinTimes = 1)
+        private static FactorResults<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> oppositeFactor, int allowMinTimes = 1)
         {
-            return Consecutive(numbers, factor, oppositeFactor, (n,factorList, index) =>
+            return AnalyseConsecutive(numbers, factor, oppositeFactor, (n, factorList, index) =>
             {
                 var number = n[index];
                 return factorList.Exists(m => m.Equals(number));
             }, allowMinTimes);
-
-            //var curResult = new Results<T> { Factor = factor,OppositeFactor=oppositeFactor, ConsecutiveTimes = new SortedDictionary<int, int>() };
-            //var i = 0;
-            ////连续次数
-            //var times = 0;
-            //var length = numbers.Count;
-            //while (i < length)
-            //{
-            //    var currentItem = numbers[i];
-            //    if (factor.Exists(m => m.Equals(currentItem)))
-            //    {
-            //        times++;
-            //    }
-            //    else
-            //    {
-            //        if (curResult.ConsecutiveTimes.ContainsKey(times))
-            //        {
-            //            curResult.ConsecutiveTimes[times]++;
-            //        }
-            //        else if(times>= allowMinTimes)
-            //        {
-            //            curResult.ConsecutiveTimes.Add(times, 1);
-            //        }
-            //        times = 0;
-            //    }
-            //    i++;
-            //}
-            //if (curResult.ConsecutiveTimes.ContainsKey(times))
-            //{
-            //    curResult.ConsecutiveTimes[times]++;
-            //}
-            //else if(times >= allowMinTimes)
-            //{
-            //    curResult.ConsecutiveTimes.Add(times, 1);
-            //}
-            //return curResult;
         }
 
         /// <summary>
@@ -128,40 +92,40 @@ namespace TrendAnalysis.Service
         /// <param name="compareFunc">比较因子的委托方法,参数为因子列表和当前索引，返回结果为bool</param>
         /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
         /// <returns></returns>
-        private static Results<T> Consecutive<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> oppositeFactor, Func<IReadOnlyList<T>, List<T>, int, bool> compareFunc, int allowMinTimes = 1)
+        private static FactorResults<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> oppositeFactor, Func<IReadOnlyList<T>, List<T>, int, bool> compareFunc, int allowMinTimes = 1)
         {
-            var curResult = new Results<T> { Factor = factor, OppositeFactor = oppositeFactor, ConsecutiveTimes = new SortedDictionary<int, int>() };
+            var curResult = new FactorResults<T> { Factor = factor, OppositeFactor = oppositeFactor, HistoricalConsecutiveTimes = new SortedDictionary<int, int>() };
             var i = 0;
             //连续次数
             var times = 0;
             var length = numbers.Count;
             while (i < length)
             {
-                if (compareFunc(numbers,factor, i))
+                if (compareFunc(numbers, factor, i))
                 {
                     times++;
                 }
                 else
                 {
-                    if (curResult.ConsecutiveTimes.ContainsKey(times))
+                    if (curResult.HistoricalConsecutiveTimes.ContainsKey(times))
                     {
-                        curResult.ConsecutiveTimes[times]++;
+                        curResult.HistoricalConsecutiveTimes[times]++;
                     }
                     else if (times >= allowMinTimes)
                     {
-                        curResult.ConsecutiveTimes.Add(times, 1);
+                        curResult.HistoricalConsecutiveTimes.Add(times, 1);
                     }
                     times = 0;
                 }
                 i++;
             }
-            if (curResult.ConsecutiveTimes.ContainsKey(times))
+            if (curResult.HistoricalConsecutiveTimes.ContainsKey(times))
             {
-                curResult.ConsecutiveTimes[times]++;
+                curResult.HistoricalConsecutiveTimes[times]++;
             }
             else if (times >= allowMinTimes)
             {
-                curResult.ConsecutiveTimes.Add(times, 1);
+                curResult.HistoricalConsecutiveTimes.Add(times, 1);
             }
             return curResult;
         }
@@ -172,7 +136,7 @@ namespace TrendAnalysis.Service
     /// 解析因子结果
     /// </summary>
     /// <typeparam name="T">因子类型</typeparam>
-    public class Results<T>
+    public class FactorResults<T>
     {
         /// <summary>
         /// 因子
@@ -181,25 +145,25 @@ namespace TrendAnalysis.Service
 
 
         /// <summary>
-        /// 反因子
+        /// 结果因子（反因子）
         /// </summary>
         public List<T> OppositeFactor { get; set; }
 
         /// <summary>
-        /// 连续次数,键为次数，值为数量
+        /// 历史的连续次数分析结果，键为次数，值为数量  表示每个连续次数出现的次数
         /// </summary>
-        public SortedDictionary<int, int> ConsecutiveTimes { get; set; } = new SortedDictionary<int, int>();
+        public SortedDictionary<int, int> HistoricalConsecutiveTimes { get; set; } = new SortedDictionary<int, int>();
 
         /// <summary>
-        /// 指定期次此因子连续次数
+        /// 当前指定期次此因子连续次数
         /// </summary>
-        public int SpecifiedTimesConsecutiveTimes { get; set; }
+        public int FactorCurrentConsecutiveTimes { get; set; }
 
 
         /// <summary>
         /// 最大连续期数-指定期次此因子连续次数的间隔数，数越小，表示变化的趋势越大
         /// </summary>
-        public int Interval => ConsecutiveTimes.Max(k => k.Key) - SpecifiedTimesConsecutiveTimes;
+        public int Interval => HistoricalConsecutiveTimes == null || HistoricalConsecutiveTimes.Count == 0 ? 0 : HistoricalConsecutiveTimes.Max(k => k.Key) - FactorCurrentConsecutiveTimes;
 
     }
 

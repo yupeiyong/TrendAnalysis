@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace TrendAnalysis.Models
 {
     /// <summary>
-    /// MarkSix指定位置购买
+    /// MarkSix指定位置购买记录
     /// </summary>
     public class MarkSixSpecifiedLocationPurchase : BaseEntity
     {

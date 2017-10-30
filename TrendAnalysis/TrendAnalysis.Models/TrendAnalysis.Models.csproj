@@ -44,8 +44,8 @@
     <Compile Include="BaseEntity.cs" />
     <Compile Include="BinaryNode.cs" />
     <Compile Include="IEntity.cs" />
-    <Compile Include="MarkSixRecord.cs" />
-    <Compile Include="MarkSixSpecifiedLocationPurchase.cs" />
+    <Compile Include="MarkSix\MarkSixRecord.cs" />
+    <Compile Include="MarkSix\MarkSixSpecifiedLocationPurchase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
