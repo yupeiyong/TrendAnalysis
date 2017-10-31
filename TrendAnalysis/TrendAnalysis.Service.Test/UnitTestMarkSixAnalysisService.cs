@@ -31,7 +31,8 @@ namespace TrendAnalysis.Service.Test
                 //十位因子
                 var tensDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
 
-                var result = service.AnalyseOnesDigit(onesDigitNumbers, onesDigitFactors, 9, 2);
+                var historicalAnalysis = new HistoricalTrendAnalysis();
+                var result = historicalAnalysis.AnalyseNumbers(new AnalyseNumbersDto<byte> { Numbers = onesDigitNumbers, Factors = onesDigitFactors, AllowMinTimes = 9, AllowMaxInterval = 2 });
                 result = result.Where(m => m.HistoricalConsecutiveTimes.Count > 0).ToList();
             }
 
@@ -54,8 +55,8 @@ namespace TrendAnalysis.Service.Test
                 //十位因子
                 var tensDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
 
-                var service = new MarkSixAnalysisService();
-                var result = service.AnalyseTensDigit(tensDigitNumbers, tensDigitFactors, 4, 0);
+                var historicalAnalysis = new HistoricalTrendAnalysis();
+                var result = historicalAnalysis.AnalyseNumbers(new AnalyseNumbersDto<byte> { Numbers = tensDigitNumbers, Factors = tensDigitFactors, AllowMinTimes = 4, AllowMaxInterval = 0 });
                 result = result.Where(m => m.HistoricalConsecutiveTimes.Count > 0).ToList();
             }
         }

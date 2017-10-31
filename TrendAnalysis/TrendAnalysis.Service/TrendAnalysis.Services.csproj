@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="CompositeNumber.cs" />
     <Compile Include="FactorAnalysis.cs" />
+    <Compile Include="HistoricalTrendAnalysis.cs" />
     <Compile Include="NumberCombination.cs" />
     <Compile Include="EFSearchExtend.cs" />
     <Compile Include="MarkSix\MarkSixPurchaseService.cs" />

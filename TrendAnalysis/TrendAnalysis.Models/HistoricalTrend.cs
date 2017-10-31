@@ -57,12 +57,12 @@ namespace TrendAnalysis.Models
         public override string ToString()
         {
             var content = new StringBuilder();
-            content.AppendLine(string.Format("第{0}位，允许连续次数{1},允许间隔数{2}。出现次数{3}，正确次数{4},正确率：{5:0.00%}", Location, AllowConsecutiveTimes, AllowInterval, AnalyticalCount, CorrectCount, CorrectRate));
+            content.AppendLine(string.Format("第{0}位号码，允许连续次数{1},允许间隔数{2}。出现次数{3}，正确次数{4},正确率：{5:0.00%}", Location, AllowConsecutiveTimes, AllowInterval, AnalyticalCount, CorrectCount, CorrectRate));
             if (Items != null && Items.Count > 0)
             {
                 foreach (var item in Items)
                 {
-                    var message = string.Format("期次：{0},号码：{1},分析结果：{4},结果连续次数:{5}结果间隔数：{6}", item.Times, item.Number, item.Success ? "-Yes- " : "-No-  ", item.ResultConsecutiveTimes, item.ResultInterval);
+                    var message = string.Format("期次：{0},号码：{1},分析结果：{2},结果连续次数:{3}结果间隔数：{4}", item.Times, item.Number, item.Success ? "-Yes- " : "-No-  ", item.ResultConsecutiveTimes, item.ResultInterval);
                     content.AppendLine(message + (item.OppositeFactor != null ? string.Join(";", item.OppositeFactor) : ""));
                 }
             }

@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnalyseHistoricalTrendDto.cs" />
+    <Compile Include="AnalyseNumbersDto.cs" />
     <Compile Include="MarkSixAnalyseSpecifiedLocationDto.cs" />
     <Compile Include="BaseSearchDto.cs" />
     <Compile Include="MarkSixRecordSearchDto.cs" />
