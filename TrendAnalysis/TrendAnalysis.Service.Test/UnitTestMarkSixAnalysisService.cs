@@ -207,61 +207,77 @@ namespace TrendAnalysis.Service.Test
         }
 
         [TestMethod]//
-        public void TestMethod_AnalyseSpecifiedLocationOnes()
+        public void TestMethod_AnalyseOnesHistoricalTrend()
         {
             using (var dao = new TrendDbContext())
             {
                 var service = new MarkSixAnalysisService();
                 var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(1000).ToList();
-                var resultString = new StringBuilder();
-                //连续次数
-                for (var specifiedTimes = 6; specifiedTimes < 12; specifiedTimes++)
+                var trendDto = new MarkSixAnalyseHistoricalTrendDto
                 {
-                    //间隔数
-                    for (var interval = 2; interval > -3; interval--)
-                    {
-                        resultString.AppendLine(string.Format("连续次数{0},间隔数{1},开始......", specifiedTimes, interval));
-                        var resultCount = 0;
-                        var onesHasCount = 0;
+                    Location=7,
+                    Times=records[0].Times,
+                    AnalyseNumberCount=100,
+                    StartAllowMaxInterval=2,
+                    EndAllowMaxInterval=-3,
+                    StartAllowMinFactorCurrentConsecutiveTimes=6,
+                    EndAllowMinFactorCurrentConsecutiveTimes=12,
+                    AllowMinTimes=3,
+                    NumbersTailCutCount=6
+                };
 
-                        for (var i = 0; i < 50; i++)
-                        {
-                            var seventhNum = records[i].SeventhNum;
-                            var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
-                            var times = records[i].Times;
-                            var dto = new MarkSixAnalyseSpecifiedLocationDto
-                            {
-                                Location = 7,
-                                Times = times,
-                                OnesAllowMinFactorCurrentConsecutiveTimes = specifiedTimes,
-                                OnesNumbersTailCutCount = 10,
-                                OnesAllowMaxInterval = interval
-                            };
-                            //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = records[i].Times, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
-                            var result = service.AnalyseSpecifiedLocationOnes(dto);
-                            //结果是否正确
-                            var success = false;
-                            if (result.OppositeFactor != null && result.OppositeFactor.Count > 0)
-                            {
-                                resultCount++;
-                                var resultSource = result.OppositeFactor.Select(r => r.ToString("00"));
-                                var onesResults = resultSource.Select(r => byte.Parse(r.Substring(1))).Distinct().ToList();
+                var trends= service.AnalyseOnesHistoricalTrend(trendDto);
+                var content = new StringBuilder();
+                trends.ForEach(item => content.Append(item.ToString()));
+                //var resultString = new StringBuilder();
+                ////连续次数
+                //for (var specifiedTimes = 6; specifiedTimes < 12; specifiedTimes++)
+                //{
+                //    //间隔数
+                //    for (var interval = 2; interval > -3; interval--)
+                //    {
+                //        resultString.AppendLine(string.Format("连续次数{0},间隔数{1},开始......", specifiedTimes, interval));
+                //        var resultCount = 0;
+                //        var onesHasCount = 0;
 
-                                if (onesResults.Contains(ones))
-                                {
-                                    onesHasCount++;
-                                    success = true;
-                                }
-                            }
-                            //var has = result.Exists(m => m == seventhNum);
-                            //if (has) hasCount++;
-                            var message = string.Format("期次：{0},第7位号码：{1},连续次数：{2} 间隔数：{3}，分析结果：{4},结果连续次数:{5}结果间隔数：{6}", records[i].Times, seventhNum, specifiedTimes, interval, success ? "-Yes- " : "      ", result.FactorCurrentConsecutiveTimes, result.Interval);
-                            resultString.AppendLine(message + (result.OppositeFactor != null ? string.Join(";", result.OppositeFactor) : ""));
-                        }
-                        resultString.AppendLine(string.Format("连续次数{0},间隔数{1},结束。命中{2}，正确{3},正确率：{4}", specifiedTimes, interval, resultCount, onesHasCount, resultCount == 0 ? 0 : (double)onesHasCount / resultCount));
-                    }
-                }
-                var str = resultString.ToString();
+                //        for (var i = 0; i < 50; i++)
+                //        {
+                //            var seventhNum = records[i].SeventhNum;
+                //            var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
+                //            var times = records[i].Times;
+                //            var dto = new MarkSixAnalyseSpecifiedLocationDto
+                //            {
+                //                Location = 7,
+                //                Times = times,
+                //                OnesAllowMinFactorCurrentConsecutiveTimes = specifiedTimes,
+                //                OnesNumbersTailCutCount = 10,
+                //                OnesAllowMaxInterval = interval
+                //            };
+                //            //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = records[i].Times, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
+                //            var result = service.AnalyseOnesHistoricalTrend(dto);
+                //            //结果是否正确
+                //            var success = false;
+                //            if (result.OppositeFactor != null && result.OppositeFactor.Count > 0)
+                //            {
+                //                resultCount++;
+                //                var resultSource = result.OppositeFactor.Select(r => r.ToString("00"));
+                //                var onesResults = resultSource.Select(r => byte.Parse(r.Substring(1))).Distinct().ToList();
+
+                //                if (onesResults.Contains(ones))
+                //                {
+                //                    onesHasCount++;
+                //                    success = true;
+                //                }
+                //            }
+                //            //var has = result.Exists(m => m == seventhNum);
+                //            //if (has) hasCount++;
+                //            var message = string.Format("期次：{0},第7位号码：{1},连续次数：{2} 间隔数：{3}，分析结果：{4},结果连续次数:{5}结果间隔数：{6}", records[i].Times, seventhNum, specifiedTimes, interval, success ? "-Yes- " : "      ", result.FactorCurrentConsecutiveTimes, result.Interval);
+                //            resultString.AppendLine(message + (result.OppositeFactor != null ? string.Join(";", result.OppositeFactor) : ""));
+                //        }
+                //        resultString.AppendLine(string.Format("连续次数{0},间隔数{1},结束。命中{2}，正确{3},正确率：{4}", specifiedTimes, interval, resultCount, onesHasCount, resultCount == 0 ? 0 : (double)onesHasCount / resultCount));
+                //    }
+                //}
+                //var str = resultString.ToString();
             }
         }
 

@@ -72,15 +72,16 @@ namespace TrendAnalysis.Service
 
             var analyseNumbers = dto.Numbers.OrderByDescending(n => n.TimesValue).Skip(0).Take(dto.AnalyseNumberCount).ToList();
             //允许的连续次数，由小到大
-            for (var consecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes; consecutiveTimes < dto.EndAllowMinFactorCurrentConsecutiveTimes; consecutiveTimes++)
+            for (var consecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes; consecutiveTimes <= dto.EndAllowMinFactorCurrentConsecutiveTimes; consecutiveTimes++)
             {
                 //允许的间隔数，由大到小
-                for (var interval = dto.StartAllowMaxInterval; interval > dto.EndAllowMaxInterval; interval--)
+                for (var interval = dto.StartAllowMaxInterval; interval >= dto.EndAllowMaxInterval; interval--)
                 {
                     var resultCount = 0;
                     var successCount = 0;
 
-                    var trend = new HistoricalTrend<T> { Items = new List<HistoricalTrendItem<T>>(), AllowConsecutiveTimes = consecutiveTimes, AllowInterval = interval };
+                    var trend = new HistoricalTrend<T> { Items = new List<HistoricalTrendItem<T>>(),Location=dto.Location, AllowConsecutiveTimes = consecutiveTimes, AllowInterval = interval };
+                    trends.Add(trend);
                     for (int i = 0, maxCount = analyseNumbers.Count; i < maxCount; i++)
                     {
                         var number = analyseNumbers[i].Number;
@@ -103,11 +104,12 @@ namespace TrendAnalysis.Service
 
                         //对结果再分析
                         var factorResult = factorResults.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
-                        var factors = factorResult.OppositeFactor;
+                        var factors = new List<T>(); 
                         var resultConsecutiveTimes = 0;
                         var resultInterval = 0;
                         if (factorResult != null)
                         {
+                            factors= factorResult.OppositeFactor;
                             resultConsecutiveTimes = factorResult.FactorCurrentConsecutiveTimes;
                             resultInterval = factorResult.Interval;
                             if (factorResult.OppositeFactor != null && factorResult.OppositeFactor.Count > 0)

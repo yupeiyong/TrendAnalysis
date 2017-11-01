@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AnalyseHistoricalTrendDto.cs" />
     <Compile Include="AnalyseNumbersDto.cs" />
+    <Compile Include="MarkSixAnalyseHistoricalTrendDto.cs" />
     <Compile Include="MarkSixAnalyseSpecifiedLocationDto.cs" />
     <Compile Include="BaseSearchDto.cs" />
     <Compile Include="MarkSixRecordSearchDto.cs" />
