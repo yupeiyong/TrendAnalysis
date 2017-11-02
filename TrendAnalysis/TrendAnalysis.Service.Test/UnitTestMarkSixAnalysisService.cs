@@ -235,6 +235,64 @@ namespace TrendAnalysis.Service.Test
             }
         }
 
+
+        [TestMethod]//
+        public void TestMethod_AnalyseTensHistoricalTrend()
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var service = new MarkSixAnalysisService();
+                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(1000).ToList();
+                var trendDto = new MarkSixAnalyseHistoricalTrendDto
+                {
+                    Location = 7,
+                    Times = records[0].Times,
+                    AnalyseNumberCount = 100,
+                    StartAllowMaxInterval = 2,
+                    EndAllowMaxInterval = -5,
+                    StartAllowMinFactorCurrentConsecutiveTimes = 3,
+                    EndAllowMinFactorCurrentConsecutiveTimes = 9,
+                    AllowMinTimes = 3,
+                    NumbersTailCutCount = 6
+                };
+
+                var trends = service.AnalyseTensHistoricalTrend(trendDto);
+                var content = new StringBuilder();
+                trends.ForEach(item => content.Append(item.ToString()));
+
+
+                var str = content.ToString();
+            }
+        }
+
+        [TestMethod]//
+        public void TestMethod_AnalyseCompositeHistoricalTrend()
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var service = new MarkSixAnalysisService();
+                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(1000).ToList();
+                var trendDto = new MarkSixAnalyseHistoricalTrendDto
+                {
+                    Location = 7,
+                    Times = records[0].Times,
+                    AnalyseNumberCount = 100,
+                    StartAllowMaxInterval = 2,
+                    EndAllowMaxInterval = -5,
+                    StartAllowMinFactorCurrentConsecutiveTimes = 9,
+                    EndAllowMinFactorCurrentConsecutiveTimes = 16,
+                    AllowMinTimes = 3,
+                    NumbersTailCutCount = 6
+                };
+
+                var trends = service.AnalyseCompositeHistoricalTrend(trendDto);
+                var content = new StringBuilder();
+                trends.ForEach(item => content.Append(item.ToString()));
+
+
+                var str = content.ToString();
+            }
+        }
         //[TestMethod]
         //public void TestGetNumbers()
         //{
