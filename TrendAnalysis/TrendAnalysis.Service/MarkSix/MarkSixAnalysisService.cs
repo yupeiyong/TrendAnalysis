@@ -67,13 +67,14 @@ namespace TrendAnalysis.Service
 
                 //按数字位置分析（十位/个位）
                 //十位
-                var tensDigitResult = historicalTrendAnalysis.AnalyseNumbers(new AnalyseNumbersDto<byte> {
-                    Numbers =tensDigitNumbers,
-                    Factors =tensDigitFactors,
-                    AllowMinTimes =dto.TensAllowMinTimes,
-                    NumbersTailCutCount =dto.TensNumbersTailCutCount,
-                    AllowMinFactorCurrentConsecutiveTimes=dto.TensAllowMinFactorCurrentConsecutiveTimes,
-                    AllowMaxInterval=dto.TensAllowMaxInterval
+                var tensDigitResult = historicalTrendAnalysis.AnalyseNumbers(new AnalyseNumbersDto<byte>
+                {
+                    Numbers = tensDigitNumbers,
+                    Factors = tensDigitFactors,
+                    AllowMinTimes = dto.TensAllowMinTimes,
+                    NumbersTailCutCount = dto.TensNumbersTailCutCount,
+                    AllowMinFactorCurrentConsecutiveTimes = dto.TensAllowMinFactorCurrentConsecutiveTimes,
+                    AllowMaxInterval = dto.TensAllowMaxInterval
                 });
 
                 //个位数号码列表
@@ -134,7 +135,7 @@ namespace TrendAnalysis.Service
                 {
                     case 1:
                         records = source.Select(m => new { Number = m.FirstNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(1)),Times=m.Times,TimesValue=m.TimesValue} ).ToList();
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
                         break;
                     case 2:
                         records = source.Select(m => new { Number = m.SecondNum, m.Times, m.TimesValue }).ToList()
@@ -169,18 +170,184 @@ namespace TrendAnalysis.Service
                 //个位因子
                 var onesDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
 
-                var trendDto = new AnalyseHistoricalTrendDto<byte> {
-                    Numbers =records,Factors=onesDigitFactors,
-                    Location =dto.Location,
-                    AnalyseNumberCount=dto.AnalyseNumberCount,
-                    StartAllowMaxInterval=dto.StartAllowMaxInterval,
-                    EndAllowMaxInterval=dto.EndAllowMaxInterval,
-                    StartAllowMinFactorCurrentConsecutiveTimes=dto.StartAllowMinFactorCurrentConsecutiveTimes,
-                    EndAllowMinFactorCurrentConsecutiveTimes=dto.EndAllowMinFactorCurrentConsecutiveTimes,
-                    AllowMinTimes=dto.AllowMinTimes,
-                    NumbersTailCutCount=dto.NumbersTailCutCount
+                var trendDto = new AnalyseHistoricalTrendDto<byte>
+                {
+                    Numbers = records,
+                    Factors = onesDigitFactors,
+                    Location = dto.Location,
+                    AnalyseNumberCount = dto.AnalyseNumberCount,
+                    StartAllowMaxInterval = dto.StartAllowMaxInterval,
+                    EndAllowMaxInterval = dto.EndAllowMaxInterval,
+                    StartAllowMinFactorCurrentConsecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes,
+                    EndAllowMinFactorCurrentConsecutiveTimes = dto.EndAllowMinFactorCurrentConsecutiveTimes,
+                    AllowMinTimes = dto.AllowMinTimes,
+                    NumbersTailCutCount = dto.NumbersTailCutCount
                 };
-                var historicalTrends= historicalTrendAnalysis.AnalyseHistoricalTrend(trendDto);
+                var historicalTrends = historicalTrendAnalysis.AnalyseHistoricalTrend(trendDto);
+
+                return historicalTrends;
+            }
+        }
+
+
+        /// <summary>
+        /// 单独分析指定位置号码十位数
+        /// </summary>
+        /// <param name="location">指定的第几位</param>
+        /// <param name="times">分析指定的期次</param>
+        /// <returns></returns>
+        public List<HistoricalTrend<byte>> AnalyseTensHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var source = dao.Set<MarkSixRecord>().AsQueryable();
+                if (!string.IsNullOrWhiteSpace(dto.Times))
+                {
+                    var record = dao.Set<MarkSixRecord>().FirstOrDefault(m => m.Times == dto.Times);
+                    if (record == null)
+                        throw new Exception("错误，指定期次的记录不存在！");
+                    source = source.Where(m => m.TimesValue < record.TimesValue);
+                }
+
+                //按期次值升序排列
+                source = source.OrderBy(m => m.TimesValue);
+                var records = new List<TemporaryRecord<byte>>();
+                switch (dto.Location)
+                {
+                    case 1:
+                        records = source.Select(m => new { Number = m.FirstNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 2:
+                        records = source.Select(m => new { Number = m.SecondNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 3:
+                        records = source.Select(m => new { Number = m.ThirdNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 4:
+                        records = source.Select(m => new { Number = m.FourthNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 5:
+                        records = source.Select(m => new { Number = m.FifthNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 6:
+                        records = source.Select(m => new { Number = m.SixthNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 7:
+                        records = source.Select(m => new { Number = m.SeventhNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    default:
+                        throw new Exception("错误，指定的位置不是有效的号码位置！");
+                }
+
+                var historicalTrendAnalysis = new HistoricalTrendAnalysis();
+
+                //十位因子
+                var tensDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
+
+                var trendDto = new AnalyseHistoricalTrendDto<byte>
+                {
+                    Numbers = records,
+                    Factors = tensDigitFactors,
+                    Location = dto.Location,
+                    AnalyseNumberCount = dto.AnalyseNumberCount,
+                    StartAllowMaxInterval = dto.StartAllowMaxInterval,
+                    EndAllowMaxInterval = dto.EndAllowMaxInterval,
+                    StartAllowMinFactorCurrentConsecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes,
+                    EndAllowMinFactorCurrentConsecutiveTimes = dto.EndAllowMinFactorCurrentConsecutiveTimes,
+                    AllowMinTimes = dto.AllowMinTimes,
+                    NumbersTailCutCount = dto.NumbersTailCutCount
+                };
+                var historicalTrends = historicalTrendAnalysis.AnalyseHistoricalTrend(trendDto);
+
+                return historicalTrends;
+            }
+        }
+
+
+        /// <summary>
+        /// 单独分析指定位置号码合数
+        /// </summary>
+        /// <param name="location">指定的第几位</param>
+        /// <param name="times">分析指定的期次</param>
+        /// <returns></returns>
+        public List<HistoricalTrend<byte>> AnalyseCompositeHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var source = dao.Set<MarkSixRecord>().AsQueryable();
+                if (!string.IsNullOrWhiteSpace(dto.Times))
+                {
+                    var record = dao.Set<MarkSixRecord>().FirstOrDefault(m => m.Times == dto.Times);
+                    if (record == null)
+                        throw new Exception("错误，指定期次的记录不存在！");
+                    source = source.Where(m => m.TimesValue < record.TimesValue);
+                }
+
+                //按期次值升序排列
+                source = source.OrderBy(m => m.TimesValue);
+                var records = new List<TemporaryRecord<byte>>();
+                switch (dto.Location)
+                {
+                    case 1:
+                        records = source.Select(m => new { Number = m.FirstNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = (byte)(byte.Parse(m.Number.ToString("00").Substring(0, 1))+ byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 2:
+                        records = source.Select(m => new { Number = m.SecondNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = (byte)(byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 3:
+                        records = source.Select(m => new { Number = m.ThirdNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = (byte)(byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 4:
+                        records = source.Select(m => new { Number = m.FourthNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = (byte)(byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 5:
+                        records = source.Select(m => new { Number = m.FifthNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = (byte)(byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 6:
+                        records = source.Select(m => new { Number = m.SixthNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = (byte)(byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 7:
+                        records = source.Select(m => new { Number = m.SeventhNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = (byte)(byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    default:
+                        throw new Exception("错误，指定的位置不是有效的号码位置！");
+                }
+
+                var historicalTrendAnalysis = new HistoricalTrendAnalysis();
+
+                var compositeService = new CompositeNumber(1,49);
+                var compositeNumber = compositeService.CompositeNumbers.Select(n => (byte)n).ToList();
+                //合数因子
+                var compositeDigitFactors = NumberCombination.CreateBinaryCombinations(compositeNumber);
+
+                var trendDto = new AnalyseHistoricalTrendDto<byte>
+                {
+                    Numbers = records,
+                    Factors = compositeDigitFactors,
+                    Location = dto.Location,
+                    AnalyseNumberCount = dto.AnalyseNumberCount,
+                    StartAllowMaxInterval = dto.StartAllowMaxInterval,
+                    EndAllowMaxInterval = dto.EndAllowMaxInterval,
+                    StartAllowMinFactorCurrentConsecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes,
+                    EndAllowMinFactorCurrentConsecutiveTimes = dto.EndAllowMinFactorCurrentConsecutiveTimes,
+                    AllowMinTimes = dto.AllowMinTimes,
+                    NumbersTailCutCount = dto.NumbersTailCutCount
+                };
+                var historicalTrends = historicalTrendAnalysis.AnalyseHistoricalTrend(trendDto);
 
                 return historicalTrends;
             }
