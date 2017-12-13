@@ -92,6 +92,13 @@
       <SubType>Content</SubType>
       <DependentUpon>MarkSix类图.classdiagram</DependentUpon>
     </Content>
+    <Content Include="活动图_按号码列表组合判断历史趋势.activitydiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="活动图_按号码列表组合判断历史趋势.activitydiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>活动图_按号码列表组合判断历史趋势.activitydiagram</DependentUpon>
+    </Content>
     <Folder Include="ModelDefinition\" />
     <Content Include="ModelDefinition\TrendAnalysis.ModelingProject.uml">
       <SubType>Content</SubType>

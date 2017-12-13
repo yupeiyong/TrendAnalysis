@@ -65,7 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTestCompositeNumber.cs" />
     <Compile Include="UnitTestMarkSixAnalysisService.cs" />
-    <Compile Include="UnitTestFactorAnalysis.cs" />
+    <Compile Include="UnitTestFactorTrend.cs" />
     <Compile Include="UnitTestNumberCombination.cs" />
     <Compile Include="UnitTestfrmMarkPurchaseService.cs" />
     <Compile Include="UnitTestMarkSixReportService.cs" />

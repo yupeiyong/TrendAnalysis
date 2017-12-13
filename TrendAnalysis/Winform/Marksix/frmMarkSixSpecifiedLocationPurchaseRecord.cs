@@ -1,16 +1,12 @@
 ﻿using Common;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Models;
-using TrendAnalysis.Service;
+using TrendAnalysis.Service.MarkSix;
 using Winform.Common;
 
 namespace Winform.Marksix

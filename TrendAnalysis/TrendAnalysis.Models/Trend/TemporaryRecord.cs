@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrendAnalysis.Models
+namespace TrendAnalysis.Models.Trend
 {
     /// <summary>
     /// 用于分析历史趋势的临时记录

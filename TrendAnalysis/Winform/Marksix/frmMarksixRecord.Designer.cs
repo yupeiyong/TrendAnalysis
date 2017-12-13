@@ -108,7 +108,7 @@
             this.tslMaster.Location = new System.Drawing.Point(9, 105);
             this.tslMaster.Name = "tslMaster";
             this.tslMaster.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.tslMaster.Size = new System.Drawing.Size(541, 28);
+            this.tslMaster.Size = new System.Drawing.Size(341, 28);
             this.tslMaster.TabIndex = 2;
             this.tslMaster.Text = "toolStrip1";
             // 

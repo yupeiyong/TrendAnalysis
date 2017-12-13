@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Transactions;
 using TrendAnalysis.DataTransferObject;
+using TrendAnalysis.Service.MarkSix;
 
 namespace TrendAnalysis.Service.Test
 {

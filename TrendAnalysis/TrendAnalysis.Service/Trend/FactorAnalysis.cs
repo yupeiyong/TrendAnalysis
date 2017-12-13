@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrendAnalysis.Models;
+using TrendAnalysis.Models.Trend;
 
-namespace TrendAnalysis.Service
+namespace TrendAnalysis.Service.Trend
 {
     /// <summary>
     /// 因子解析
@@ -13,16 +14,16 @@ namespace TrendAnalysis.Service
     public class FactorAnalysis
     {
         /// <summary>
-        /// 解析连续在因子中的记录数
+        /// 解析因子在记录中的连续次数
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="numbers">记录</param>
         /// <param name="nodes">因子结点</param>
         /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
         /// <returns></returns>
-        public static List<FactorResults<T>> AnalyseConsecutives<T>(List<T> numbers, List<BinaryNode<T>> factors, int allowMinTimes = 1)
+        public static List<FactorTrendAnalyseResult<T>> AnalyseConsecutives<T>(List<T> numbers, List<Factor<T>> factors, int allowMinTimes = 1)
         {
-            var resultList = new List<FactorResults<T>>();
+            var resultList = new List<FactorTrendAnalyseResult<T>>();
             foreach (var factor in factors)
             {
                 if (factor.Left != null && factor.Left.Count > 0)
@@ -37,43 +38,17 @@ namespace TrendAnalysis.Service
             return resultList;
         }
 
-        /// <summary>
-        /// 解析连续在因子中的记录数
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="numbers">记录</param>
-        /// <param name="nodes">因子结点</param>
-        /// <param name="compareFunc">比较因子的委托方法,参数为因子列表和当前索引，返回结果为bool</param>
-        /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
-        /// <returns></returns>
-        public static List<FactorResults<T>> AnalyseConsecutives<T>(IReadOnlyList<T> numbers, List<BinaryNode<T>> factors, Func<IReadOnlyList<T>, List<T>, int, bool> compareFunc, int allowMinTimes = 1)
-        {
-            var resultList = new List<FactorResults<T>>();
-            foreach (var factor in factors)
-            {
-                if (factor.Left != null && factor.Left.Count > 0)
-                {
-                    resultList.Add(AnalyseConsecutive(numbers, factor.Left, factor.Right, compareFunc, allowMinTimes));
-                }
-                if (factor.Right != null && factor.Right.Count > 0)
-                {
-                    resultList.Add(AnalyseConsecutive(numbers, factor.Right, factor.Left, compareFunc, allowMinTimes));
-                }
-            }
-            return resultList;
-        }
 
         /// <summary>
-        /// 解析连续在因子中的记录数
+        /// 解析因子在记录中的连续次数
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="numbers">记录</param>
         /// <param name="factor">判断因子</param>
         /// <param name="oppositeFactor">反因子</param>
-        /// <param name="compareFunc">比较因子的委托方法</param>
         /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
         /// <returns></returns>
-        private static FactorResults<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> oppositeFactor, int allowMinTimes = 1)
+        private static FactorTrendAnalyseResult<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> oppositeFactor, int allowMinTimes = 1)
         {
             return AnalyseConsecutive(numbers, factor, oppositeFactor, (n, factorList, index) =>
             {
@@ -92,9 +67,9 @@ namespace TrendAnalysis.Service
         /// <param name="compareFunc">比较因子的委托方法,参数为因子列表和当前索引，返回结果为bool</param>
         /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
         /// <returns></returns>
-        private static FactorResults<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> oppositeFactor, Func<IReadOnlyList<T>, List<T>, int, bool> compareFunc, int allowMinTimes = 1)
+        private static FactorTrendAnalyseResult<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> oppositeFactor, Func<IReadOnlyList<T>, List<T>, int, bool> compareFunc, int allowMinTimes = 1)
         {
-            var curResult = new FactorResults<T> { Factor = factor, OppositeFactor = oppositeFactor, HistoricalConsecutiveTimes = new SortedDictionary<int, int>() };
+            var curResult = new FactorTrendAnalyseResult<T> { Factor = factor, OppositeFactor = oppositeFactor, HistoricalConsecutiveTimes = new SortedDictionary<int, int>() };
             var i = 0;
             //连续次数
             var times = 0;
@@ -129,6 +104,33 @@ namespace TrendAnalysis.Service
             }
             return curResult;
         }
+
+        ///// <summary>
+        ///// 解析连续在因子中的记录数
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="numbers">记录</param>
+        ///// <param name="nodes">因子结点</param>
+        ///// <param name="compareFunc">比较因子的委托方法,参数为因子列表和当前索引，返回结果为bool</param>
+        ///// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
+        ///// <returns></returns>
+        //public static List<FactorTrendAnalyseResult<T>> AnalyseConsecutives<T>(IReadOnlyList<T> numbers, List<Factor<T>> factors, Func<IReadOnlyList<T>, List<T>, int, bool> compareFunc, int allowMinTimes = 1)
+        //{
+        //    var resultList = new List<FactorTrendAnalyseResult<T>>();
+        //    foreach (var factor in factors)
+        //    {
+        //        if (factor.Left != null && factor.Left.Count > 0)
+        //        {
+        //            resultList.Add(AnalyseConsecutive(numbers, factor.Left, factor.Right, compareFunc, allowMinTimes));
+        //        }
+        //        if (factor.Right != null && factor.Right.Count > 0)
+        //        {
+        //            resultList.Add(AnalyseConsecutive(numbers, factor.Right, factor.Left, compareFunc, allowMinTimes));
+        //        }
+        //    }
+        //    return resultList;
+        //}
+
     }
 
 
@@ -136,7 +138,7 @@ namespace TrendAnalysis.Service
     /// 解析因子结果
     /// </summary>
     /// <typeparam name="T">因子类型</typeparam>
-    public class FactorResults<T>
+    public class FactorTrendAnalyseResult<T>
     {
         /// <summary>
         /// 因子

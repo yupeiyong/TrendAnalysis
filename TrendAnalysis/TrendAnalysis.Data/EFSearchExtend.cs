@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrendAnalysis.Service
+namespace TrendAnalysis.Data
 {
     public static class EFSearchExtend
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrendAnalysis.Models
+namespace TrendAnalysis.Models.Trend
 {
     /// <summary>
     /// 历史趋势明细项

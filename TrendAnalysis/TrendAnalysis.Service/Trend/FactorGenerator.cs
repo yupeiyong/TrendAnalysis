@@ -4,37 +4,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrendAnalysis.Models;
+using TrendAnalysis.Models.Trend;
 
-namespace TrendAnalysis.Service
+namespace TrendAnalysis.Service.Trend
 {
     /// <summary>
     /// 号码组合
     /// </summary>
-    public class NumberCombination
+    public class FactorGenerator
     {
         /// <summary>
-        /// 按输入数组生成二分组合集合
+        /// 按输入数组生成因子集合
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="arr"></param>
         /// <param name="middleIndex">进行二分组合时，从0开始的中间位置索引</param>
         /// <param name="OddLengthAllowZeroIndex">当数组长度为奇数，是否允许从索引位置0开始</param>
         /// <returns></returns>
-        public static List<BinaryNode<T>> CreateBinaryCombinations<T>(List<T> arr, int middleIndex = 0,bool OddLengthAllowZeroIndex = false)
+        public static List<Factor<T>> Create<T>(List<T> arr, int middleIndex = 0, bool OddLengthAllowZeroIndex = false)
         {
             if (arr == null || arr.Count() == 0)
                 throw new Exception("错误，输入的集合为空！");
 
-            var nodes = new List<BinaryNode<T>>();
+            var nodes = new List<Factor<T>>();
             var length = arr.Count();
             if (length == 1)
             {
-                nodes.Add(new BinaryNode<T> { Left = new List<T>() { arr[0] }, Right = new List<T>() });
+                nodes.Add(new Factor<T> { Left = new List<T>() { arr[0] }, Right = new List<T>() });
                 return nodes;
             }
             else if (length == 2)
             {
-                nodes.Add(new BinaryNode<T> { Left = new List<T>() { arr[0] }, Right = new List<T>() { arr[1] } });
+                nodes.Add(new Factor<T> { Left = new List<T>() { arr[0] }, Right = new List<T>() { arr[1] } });
                 return nodes;
             }
             if (middleIndex == 0)
@@ -55,7 +56,7 @@ namespace TrendAnalysis.Service
             //var top = length % 2 == 0 ? 1 : 0;
             //统一为1，不论长度是奇数还是偶数
             var top = 1;
-            if(length%2==1&& OddLengthAllowZeroIndex)
+            if (length % 2 == 1 && OddLengthAllowZeroIndex)
             {
                 top = 0;
             }
@@ -91,7 +92,7 @@ namespace TrendAnalysis.Service
             return nodes;
         }
 
-        private static BinaryNode<T> CreateNode<T>(List<T> arr, int[] leftIndexArray)
+        private static Factor<T> CreateNode<T>(List<T> arr, int[] leftIndexArray)
         {
 
             var leftArry = new List<T>();
@@ -108,7 +109,7 @@ namespace TrendAnalysis.Service
                     rightArray.Add(item);
                 }
             }
-            return new BinaryNode<T>() { Left = leftArry, Right = rightArray };
+            return new Factor<T>() { Left = leftArry, Right = rightArray };
         }
     }
 

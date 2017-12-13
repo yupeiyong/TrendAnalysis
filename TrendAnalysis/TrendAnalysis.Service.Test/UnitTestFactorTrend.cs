@@ -1,20 +1,21 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using TrendAnalysis.Models;
+using TrendAnalysis.Models.Trend;
+using TrendAnalysis.Service.Trend;
 
 namespace TrendAnalysis.Service.Test
 {
     [TestClass]
-    public class UnitTestFactorAnalysis
+    public class UnitTestFactorTrend
     {
         [TestMethod]
         public void TestMethod1()
         {
-            var ls = new List<BinaryNode<string>>() { new BinaryNode<string> { Left = new List<string> { "1", "2", "3" }, Right = new List<string> { } } };
+            var ls = new List<Factor<string>>() { new Factor<string> { Left = new List<string> { "1", "2", "3" }, Right = new List<string> { } } };
             var numbers = new List<string> { "3", "2", "1", "2", "0", "0", "1", "2", "3", "3", "4", "4", "2", "3", "3","0", "2", "3", "3" };
-            var rows= FactorAnalysis.AnalyseConsecutives(numbers, ls);
+            var rows= FactorTrend.AnalyseConsecutives(numbers, ls);
             Assert.IsTrue(rows.Count > 0);
             Assert.IsTrue(rows.Count == 1);
             Assert.IsTrue(rows[0].HistoricalConsecutiveTimes.Count == 2);
@@ -30,9 +31,9 @@ namespace TrendAnalysis.Service.Test
         [TestMethod]
         public void TestMethod2()
         {
-            var ls = new List<BinaryNode<int>>() { new BinaryNode<int> { Left = new List<int> { 1,2,3 }, Right = new List<int> { } } };
+            var ls = new List<Factor<int>>() { new Factor<int> { Left = new List<int> { 1,2,3 }, Right = new List<int> { } } };
             var numbers = new List<int> { 3, 2, 1, 2, 0, 0, 1, 2, 3, 3, 4, 4, 2, 3, 3, 0, 2, 3, 3 };
-            var rows = FactorAnalysis.AnalyseConsecutives(numbers, ls);
+            var rows = FactorTrend.AnalyseConsecutives(numbers, ls);
 
             Assert.IsTrue(rows.Count > 0);
             Assert.IsTrue(rows.Count == 1);

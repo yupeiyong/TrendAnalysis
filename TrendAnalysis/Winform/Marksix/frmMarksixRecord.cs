@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using TrendAnalysis.Service;
 using TrendAnalysis.DataTransferObject;
 using Common;
 using System.Data;
@@ -8,8 +7,8 @@ using System.Linq;
 using TrendAnalysis.Models;
 using System.Drawing;
 using System.ComponentModel;
-using System.Collections.Generic;
 using Winform.Common;
+using TrendAnalysis.Service.MarkSix;
 
 namespace Winform.Marksix
 {

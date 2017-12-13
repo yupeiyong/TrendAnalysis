@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm12="http://schemas.microsoft.com/dsltools/UseCaseModel"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm12="http://schemas.microsoft.com/dsltools/UseCaseModel"
   dslVersion="1.0.0.0"
   Id="157f3c16-3e6f-4d21-b55b-3345795bc7f0"
   name="TrendAnalysis.ModelingProject" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -57,6 +57,17 @@
     <comment
       Id="e42fcd5c-80d4-4000-9a6f-52908515da25">
       <body>解析最长连续记录</body>
+    </comment>
+    <comment
+      Id="3de8ff3b-eabc-4c11-8a44-c7c002f081c6">
+      <body>[{12345},{45678},{23456},{78901}......]，
+左右结点共111*2=222个因子</body>
+      <annotatedElements>
+        <opaqueActionMoniker
+          Id="d86f5796-d2e7-4bc1-8e93-4f1dcb0f5615"
+          LastKnownName="取因子列表factors"
+          LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+      </annotatedElements>
     </comment>
   </ownedCommentsInternal>
   <profileInstances>
@@ -4075,6 +4086,144 @@
               </controlFlow>
             </flowNodeTargets>
           </joinNode>
+        </nodes>
+      </activity>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <activity
+        Id="cee6ede6-1fa8-424f-979c-d5efa8eee704"
+        name="活动图_按号码列表组合判断历史趋势"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <initialNode
+            Id="a735923a-7fb3-4879-86d7-48570a3c0e48"
+            name="Initial1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="3cc5ae1a-631e-4fab-9efd-6656fa65b384"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="d86f5796-d2e7-4bc1-8e93-4f1dcb0f5615"
+                  LastKnownName="取因子列表factors"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <opaqueAction
+            Id="d86f5796-d2e7-4bc1-8e93-4f1dcb0f5615"
+            name="取因子列表factors"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="9f5b488b-9c4b-4e0a-8da9-40f6303e643e"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="0753d9b1-b094-4367-994e-ce0c74fe1511"
+                  LastKnownName="i=0,j=0"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="0753d9b1-b094-4367-994e-ce0c74fe1511"
+            name="i=0,j=0"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="cb9ea422-80bb-48ac-aa51-f234e02125f3"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="6ba32ba6-68a2-4231-ace8-50db41729467"
+                  LastKnownName="i,j递增"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="055f81c0-7217-4708-a298-45a4e48383fa"
+            name="将factors[i]，factors[j]装入比较因子"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="d45baf7d-4401-44da-a8cf-829d8d8fdbf1"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="af60065b-65f3-42ca-a82b-7060381c7def"
+                  LastKnownName="通过比较因子，获取比较因子的历史趋势"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="6ba32ba6-68a2-4231-ace8-50db41729467"
+            name="i,j递增"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="990fec6c-0c00-447f-a8d5-2144736f0828"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="055f81c0-7217-4708-a298-45a4e48383fa"
+                  LastKnownName="将factors[i]，factors[j]装入比较因子"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="af60065b-65f3-42ca-a82b-7060381c7def"
+            name="通过比较因子，获取比较因子的历史趋势"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="c453aae9-b4d3-43bb-bc3f-0815e9dca3b3"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="0207940d-9ebf-4929-ac0e-bf9a0de5ee71"
+                  LastKnownName="通过历史趋势，分析指定期次可能的因子"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="0207940d-9ebf-4929-ac0e-bf9a0de5ee71"
+            name="通过历史趋势，分析指定期次可能的因子"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="ec55029b-cb85-430d-b906-e93fc75d669b"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="8e09e9dd-f015-4ea0-a3f1-f5efc9d6bdaa"
+                  LastKnownName="获取最终的分析结果"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="8e09e9dd-f015-4ea0-a3f1-f5efc9d6bdaa"
+            name="获取最终的分析结果"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="ca04ad03-65e3-477b-b544-99eed955a6f6"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="38b0a6b1-af95-4e37-84dd-3ecc860cc183"
+                  LastKnownName="ActivityFinal1"
+                  LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <activityFinalNode
+            Id="38b0a6b1-af95-4e37-84dd-3ecc860cc183"
+            name="ActivityFinal1"
+            isLeaf="false" />
         </nodes>
       </activity>
     </packageHasNamedElement>

@@ -10,7 +10,7 @@ using System.Data.Entity;
 using System.Data;
 using OfficeLibrary;
 
-namespace TrendAnalysis.Service
+namespace TrendAnalysis.Service.MarkSix
 {
     public class MarkSixPurchaseService
     {

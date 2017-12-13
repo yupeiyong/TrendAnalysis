@@ -1,11 +1,9 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Transactions;
-using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Data;
 using TrendAnalysis.Models;
 using System.Linq;
-using TrendAnalysis.Service;
+using TrendAnalysis.Service.MarkSix;
 
 namespace TrendAnalysis.Service.Test
 {

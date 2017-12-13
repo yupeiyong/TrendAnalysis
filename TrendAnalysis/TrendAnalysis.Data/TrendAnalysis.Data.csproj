@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EFSearchExtend.cs" />
     <Compile Include="Mapping\MarkSixRecordMap.cs" />
     <Compile Include="Mapping\MarkSixSpecifiedLocationPurchaseMap.cs" />
     <Compile Include="Migrations\Configuration.cs" />

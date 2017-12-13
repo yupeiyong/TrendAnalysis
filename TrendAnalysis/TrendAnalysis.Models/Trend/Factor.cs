@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrendAnalysis.Models
+namespace TrendAnalysis.Models.Trend
 {
     /// <summary>
     /// 二分节点
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class BinaryNode<T>
+    public class Factor<T>
     {
         /// <summary>
         /// 左因子

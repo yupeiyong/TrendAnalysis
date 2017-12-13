@@ -4,8 +4,10 @@ using System.Linq;
 using TrendAnalysis.Data;
 using System;
 using TrendAnalysis.DataTransferObject;
+using TrendAnalysis.Service.Trend;
+using TrendAnalysis.Models.Trend;
 
-namespace TrendAnalysis.Service
+namespace TrendAnalysis.Service.MarkSix
 {
     public class MarkSixAnalysisService
     {
@@ -59,15 +61,15 @@ namespace TrendAnalysis.Service
                         throw new Exception("错误，指定的位置不是有效的号码位置！");
                 }
 
-                var historicalTrendAnalysis = new HistoricalTrendAnalysis();
+                var FactorHistoricalTrend = new FactorTrend();
                 //十位数号码列表
                 var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).Select(n => byte.Parse(n)).ToList();
                 //十位因子
-                var tensDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
+                var tensDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
 
                 //按数字位置分析（十位/个位）
                 //十位
-                var tensDigitResult = historicalTrendAnalysis.AnalyseNumbers(new AnalyseNumbersDto<byte>
+                var tensDigitResult = FactorHistoricalTrend.Analyse(new AnalyseNumbersDto<byte>
                 {
                     Numbers = tensDigitNumbers,
                     Factors = tensDigitFactors,
@@ -80,10 +82,10 @@ namespace TrendAnalysis.Service
                 //个位数号码列表
                 var onesDigitNumbers = numbers.Select(n => n.ToString("00").Substring(1)).Select(n => byte.Parse(n)).ToList();
                 //个位因子
-                var onesDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
+                var onesDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
 
                 //个位
-                var onesDigitResult = historicalTrendAnalysis.AnalyseNumbers(new AnalyseNumbersDto<byte>
+                var onesDigitResult = FactorHistoricalTrend.Analyse(new AnalyseNumbersDto<byte>
                 {
                     Numbers = onesDigitNumbers,
                     Factors = onesDigitFactors,
@@ -109,6 +111,7 @@ namespace TrendAnalysis.Service
             }
         }
 
+        public static int FactorIndex { get; set; }
         /// <summary>
         /// 单独分析指定位置号码个位数
         /// </summary>
@@ -165,11 +168,12 @@ namespace TrendAnalysis.Service
                         throw new Exception("错误，指定的位置不是有效的号码位置！");
                 }
 
-                var historicalTrendAnalysis = new HistoricalTrendAnalysis();
+                var FactorHistoricalTrend = new FactorTrend();
 
                 //个位因子
-                var onesDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
+                var onesDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
 
+                //onesDigitFactors = onesDigitFactors.Skip(FactorIndex * 20).Take(20).ToList();
                 var trendDto = new AnalyseHistoricalTrendDto<byte>
                 {
                     Numbers = records,
@@ -183,7 +187,7 @@ namespace TrendAnalysis.Service
                     AllowMinTimes = dto.AllowMinTimes,
                     NumbersTailCutCount = dto.NumbersTailCutCount
                 };
-                var historicalTrends = historicalTrendAnalysis.AnalyseHistoricalTrend(trendDto);
+                var historicalTrends = FactorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
                 return historicalTrends;
             }
@@ -246,10 +250,10 @@ namespace TrendAnalysis.Service
                         throw new Exception("错误，指定的位置不是有效的号码位置！");
                 }
 
-                var historicalTrendAnalysis = new HistoricalTrendAnalysis();
+                var FactorHistoricalTrend = new FactorTrend();
 
                 //十位因子
-                var tensDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
+                var tensDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
 
                 var trendDto = new AnalyseHistoricalTrendDto<byte>
                 {
@@ -264,7 +268,7 @@ namespace TrendAnalysis.Service
                     AllowMinTimes = dto.AllowMinTimes,
                     NumbersTailCutCount = dto.NumbersTailCutCount
                 };
-                var historicalTrends = historicalTrendAnalysis.AnalyseHistoricalTrend(trendDto);
+                var historicalTrends = FactorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
                 return historicalTrends;
             }
@@ -327,12 +331,12 @@ namespace TrendAnalysis.Service
                         throw new Exception("错误，指定的位置不是有效的号码位置！");
                 }
 
-                var historicalTrendAnalysis = new HistoricalTrendAnalysis();
+                var FactorHistoricalTrend = new FactorTrend();
 
                 var compositeService = new CompositeNumber(1,49);
                 var compositeNumber = compositeService.CompositeNumbers.Select(n => (byte)n).ToList();
                 //合数因子
-                var compositeDigitFactors = NumberCombination.CreateBinaryCombinations(compositeNumber);
+                var compositeDigitFactors = FactorGenerator.Create(compositeNumber);
 
                 var trendDto = new AnalyseHistoricalTrendDto<byte>
                 {
@@ -347,7 +351,7 @@ namespace TrendAnalysis.Service
                     AllowMinTimes = dto.AllowMinTimes,
                     NumbersTailCutCount = dto.NumbersTailCutCount
                 };
-                var historicalTrends = historicalTrendAnalysis.AnalyseHistoricalTrend(trendDto);
+                var historicalTrends = FactorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
                 return historicalTrends;
             }
@@ -386,9 +390,9 @@ namespace TrendAnalysis.Service
         ///// <param name="tensDigitFactors">比较因子</param>
         ///// <param name="allowMinTimes">允许的最小连续次数，大于等于此数才记录</param>
         ///// <returns></returns>
-        //public List<FactorResults<byte>> AnalyseOnesDigit(List<byte> onesDigitNumbers, List<BinaryNode<byte>> onesDigitFactors, int allowMinTimes, int numbersTailCutCount)
+        //public List<FactorTrendAnalyseResult<byte>> AnalyseOnesDigit(List<byte> onesDigitNumbers, List<Factor<byte>> onesDigitFactors, int allowMinTimes, int numbersTailCutCount)
         //{
-        //    List<FactorResults<byte>> onesDigitResult;
+        //    List<FactorTrendAnalyseResult<byte>> onesDigitResult;
         //    if (numbersTailCutCount > 0 && numbersTailCutCount < onesDigitNumbers.Count)
         //    {
         //        var numbers = onesDigitNumbers.Skip(0).Take(onesDigitNumbers.Count - numbersTailCutCount).ToList();
@@ -426,9 +430,9 @@ namespace TrendAnalysis.Service
         ///// <param name="tensDigitFactors">比较因子</param>
         ///// <param name="allowMinTimes">允许的最小连续次数，大于等于此数才记录</param>
         ///// <returns></returns>
-        //public List<FactorResults<byte>> AnalyseTensDigit(List<byte> tensDigitNumbers, List<BinaryNode<byte>> tensDigitFactors, int allowMinTimes, int numbersTailCutCount)
+        //public List<FactorTrendAnalyseResult<byte>> AnalyseTensDigit(List<byte> tensDigitNumbers, List<Factor<byte>> tensDigitFactors, int allowMinTimes, int numbersTailCutCount)
         //{
-        //    List<FactorResults<byte>> tensDigitResult;
+        //    List<FactorTrendAnalyseResult<byte>> tensDigitResult;
         //    if (numbersTailCutCount > 0 && tensDigitNumbers.Count > 0)
         //    {
         //        var numbers = tensDigitNumbers.Skip(0).Take(tensDigitNumbers.Count - numbersTailCutCount).ToList();
@@ -468,9 +472,9 @@ namespace TrendAnalysis.Service
         ///// <param name="allowMinTimes"></param>
         ///// <param name="numbersTailCutCount"></param>
         ///// <returns></returns>
-        //public List<FactorResults<byte>> AnalyseCompositeNumber(List<byte> compositeNumbers, List<BinaryNode<byte>> factors, int allowMinTimes, int numbersTailCutCount)
+        //public List<FactorTrendAnalyseResult<byte>> AnalyseCompositeNumber(List<byte> compositeNumbers, List<Factor<byte>> factors, int allowMinTimes, int numbersTailCutCount)
         //{
-        //    List<FactorResults<byte>> results;
+        //    List<FactorTrendAnalyseResult<byte>> results;
         //    if (numbersTailCutCount > 0 && compositeNumbers.Count > 0)
         //    {
         //        var numbers = compositeNumbers.Skip(0).Take(compositeNumbers.Count - numbersTailCutCount).ToList();
@@ -509,7 +513,7 @@ namespace TrendAnalysis.Service
         ///// <param name="around">后面连续期次</param>
         ///// <param name="allowMinTimes">允许的最小连续次数，大于等于此数才记录</param>
         ///// <returns></returns>
-        //public List<FactorResults<byte>> AnalyseTensDigitAround(List<byte> tensDigitNumbers, List<BinaryNode<byte>> tensDigitFactors, int around, int allowMinTimes, int numbersTailCutCount)
+        //public List<FactorTrendAnalyseResult<byte>> AnalyseTensDigitAround(List<byte> tensDigitNumbers, List<Factor<byte>> tensDigitFactors, int around, int allowMinTimes, int numbersTailCutCount)
         //{
         //    /*
         //     十位数相加组合
@@ -550,7 +554,7 @@ namespace TrendAnalysis.Service
         //       return factor.Contains(sum);
         //   };
         //    //分析结果
-        //    List<FactorResults<byte>> tensDigitResult;
+        //    List<FactorTrendAnalyseResult<byte>> tensDigitResult;
         //    if (numbersTailCutCount > 0 && tensDigitNumbers.Count > 0)
         //    {
         //        var numbers = tensDigitNumbers.Skip(0).Take(tensDigitNumbers.Count - numbersTailCutCount).ToList();

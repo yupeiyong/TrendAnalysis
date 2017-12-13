@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Text;
 using TrendAnalysis.DataTransferObject;
 using System.Threading.Tasks;
+using TrendAnalysis.Service.MarkSix;
+using TrendAnalysis.Service.Trend;
 
 namespace TrendAnalysis.Service.Test
 {
@@ -24,15 +26,15 @@ namespace TrendAnalysis.Service.Test
                 //个位数号码列表
                 var onesDigitNumbers = numbers.Select(n => n.ToString("00").Substring(1)).Select(n => byte.Parse(n)).ToList();
                 //个位因子
-                var onesDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
+                var onesDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
 
                 //十位数号码列表
                 var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).Select(n => byte.Parse(n)).ToList();
                 //十位因子
-                var tensDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
+                var tensDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
 
-                var historicalAnalysis = new HistoricalTrendAnalysis();
-                var result = historicalAnalysis.AnalyseNumbers(new AnalyseNumbersDto<byte> { Numbers = onesDigitNumbers, Factors = onesDigitFactors, AllowMinTimes = 9, AllowMaxInterval = 2 });
+                var historicalAnalysis = new FactorTrend();
+                var result = historicalAnalysis.Analyse(new AnalyseNumbersDto<byte> { Numbers = onesDigitNumbers, Factors = onesDigitFactors, AllowMinTimes = 9, AllowMaxInterval = 2 });
                 result = result.Where(m => m.HistoricalConsecutiveTimes.Count > 0).ToList();
             }
 
@@ -48,15 +50,15 @@ namespace TrendAnalysis.Service.Test
                 //个位数号码列表
                 var onesDigitNumbers = numbers.Select(n => n.ToString("00").Substring(1)).Select(n => byte.Parse(n)).ToList();
                 //个位因子
-                var onesDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
+                var onesDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
 
                 //十位数号码列表
                 var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).Select(n => byte.Parse(n)).ToList();
                 //十位因子
-                var tensDigitFactors = NumberCombination.CreateBinaryCombinations(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
+                var tensDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
 
-                var historicalAnalysis = new HistoricalTrendAnalysis();
-                var result = historicalAnalysis.AnalyseNumbers(new AnalyseNumbersDto<byte> { Numbers = tensDigitNumbers, Factors = tensDigitFactors, AllowMinTimes = 4, AllowMaxInterval = 0 });
+                var historicalAnalysis = new FactorTrend();
+                var result = historicalAnalysis.Analyse(new AnalyseNumbersDto<byte> { Numbers = tensDigitNumbers, Factors = tensDigitFactors, AllowMinTimes = 4, AllowMaxInterval = 0 });
                 result = result.Where(m => m.HistoricalConsecutiveTimes.Count > 0).ToList();
             }
         }
@@ -206,7 +208,11 @@ namespace TrendAnalysis.Service.Test
             return result;
         }
 
-        [TestMethod]//
+
+        /// <summary>
+        /// 分析个位历史趋势
+        /// </summary>
+        [TestMethod]
         public void TestMethod_AnalyseOnesHistoricalTrend()
         {
             using (var dao = new TrendDbContext())
@@ -217,7 +223,7 @@ namespace TrendAnalysis.Service.Test
                 {
                     Location=7,
                     Times=records[0].Times,
-                    AnalyseNumberCount=100,
+                    AnalyseNumberCount=1000,
                     StartAllowMaxInterval=1,
                     EndAllowMaxInterval=-3,
                     StartAllowMinFactorCurrentConsecutiveTimes=9,
@@ -235,6 +241,43 @@ namespace TrendAnalysis.Service.Test
             }
         }
 
+        /// <summary>
+        /// 分析个位历史趋势，因子分组
+        /// </summary>
+        [TestMethod]
+        public void TestMethod_AnalyseOnesHistoricalTrend_Factor_Array()
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var resultArray = new List<string>();
+                for(var index = 0; index < 6; index++)
+                {
+                    MarkSixAnalysisService.FactorIndex = index;
+                    var service = new MarkSixAnalysisService();
+                    var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(1000).ToList();
+                    var trendDto = new MarkSixAnalyseHistoricalTrendDto
+                    {
+                        Location = 7,
+                        Times = records[0].Times,
+                        AnalyseNumberCount = 100,
+                        StartAllowMaxInterval = 1,
+                        EndAllowMaxInterval = -3,
+                        StartAllowMinFactorCurrentConsecutiveTimes = 6,
+                        EndAllowMinFactorCurrentConsecutiveTimes = 10,
+                        AllowMinTimes = 3,
+                        NumbersTailCutCount = 6
+                    };
+
+                    var trends = service.AnalyseOnesHistoricalTrend(trendDto);
+                    var content = new StringBuilder();
+                    trends.ForEach(item => content.Append(item.ToString()));
+
+
+                    var str = content.ToString();
+                    resultArray.Add(str);
+                }
+            }
+        }
 
         [TestMethod]//
         public void TestMethod_AnalyseTensHistoricalTrend()

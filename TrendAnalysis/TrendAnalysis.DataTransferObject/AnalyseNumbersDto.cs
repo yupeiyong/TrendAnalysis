@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrendAnalysis.Models;
+using TrendAnalysis.Models.Trend;
 
 namespace TrendAnalysis.DataTransferObject
 {
@@ -15,7 +16,7 @@ namespace TrendAnalysis.DataTransferObject
     {
         public List<T> Numbers { get; set; }
 
-        public List<BinaryNode<T>> Factors { get; set; }
+        public List<Factor<T>> Factors { get; set; }
 
 
         /// <summary>

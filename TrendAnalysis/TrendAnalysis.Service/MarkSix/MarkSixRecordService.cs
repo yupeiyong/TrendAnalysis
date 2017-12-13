@@ -9,7 +9,7 @@ using TrendAnalysis.Data;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Models;
 
-namespace TrendAnalysis.Service
+namespace TrendAnalysis.Service.MarkSix
 {
     /// <summary>
     /// MarkSix记录操作类

@@ -53,11 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompositeNumber.cs" />
-    <Compile Include="FactorAnalysis.cs" />
-    <Compile Include="HistoricalTrendAnalysis.cs" />
-    <Compile Include="NumberCombination.cs" />
-    <Compile Include="EFSearchExtend.cs" />
+    <Compile Include="Trend\CompositeNumber.cs" />
+    <Compile Include="Trend\FactorTrendAnalyseResult.cs" />
+    <Compile Include="Trend\PermutationFactorTrend.cs" />
+    <Compile Include="Trend\FactorTrend.cs" />
+    <Compile Include="Trend\FactorGenerator.cs" />
     <Compile Include="MarkSix\MarkSixPurchaseService.cs" />
     <Compile Include="MarkSix\MarkSixAnalysisService.cs" />
     <Compile Include="MarkSix\MarkSixRecordService.cs" />

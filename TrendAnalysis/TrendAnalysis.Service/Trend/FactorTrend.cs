@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Models;
+using TrendAnalysis.Models.Trend;
 
-namespace TrendAnalysis.Service
+namespace TrendAnalysis.Service.Trend
 {
     /// <summary>
     /// 历史趋势分析
     /// </summary>
-    public class HistoricalTrendAnalysis
+    public class FactorTrend
     {
         /// <summary>
         /// 分析列表
@@ -18,17 +19,17 @@ namespace TrendAnalysis.Service
         /// <param name="tensDigitFactors">比较因子</param>
         /// <param name="allowMinTimes">允许的最小连续次数，大于等于此数才记录</param>
         /// <returns></returns>
-        public List<FactorResults<T>> AnalyseNumbers<T>(AnalyseNumbersDto<T> dto)
+        public List<FactorTrendAnalyseResult<T>> Analyse<T>(AnalyseNumbersDto<T> dto)
         {
-            List<FactorResults<T>> factorResults;
+            List<FactorTrendAnalyseResult<T>> factorResults;
             if (dto.NumbersTailCutCount > 0 && dto.Numbers.Count > 0)
             {
                 var nums = dto.Numbers.Skip(0).Take(dto.Numbers.Count - dto.NumbersTailCutCount).ToList();
-                factorResults = FactorAnalysis.AnalyseConsecutives(nums, dto.Factors, dto.AllowMinTimes);
+                factorResults = AnalyseConsecutives(nums, dto.Factors, dto.AllowMinTimes);
             }
             else
             {
-                factorResults = FactorAnalysis.AnalyseConsecutives(dto.Numbers, dto.Factors, dto.AllowMinTimes);
+                factorResults = AnalyseConsecutives(dto.Numbers, dto.Factors, dto.AllowMinTimes);
             }
             factorResults = factorResults.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
             foreach (var item in factorResults)
@@ -68,7 +69,7 @@ namespace TrendAnalysis.Service
             var trends = new List<HistoricalTrend<T>>();
 
             if (dto.Numbers.Count < dto.AnalyseNumberCount)
-                throw new Exception("分析历史趋势时，分析记录数量不能大小记录数量！");
+                throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
 
             var analyseNumbers = dto.Numbers.OrderByDescending(n => n.TimesValue).Skip(0).Take(dto.AnalyseNumberCount).ToList();
             //允许的连续次数，由小到大
@@ -89,7 +90,7 @@ namespace TrendAnalysis.Service
                         var timesValue = analyseNumbers[i].TimesValue;
                         var numbers = dto.Numbers.Where(n => n.TimesValue < timesValue).Select(n => n.Number).ToList();
 
-                        var factorResults = AnalyseNumbers(new AnalyseNumbersDto<T>
+                        var factorResults = Analyse(new AnalyseNumbersDto<T>
                         {
                             Numbers = numbers,
                             Factors = dto.Factors,
@@ -135,5 +136,98 @@ namespace TrendAnalysis.Service
             return trends;
         }
 
+
+        /// <summary>
+        /// 解析因子在记录中的连续次数
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="numbers">记录</param>
+        /// <param name="nodes">因子结点</param>
+        /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
+        /// <returns></returns>
+        public static List<FactorTrendAnalyseResult<T>> AnalyseConsecutives<T>(List<T> numbers, List<Factor<T>> factors, int allowMinTimes = 1)
+        {
+            var resultList = new List<FactorTrendAnalyseResult<T>>();
+            foreach (var factor in factors)
+            {
+                if (factor.Left != null && factor.Left.Count > 0)
+                {
+                    resultList.Add(AnalyseConsecutive(numbers, factor.Left, factor.Right, allowMinTimes));
+                }
+                if (factor.Right != null && factor.Right.Count > 0)
+                {
+                    resultList.Add(AnalyseConsecutive(numbers, factor.Right, factor.Left, allowMinTimes));
+                }
+            }
+            return resultList;
+        }
+
+
+        /// <summary>
+        /// 解析因子在记录中的连续次数
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="numbers">记录</param>
+        /// <param name="factor">判断因子</param>
+        /// <param name="oppositeFactor">反因子</param>
+        /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
+        /// <returns></returns>
+        private static FactorTrendAnalyseResult<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> oppositeFactor, int allowMinTimes = 1)
+        {
+            return AnalyseConsecutive(numbers, factor, oppositeFactor, (n, factorList, index) =>
+            {
+                var number = n[index];
+                return factorList.Exists(m => m.Equals(number));
+            }, allowMinTimes);
+        }
+
+        /// <summary>
+        /// 解析连续在因子中的记录数
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="numbers">记录</param>
+        /// <param name="factor">判断因子</param>
+        /// <param name="oppositeFactor">反因子</param>
+        /// <param name="compareFunc">比较因子的委托方法,参数为因子列表和当前索引，返回结果为bool</param>
+        /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
+        /// <returns></returns>
+        private static FactorTrendAnalyseResult<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> oppositeFactor, Func<IReadOnlyList<T>, List<T>, int, bool> compareFunc, int allowMinTimes = 1)
+        {
+            var curResult = new FactorTrendAnalyseResult<T> { Factor = factor, OppositeFactor = oppositeFactor, HistoricalConsecutiveTimes = new SortedDictionary<int, int>() };
+            var i = 0;
+            //连续次数
+            var times = 0;
+            var length = numbers.Count;
+            while (i < length)
+            {
+                if (compareFunc(numbers, factor, i))
+                {
+                    times++;
+                }
+                else
+                {
+                    if (curResult.HistoricalConsecutiveTimes.ContainsKey(times))
+                    {
+                        curResult.HistoricalConsecutiveTimes[times]++;
+                    }
+                    else if (times >= allowMinTimes)
+                    {
+                        curResult.HistoricalConsecutiveTimes.Add(times, 1);
+                    }
+                    times = 0;
+                }
+                i++;
+            }
+            if (curResult.HistoricalConsecutiveTimes.ContainsKey(times))
+            {
+                curResult.HistoricalConsecutiveTimes[times]++;
+            }
+            else if (times >= allowMinTimes)
+            {
+                curResult.HistoricalConsecutiveTimes.Add(times, 1);
+            }
+            return curResult;
+        }
     }
+
 }
