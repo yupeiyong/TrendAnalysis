@@ -34,7 +34,7 @@ namespace TrendAnalysis.Service.Test
                 var tensDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
 
                 var historicalAnalysis = new FactorTrend();
-                var result = historicalAnalysis.Analyse(new AnalyseNumbersDto<byte> { Numbers = onesDigitNumbers, Factors = onesDigitFactors, AllowMinTimes = 9, AllowMaxInterval = 2 });
+                var result = historicalAnalysis.Analyse(new FactorTrendAnalyseDto<byte> { Numbers = onesDigitNumbers, Factors = onesDigitFactors, AllowMinTimes = 9, AllowMaxInterval = 2 });
                 result = result.Where(m => m.HistoricalConsecutiveTimes.Count > 0).ToList();
             }
 
@@ -58,7 +58,7 @@ namespace TrendAnalysis.Service.Test
                 var tensDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
 
                 var historicalAnalysis = new FactorTrend();
-                var result = historicalAnalysis.Analyse(new AnalyseNumbersDto<byte> { Numbers = tensDigitNumbers, Factors = tensDigitFactors, AllowMinTimes = 4, AllowMaxInterval = 0 });
+                var result = historicalAnalysis.Analyse(new FactorTrendAnalyseDto<byte> { Numbers = tensDigitNumbers, Factors = tensDigitFactors, AllowMinTimes = 4, AllowMaxInterval = 0 });
                 result = result.Where(m => m.HistoricalConsecutiveTimes.Count > 0).ToList();
             }
         }

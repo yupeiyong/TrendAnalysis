@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TrendAnalysis.Models.Trend
 {
     /// <summary>
-    /// 二分节点
+    /// 因子
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class Factor<T>

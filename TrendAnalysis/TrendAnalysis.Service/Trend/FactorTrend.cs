@@ -8,18 +8,18 @@ using TrendAnalysis.Models.Trend;
 namespace TrendAnalysis.Service.Trend
 {
     /// <summary>
-    /// 历史趋势分析
+    /// 因子的历史趋势
     /// </summary>
     public class FactorTrend
     {
         /// <summary>
-        /// 分析列表
+        /// 分析
         /// </summary>
         /// <param name="numbers">记录集合</param>
         /// <param name="tensDigitFactors">比较因子</param>
         /// <param name="allowMinTimes">允许的最小连续次数，大于等于此数才记录</param>
         /// <returns></returns>
-        public List<FactorTrendAnalyseResult<T>> Analyse<T>(AnalyseNumbersDto<T> dto)
+        public List<FactorTrendAnalyseResult<T>> Analyse<T>(FactorTrendAnalyseDto<T> dto)
         {
             List<FactorTrendAnalyseResult<T>> factorResults;
             if (dto.NumbersTailCutCount > 0 && dto.Numbers.Count > 0)
@@ -90,7 +90,7 @@ namespace TrendAnalysis.Service.Trend
                         var timesValue = analyseNumbers[i].TimesValue;
                         var numbers = dto.Numbers.Where(n => n.TimesValue < timesValue).Select(n => n.Number).ToList();
 
-                        var factorResults = Analyse(new AnalyseNumbersDto<T>
+                        var factorResults = Analyse(new FactorTrendAnalyseDto<T>
                         {
                             Numbers = numbers,
                             Factors = dto.Factors,

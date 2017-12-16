@@ -69,7 +69,7 @@ namespace TrendAnalysis.Service.MarkSix
 
                 //按数字位置分析（十位/个位）
                 //十位
-                var tensDigitResult = FactorHistoricalTrend.Analyse(new AnalyseNumbersDto<byte>
+                var tensDigitResult = FactorHistoricalTrend.Analyse(new FactorTrendAnalyseDto<byte>
                 {
                     Numbers = tensDigitNumbers,
                     Factors = tensDigitFactors,
@@ -85,7 +85,7 @@ namespace TrendAnalysis.Service.MarkSix
                 var onesDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
 
                 //个位
-                var onesDigitResult = FactorHistoricalTrend.Analyse(new AnalyseNumbersDto<byte>
+                var onesDigitResult = FactorHistoricalTrend.Analyse(new FactorTrendAnalyseDto<byte>
                 {
                     Numbers = onesDigitNumbers,
                     Factors = onesDigitFactors,
