@@ -11,12 +11,11 @@ namespace TrendAnalysis.Service.Trend
     /// </summary>
     public class PermutationFactorTrend
     {
+
         /// <summary>
         /// 分析
         /// </summary>
-        /// <param name="numbers">记录集合</param>
-        /// <param name="tensDigitFactors">比较因子</param>
-        /// <param name="allowMinTimes">允许的最小连续次数，大于等于此数才记录</param>
+        /// <param name="dto">记录集合、比较因子、允许的最小连续次数，大于等于此数才记录......</param>
         /// <returns></returns>
         public List<PermutationFactorTrendAnalyseResult<T>> Analyse<T>(PermutationFactorTrendAnalyseDto<T> dto)
         {
@@ -55,12 +54,14 @@ namespace TrendAnalysis.Service.Trend
 
             return factorResults;
         }
+
+
         /// <summary>
         /// 解析因子在记录中的连续次数
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="numbers">记录</param>
-        /// <param name="nodes">因子结点</param>
+        /// <param name="permutationFactors">排列因子</param>
         /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
         /// <returns></returns>
         public static List<PermutationFactorTrendAnalyseResult<T>> AnalyseConsecutives<T>(List<T> numbers, List<List<Factor<T>>> permutationFactors, int allowMinTimes = 1)
@@ -211,7 +212,7 @@ namespace TrendAnalysis.Service.Trend
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="permutationFactors">要遍历的排列因子，二维列表</param>
-        /// <returns>遍历结果，</returns>
+        /// <returns>遍历结果，总条数是每一行数据条数相乘的结果</returns>
         public static List<List<List<T>>> TraversePermutationFactor<T>(List<List<Factor<T>>> permutationFactors)
         {
             var length = permutationFactors.Count;
