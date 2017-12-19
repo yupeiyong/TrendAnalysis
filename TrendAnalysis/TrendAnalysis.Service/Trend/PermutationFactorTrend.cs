@@ -127,8 +127,9 @@ namespace TrendAnalysis.Service.Trend
                     //取保存在最后位置的反因子
                     var oppositeFactor = factor[factor.Count - 1];
                     //删除保存在最后位置的反因子
-                    factor.RemoveAt(factor.Count - 1);
-                    resultList.Add(AnalyseConsecutive(numbers, factor, oppositeFactor, allowMinTimes));
+                    var curFactor = factor;
+                    curFactor.RemoveAt(factor.Count - 1);
+                    resultList.Add(AnalyseConsecutive(numbers, curFactor, oppositeFactor, allowMinTimes));
                 }
             }
 
@@ -171,13 +172,17 @@ namespace TrendAnalysis.Service.Trend
                         break;
                     }
                 }
+                //排列因子全部相等
                 if (n >= factors.Count)
                 {
+                    //连续次数递增
                     times++;
+                    //索引位置调整，指向下一索引位置的前一条记录
                     i = i + factors.Count - 1;
                 }
                 else
                 {
+                    //是否有相同的连续次数，有则递增，否则新增一条连续次数记录
                     if (curResult.HistoricalConsecutiveTimes.ContainsKey(times))
                     {
                         curResult.HistoricalConsecutiveTimes[times]++;
@@ -190,6 +195,7 @@ namespace TrendAnalysis.Service.Trend
                 }
                 i++;
             }
+            //是否有相同的连续次数，有则递增，否则新增一条连续次数记录
             if (curResult.HistoricalConsecutiveTimes.ContainsKey(times))
             {
                 curResult.HistoricalConsecutiveTimes[times]++;
