@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrendAnalysis.Data;
-using TrendAnalysis.Models;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
 using TrendAnalysis.DataTransferObject;
-using System.Threading.Tasks;
+using TrendAnalysis.Models;
 using TrendAnalysis.Service.MarkSix;
 using TrendAnalysis.Service.Trend;
 
-namespace TrendAnalysis.Service.Test
+
+namespace TrendAnalysis.Service.Test.MarkSix
 {
     [TestClass]
     public class UnitTestMarkSixAnalysisService

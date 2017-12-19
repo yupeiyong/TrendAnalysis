@@ -1,11 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
 using System.Transactions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrendAnalysis.Data;
 using TrendAnalysis.Models;
-using System.Linq;
 using TrendAnalysis.Service.MarkSix;
 
-namespace TrendAnalysis.Service.Test
+
+namespace TrendAnalysis.Service.Test.MarkSix
 {
     [TestClass]
     public class UnitTestfrmMarkPurchaseService
