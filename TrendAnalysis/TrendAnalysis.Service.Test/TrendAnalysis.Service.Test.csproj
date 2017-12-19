@@ -64,12 +64,12 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trend\UnitTestPermutationFactorTrend.cs" />
-    <Compile Include="UnitTestCompositeNumber.cs" />
-    <Compile Include="UnitTestMarkSixAnalysisService.cs" />
-    <Compile Include="UnitTestFactorTrend.cs" />
-    <Compile Include="UnitTestNumberCombination.cs" />
-    <Compile Include="UnitTestfrmMarkPurchaseService.cs" />
-    <Compile Include="UnitTestMarkSixReportService.cs" />
+    <Compile Include="Trend\UnitTestCompositeNumber.cs" />
+    <Compile Include="MarkSix\UnitTestMarkSixAnalysisService.cs" />
+    <Compile Include="Trend\UnitTestFactorTrend.cs" />
+    <Compile Include="Trend\UnitTestNumberCombination.cs" />
+    <Compile Include="MarkSix\UnitTestfrmMarkPurchaseService.cs" />
+    <Compile Include="MarkSix\UnitTestMarkSixReportService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,9 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Transactions;
+﻿using System.Transactions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Service.MarkSix;
 
-namespace TrendAnalysis.Service.Test
+
+namespace TrendAnalysis.Service.Test.MarkSix
 {
     [TestClass]
     public class UnitTestMarkSixReportService

@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using TrendAnalysis.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrendAnalysis.Models.Trend;
 using TrendAnalysis.Service.Trend;
 
-namespace TrendAnalysis.Service.Test
+
+namespace TrendAnalysis.Service.Test.Trend
 {
     [TestClass]
     public class UnitTestFactorTrend

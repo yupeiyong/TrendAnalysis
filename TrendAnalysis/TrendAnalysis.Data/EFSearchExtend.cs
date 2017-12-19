@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace TrendAnalysis.Data
 {
-    public static class EFSearchExtend
+
+    public static class EfSearchExtend
     {
+
         /// <summary>
         ///     生成日期查询的数据源
         /// </summary>
@@ -18,9 +18,9 @@ namespace TrendAnalysis.Data
         /// <param name="startDateTime"></param>
         /// <param name="endDateTime"></param>
         /// <returns></returns>
-        public static IQueryable<TEntity> WhereDateTime<TEntity>(this IQueryable<TEntity> source, string fieldName, DateTime? startDateTime, DateTime? endDateTime) where TEntity :class
+        public static IQueryable<TEntity> WhereDateTime<TEntity>(this IQueryable<TEntity> source, string fieldName, DateTime? startDateTime, DateTime? endDateTime) where TEntity : class
         {
-            var type = typeof(TEntity);
+            var type = typeof (TEntity);
             var property = type.GetProperty(fieldName);
             if (property == null)
                 throw new Exception($"错误，类型：{type.Name}不存在{fieldName}属性！");
@@ -43,27 +43,30 @@ namespace TrendAnalysis.Data
 
             var parameterExpr = Expression.Parameter(type, "m");
             var propertyAccessExpr = Expression.MakeMemberAccess(parameterExpr, property);
-            //是否为可空类型
-            if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
-            {
-                var notNullExpr = Expression.NotEqual(propertyAccessExpr, Expression.Constant(null));//m.OnLastUpdated != null
 
-                var greaterThanOrEqualExpr = Expression.GreaterThanOrEqual(Expression.Property(propertyAccessExpr, "Value"), Expression.Constant(start));//m.OnLastUpdated.Value >=start
-                var lessThanExpr = Expression.LessThan(Expression.Property(propertyAccessExpr, "Value"), Expression.Constant(end));//m.OnLastUpdated.Value <end
-                var whereExpr = Expression.AndAlso(Expression.AndAlso(notNullExpr, greaterThanOrEqualExpr), lessThanExpr);//m.OnLastUpdated != null && m.OnLastUpdated.Value >= start && m.OnLastUpdated.Value < end
+            //是否为可空类型
+            if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof (Nullable<>))
+            {
+                var notNullExpr = Expression.NotEqual(propertyAccessExpr, Expression.Constant(null)); //m.OnLastUpdated != null
+
+                var greaterThanOrEqualExpr = Expression.GreaterThanOrEqual(Expression.Property(propertyAccessExpr, "Value"), Expression.Constant(start)); //m.OnLastUpdated.Value >=start
+                var lessThanExpr = Expression.LessThan(Expression.Property(propertyAccessExpr, "Value"), Expression.Constant(end)); //m.OnLastUpdated.Value <end
+                var whereExpr = Expression.AndAlso(Expression.AndAlso(notNullExpr, greaterThanOrEqualExpr), lessThanExpr); //m.OnLastUpdated != null && m.OnLastUpdated.Value >= start && m.OnLastUpdated.Value < end
                 var lambdaExpr = Expression.Lambda(whereExpr, parameterExpr);
-                var resultExpression = Expression.Call(typeof(Queryable), "Where", new[] { type }, source.Expression, Expression.Quote(lambdaExpr));
+                var resultExpression = Expression.Call(typeof (Queryable), "Where", new[] {type}, source.Expression, Expression.Quote(lambdaExpr));
                 return source.Provider.CreateQuery<TEntity>(resultExpression);
             }
             else
             {
-                var greaterThanOrEqualExpr = Expression.GreaterThanOrEqual(propertyAccessExpr, Expression.Constant(start));//m.OnLastUpdated >=start
-                var lessThanExpr = Expression.LessThan(propertyAccessExpr, Expression.Constant(end));//m.OnLastUpdated <end
-                var whereExpr = Expression.AndAlso(greaterThanOrEqualExpr, lessThanExpr);//m.OnLastUpdated >= start && m.OnLastUpdated < end
+                var greaterThanOrEqualExpr = Expression.GreaterThanOrEqual(propertyAccessExpr, Expression.Constant(start)); //m.OnLastUpdated >=start
+                var lessThanExpr = Expression.LessThan(propertyAccessExpr, Expression.Constant(end)); //m.OnLastUpdated <end
+                var whereExpr = Expression.AndAlso(greaterThanOrEqualExpr, lessThanExpr); //m.OnLastUpdated >= start && m.OnLastUpdated < end
                 var lambdaExpr = Expression.Lambda(whereExpr, parameterExpr);
-                var resultExpression = Expression.Call(typeof(Queryable), "Where", new[] { type }, source.Expression, Expression.Quote(lambdaExpr));
+                var resultExpression = Expression.Call(typeof (Queryable), "Where", new[] {type}, source.Expression, Expression.Quote(lambdaExpr));
                 return source.Provider.CreateQuery<TEntity>(resultExpression);
             }
         }
+
     }
+
 }

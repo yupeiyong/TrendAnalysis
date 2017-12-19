@@ -34,8 +34,7 @@ namespace OfficeLibrary
         /// <summary>
         ///     设置表格行列格式
         /// </summary>
-        /// <typeparam name="TReportItem">报表明细项类型</typeparam>
-        /// <param name="itemMembers">成员集合</param>
+        /// <param name="columns"></param>
         protected virtual void SetRowsColumnsStyle(DataColumnCollection columns)
         {
             for (int i = 0, len = columns.Count; i < len; i++)
@@ -70,8 +69,6 @@ namespace OfficeLibrary
         /// <summary>
         ///     写入表格表头
         /// </summary>
-        /// <typeparam name="TReport">报表类型</typeparam>
-        /// <param name="report">报表</param>
         /// <param name="sheetTitle">表头标题</param>
         /// <param name="columnCount">表头总列数</param>
         /// <returns>下一开始行号</returns>
@@ -145,9 +142,6 @@ namespace OfficeLibrary
         /// <summary>
         ///     写入表格尾部
         /// </summary>
-        /// <typeparam name="TReport">报表类型</typeparam>
-        /// <param name="report">报表</param>
-        /// <param name="itemMembers"></param>
         /// <param name="startRowIndex">开始行号</param>
         /// <returns>下一开始行号</returns>
         protected virtual int WriteSheetFooter(int startRowIndex)
@@ -162,9 +156,7 @@ namespace OfficeLibrary
         {
             range.Style.Border.BorderAround(ExcelBorderStyle.Thin);
             range.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-            //range.Style.Border.Bottom.Color.SetColor(Color.Black);
             range.Style.Border.Right.Style = ExcelBorderStyle.Thin;
-            //range.Style.Border.Right.Color.SetColor(Color.Black);
         }
 
     }

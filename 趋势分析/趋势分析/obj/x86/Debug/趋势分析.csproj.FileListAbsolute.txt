@@ -118,3 +118,7 @@ E:\workspace\TrendAnalysis\趋势分析\趋势分析\obj\x86\Debug\趋势分析.
 E:\workspace\TrendAnalysis\趋势分析\趋势分析\obj\x86\Debug\趋势分析.frmMain.resources
 E:\workspace\TrendAnalysis\趋势分析\趋势分析\obj\x86\Debug\趋势分析.Properties.Resources.resources
 E:\workspace\TrendAnalysis\趋势分析\趋势分析\obj\x86\Debug\趋势分析.csproj.GenerateResource.Cache
+F:\workspace\TrendAnalysis\趋势分析\趋势分析\bin\Debug\趋势分析.exe.config
+F:\workspace\TrendAnalysis\趋势分析\趋势分析\obj\x86\Debug\趋势分析.csproj.ResolveComReference.cache
+F:\workspace\TrendAnalysis\趋势分析\趋势分析\obj\x86\Debug\趋势分析.exe
+F:\workspace\TrendAnalysis\趋势分析\趋势分析\obj\x86\Debug\趋势分析.pdb
