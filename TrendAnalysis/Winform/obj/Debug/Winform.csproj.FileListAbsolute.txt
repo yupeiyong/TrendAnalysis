@@ -33,3 +33,4 @@ F:\workspace\TrendAnalysis\TrendAnalysis\Winform\obj\Debug\Winform.Marksix.frmMa
 F:\workspace\TrendAnalysis\TrendAnalysis\Winform\obj\Debug\Winform.Marksix.frmMarkSixSpecifiedLocationPurchaseRecord.resources
 F:\workspace\TrendAnalysis\TrendAnalysis\Winform\obj\Debug\Winform.Properties.Resources.resources
 F:\workspace\TrendAnalysis\TrendAnalysis\Winform\obj\Debug\Winform.csproj.GenerateResource.Cache
+E:\workspace\TrendAnalysis\TrendAnalysis\Winform\bin\Debug\Winform.exe.config
