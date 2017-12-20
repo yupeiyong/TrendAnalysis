@@ -35,12 +35,25 @@ namespace TrendAnalysis.Service.Trend
             {
                 var times = 0;
 
+                //因子列表数量
+                var factorCount = item.Factors.Count;
                 //记录集合倒序检查，因子是否包含当前号码
-                for (var i = dto.Numbers.Count - 1; i >= 0; i--)
+                for (var i = dto.Numbers.Count - 1; i >= 0; i-=factorCount)
                 {
-                    //if (!item.Factors.Contains(dto.Numbers[i]))
-                    //    break;
-                    times++;
+                    var n = item.Factors.Count - 1;
+
+                    //倒序遍历因子列表
+                    //j是控制获取号码索引位置的指针
+                    for (var j=0; n >= 0 && i-j>=0; n--,j++)
+                    {
+                        if (!item.Factors[n].Contains(dto.Numbers[i-j]))
+                            break;
+                    }
+                    //所有因子都包含，则次数递增
+                    if (n <= 0)
+                    {
+                        times++;
+                    }
                 }
 
                 //记录因子当前连续次数
@@ -136,7 +149,7 @@ namespace TrendAnalysis.Service.Trend
                     //删除保存在最后位置的反因子
                     var curFactor = factor;
                     curFactor.RemoveAt(factor.Count - 1);
-                    resultList.Add(CountConsecutive(numbers, curFactor, oppositeFactor, allowMinTimes));
+                    resultList.Add(CountConsecutive(numbers, curFactor, oppositeFactor, numbersTailCutCount, allowMinTimes));
                 }
             }
 
@@ -333,6 +346,93 @@ namespace TrendAnalysis.Service.Trend
                         if (countArray[i] % 2 == 0)
                         {
                             factors[i] = permutationFactors[i][indexArray[i]].Left;
+                            if (i == 0)
+                            {
+                                //记录反因子到最后位置
+                                factors[length] = permutationFactors[i][indexArray[i]].Right;
+                            }
+                        }
+                        else
+                        {
+                            factors[i] = permutationFactors[i][indexArray[i]].Right;
+                            if (i == 0)
+                            {
+                                //记录反因子到最后位置
+                                factors[length] = permutationFactors[i][indexArray[i]].Left;
+                            }
+                            //可以遍历下一个元素
+                            indexArray[i]++;
+                        }
+                        countArray[i]++;
+                    }
+                    else
+                    {
+                        if (i == 0) break;
+                        indexArray[i] = 0;
+                        i--;
+                        continue;
+                    }
+                }
+                else
+                {
+                    for (var j = 0; j < permutationFactors[i].Count; j++)
+                    {
+                        factors[i] = permutationFactors[i][j].Left;
+
+                        result.Add(factors.ToList());
+
+                        factors[i] = permutationFactors[i][j].Right;
+
+                        result.Add(factors.ToList());
+                    }
+                    i--;
+                    continue;
+                }
+                i++;
+            }
+            return result;
+        }
+
+        #region  保留此段代码，遍历因子，组装分析趋势的因子时，记录反因子按最后因子取反
+        /*
+        /// <summary>
+        ///     遍历排列因子
+        ///     比如：
+        ///     { 1, 2 }, { 3, 4 },
+        ///     排列结果：
+        ///     1,3
+        ///     1,4
+        ///     2,3
+        ///     2,4
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="permutationFactors">要遍历的排列因子，二维列表</param>
+        /// <returns>遍历结果，总条数是每一行数据条数相乘的结果</returns>
+        public static List<List<List<T>>> TraversePermutationFactor<T>(List<List<Factor<T>>> permutationFactors)
+        {
+            var length = permutationFactors.Count;
+            var result = new List<List<List<T>>>();
+
+            //列表数组,最后一个元素为反因子
+            var factors = new List<T>[length + 1];
+
+            //每一因子索引位置数组，记录了相当每一行因子的位置
+            var indexArray = new int[length];
+
+            //记录每一因子遍历数量，记录了相当每一行遍历过的因子数量，因为每个因子有左右列表，所以每一行遍历数为每 一行元素数量*2
+            var countArray = new int[length];
+            var i = 0;
+            while (i < length)
+            {
+                if (i < length - 1)
+                {
+                    var curLength = permutationFactors[i].Count;
+                    if (indexArray[i] < curLength)
+                    {
+                        //取2的模如果=0，表示遍历到当前元素
+                        if (countArray[i] % 2 == 0)
+                        {
+                            factors[i] = permutationFactors[i][indexArray[i]].Left;
                         }
                         else
                         {
@@ -374,7 +474,9 @@ namespace TrendAnalysis.Service.Trend
             }
             return result;
         }
+        */
 
+        #endregion
     }
 
 }
