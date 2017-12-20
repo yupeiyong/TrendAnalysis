@@ -1,39 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Models.Trend;
 
+
 namespace TrendAnalysis.Service.Trend
 {
+
     /// <summary>
-    /// 排列因子的历史趋势
+    ///     排列因子的历史趋势
     /// </summary>
     public class PermutationFactorTrend
     {
 
         /// <summary>
-        /// 分析
+        ///     分析
         /// </summary>
         /// <param name="dto">记录集合、比较因子、允许的最小连续次数，大于等于此数才记录......</param>
         /// <returns></returns>
         public List<PermutationFactorTrendAnalyseResult<T>> Analyse<T>(PermutationFactorTrendAnalyseDto<T> dto)
         {
-
             List<PermutationFactorTrendAnalyseResult<T>> factorResults = null;
             if (dto.NumbersTailCutCount > 0 && dto.Numbers.Count > 0)
             {
                 var nums = dto.Numbers.Skip(0).Take(dto.Numbers.Count - dto.NumbersTailCutCount).ToList();
-                factorResults = AnalyseConsecutives(nums, dto.PermutationFactors, dto.AllowMinTimes);
+                factorResults = CountConsecutives(nums, dto.PermutationFactors, dto.AllowMinTimes);
             }
             else
             {
-                factorResults = AnalyseConsecutives(dto.Numbers, dto.PermutationFactors, dto.AllowMinTimes);
+                factorResults = CountConsecutives(dto.Numbers, dto.PermutationFactors, dto.AllowMinTimes);
             }
             factorResults = factorResults.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
             foreach (var item in factorResults)
             {
                 var times = 0;
+
                 //记录集合倒序检查，因子是否包含当前号码
                 for (var i = dto.Numbers.Count - 1; i >= 0; i--)
                 {
@@ -41,6 +42,7 @@ namespace TrendAnalysis.Service.Trend
                     //    break;
                     times++;
                 }
+
                 //记录因子当前连续次数
                 item.FactorCurrentConsecutiveTimes = times;
             }
@@ -57,16 +59,18 @@ namespace TrendAnalysis.Service.Trend
 
 
         /// <summary>
-        /// 解析因子在记录中的连续次数
+        ///     解析因子在记录中的连续次数
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="numbers">记录</param>
         /// <param name="permutationFactors">排列因子</param>
+        /// <param name="numbersTailCutCount">切去尾部数量，尾部不计入统计数量</param>
         /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
         /// <returns></returns>
-        public static List<PermutationFactorTrendAnalyseResult<T>> AnalyseConsecutives<T>(List<T> numbers, List<List<Factor<T>>> permutationFactors, int allowMinTimes = 1)
+        public static List<PermutationFactorTrendAnalyseResult<T>> CountConsecutives<T>(List<T> numbers, List<List<Factor<T>>> permutationFactors, int numbersTailCutCount = 1, int allowMinTimes = 1)
         {
             #region 因子排列
+
             /*
              因子
              12 34
@@ -115,7 +119,9 @@ namespace TrendAnalysis.Service.Trend
             }
              
              */
+
             #endregion
+
 
             var factors = TraversePermutationFactor(permutationFactors);
 
@@ -126,10 +132,11 @@ namespace TrendAnalysis.Service.Trend
                 {
                     //取保存在最后位置的反因子
                     var oppositeFactor = factor[factor.Count - 1];
+
                     //删除保存在最后位置的反因子
                     var curFactor = factor;
                     curFactor.RemoveAt(factor.Count - 1);
-                    resultList.Add(AnalyseConsecutive(numbers, curFactor, oppositeFactor, allowMinTimes));
+                    resultList.Add(CountConsecutive(numbers, curFactor, oppositeFactor, allowMinTimes));
                 }
             }
 
@@ -139,21 +146,30 @@ namespace TrendAnalysis.Service.Trend
 
 
         /// <summary>
-        /// 解析因子在记录中的连续次数
+        ///     解析因子在记录中的连续次数
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="numbers">记录</param>
-        /// <param name="factor">用于判断的因子列表</param>
+        /// <param name="factors"></param>
         /// <param name="oppositeFactor">反因子</param>
+        /// <param name="numbersTailCutCount"></param>
         /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
         /// <returns></returns>
-        private static PermutationFactorTrendAnalyseResult<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<List<T>> factors, List<T> oppositeFactor, int allowMinTimes = 1)
+        public static PermutationFactorTrendAnalyseResult<T> CountConsecutive<T>(IReadOnlyList<T> numbers, List<List<T>> factors, List<T> oppositeFactor, int numbersTailCutCount = 1, int allowMinTimes = 1)
         {
-            var curResult = new PermutationFactorTrendAnalyseResult<T> { Factors = factors, OppositeFactor = oppositeFactor, HistoricalConsecutiveTimes = new SortedDictionary<int, int>() };
+            var curResult = new PermutationFactorTrendAnalyseResult<T>
+            {
+                Factors = factors,
+                OppositeFactor = oppositeFactor,
+                HistoricalConsecutiveTimes = new SortedDictionary<int, int>()
+            };
             var i = 0;
+
             //连续次数
             var times = 0;
-            var length = numbers.Count;
+            //统计记录的长度
+            var length = numbers.Count - numbersTailCutCount;
+
             //遍历所有记录
             while (i < length)
             {
@@ -161,7 +177,8 @@ namespace TrendAnalysis.Service.Trend
                 排列因子：{1,2}{3,4}
                 号码索引位置：1 2 3 4 5 6 7 8 9 10 11 12 13 
                 号码：        6 1 3 5 2 3 2 4 1 0  0  1  1
-                              0 1 2 0 1 2 1 2 1 0  0  1  1（1命中第一个因子，2命中第二个因子，只有同时命中1、2才能算一次，并且索引位置跳到下一位置
+                              0 1 2 0 1 2 1 2 1 0  0  1  1
+                （1命中第一个因子，2命中第二个因子，只有同时命中1、2才能算一次，并且索引位置跳到下一位置，比如索引位置2，3，同时命中1，2，连续次数递增1）
                  
                  */
                 var n = 0;
@@ -172,11 +189,13 @@ namespace TrendAnalysis.Service.Trend
                         break;
                     }
                 }
+
                 //排列因子全部相等
                 if (n >= factors.Count)
                 {
                     //连续次数递增
                     times++;
+
                     //索引位置调整，指向下一索引位置的前一条记录
                     i = i + factors.Count - 1;
                 }
@@ -191,10 +210,12 @@ namespace TrendAnalysis.Service.Trend
                     {
                         curResult.HistoricalConsecutiveTimes.Add(times, 1);
                     }
+                    //连续次数清零，下一次重新统计
                     times = 0;
                 }
                 i++;
             }
+
             //是否有相同的连续次数，有则递增，否则新增一条连续次数记录
             if (curResult.HistoricalConsecutiveTimes.ContainsKey(times))
             {
@@ -206,6 +227,7 @@ namespace TrendAnalysis.Service.Trend
             }
             return curResult;
         }
+
 
         ///// <summary>
         ///// 解析因子在记录中的连续次数
@@ -290,6 +312,7 @@ namespace TrendAnalysis.Service.Trend
         {
             var length = permutationFactors.Count;
             var result = new List<List<List<T>>>();
+
             //列表数组,最后一个元素为反因子
             var factors = new List<T>[length + 1];
 
@@ -314,6 +337,7 @@ namespace TrendAnalysis.Service.Trend
                         else
                         {
                             factors[i] = permutationFactors[i][indexArray[i]].Right;
+
                             //可以遍历下一个元素
                             indexArray[i]++;
                         }
@@ -332,11 +356,13 @@ namespace TrendAnalysis.Service.Trend
                     for (var j = 0; j < permutationFactors[i].Count; j++)
                     {
                         factors[i] = permutationFactors[i][j].Left;
+
                         //记录反因子
                         factors[i + 1] = permutationFactors[i][j].Right;
                         result.Add(factors.ToList());
 
                         factors[i] = permutationFactors[i][j].Right;
+
                         //记录反因子
                         factors[i + 1] = permutationFactors[i][j].Left;
                         result.Add(factors.ToList());
@@ -350,4 +376,5 @@ namespace TrendAnalysis.Service.Trend
         }
 
     }
+
 }
