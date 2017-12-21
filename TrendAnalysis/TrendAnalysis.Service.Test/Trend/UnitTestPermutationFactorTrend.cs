@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Models.Trend;
 using TrendAnalysis.Service.Trend;
 
@@ -200,6 +201,138 @@ namespace TrendAnalysis.Service.Test.Trend
             ////连续次数＝9出现一次
             //Assert.IsTrue(result.HistoricalConsecutiveTimes[9] == 1);
         }
+
+
+        [TestMethod]
+        public void TestAnalyse_Empty()
+        {
+            var numbers = new List<byte>
+            {
+                1, 3, 6, 9, 1, 4, 2, 3, 1, 2, 5, 6, 8, 2, 3, 1
+            };
+
+            var fac1 = new Factor<byte> { Left = new List<byte> { 1, 2 }, Right = new List<byte> { 3, 4 } };
+            var fac2 = new Factor<byte> { Left = new List<byte> { 5, 6 }, Right = new List<byte> { 7, 8 } };
+            //var fac3 = new Factor<byte> { Left = new List<byte> { 1, 2 }, Right = new List<byte> { 3, 4 } };
+            var permutationFactors = new List<List<Factor<byte>>> { new List<Factor<byte>> { fac1 }, new List<Factor<byte>> { fac2 } };
+
+
+            var result = new PermutationFactorTrend().Analyse(new PermutationFactorTrendAnalyseDto<byte>
+            {
+                Numbers = numbers,
+                PermutationFactors = permutationFactors,
+                NumbersTailCutCount = 6
+            });
+            //没有符合条件
+            Assert.IsTrue(result.Count == 0);
+        }
+
+
+        [TestMethod]
+        public void TestAnalyse_ConsecutiveTimes_One()
+        {
+            var numbers = new List<byte>
+            {
+                1, 3, 6, 9, 1, 4, 2, 3, 1, 2, 5, 6, 8, 2, 3, 6
+            };
+
+            var fac1 = new Factor<byte> { Left = new List<byte> { 1, 2 }, Right = new List<byte> { 3, 4 } };
+            var fac2 = new Factor<byte> { Left = new List<byte> { 5, 6 }, Right = new List<byte> { 7, 8 } };
+            //var fac3 = new Factor<byte> { Left = new List<byte> { 1, 2 }, Right = new List<byte> { 3, 4 } };
+            var permutationFactors = new List<List<Factor<byte>>> { new List<Factor<byte>> { fac1 }, new List<Factor<byte>> { fac2 } };
+
+
+            var result = new PermutationFactorTrend().Analyse(new PermutationFactorTrendAnalyseDto<byte>
+            {
+                Numbers = numbers,
+                PermutationFactors = permutationFactors,
+                NumbersTailCutCount = 6
+            });
+            Assert.IsTrue(result.Count == 1);
+            var result1 = result[0];
+            Assert.IsTrue(result1.Factors.Count == 2);
+            Assert.IsTrue(string.Join(",", result1.Factors[0]) == "3,4");
+            Assert.IsTrue(string.Join(",", result1.Factors[1]) == "5,6");
+            //有0个连续次数
+            Assert.IsTrue(result1.HistoricalConsecutiveTimes.Count == 1);
+
+            //连续次数＝1出现一次
+            Assert.IsTrue(result1.HistoricalConsecutiveTimes[1] == 1);
+
+            //历史连续次数＝1
+            Assert.IsTrue(result1.FactorCurrentConsecutiveTimes == 1);
+        }
+
+        [TestMethod]
+        public void TestAnalyse_ConsecutiveTimes_Three()
+        {
+            var numbers = new List<byte>
+            {
+                1, 3, 6, 9, 1, 4, 2, 3, 1, 2, 4, 6, 4, 5, 3, 6
+            };
+
+            var fac1 = new Factor<byte> { Left = new List<byte> { 1, 2 }, Right = new List<byte> { 3, 4 } };
+            var fac2 = new Factor<byte> { Left = new List<byte> { 5, 6 }, Right = new List<byte> { 7, 8 } };
+            //var fac3 = new Factor<byte> { Left = new List<byte> { 1, 2 }, Right = new List<byte> { 3, 4 } };
+            var permutationFactors = new List<List<Factor<byte>>> { new List<Factor<byte>> { fac1 }, new List<Factor<byte>> { fac2 } };
+
+
+            var result = new PermutationFactorTrend().Analyse(new PermutationFactorTrendAnalyseDto<byte>
+            {
+                Numbers = numbers,
+                PermutationFactors = permutationFactors,
+                NumbersTailCutCount = 6
+            });
+            Assert.IsTrue(result.Count == 1);
+            var result1 = result[0];
+            Assert.IsTrue(result1.Factors.Count == 2);
+            Assert.IsTrue(string.Join(",", result1.Factors[0]) == "3,4");
+            Assert.IsTrue(string.Join(",", result1.Factors[1]) == "5,6");
+            //有0个连续次数
+            Assert.IsTrue(result1.HistoricalConsecutiveTimes.Count == 1);
+
+            //连续次数＝1出现一次
+            Assert.IsTrue(result1.HistoricalConsecutiveTimes[1] == 1);
+
+            //历史连续次数＝1
+            Assert.IsTrue(result1.FactorCurrentConsecutiveTimes == 3);
+        }
+
+        [TestMethod]
+        public void TestAnalyse_ConsecutiveTimes_Four()
+        {
+            var numbers = new List<byte>
+            {
+                1, 3, 6, 9, 1, 4, 2, 3, 1, 3,5, 4, 6, 4, 5, 3, 6
+            };
+
+            var fac1 = new Factor<byte> { Left = new List<byte> { 1, 2 }, Right = new List<byte> { 3, 4 } };
+            var fac2 = new Factor<byte> { Left = new List<byte> { 5, 6 }, Right = new List<byte> { 7, 8 } };
+            //var fac3 = new Factor<byte> { Left = new List<byte> { 1, 2 }, Right = new List<byte> { 3, 4 } };
+            var permutationFactors = new List<List<Factor<byte>>> { new List<Factor<byte>> { fac1 }, new List<Factor<byte>> { fac2 } };
+
+
+            var result = new PermutationFactorTrend().Analyse(new PermutationFactorTrendAnalyseDto<byte>
+            {
+                Numbers = numbers,
+                PermutationFactors = permutationFactors,
+                NumbersTailCutCount = 6
+            });
+            Assert.IsTrue(result.Count == 1);
+            var result1 = result[0];
+            Assert.IsTrue(result1.Factors.Count == 2);
+            Assert.IsTrue(string.Join(",", result1.Factors[0]) == "3,4");
+            Assert.IsTrue(string.Join(",", result1.Factors[1]) == "5,6");
+            //有0个连续次数
+            Assert.IsTrue(result1.HistoricalConsecutiveTimes.Count == 1);
+
+            //连续次数＝1出现2次
+            Assert.IsTrue(result1.HistoricalConsecutiveTimes[1] == 2);
+
+            //历史连续次数＝1
+            Assert.IsTrue(result1.FactorCurrentConsecutiveTimes == 4);
+        }
+
     }
 
 }

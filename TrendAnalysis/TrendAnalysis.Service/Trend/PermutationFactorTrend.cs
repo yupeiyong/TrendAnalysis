@@ -20,16 +20,8 @@ namespace TrendAnalysis.Service.Trend
         /// <returns></returns>
         public List<PermutationFactorTrendAnalyseResult<T>> Analyse<T>(PermutationFactorTrendAnalyseDto<T> dto)
         {
-            List<PermutationFactorTrendAnalyseResult<T>> factorResults = null;
-            if (dto.NumbersTailCutCount > 0 && dto.Numbers.Count > 0)
-            {
-                var nums = dto.Numbers.Skip(0).Take(dto.Numbers.Count - dto.NumbersTailCutCount).ToList();
-                factorResults = CountConsecutives(nums, dto.PermutationFactors, dto.AllowMinTimes);
-            }
-            else
-            {
-                factorResults = CountConsecutives(dto.Numbers, dto.PermutationFactors, dto.AllowMinTimes);
-            }
+            //统计连续次数
+            var factorResults = CountConsecutives(dto.Numbers, dto.PermutationFactors,dto.NumbersTailCutCount, dto.AllowMinTimes);
             factorResults = factorResults.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
             foreach (var item in factorResults)
             {
@@ -53,6 +45,10 @@ namespace TrendAnalysis.Service.Trend
                     if (n <= 0)
                     {
                         times++;
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
 
@@ -241,72 +237,6 @@ namespace TrendAnalysis.Service.Trend
             return curResult;
         }
 
-
-        ///// <summary>
-        ///// 解析因子在记录中的连续次数
-        ///// </summary>
-        ///// <typeparam name="T"></typeparam>
-        ///// <param name="numbers">记录</param>
-        ///// <param name="factor">判断因子</param>
-        ///// <param name="oppositeFactor">反因子</param>
-        ///// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
-        ///// <returns></returns>
-        //private static PermutationFactorTrendAnalyseResult<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<List<T>> factor, List<T> oppositeFactor, int allowMinTimes = 1)
-        //{
-        //    return AnalyseConsecutive(numbers, factor, oppositeFactor, (n, factorList, index) =>
-        //    {
-        //        var number = n[index];
-        //        return factorList.Exists(m => m.Equals(number));
-        //    }, allowMinTimes);
-        //}
-
-        ///// <summary>
-        ///// 解析连续在因子中的记录数
-        ///// </summary>
-        ///// <typeparam name="T"></typeparam>
-        ///// <param name="numbers">记录</param>
-        ///// <param name="factor">判断因子</param>
-        ///// <param name="oppositeFactor">反因子</param>
-        ///// <param name="compareFunc">比较因子的委托方法,参数为因子列表和当前索引，返回结果为bool</param>
-        ///// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
-        ///// <returns></returns>
-        //private static PermutationFactorTrendAnalyseResult<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<List<T>> factor, List<T> oppositeFactor, Func<IReadOnlyList<T>, List<T>, int, bool> compareFunc, int allowMinTimes = 1)
-        //{
-        //    var curResult = new PermutationFactorTrendAnalyseResult<T> { Factors = factor, OppositeFactor = oppositeFactor, HistoricalConsecutiveTimes = new SortedDictionary<int, int>() };
-        //    var i = 0;
-        //    //连续次数
-        //    var times = 0;
-        //    var length = numbers.Count;
-        //    while (i < length)
-        //    {
-        //        if (compareFunc(numbers, factor, i))
-        //        {
-        //            times++;
-        //        }
-        //        else
-        //        {
-        //            if (curResult.HistoricalConsecutiveTimes.ContainsKey(times))
-        //            {
-        //                curResult.HistoricalConsecutiveTimes[times]++;
-        //            }
-        //            else if (times >= allowMinTimes)
-        //            {
-        //                curResult.HistoricalConsecutiveTimes.Add(times, 1);
-        //            }
-        //            times = 0;
-        //        }
-        //        i++;
-        //    }
-        //    if (curResult.HistoricalConsecutiveTimes.ContainsKey(times))
-        //    {
-        //        curResult.HistoricalConsecutiveTimes[times]++;
-        //    }
-        //    else if (times >= allowMinTimes)
-        //    {
-        //        curResult.HistoricalConsecutiveTimes.Add(times, 1);
-        //    }
-        //    return curResult;
-        //}
 
         /// <summary>
         ///     遍历排列因子
