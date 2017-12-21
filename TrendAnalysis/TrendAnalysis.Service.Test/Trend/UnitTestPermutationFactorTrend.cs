@@ -92,7 +92,7 @@ namespace TrendAnalysis.Service.Test.Trend
 
             result = PermutationFactorTrend.CountConsecutive(numbers, factors, oppositeFactor, cutCount);
 
-            //有两个连续次数
+            //有3个连续次数
             Assert.IsTrue(result.HistoricalConsecutiveTimes.Count == 3);
 
             //连续次数＝1出现一次
