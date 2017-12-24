@@ -46,3 +46,5 @@ E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\bin\Debug\zh-Hans
 E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\obj\Debug\TrendAnalysis.Services.csprojResolveAssemblyReference.cache
 E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\obj\Debug\TrendAnalysis.Service.dll
 E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\obj\Debug\TrendAnalysis.Service.pdb
+E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\bin\Debug\Newtonsoft.Json.dll
+E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\bin\Debug\Newtonsoft.Json.xml
