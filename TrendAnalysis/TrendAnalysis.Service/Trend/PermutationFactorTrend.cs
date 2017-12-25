@@ -65,7 +65,7 @@ namespace TrendAnalysis.Service.Trend
                             break;
                     }
                     //所有因子都包含，则次数递增
-                    if (n <= 0)
+                    if (n < 0)
                     {
                         times++;
                     }
@@ -156,7 +156,7 @@ namespace TrendAnalysis.Service.Trend
 
 
             var factors = TraversePermutationFactor(permutationFactors);
-
+            factors = factors.Distinct().ToList();
             var resultList = new List<PermutationFactorTrendAnalyseResult<T>>();
             foreach (var factor in factors)
             {

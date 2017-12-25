@@ -41,10 +41,11 @@ namespace TrendAnalysis.Models
         [Description("7")]
         public byte SeventhNum { get; set; }
 
-        [Description("开奖日期")]
+
         /// <summary>
         /// 开奖日期
         /// </summary>
+        [Description("开奖日期")]
         public DateTime AwardingDate { get; set; }
     }
 }

@@ -1,23 +1,26 @@
-﻿using System.Collections.Generic;
-using TrendAnalysis.Models;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TrendAnalysis.Data;
-using System;
 using TrendAnalysis.DataTransferObject;
-using TrendAnalysis.Service.Trend;
+using TrendAnalysis.Models;
 using TrendAnalysis.Models.Trend;
-using Newtonsoft.Json;
+using TrendAnalysis.Service.Trend;
+
 
 namespace TrendAnalysis.Service.MarkSix
 {
+
     public class MarkSixAnalysisService
     {
 
+        public static int FactorIndex { get; set; }
+
+
         /// <summary>
-        /// 分析指定位置号码
+        ///     分析指定位置号码
         /// </summary>
-        /// <param name="location">指定的第几位</param>
-        /// <param name="times">分析指定的期次</param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         public List<byte> AnalyseSpecifiedLocation(MarkSixAnalyseSpecifiedLocationDto dto)
         {
@@ -34,7 +37,7 @@ namespace TrendAnalysis.Service.MarkSix
 
                 //按期次值升序排列
                 source = source.OrderBy(m => m.TimesValue);
-                var numbers = new List<byte>();
+                List<byte> numbers;
                 switch (dto.Location)
                 {
                     case 1:
@@ -62,15 +65,17 @@ namespace TrendAnalysis.Service.MarkSix
                         throw new Exception("错误，指定的位置不是有效的号码位置！");
                 }
 
-                var FactorHistoricalTrend = new FactorTrend();
+                var factorHistoricalTrend = new FactorTrend();
+
                 //十位数号码列表
-                var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).Select(n => byte.Parse(n)).ToList();
+                var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).Select(byte.Parse).ToList();
+
                 //十位因子
-                var tensDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
+                var tensDigitFactors = FactorGenerator.Create(new List<byte> {0, 1, 2, 3, 4}.ToList());
 
                 //按数字位置分析（十位/个位）
                 //十位
-                var tensDigitResult = FactorHistoricalTrend.Analyse(new FactorTrendAnalyseDto<byte>
+                var tensDigitResult = factorHistoricalTrend.Analyse(new FactorTrendAnalyseDto<byte>
                 {
                     Numbers = tensDigitNumbers,
                     Factors = tensDigitFactors,
@@ -81,12 +86,13 @@ namespace TrendAnalysis.Service.MarkSix
                 });
 
                 //个位数号码列表
-                var onesDigitNumbers = numbers.Select(n => n.ToString("00").Substring(1)).Select(n => byte.Parse(n)).ToList();
+                var onesDigitNumbers = numbers.Select(n => n.ToString("00").Substring(1)).Select(byte.Parse).ToList();
+
                 //个位因子
-                var onesDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
+                var onesDigitFactors = FactorGenerator.Create(new List<byte> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}.ToList());
 
                 //个位
-                var onesDigitResult = FactorHistoricalTrend.Analyse(new FactorTrendAnalyseDto<byte>
+                var onesDigitResult = factorHistoricalTrend.Analyse(new FactorTrendAnalyseDto<byte>
                 {
                     Numbers = onesDigitNumbers,
                     Factors = onesDigitFactors,
@@ -114,10 +120,9 @@ namespace TrendAnalysis.Service.MarkSix
 
 
         /// <summary>
-        /// 通过排列因子分析指定位置号码
+        ///     通过排列因子分析指定位置号码
         /// </summary>
-        /// <param name="location">指定的第几位</param>
-        /// <param name="times">分析指定的期次</param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         public List<byte> AnalyseSpecifiedLocationByPermutationFactors(MarkSixAnalyseSpecifiedLocationDto dto)
         {
@@ -134,7 +139,7 @@ namespace TrendAnalysis.Service.MarkSix
 
                 //按期次值升序排列
                 source = source.OrderBy(m => m.TimesValue);
-                var numbers = new List<byte>();
+                List<byte> numbers;
                 switch (dto.Location)
                 {
                     case 1:
@@ -163,15 +168,16 @@ namespace TrendAnalysis.Service.MarkSix
                 }
 
                 //十位数号码列表
-                var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).Select(n => byte.Parse(n)).ToList();
+                var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).Select(byte.Parse).ToList();
+
                 //十位因子
-                var tensDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
+                var tensDigitFactors = FactorGenerator.Create(new List<byte> {0, 1, 2, 3, 4}.ToList());
                 var tensResults = new List<List<PermutationFactorTrendAnalyseResult<byte>>>();
                 for (var i = 0; i < tensDigitFactors.Count; i++)
                 {
-                    var ls = new List<List<Factor<byte>>> { new List<Factor<byte>> { tensDigitFactors[i] }, tensDigitFactors };
+                    var ls = new List<List<Factor<byte>>> {new List<Factor<byte>> {tensDigitFactors[i]}, tensDigitFactors};
                     var trend = new PermutationFactorTrend();
-                    var curResult=trend.Analyse(new PermutationFactorTrendAnalyseDto<byte>
+                    var curResult = trend.Analyse(new PermutationFactorTrendAnalyseDto<byte>
                     {
                         Numbers = tensDigitNumbers,
                         PermutationFactors = ls,
@@ -179,62 +185,24 @@ namespace TrendAnalysis.Service.MarkSix
                         NumbersTailCutCount = dto.TensNumbersTailCutCount,
                         AllowMinFactorCurrentConsecutiveTimes = dto.TensAllowMinFactorCurrentConsecutiveTimes,
                         AllowMaxInterval = dto.TensAllowMaxInterval
-
                     });
                     if (curResult.Count > 0)
                     {
                         tensResults.Add(curResult);
-                    }                    
+                    }
                 }
 
 
                 //个位数号码列表
-                var onesDigitNumbers = numbers.Select(n => n.ToString("00").Substring(1)).Select(n => byte.Parse(n)).ToList();
-
-
-                //显示字符串，用于测试
-                var numberString = string.Join(",", onesDigitNumbers);
-                /*
-                 4,6,9,1,8,3,6,6,6,1,7,1,4,7,8,2,0,5,2,4,6,3,4,4,2,6,1,5,1,1,5,9,7,4,9,5,2,0,0,2,5,5,4,1,2,6,8,3,5,7,5,0,8,1,4,7,8,3,6,4,4,2,5,4,7,8,9,6,9,1,5,5,5,5,2,
-                 0,7,0,8,5,6,7,7,4,2,0,1,3,7,8,8,9,9,0,0,2,4,4,3,6,3,7,5,1,3,5,4,8,5,5,4,5,8,2,2,5,0,2,7,5,5,9,7,9,3,2,1,2,9,9,8,8,9,0,0,6,6,0,3,5,5,8,1,9,6,4,6,2,3,0,
-                 1,8,0,0,7,1,4,7,4,2,9,6,6,5,5,1,0,0,7,4,7,2,4,8,3,3,6,9,2,1,6,1,4,0,4,3,3,4,6,1,7,1,9,4,8,5,8,3,6,0,2,5,0,8,4,0,0,5,4,9,1,2,6,5,7,3,9,9,3,6,3,7,3,7,5,
-                 8,3,2,0,8,1,3,0,0,6,2,7,8,4,5,9,2,4,4,5,3,4,6,0,4,8,0,6,9,3,7,5,7,3,8,2,6,7,5,6,4,9,7,4,6,2,6,7,6,0,7,9,1,5,0,0,7,8,1,7,6,8,7,1,5,4,2,3,2,6,4,3,2,1,5,
-                 0,1,4,3,7,9,5,3,6,9,1,6,0,0,1,6,5,7,0,4,3,4,9,1,6,9,3,3,3,3,9,4,7,8,5,2,9,3,1,8,4,6,9,2,7,9,4,3,5,6,6,8,5,3,0,1,1,6,0,3,6,2,8,4,4,8,1,5,2,0,2,4,0,8,8,
-                 4,9,1,3,7,6,0,9,9,6,4,0,0,2,8,5,0,2,5,7,9,7,6,8,6,2,0,9,0,5,5,4,9,4,1,2,0,5,2,5,2,5,7,1,8,0,2,3,2,1,9,2,7,5,4,9,8,9,3,0,4,7,8,2,5,2,5,2,9,7,8,1,9,1,7,2,3,1,0,4,4,5,5,7,3,1,8,0,3,2,4,0,4,3,4,9,9,8,2,4,1,3,4,7,6,9,6,1,4,1,3,5,4,0,1,5,4,0,4,8,9,1,2,9,9,5,3,3,7,0,3,9,7,9,0,8,7,8,5,3,3,2,5,6,4,1,2,4,2,5,3,7,1,0,5,4,3,2,2,5,5,1,5,9,1,3,7,5,8,1,7,1,6,3,3,9,2,3,0,0,9,4,1,4,0,0,8,7,0,3,8,1,6,5,5,6,6,0,9,4,7,8,4,3,5,9,3,9,7,1,4,3,4,2,2,2,5,1,4,2,9,2,4,3,0,9,5,2,7,6,5,2,0,3,4,1,5,1,4,8,9,3,1,6,1,5,0,4,9,0,7,8,0,7,1,4,2,5,0,4,3,3,6,9,8,5,1,8,3,5,8,8,8,1,9,0,4,7,4,6,4,2,5,6,2,9,3,2,0,1,2,3,2,7,5,1,9,9,0,6,6,2,8,5,4,3,9,1,1,3,1,7,7,6,0,2,4,4,1,8,1,6,3,4,7,1,6,2,0,6,6,1,7,4,5,5,6,7,8,3,4,2,3,0,1,4,2,7,7,4,7,7,4,6,6,3,2,7,6,1,5,2,2,5,7,5,8,4,2,3,4,5,2,7,3,8,2,4,5,3,5,5,2,7,5,4,4,0,3,4,7,5,0,9,9,9,4,3,9,8,1,9,8,0,4,6,4,5,0,0,2,2,4,7,3,3,6,6,8,7,8,9,8,5,8,6,7,4,5,1,0,4,6,1,6,7,1,9,2,5,3,5,4,3,8,7,4,0,5,9,6,8,2,0,1,1,0,9,4,8,1,4,5,2,4,9,3,2,2,7,9,9,5,9,9,9,8,2,4,6,6,9,1,6,9,4,6,8,7,0,9,6,1,7,0,5,6,9,7,1,3,3,7,5,5,4,4,3,5,3,3,2,0,4,0,7,9,2,5,9,3,7,5,1,9,0,9,8,5,4,2,4,2,2,1,5,4,3,9,6,8,1,2,4,8,6,7,7,5,6,5,8,5,3,9,7,1,3,7,5,0,1,6,4,5,8,2,3,1,2,6,1,3,8,9,3,3,2,5,0,7,6,3,2,7,7,4,7,3,7,7,5,0,4,4,8,1,6,4,9,5,2,8,3,0,2,6,8,6,1,5,7,1,5,2,9,4,3,4,4,6,0,2,2,0,4,5,4,7,8,4,2,7,1,6,5,8,3,5,9,6,6,9,2,6,3,5,3,4,7,3,4,4,6,4,0,6,3,5,8,8,8,8,1,5,4,1,4,3,0,2,0,1,3,7,4,0,0,5,3,0,2,9,3,0,3,9,0,9,4,8,7,5,1,2,3,5,7,4,7,2,7,1,3,4,8,3,6,2,1,3,6,1,4,7,3,1,4,9,1,8,8,2,0,1,6,6,9,4,2,6,6,4,6,3,8,8,2,6,7,3,1,6,4,9,6,6,9,7,6,8,1,6,2,4,1,4,8,8,0,7,9,5,6,5,6,2,5,7,5,5,3,0,9,5,5,4,5,5,1,0,9,8,9,9,3,3,7,8,1,4,7,4,4,5,5,3,3,0,2,3,8,9,0,2,2,0,3,5,6,7,9,0,0,8,7,5,9,2,4,3,0,4,1,5,0,7,9,6,7,7,4,1,2,2,4,0,8,6,0,5,5,2,5,9,0,0,7,9,5,2,8,6,5,3,2,6,1,2,5,3,8,7,4,0,1,4,3,7,0,9,1,8,2,6,7,1,3,1,9,0,2,9,3,1,1,7,2,4,5,2,9,7,7,7,6,5,3,0,6,1,3,2,1,4,1,8,9,0,3,3,7,1,5,4,3,9,5,3,2,7,9,9,5,0,7,8,4,1,8,1,4,2,7,2,8,4,4,8,8,4,3,7,1,8,0,7,5,4,0,6,8,7,1,2,5,2,7,3,8,1,4,1,5,5,0,0,6,2,0,5,9,9,5,2,2,7,3,8,9,1,1,5,4,1,8,2,8,1,3,8,6,1,7,8,9,5,2,4,4,6,5,4,0,9,6,9,8,3,6,6,9,8,4,5,5,6,3,0,7,2,3,6,0,5,8,7,2,8,3,3,3,7,3,6,8,5,8,2,2,6,6,9,1,7,9,6,9,2,7,1,2,8,9,0,7,9,1,7,8,2,9,3,2,7,4,6,1,4,9,0,8,4,6,4,9,7,2,1,3,8,4,4,0,1,8,1,2,8,4,3,4,0,2,8,8,1,5,6,4,2,9,3,3,5,5,2,5,9,9,4,4,1,6,7,4,7,1,6,3,6,3,1,9,4,1,8,3,8,1,4,7,7,9,1,6,3,8,5,2,8,7,7,8,2,3,5,0,0,5,6,4,2,8,7,3,3,1,7,5,2,6,2,2,3,9,9,2,9,1,8,5,2,2,7,7,6,5,9,5,1,3,6,8,4,5,4,0,5,2,5,7,8,2,9,9,4,9,2,9,7,9,0,7,1,9,0,8,0,4,3,4,6,9,2,9,0,2,2,1,3,1,6,1,6,8,6,7,2,1,1,0,1,5,6,7,8,0,1,3,4,2,0,3,6,5,0,0,9,2,0,0,1,3,1,6,4,4,5,5,7,4,7,3,1,6,4,4,0,5,9,0,3,4,6,2,3,7,4,3,8,0,2,6,1,7,9,3,6,3,9,5,3,2,8,5,3,4,6,9,0,5,3,1,4,8,5,2,1,6,1,5,7,2,8,8,9,0,0,2,3,6,3,7,4,4,1,4,7,3,0,1,2,7,2,5,7,5,2,9,4,4,3,7,8,5,5,3,3,0,4,6,1,8,1,8,2,5,4,8,0,2,4,7,5,4,8,9,7,9,7,8,3,4,8,7,5,5,0,5,9,1,5,7,8,8,7,9,3,0,7,3,5,3,3,2,8,7,6,4,1,0,0,9,4,2,4,2,3,9,3,6,7,3,3,4,5,6,2,7,2,6,5,0,3,8,3,4,9,4,6,0,7,0,0,9,7,0,4,6,0,0,9,6,9,8,0,4,7,3,4,6,8,8,7,8,7,2,9,1,6,1,2,9,5,8,3,6,3,5,9,4,9,7,7,9,0,7,5,6,5,3,2,9,3,2,6,4,7,0,8,2,0,8,7,5,3,6,9,5,8,1,9,8,1,9,3,1,0,6,2,3,8,3,0,0,1,9,1,0,0,7,3,1,5,1,8,7,6,0,4,5,7,9,5,2,8,6,4,2,1,0,1,0,5,7,6,1,3,8,5,9,8,5,0,4,7,4,4,5,1,4,1,1,3,2,1,3,4,8,3,6,0,2,9,5,0,6,8,7,8,6,3,1,7,6,9,2,6,8,2,1,4,5,8,0,4,2,2,4,9,4,3,2,0,9,7,4,7,5,0,8,8,0,9,1,7,3,2,2,5,0,5,5,3,3,2,7,7,2,2,7,3,4,6,0,7,2,3,4,3,0,2,1,6,9,3,4,1,2,7,3,7,4,7,6,6,7,1,5,0,6,1,6,3,7,7,5,4,8,6,5,1,8,7,9,5,0,2,8,7,2,6,9,7,1,9,4,4,5,1,6,3,7,5,1,2,9,9,3,6,1,4,6,8,9,5,7,0,7,0,6,4,2,3,3,8,4,4,5,3,2,3,6,3,4,1,9,9,9,0,9,8,6,7,5,8,8,1,3,8,3,5,3,6,7,9,7,7,8,9,8,0,2,3,4,1,1,3,4,3,5,0,9,1,9,5,8,7,9,0,9,0,1,9,5,5,6,6,3,0,0,8,3,3,5,4,5,8,4,5,1,4,6,2,1,3,2,2,8,8,6,6,8,5,0,6,0,3,6,5,0,6,1,4,0,2,8,2,5,5,4,2,5,3,6,0,1,4,5,9,5,1,7,1,7,4,4,7,9,9,9,5,9,4,3,1,2,5,0,9,7,3,1,8,8,2,1,5,0,3,3,3,0,6,8,9,6,9,7,1,2,0,7,7,2,9,6,4,8,2,0,5,8,6,8,6,8,4,5,2,6,5,5,6,9,5,2,0,3,2,1,9,7,4,0,4,4,1,5,5,9,5,4,3,7,9,5,0,7,4,2,3,0,2,4,2,0,1,1,2,1,3,5,4,8,6,3,6,5,0,5,4,4,6,0,2,6,1,1,9,9,4,0,1,4,1,0,4,2,3,4,2,8,7,6,9,4,0,4,8,1,5,8,7,4,6,6,8,4,9,1,0,4,8,4,7,6,8,5,7,5,6,8,3,4,0,1,7,4,1,5,4,1,6,7,4,4,4,1,1,5,1,8,0,8,0,9,3,4,9,6,7,2,0,1,1,7,0,6,2,2,8,0,1,3,4,7,6,4,9,3,1,6,6,7,6,6,6,0,1,8,0,1,6,7,2,9,0,1,0,8,5,0,7,3,9,2,7,1,8,3,4,5,4,0,9,2,7,4,9,1,7,8,0,6,6,1,0,4,3,1,4,7,4,4,2,9,9,9,7,3,4,1,3,2,4,2,2,2,2,7,7,3,4,3,6,5,8,5,7,2,1,8,7,7,5,2,6,4,5,7,5,6,7,6,2,2,7,7,3,1,7,8,8,2,6,7,5,7,8,8,5,9,3,4,5,8,2,9,4,7,4,7,0,0,0,3,7,6,1,2,2,3,0,3,4,8,0,2,7,8,7,0,8,6,9,1,9,7,2,6,0,5,0,5,4,9,9,0,0,2,8,1,9,0,0,5,3,9,3,2,1,9,2,2,0,8,5,8,5,8,7,3,6,5,2,6,0,8,1,8,5,4,3,0,8,7,8,8,5,2,6,2,9,8,2,9,8,3,7,7,0,5,9,6,5,0,2,1,0,4,0,6,1,4,4,8,0,7,2,1,0,2,0,6,2,9,7,2,6,2,5,2,3,6,8,3,5,7,3,6,3,3,4,0,7,4,9,7,0,3,9,8,3,5,9,5,1,5,2,4,9,5,1,5,1,4,1,2,5,2,4,1,5,1,8,0,2,0,2,7,4,1,1,1,5,9,7,7,7,3,8,5,8,5,7,7,2,7,3,5,2,3,4,2,6,5,7,1,4,8,8,8,2,4,4,6,1,5,4,3,2,5,4,8,2,3,8,5,1,4,2,0,3,1,4,7,6,8,7,7,9,6,2,9,4,8,9,7,4,1,0,4,7,3,3,7,3,9,3,1,2,5,1,7,2,0,8,6,8,8,5,8,5,7,5,8,8,3,9,7,3,3,2,9,0,7,8,2,3,9,6,5,4,0,6,6,1,8,1,9,2,1,2,3,5,1,1,0,3,1,3,0,6,7,4,8,8,4,4,8,4,9,2,4,3,0,5,9,7,8,7,3,1,6,1,4,5,8,2,2,3,7,2,7,8,4,7,5,1,7,7,5,2,8,4,2,8,8,4,7,1,3,7,5,4,5,9,2,8,8,9,8,6,9,9,6,4,3,6,3,2,7,7,4,6,6,8,7,3,7,2,0,8,5,1,4,9,0,9,2,7,4,3,7,9,8,2,5,4,4,0,0,1,9,2,8,2,9,1,4,3,1,6,6,3,0,6,6,7,7,6,7,6,3,9,1,1,9,4,4,4,5,0,0,0,8,2,9,8,6,0,0,7,1,6,0,1,6,6,2,8,6,4,3,8,9,4,1,9,0,6,7,9,7,7,9,6,5,4,1,3,6,5,7,1,3,8,4,7,6,8,5,7,9,4,9,0,1,5,5,4,5,4,4,2,8,0,7,0,7,7,4,4,6,6,1,5,3,1,6,5,3,7,2,3,4,6,6,4,0,5,0,8,5,8,7,7,6,9,9,1,5,1,5,6,7,0,5
-                 
-                 */
-
-                var reverseNumber = new List<byte>();
-                for(var i = onesDigitNumbers.Count - 1; i >= 0; i--)
-                {
-                    reverseNumber.Add(onesDigitNumbers[i]);
-                }
-                //显示字符串，用于测试
-                var reverseNumbersString = string.Join(",", reverseNumber);
-                /*
-                 5,0,7,6,5,1,5,1,9,9,6,7,7,8,5,8,0,5,0,4,6,6,4,3,2,7,3,5,6,1,3,5,1,6,6,4,4,7,7,0,7,0,8,2,4,4,5,4,5,5,1,0,9,4,9,7,5,8,6,7,4,8,3,1,7,5,6,3,1,4,5,6,9,7,7,9,7,
-                 6,0,9,1,4,9,8,3,4,6,8,2,6,6,1,0,6,1,7,0,0,6,8,9,2,8,0,0,0,5,4,4,4,9,1,1,9,3,6,7,6,7,7,6,6,0,3,6,6,1,3,4,1,9,2,8,2,9,1,0,0,4,4,5,2,8,9,7,3,4,7,2,9,0,9,4,1,
-                 5,8,0,2,7,3,7,8,6,6,4,7,7,2,3,6,3,4,6,9,9,6,8,9,8,8,2,9,5,4,5,7,3,1,7,4,8,8,2,4,8,2,5,7,7,1,5,7,4,8,7,2,7,3,2,2,8,5,4,1,6,1,3,7,8,7,9,5,0,3,4,2,9,4,8,4,4,
-                 8,8,4,7,6,0,3,1,3,0,1,1,5,3,2,1,2,9,1,8,1,6,6,0,4,5,6,9,3,2,8,7,0,9,2,3,3,7,9,3,8,8,5,7,5,8,5,8,8,6,8,0,2,7,1,5,2,1,3,9,3,7,3,3,7,4,0,1,4,7,9,8,4,9,2,6,9,
-                 7,7,8,6,7,4,1,3,0,2,4,1,5,8,3,2,8,4,5,2,3,4,5,1,6,4,4,2,8,8,8,4,1,7,5,6,2,4,3,2,5,3,7,2,7,7,5,8,5,8,3,7,7,7,9,5,1,1,1,4,7,2,0,2,0,8,1,5,1,4,2,5,2,1,4,1,5,
-                 1,5,9,4,2,5,1,5,9,5,3,8,9,3,0,7,9,4,7,0,4,3,3,6,3,7,5,3,8,6,3,2,5,2,6,2,7,9,2,6,0,2,0,1,2,7,0,8,4,4,1,6,0,4,0,1,2,0,5,6,9,5,0,7,7,3,8,9,2,8,9,2,6,2,5,8,8,
-                 7,8,0,3,4,5,8,1,8,0,6,2,5,6,3,7,8,5,8,5,8,0,2,2,9,1,2,3,9,3,5,0,0,9,1,8,2,0,0,9,9,4,5,0,5,0,6,2,7,9,1,9,6,8,0,7,8,7,2,0,8,4,3,0,3,2,2,1,6,7,3,0,0,0,7,4,7,
-                 4,9,2,8,5,4,3,9,5,8,8,7,5,7,6,2,8,8,7,1,3,7,7,2,2,6,7,6,5,7,5,4,6,2,5,7,7,8,1,2,7,5,8,5,6,3,4,3,7,7,2,2,2,2,4,2,3,1,4,3,7,9,9,9,2,4,4,7,4,1,3,4,0,1,6,6,0,
-                 8,7,1,9,4,7,2,9,0,4,5,4,3,8,1,7,2,9,3,7,0,5,8,0,1,0,9,2,7,6,1,0,8,1,0,6,6,6,7,6,6,1,3,9,4,6,7,4,3,1,0,8,2,2,6,0,7,1,1,0,2,7,6,9,4,3,9,0,8,0,8,1,5,1,1,4,4,
-                 4,7,6,1,4,5,1,4,7,1,0,4,3,8,6,5,7,5,8,6,7,4,8,4,0,1,9,4,8,6,6,4,7,8,5,1,8,4,0,4,9,6,7,8,2,4,3,2,4,0,1,4,1,0,4,9,9,1,1,6,2,0,6,4,4,5,0,5,6,3,6,8,4,5,3,1,2,
-                 1,1,0,2,4,2,0,3,2,4,7,0,5,9,7,3,4,5,9,5,5,1,4,4,0,4,7,9,1,2,3,0,2,5,9,6,5,5,6,2,5,4,8,6,8,6,8,5,0,2,8,4,6,9,2,7,7,0,2,1,7,9,6,9,8,6,0,3,3,3,0,5,1,2,8,8,1,
-                 3,7,9,0,5,2,1,3,4,9,5,9,9,9,7,4,4,7,1,7,1,5,9,5,4,1,0,6,3,5,2,4,5,5,2,8,2,0,4,1,6,0,5,6,3,0,6,0,5,8,6,6,8,8,2,2,3,1,2,6,4,1,5,4,8,5,4,5,3,3,8,0,0,3,6,6,5,
-                 5,9,1,0,9,0,9,7,8,5,9,1,9,0,5,3,4,3,1,1,4,3,2,0,8,9,8,7,7,9,7,6,3,5,3,8,3,1,8,8,5,7,6,8,9,0,9,9,9,1,4,3,6,3,2,3,5,4,4,8,3,3,2,4,6,0,7,0,7,5,9,8,6,4,1,6,3,
-                 9,9,2,1,5,7,3,6,1,5,4,4,9,1,7,9,6,2,7,8,2,0,5,9,7,8,1,5,6,8,4,5,7,7,3,6,1,6,0,5,1,7,6,6,7,4,7,3,7,2,1,4,3,9,6,1,2,0,3,4,3,2,7,0,6,4,3,7,2,2,7,7,2,3,3,5,5,0,5,2,2,3,7,1,9,0,8,8,0,5,7,4,7,9,0,2,3,4,9,4,2,2,4,0,8,5,4,1,2,8,6,2,9,6,7,1,3,6,8,7,8,6,0,5,9,2,0,6,3,8,4,3,1,2,3,1,1,4,1,5,4,4,7,4,0,5,8,9,5,8,3,1,6,7,5,0,1,0,1,2,4,6,8,2,5,9,7,5,4,0,6,7,8,1,5,1,3,7,0,0,1,9,1,0,0,3,8,3,2,6,0,1,3,9,1,8,9,1,8,5,9,6,3,5,7,8,0,2,8,0,7,4,6,2,3,9,2,3,5,6,5,7,0,9,7,7,9,4,9,5,3,6,3,8,5,9,2,1,6,1,9,2,7,8,7,8,8,6,4,3,7,4,0,8,9,6,9,0,0,6,4,0,7,9,0,0,7,0,6,4,9,4,3,8,3,0,5,6,2,7,2,6,5,4,3,3,7,6,3,9,3,2,4,2,4,9,0,0,1,4,6,7,8,2,3,3,5,3,7,0,3,9,7,8,8,7,5,1,9,5,0,5,5,7,8,4,3,8,7,9,7,9,8,4,5,7,4,2,0,8,4,5,2,8,1,8,1,6,4,0,3,3,5,5,8,7,3,4,4,9,2,5,7,5,2,7,2,1,0,3,7,4,1,4,4,7,3,6,3,2,0,0,9,8,8,2,7,5,1,6,1,2,5,8,4,1,3,5,0,9,6,4,3,5,8,2,3,5,9,3,6,3,9,7,1,6,2,0,8,3,4,7,3,2,6,4,3,0,9,5,0,4,4,6,1,3,7,4,7,5,5,4,4,6,1,3,1,0,0,2,9,0,0,5,6,3,0,2,4,3,1,0,8,7,6,5,1,0,1,1,2,7,6,8,6,1,6,1,3,1,2,2,0,9,2,9,6,4,3,4,0,8,0,9,1,7,0,9,7,9,2,9,4,9,9,2,8,7,5,2,5,0,4,5,4,8,6,3,1,5,9,5,6,7,7,2,2,5,8,1,9,2,9,9,3,2,2,6,2,5,7,1,3,3,7,8,2,4,6,5,0,0,5,3,2,8,7,7,8,2,5,8,3,6,1,9,7,7,4,1,8,3,8,1,4,9,1,3,6,3,6,1,7,4,7,6,1,4,4,9,9,5,2,5,5,3,3,9,2,4,6,5,1,8,8,2,0,4,3,4,8,2,1,8,1,0,4,4,8,3,1,2,7,9,4,6,4,8,0,9,4,1,6,4,7,2,3,9,2,8,7,1,9,7,0,9,8,2,1,7,2,9,6,9,7,1,9,6,6,2,2,8,5,8,6,3,7,3,3,3,8,2,7,8,5,0,6,3,2,7,0,3,6,5,5,4,8,9,6,6,3,8,9,6,9,0,4,5,6,4,4,2,5,9,8,7,1,6,8,3,1,8,2,8,1,4,5,1,1,9,8,3,7,2,2,5,9,9,5,0,2,6,0,0,5,5,1,4,1,8,3,7,2,5,2,1,7,8,6,0,4,5,7,0,8,1,7,3,4,8,8,4,4,8,2,7,2,4,1,8,1,4,8,7,0,5,9,9,7,2,3,5,9,3,4,5,1,7,3,3,0,9,8,1,4,1,2,3,1,6,0,3,5,6,7,7,7,9,2,5,4,2,7,1,1,3,9,2,0,9,1,3,1,7,6,2,8,1,9,0,7,3,4,1,0,4,7,8,3,5,2,1,6,2,3,5,6,8,2,5,9,7,0,0,9,5,2,5,5,0,6,8,0,4,2,2,1,4,7,7,6,9,7,0,5,1,4,0,3,4,2,9,5,7,8,0,0,9,7,6,5,3,0,2,2,0,9,8,3,2,0,3,3,5,5,4,4,7,4,1,8,7,3,3,9,9,8,9,0,1,5,5,4,5,5,9,0,3,5,5,7,5,2,6,5,6,5,9,7,0,8,8,4,1,4,2,6,1,8,6,7,9,6,6,9,4,6,1,3,7,6,2,8,8,3,6,4,6,6,2,4,9,6,6,1,0,2,8,8,1,9,4,1,3,7,4,1,6,3,1,2,6,3,8,4,3,1,7,2,7,4,7,5,3,2,1,5,7,8,4,9,0,9,3,0,3,9,2,0,3,5,0,0,4,7,3,1,0,2,0,3,4,1,4,5,1,8,8,8,8,5,3,6,0,4,6,4,4,3,7,4,3,5,3,6,2,9,6,6,9,5,3,8,5,6,1,7,2,4,8,7,4,5,4,0,2,2,0,6,4,4,3,4,9,2,5,1,7,5,1,6,8,6,2,0,3,8,2,5,9,4,6,1,8,4,4,0,5,7,7,3,7,4,7,7,2,3,6,7,0,5,2,3,3,9,8,3,1,6,2,1,3,2,8,5,4,6,1,0,5,7,3,1,7,9,3,5,8,5,6,5,7,7,6,8,4,2,1,8,6,9,3,4,5,1,2,2,4,2,4,5,8,9,0,9,1,5,7,3,9,5,2,9,7,0,4,0,2,3,3,5,3,4,4,5,5,7,3,3,1,7,9,6,5,0,7,1,6,9,0,7,8,6,4,9,6,1,9,6,6,4,2,8,9,9,9,5,9,9,7,2,2,3,9,4,2,5,4,1,8,4,9,0,1,1,0,2,8,6,9,5,0,4,7,8,3,4,5,3,5,2,9,1,7,6,1,6,4,0,1,5,4,7,6,8,5,8,9,8,7,8,6,6,3,3,7,4,2,2,0,0,5,4,6,4,0,8,9,1,8,9,3,4,9,9,9,0,5,7,4,3,0,4,4,5,7,2,5,5,3,5,4,2,8,3,7,2,5,4,3,2,4,8,5,7,5,2,2,5,1,6,7,2,3,6,6,4,7,7,4,7,7,2,4,1,0,3,2,4,3,8,7,6,5,5,4,7,1,6,6,0,2,6,1,7,4,3,6,1,8,1,4,4,2,0,6,7,7,1,3,1,1,9,3,4,5,8,2,6,6,0,9,9,1,5,7,2,3,2,1,0,2,3,9,2,6,5,2,4,6,4,7,4,0,9,1,8,8,8,5,3,8,1,5,8,9,6,3,3,4,0,5,2,4,1,7,0,8,7,0,9,4,0,5,1,6,1,3,9,8,4,1,5,1,4,3,0,2,5,6,7,2,5,9,0,3,4,2,9,2,4,1,5,2,2,2,4,3,4,1,7,9,3,9,5,3,4,8,7,4,9,0,6,6,5,5,6,1,8,3,0,7,8,0,0,4,1,4,9,0,0,3,2,9,3,3,6,1,7,1,8,5,7,3,1,9,5,1,5,5,2,2,3,4,5,0,1,7,3,5,2,4,2,1,4,6,5,2,3,3,5,8,7,8,0,9,7,9,3,0,7,3,3,5,9,9,2,1,9,8,4,0,4,5,1,0,4,5,3,1,4,1,6,9,6,7,4,3,1,4,2,8,9,9,4,3,4,0,4,2,3,0,8,1,3,7,5,5,4,4,0,1,3,2,7,1,9,1,8,7,9,2,5,2,5,2,8,7,4,0,3,9,8,9,4,5,7,2,9,1,2,3,2,0,8,1,7,5,2,5,2,5,0,2,1,4,9,4,5,5,0,9,0,2,6,8,6,7,9,7,5,2,0,5,8,2,0,0,4,6,9,9,0,6,7,3,1,9,4,8,8,0,4,2,0,2,5,1,8,4,4,8,2,6,3,0,6,1,1,0,3,5,8,6,6,5,3,4,9,7,2,9,6,4,8,1,3,9,2,5,8,7,4,9,3,3,3,3,9,6,1,9,4,3,4,0,7,5,6,1,0,0,6,1,9,6,3,5,9,7,3,4,1,0,5,1,2,3,4,6,2,3,2,4,5,1,7,8,6,7,1,8,7,0,0,5,1,9,7,0,6,7,6,2,6,4,7,9,4,6,5,7,6,2,8,3,7,5,7,3,9,6,0,8,4,0,6,4,3,5,4,4,2,9,5,4,8,7,2,6,0,0,3,1,8,0,2,3,8,5,7,3,7,3,6,3,9,9,3,7,5,6,2,1,9,4,5,0,0,4,8,0,5,2,0,6,3,8,5,8,4,9,1,7,1,6,4,3,3,4,0,4,1,6,1,2,9,6,3,3,8,4,2,7,4,7,0,0,1,5,5,6,6,9,2,4,7,4,1,7,0,0,8,1,0,3,2,6,4,6,9,1,8,5,5,3,0,6,6,0,0,9,8,8,9,9,2,1,2,3,9,7,9,5,5,7,2,0,5,2,2,8,5,4,5,5,8,4,5,3,1,5,7,3,6,3,4,4,2,0,0,9,9,8,8,7,3,1,0,2,4,7,7,6,5,8,0,7,0,2,5,5,5,5,1,9,6,9,8,7,4,5,2,4,4,6,3,8,7,4,1,8,0,5,7,5,3,8,6,2,1,4,5,5,2,0,0,2,5,9,4,7,9,5,1,1,5,1,6,2,4,4,3,6,4,2,5,0,2,8,7,4,1,7,1,6,6,6,3,8,1,9,6,4
-                 */
+                var onesDigitNumbers = numbers.Select(n => n.ToString("00").Substring(1)).Select(byte.Parse).ToList();
 
                 //个位因子
-                var onesDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
+                var onesDigitFactors = FactorGenerator.Create(new List<byte> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}.ToList());
 
-                var onesResults= new List<List<PermutationFactorTrendAnalyseResult<byte>>>();
+                var onesResults = new List<List<PermutationFactorTrendAnalyseResult<byte>>>();
                 for (var i = 0; i < onesDigitFactors.Count; i++)
                 {
-                    var ls = new List<List<Factor<byte>>> { new List<Factor<byte>> { onesDigitFactors[i] }, onesDigitFactors };
+                    var ls = new List<List<Factor<byte>>> {new List<Factor<byte>> {onesDigitFactors[i]}, onesDigitFactors};
                     var trend = new PermutationFactorTrend();
                     var curResult = trend.Analyse(new PermutationFactorTrendAnalyseDto<byte>
                     {
@@ -244,7 +212,6 @@ namespace TrendAnalysis.Service.MarkSix
                         NumbersTailCutCount = dto.OnesNumbersTailCutCount,
                         AllowMinFactorCurrentConsecutiveTimes = dto.OnesAllowMinFactorCurrentConsecutiveTimes,
                         AllowMaxInterval = dto.OnesAllowMaxInterval
-
                     });
                     if (curResult.Count > 0)
                     {
@@ -264,15 +231,14 @@ namespace TrendAnalysis.Service.MarkSix
                 //        return GetNumbers(tenFactor, onesFactor);
                 //    }
                 //}
-                var test=onesResults.OrderBy(p => p.First().Interval).ThenByDescending(p => p.First().FactorCurrentConsecutiveTimes).ToList();
+                var test = onesResults.OrderBy(p => p.First().Interval).ThenByDescending(p => p.First().FactorCurrentConsecutiveTimes).ToList();
                 return new List<byte>();
             }
         }
 
 
-        public static int FactorIndex { get; set; }
         /// <summary>
-        /// 单独分析指定位置号码个位数
+        ///     单独分析指定位置号码个位数
         /// </summary>
         /// <param name="location">指定的第几位</param>
         /// <param name="times">分析指定的期次</param>
@@ -292,45 +258,45 @@ namespace TrendAnalysis.Service.MarkSix
 
                 //按期次值升序排列
                 source = source.OrderBy(m => m.TimesValue);
-                var records = new List<TemporaryRecord<byte>>();
+                List<TemporaryRecord<byte>> records;
                 switch (dto.Location)
                 {
                     case 1:
-                        records = source.Select(m => new { Number = m.FirstNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.FirstNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 2:
-                        records = source.Select(m => new { Number = m.SecondNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.SecondNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 3:
-                        records = source.Select(m => new { Number = m.ThirdNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.ThirdNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 4:
-                        records = source.Select(m => new { Number = m.FourthNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.FourthNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 5:
-                        records = source.Select(m => new { Number = m.FifthNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.FifthNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 6:
-                        records = source.Select(m => new { Number = m.SixthNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.SixthNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 7:
-                        records = source.Select(m => new { Number = m.SeventhNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.SeventhNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     default:
                         throw new Exception("错误，指定的位置不是有效的号码位置！");
                 }
 
-                var FactorHistoricalTrend = new FactorTrend();
+                var factorHistoricalTrend = new FactorTrend();
 
                 //个位因子
-                var onesDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
+                var onesDigitFactors = FactorGenerator.Create(new List<byte> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}.ToList());
 
                 //onesDigitFactors = onesDigitFactors.Skip(FactorIndex * 20).Take(20).ToList();
                 var trendDto = new AnalyseHistoricalTrendDto<byte>
@@ -346,7 +312,7 @@ namespace TrendAnalysis.Service.MarkSix
                     AllowMinTimes = dto.AllowMinTimes,
                     NumbersTailCutCount = dto.NumbersTailCutCount
                 };
-                var historicalTrends = FactorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
+                var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
                 return historicalTrends;
             }
@@ -354,10 +320,9 @@ namespace TrendAnalysis.Service.MarkSix
 
 
         /// <summary>
-        /// 单独分析指定位置号码十位数
+        ///     单独分析指定位置号码十位数
         /// </summary>
-        /// <param name="location">指定的第几位</param>
-        /// <param name="times">分析指定的期次</param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         public List<HistoricalTrend<byte>> AnalyseTensHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
         {
@@ -378,41 +343,41 @@ namespace TrendAnalysis.Service.MarkSix
                 switch (dto.Location)
                 {
                     case 1:
-                        records = source.Select(m => new { Number = m.FirstNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.FirstNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 2:
-                        records = source.Select(m => new { Number = m.SecondNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.SecondNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 3:
-                        records = source.Select(m => new { Number = m.ThirdNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.ThirdNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 4:
-                        records = source.Select(m => new { Number = m.FourthNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.FourthNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 5:
-                        records = source.Select(m => new { Number = m.FifthNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.FifthNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 6:
-                        records = source.Select(m => new { Number = m.SixthNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.SixthNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 7:
-                        records = source.Select(m => new { Number = m.SeventhNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.SeventhNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     default:
                         throw new Exception("错误，指定的位置不是有效的号码位置！");
                 }
 
-                var FactorHistoricalTrend = new FactorTrend();
+                var factorHistoricalTrend = new FactorTrend();
 
                 //十位因子
-                var tensDigitFactors = FactorGenerator.Create(new List<byte>() { 0, 1, 2, 3, 4 }.ToList());
+                var tensDigitFactors = FactorGenerator.Create(new List<byte> {0, 1, 2, 3, 4}.ToList());
 
                 var trendDto = new AnalyseHistoricalTrendDto<byte>
                 {
@@ -427,7 +392,7 @@ namespace TrendAnalysis.Service.MarkSix
                     AllowMinTimes = dto.AllowMinTimes,
                     NumbersTailCutCount = dto.NumbersTailCutCount
                 };
-                var historicalTrends = FactorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
+                var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
                 return historicalTrends;
             }
@@ -435,10 +400,9 @@ namespace TrendAnalysis.Service.MarkSix
 
 
         /// <summary>
-        /// 单独分析指定位置号码合数
+        ///     单独分析指定位置号码合数
         /// </summary>
-        /// <param name="location">指定的第几位</param>
-        /// <param name="times">分析指定的期次</param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         public List<HistoricalTrend<byte>> AnalyseCompositeHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
         {
@@ -459,41 +423,42 @@ namespace TrendAnalysis.Service.MarkSix
                 switch (dto.Location)
                 {
                     case 1:
-                        records = source.Select(m => new { Number = m.FirstNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = (byte)(byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.FirstNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = (byte) (byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 2:
-                        records = source.Select(m => new { Number = m.SecondNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = (byte)(byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.SecondNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = (byte) (byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 3:
-                        records = source.Select(m => new { Number = m.ThirdNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = (byte)(byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.ThirdNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = (byte) (byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 4:
-                        records = source.Select(m => new { Number = m.FourthNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = (byte)(byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.FourthNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = (byte) (byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 5:
-                        records = source.Select(m => new { Number = m.FifthNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = (byte)(byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.FifthNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = (byte) (byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 6:
-                        records = source.Select(m => new { Number = m.SixthNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = (byte)(byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.SixthNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = (byte) (byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     case 7:
-                        records = source.Select(m => new { Number = m.SeventhNum, m.Times, m.TimesValue }).ToList()
-                            .Select(m => new TemporaryRecord<byte> { Number = (byte)(byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        records = source.Select(m => new {Number = m.SeventhNum, m.Times, m.TimesValue}).ToList()
+                            .Select(m => new TemporaryRecord<byte> {Number = (byte) (byte.Parse(m.Number.ToString("00").Substring(0, 1)) + byte.Parse(m.Number.ToString("00").Substring(1))), Times = m.Times, TimesValue = m.TimesValue}).ToList();
                         break;
                     default:
                         throw new Exception("错误，指定的位置不是有效的号码位置！");
                 }
 
-                var FactorHistoricalTrend = new FactorTrend();
+                var factorHistoricalTrend = new FactorTrend();
 
                 var compositeService = new CompositeNumber(1, 49);
-                var compositeNumber = compositeService.CompositeNumbers.Select(n => (byte)n).ToList();
+                var compositeNumber = compositeService.CompositeNumbers.Select(n => (byte) n).ToList();
+
                 //合数因子
                 var compositeDigitFactors = FactorGenerator.Create(compositeNumber);
 
@@ -510,14 +475,15 @@ namespace TrendAnalysis.Service.MarkSix
                     AllowMinTimes = dto.AllowMinTimes,
                     NumbersTailCutCount = dto.NumbersTailCutCount
                 };
-                var historicalTrends = FactorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
+                var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
                 return historicalTrends;
             }
         }
 
+
         /// <summary>
-        /// 通过10位和个位因子，获取最终数字
+        ///     通过10位和个位因子，获取最终数字
         /// </summary>
         /// <param name="tenFactor"></param>
         /// <param name="onesFactor"></param>
@@ -529,11 +495,11 @@ namespace TrendAnalysis.Service.MarkSix
             {
                 for (var j = 0; j < onesFactor.Count; j++)
                 {
-                    var valueStr = tenFactor[i].ToString() + onesFactor[j].ToString();
+                    var valueStr = tenFactor[i] + onesFactor[j];
                     byte number;
-                    if (!byte.TryParse(valueStr, out number))
+                    if (!byte.TryParse(valueStr.ToString(), out number))
                     {
-                        throw new Exception(string.Format("错误，{0}不是有效的byte类型数据！", valueStr));
+                        throw new Exception($"错误，{valueStr}不是有效的byte类型数据！");
                     }
                     result.Add(number);
                 }
@@ -745,7 +711,7 @@ namespace TrendAnalysis.Service.MarkSix
 
 
         /// <summary>
-        /// 分析指定位置当前期之前的号码
+        ///     分析指定位置当前期之前的号码
         /// </summary>
         /// <param name="location">指定位置</param>
         /// <param name="times">期次</param>
@@ -755,5 +721,7 @@ namespace TrendAnalysis.Service.MarkSix
         {
             return null;
         }
+
     }
+
 }

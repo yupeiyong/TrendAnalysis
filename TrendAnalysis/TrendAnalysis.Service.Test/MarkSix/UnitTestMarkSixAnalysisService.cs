@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrendAnalysis.Data;
 using TrendAnalysis.DataTransferObject;
@@ -242,7 +243,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
             }
         }
 
-
+        #region  测试通过排列因子分析趋势
         /// <summary>
         /// 测试，按排列因子分析历史趋势
         /// </summary>
@@ -264,7 +265,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
                     var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
                     var times = records[i].Times;
-                    var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 8, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0 };
+                    var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 4, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0 };
                     //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = records[i].Times, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
                     var result = service.AnalyseSpecifiedLocationByPermutationFactors(dto);
                     if (result.Count > 0)
@@ -289,6 +290,72 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var str = resultString.ToString();
             }
         }
+
+        /// <summary>
+        /// 通过测试数据，测试，按排列因子分析历史趋势
+        /// </summary>
+        [TestMethod]
+        public void TestAnalyseSpecifiedLocationByPermutationFactors_By_Test_Data()
+        {
+            using (new TransactionScope())
+            {
+                using (var dao = new TrendDbContext())
+                {
+                    //删除所有记录
+                    dao.Set<MarkSixRecord>().RemoveRange(dao.Set<MarkSixRecord>());
+
+                    //添加测试数据
+                    var recordString = "01,06,01,06,01,06,01,06,01,06,22,22,33,31,35,06,01,06,01,06,01,06,01,06,01";
+                    var numbers = recordString.Split(',').ToList().Select(byte.Parse).ToList();
+                    var sevenNumbers = new List<MarkSixRecord>();
+                    for (var i = 0; i < numbers.Count; i++)
+                    {
+                        var record = new MarkSixRecord { Times = i.ToString(), SeventhNum = numbers[i], AwardingDate = DateTime.Now, TimesValue = i };
+                        sevenNumbers.Add(record);
+                    }
+                    dao.Set<MarkSixRecord>().AddRange(sevenNumbers);
+                    dao.SaveChanges();
+                    var service = new MarkSixAnalysisService();
+                    var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.TimesValue).Take(1000).ToList();
+                    var resultString = new StringBuilder();
+                    var hasCount = 0;
+                    var resultCount = 0;
+                    var tensHasCount = 0;
+                    var onesHasCount = 0;
+                    for (var i = 0; i < 100; i++)
+                    {
+                        var seventhNum = records[i].SeventhNum;
+                        var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
+                        var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
+                        var times = records[i].Times;
+                        var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 8, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0 };
+                        //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = records[i].Times, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
+                        var result = service.AnalyseSpecifiedLocationByPermutationFactors(dto);
+                        if (result.Count > 0)
+                        {
+                            resultCount++;
+                            var resultSource = result.Select(r => r.ToString("00"));
+                            var onesResults = resultSource.Select(r => byte.Parse(r.Substring(1))).Distinct().ToList();
+                            var tensResults = resultSource.Select(r => byte.Parse(r.Substring(0, 1))).Distinct().ToList();
+                            if (tensResults.Contains(tens))
+                            {
+                                tensHasCount++;
+                            }
+                            if (onesResults.Contains(ones))
+                            {
+                                onesHasCount++;
+                            }
+                        }
+                        var has = result.Exists(m => m == seventhNum);
+                        if (has) hasCount++;
+                        resultString.AppendLine("期次：" + records[i].Times + ",第7位号码：" + seventhNum + ",分析结果：" + (has ? "-Yes- " : "      ") + string.Join(";", result));
+                    }
+                    var str = resultString.ToString();
+                }
+            }
+
+        }
+        #endregion
         /// <summary>
         /// 分析个位历史趋势，因子分组
         /// </summary>
