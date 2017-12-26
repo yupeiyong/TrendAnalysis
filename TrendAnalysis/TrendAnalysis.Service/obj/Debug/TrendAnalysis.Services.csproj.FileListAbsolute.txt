@@ -48,3 +48,5 @@ E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\obj\Debug\TrendAn
 E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\obj\Debug\TrendAnalysis.Service.pdb
 E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\bin\Debug\Newtonsoft.Json.dll
 E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\bin\Debug\Newtonsoft.Json.xml
+F:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\bin\Debug\Newtonsoft.Json.dll
+F:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\bin\Debug\Newtonsoft.Json.xml
