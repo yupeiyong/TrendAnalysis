@@ -235,7 +235,7 @@ namespace TrendAnalysis.Service.Test.Trend
         {
             var numbers = new List<byte>
             {
-                1, 3, 6, 9, 1, 4, 2, 3, 1, 2, 5, 6, 8, 2, 3, 6
+                1, 3, 6, 9, 1, 4, 2, 3, 1, 2, 5, 6, 8, 2, 3, 6,4
             };
 
             var fac1 = new Factor<byte> { Left = new List<byte> { 1, 2 }, Right = new List<byte> { 3, 4 } };
@@ -262,7 +262,7 @@ namespace TrendAnalysis.Service.Test.Trend
             Assert.IsTrue(result1.HistoricalConsecutiveTimes[1] == 1);
 
             //历史连续次数＝1
-            Assert.IsTrue(result1.FactorCurrentConsecutiveTimes == 1);
+            Assert.IsTrue(result1.FactorCurrentConsecutiveTimes == 2);
         }
 
         [TestMethod]
@@ -270,7 +270,7 @@ namespace TrendAnalysis.Service.Test.Trend
         {
             var numbers = new List<byte>
             {
-                1, 3, 6, 9, 1, 4, 2, 3, 1, 2, 4, 6, 4, 5, 3, 6
+                1, 3, 6, 9, 1, 4, 2, 3, 1, 2, 4, 6, 4, 5, 3
             };
 
             var fac1 = new Factor<byte> { Left = new List<byte> { 1, 2 }, Right = new List<byte> { 3, 4 } };
@@ -305,7 +305,7 @@ namespace TrendAnalysis.Service.Test.Trend
         {
             var numbers = new List<byte>
             {
-                1, 3, 6, 9, 1, 4, 2, 3, 1, 3,5, 4, 6, 4, 5, 3, 6
+                1, 3, 6, 9, 1, 4, 2, 3, 1, 3,5, 4, 6, 4, 5, 3
             };
 
             var fac1 = new Factor<byte> { Left = new List<byte> { 1, 2 }, Right = new List<byte> { 3, 4 } };
