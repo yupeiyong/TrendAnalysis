@@ -21,6 +21,13 @@ namespace TrendAnalysis.Service.Trend
         /// <returns></returns>
         public List<FactorTrendAnalyseResult<T>> Analyse<T>(FactorTrendAnalyseDto<T> dto)
         {
+            /*
+            位置索引：	0	1	2	3	4	5	6	7	8	9	10	11	12	13
+                号码：	2	1	1	6	6	4	5	4	6	0	1	4	8	2
+	  分析的开始位置：  如:6,那么可以和0-5这5个位置的数字任意组合，加或减（暂不考虑乘除），比如：(0)2 + (6)5=7%10
+
+
+             */
             List<FactorTrendAnalyseResult<T>> factorResults;
             if (dto.NumbersTailCutCount > 0 && dto.Numbers.Count > 0)
             {
