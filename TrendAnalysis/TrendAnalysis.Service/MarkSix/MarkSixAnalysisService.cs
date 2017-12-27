@@ -241,8 +241,7 @@ namespace TrendAnalysis.Service.MarkSix
         /// <summary>
         ///     单独分析指定位置号码个位数
         /// </summary>
-        /// <param name="location">指定的第几位</param>
-        /// <param name="times">分析指定的期次</param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         public List<HistoricalTrend<byte>> AnalyseOnesHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
         {

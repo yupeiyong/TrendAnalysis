@@ -7,7 +7,7 @@ namespace TrendAnalysis.Models.Trend
     /// <summary>
     ///     历史趋势明细项
     /// </summary>
-    public class HistoricalTrendItem<T> : BaseEntity
+    public class HistoricalTrendItem<T> 
     {
 
         /// <summary>
