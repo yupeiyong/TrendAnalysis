@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrendAnalysis.Data;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Models;
+using TrendAnalysis.Models.MarkSix;
 using TrendAnalysis.Service.MarkSix;
 using TrendAnalysis.Service.Trend;
 

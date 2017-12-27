@@ -9,6 +9,7 @@ using OfficeOpenXml;
 using TrendAnalysis.Data;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Models;
+using TrendAnalysis.Models.MarkSix;
 
 
 namespace TrendAnalysis.Service.MarkSix

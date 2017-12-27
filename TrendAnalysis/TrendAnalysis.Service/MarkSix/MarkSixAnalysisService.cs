@@ -4,6 +4,7 @@ using System.Linq;
 using TrendAnalysis.Data;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Models;
+using TrendAnalysis.Models.MarkSix;
 using TrendAnalysis.Models.Trend;
 using TrendAnalysis.Service.Trend;
 

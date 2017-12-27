@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Models;
+using TrendAnalysis.Models.MarkSix;
 using TrendAnalysis.Service.MarkSix;
 using Winform.Common;
 

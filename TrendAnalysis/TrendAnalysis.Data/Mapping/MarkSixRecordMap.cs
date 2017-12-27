@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrendAnalysis.Models;
+using TrendAnalysis.Models.MarkSix;
+
 
 namespace TrendAnalysis.Data.Mapping
 {

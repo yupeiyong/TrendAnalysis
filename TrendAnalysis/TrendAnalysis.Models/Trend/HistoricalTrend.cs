@@ -1,58 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
+
 
 namespace TrendAnalysis.Models.Trend
 {
+
     /// <summary>
-    /// 历史趋势
+    ///     历史趋势
     /// </summary>
-    public class HistoricalTrend<T>
+    public class HistoricalTrend<T> : BaseEntity
     {
+
         /// <summary>
-        /// 第几位数
+        ///     第几位数
         /// </summary>
         public int Location { get; set; }
 
 
         /// <summary>
-        /// 允许的连续次数
+        ///     允许的连续次数
         /// </summary>
         public int AllowConsecutiveTimes { set; get; }
 
 
         /// <summary>
-        /// 允许的间隔数
+        ///     允许的间隔数
         /// </summary>
         public int AllowInterval { get; set; }
 
 
         /// <summary>
-        /// 正确次数
+        ///     正确次数
         /// </summary>
         public int CorrectCount { get; set; }
 
 
         /// <summary>
-        /// 有分析结果的次数（符合连续次数和间隔数的记录次数）
+        ///     有分析结果的次数（符合连续次数和间隔数的记录次数）
         /// </summary>
         public int AnalyticalCount { get; set; }
 
 
         /// <summary>
-        /// 总期次
+        ///     总期次
         /// </summary>
         public int TotalHistoricalCount { get; set; }
 
 
         /// <summary>
-        /// 正确率
+        ///     正确率
         /// </summary>
-        public double CorrectRate => AnalyticalCount == 0 ? 0 : (double)CorrectCount / AnalyticalCount;
+        public double CorrectRate => AnalyticalCount == 0 ? 0 : (double) CorrectCount/AnalyticalCount;
 
         public List<HistoricalTrendItem<T>> Items { get; set; }
+
 
         public override string ToString()
         {
@@ -68,5 +69,7 @@ namespace TrendAnalysis.Models.Trend
             }
             return content.ToString();
         }
+
     }
+
 }

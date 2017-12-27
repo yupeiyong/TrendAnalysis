@@ -1,7 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace TrendAnalysis.Models
+
+namespace TrendAnalysis.Models.MarkSix
 {
     /// <summary>
     /// MarkSix历史记录

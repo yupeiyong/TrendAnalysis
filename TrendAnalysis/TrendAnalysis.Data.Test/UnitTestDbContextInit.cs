@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrendAnalysis.Models;
+using TrendAnalysis.Models.MarkSix;
+
 
 namespace TrendAnalysis.Data.Test
 {
