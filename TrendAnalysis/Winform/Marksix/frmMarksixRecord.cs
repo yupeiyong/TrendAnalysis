@@ -7,6 +7,7 @@ using System.Linq;
 using TrendAnalysis.Models;
 using System.Drawing;
 using System.ComponentModel;
+using TrendAnalysis.Models.MarkSix;
 using Winform.Common;
 using TrendAnalysis.Service.MarkSix;
 

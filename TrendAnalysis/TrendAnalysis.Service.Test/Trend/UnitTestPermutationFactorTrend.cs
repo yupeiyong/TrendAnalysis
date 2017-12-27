@@ -53,10 +53,10 @@ namespace TrendAnalysis.Service.Test.Trend
                 new List<byte> {3, 4}
             };
 
-            var oppositeFactor = new List<byte> { 5, 6 };
+            var predictiveFactor = new List<byte> { 5, 6 };
 
             var cutCount = 6;
-            var result = PermutationFactorTrend.CountConsecutive(numbers, factors, oppositeFactor, cutCount);
+            var result = PermutationFactorTrend.CountConsecutive(numbers, factors, predictiveFactor, cutCount);
 
             //有两个连续次数
             Assert.IsTrue(result.HistoricalConsecutiveTimes.Count == 2);
@@ -73,7 +73,7 @@ namespace TrendAnalysis.Service.Test.Trend
                 1, 3, 9, 1, 3, 1, 3, 1, 3, 6, 9, 1, 4, 2, 3, 1, 4, 5, 6, 8, 2, 3, 1
             };
 
-            result = PermutationFactorTrend.CountConsecutive(numbers, factors, oppositeFactor, cutCount);
+            result = PermutationFactorTrend.CountConsecutive(numbers, factors, predictiveFactor, cutCount);
 
             //有两个连续次数
             Assert.IsTrue(result.HistoricalConsecutiveTimes.Count == 2);
@@ -91,7 +91,7 @@ namespace TrendAnalysis.Service.Test.Trend
                 1, 3, 9, 1, 3, 1, 3, 1, 3, 6, 9, 1, 4, 2, 3, 1, 4,1, 4, 2, 3, 1, 4,1, 4, 2, 3, 1, 4, 5, 6, 8, 2, 3, 1
             };
 
-            result = PermutationFactorTrend.CountConsecutive(numbers, factors, oppositeFactor, cutCount);
+            result = PermutationFactorTrend.CountConsecutive(numbers, factors, predictiveFactor, cutCount);
 
             //有3个连续次数
             Assert.IsTrue(result.HistoricalConsecutiveTimes.Count == 3);

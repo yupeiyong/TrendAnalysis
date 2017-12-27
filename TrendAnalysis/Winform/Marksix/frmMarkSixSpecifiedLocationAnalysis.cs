@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TrendAnalysis.Models;
+using TrendAnalysis.Models.MarkSix;
 using TrendAnalysis.Service;
 using Winform.Common;
 

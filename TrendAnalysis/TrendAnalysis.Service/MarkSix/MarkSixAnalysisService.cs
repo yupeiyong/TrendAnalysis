@@ -4,6 +4,7 @@ using System.Linq;
 using TrendAnalysis.Data;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Models;
+using TrendAnalysis.Models.MarkSix;
 using TrendAnalysis.Models.Trend;
 using TrendAnalysis.Service.Trend;
 
@@ -109,8 +110,8 @@ namespace TrendAnalysis.Service.MarkSix
                     var maxOnes = onesDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
                     if (maxTens != null && maxOnes != null)
                     {
-                        var tenFactor = maxTens.OppositeFactor;
-                        var onesFactor = maxOnes.OppositeFactor;
+                        var tenFactor = maxTens.PredictiveFactor;
+                        var onesFactor = maxOnes.PredictiveFactor;
                         return GetNumbers(tenFactor, onesFactor);
                     }
                 }
@@ -226,8 +227,8 @@ namespace TrendAnalysis.Service.MarkSix
                 //    var maxOnes = onesDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
                 //    if (maxTens != null && maxOnes != null)
                 //    {
-                //        var tenFactor = maxTens.OppositeFactor;
-                //        var onesFactor = maxOnes.OppositeFactor;
+                //        var tenFactor = maxTens.predictiveFactor;
+                //        var onesFactor = maxOnes.predictiveFactor;
                 //        return GetNumbers(tenFactor, onesFactor);
                 //    }
                 //}
@@ -240,8 +241,7 @@ namespace TrendAnalysis.Service.MarkSix
         /// <summary>
         ///     单独分析指定位置号码个位数
         /// </summary>
-        /// <param name="location">指定的第几位</param>
-        /// <param name="times">分析指定的期次</param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         public List<HistoricalTrend<byte>> AnalyseOnesHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
         {

@@ -3,6 +3,7 @@ using System.Transactions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrendAnalysis.Data;
 using TrendAnalysis.Models;
+using TrendAnalysis.Models.MarkSix;
 using TrendAnalysis.Service.MarkSix;
 
 

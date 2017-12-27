@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace TrendAnalysis.Models
+
+namespace TrendAnalysis.Models.MarkSix
 {
     /// <summary>
     /// MarkSix指定位置购买记录

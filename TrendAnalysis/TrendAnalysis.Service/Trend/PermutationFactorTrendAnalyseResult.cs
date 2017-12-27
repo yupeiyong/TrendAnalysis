@@ -15,9 +15,9 @@ namespace TrendAnalysis.Service.Trend
 
 
         /// <summary>
-        ///     结果因子（反因子）
+        ///     预测可能的因子（反因子）
         /// </summary>
-        public List<T> OppositeFactor { get; set; }
+        public List<T> PredictiveFactor { get; set; }
 
         /// <summary>
         ///     历史的连续次数分析结果，键为次数，值为数量  表示每个连续次数出现的次数

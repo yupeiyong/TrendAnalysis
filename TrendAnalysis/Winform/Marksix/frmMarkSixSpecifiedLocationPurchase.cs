@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using TrendAnalysis.Models;
+using TrendAnalysis.Models.MarkSix;
 using TrendAnalysis.Service.MarkSix;
 
 namespace Winform.Marksix
