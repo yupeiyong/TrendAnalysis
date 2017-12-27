@@ -109,8 +109,8 @@ namespace TrendAnalysis.Service.MarkSix
                     var maxOnes = onesDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
                     if (maxTens != null && maxOnes != null)
                     {
-                        var tenFactor = maxTens.OppositeFactor;
-                        var onesFactor = maxOnes.OppositeFactor;
+                        var tenFactor = maxTens.PredictiveFactor;
+                        var onesFactor = maxOnes.PredictiveFactor;
                         return GetNumbers(tenFactor, onesFactor);
                     }
                 }

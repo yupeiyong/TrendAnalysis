@@ -1,30 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+
 
 namespace TrendAnalysis.Service.Trend
 {
+
     /// <summary>
     ///     合数
     /// </summary>
     public class CompositeNumber
     {
-        /// <summary>
-        /// 构造器
-        /// </summary>
-        /// <param name="stratNumber">开始数</param>
-        /// <param name="endNumber">结束数</param>
-        public CompositeNumber(uint stratNumber, uint endNumber)
-        {
-            _startNumber = stratNumber;
-            _endNumber = endNumber;
-            //生成合数
-            CompositeNumbers = Create();
-        }
-
 
         /// <summary>
         ///     结束数
@@ -39,7 +26,25 @@ namespace TrendAnalysis.Service.Trend
 
         private SortedDictionary<uint, List<uint>> _dictCompositeNumber;
 
+
+        /// <summary>
+        ///     构造器
+        /// </summary>
+        /// <param name="stratNumber">开始数</param>
+        /// <param name="endNumber">结束数</param>
+        public CompositeNumber(uint stratNumber, uint endNumber)
+        {
+            _startNumber = stratNumber;
+            _endNumber = endNumber;
+
+            //生成合数
+            CompositeNumbers = Create();
+        }
+
+
         public List<uint> CompositeNumbers { get; private set; }
+
+
         /// <summary>
         ///     通过最大数，创建合数集合
         /// </summary>
@@ -55,14 +60,14 @@ namespace TrendAnalysis.Service.Trend
             for (var i = _startNumber; i <= _endNumber; i++)
             {
                 var numberString = i.ToString(formatString);
-                var sum = (uint)numberString.ToList().Select(item => Convert.ToInt32(item.ToString())).Sum();
+                var sum = (uint) numberString.ToList().Select(item => Convert.ToInt32(item.ToString())).Sum();
                 if (_dictCompositeNumber.ContainsKey(sum))
                 {
                     _dictCompositeNumber[sum].Add(i);
                 }
                 else
                 {
-                    _dictCompositeNumber.Add(sum, new List<uint>() { i });
+                    _dictCompositeNumber.Add(sum, new List<uint> {i});
                 }
             }
             return _dictCompositeNumber.Keys.ToList();
@@ -81,6 +86,7 @@ namespace TrendAnalysis.Service.Trend
             return _dictCompositeNumber[compositeNumber];
         }
 
+
         /// <summary>
         ///     通过合数，获取数字列表
         /// </summary>
@@ -98,6 +104,7 @@ namespace TrendAnalysis.Service.Trend
             }
             return numbers.Distinct().OrderBy(n => n).ToList();
         }
+
     }
 
 }

@@ -1,39 +1,44 @@
-﻿using OfficeLibrary;
-using OfficeOpenXml;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using OfficeLibrary;
+using OfficeOpenXml;
 using TrendAnalysis.Data;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Models;
 
+
 namespace TrendAnalysis.Service.MarkSix
 {
+
     /// <summary>
-    /// MarkSix记录操作类
+    ///     MarkSix记录操作类
     /// </summary>
     public class MarkSixRecordService
     {
-        public event EventHandler<EventArgs> ImportingEvent;
-
-        public event EventHandler<EventArgs> BeforeImportEvent;
 
         /// <summary>
-        /// 记录条数
+        ///     记录条数
         /// </summary>
         public int RecordCount { get; set; }
 
 
         /// <summary>
-        /// 已导入条数
+        ///     已导入条数
         /// </summary>
-        public int ImportedCount { get; set; } = 0;
+        public int ImportedCount { get; set; }
         /// <summary>
-        /// 是否停止导入
+        ///     是否停止导入
         /// </summary>
         public bool IsStopImporting { get; set; }
+
+        public event EventHandler<EventArgs> ImportingEvent;
+
+        public event EventHandler<EventArgs> BeforeImportEvent;
+
 
         public List<MarkSixRecord> Search(MarkSixRecordSearchDto dto)
         {
@@ -54,8 +59,10 @@ namespace TrendAnalysis.Service.MarkSix
                 return source.OrderBy(m => m.Times).Skip(dto.StartIndex).Take(dto.PageSize).ToList();
             }
         }
+
+
         /// <summary>
-        /// 导出
+        ///     导出
         /// </summary>
         /// <returns></returns>
         public void Export(DataTable table, string fileName)
@@ -64,6 +71,8 @@ namespace TrendAnalysis.Service.MarkSix
             var toExcel = new DataTableToExcel();
             toExcel.Export(table, fileName, "MarksixRecord");
         }
+
+
         protected void OnImportingEvent(EventArgs e)
         {
             if (ImportingEvent != null)
@@ -72,6 +81,7 @@ namespace TrendAnalysis.Service.MarkSix
             }
         }
 
+
         protected void OnBeforeImportEvent(EventArgs e)
         {
             if (BeforeImportEvent != null)
@@ -79,13 +89,15 @@ namespace TrendAnalysis.Service.MarkSix
                 BeforeImportEvent(this, e);
             }
         }
+
+
         /// <summary>
-        /// 导入
+        ///     导入
         /// </summary>
         public int Import(string fileName)
         {
             //数组列表
-            List<MarkSixRecord> records = new List<MarkSixRecord>();
+            var records = new List<MarkSixRecord>();
             using (var stream = new FileStream(fileName, FileMode.Open))
             using (var package = new ExcelPackage(stream))
             {
@@ -99,11 +111,13 @@ namespace TrendAnalysis.Service.MarkSix
                     var startColumn = sht.Dimension.Start.Column;
                     var endColumn = sht.Dimension.End.Column;
                     var cell = sht.Cells[startRow, startColumn, endRow, endColumn].FirstOrDefault(c => c.Text == "序号");
+
                     //查找最后一个"序号"单元格
                     if (cell == null)
                     {
                         throw new Exception("工作表" + sht.Name + ",没有第一个单元格为‘序号’的结束行！");
                     }
+
                     //记录日期
                     DateTime recordDate;
                     if (sht.Cells[2, 2].Value == null)
@@ -114,23 +128,27 @@ namespace TrendAnalysis.Service.MarkSix
                     {
                         throw new Exception("工作表" + sht.Name + ",第二行记录日期格式错误！");
                     }
-                    //遍历所有行
-                    for (int r = 2; r < endRow; r++)
-                    {
 
+                    //遍历所有行
+                    for (var r = 2; r < endRow; r++)
+                    {
                         try
                         {
                             //声明记录对象
                             var record = new MarkSixRecord();
+
                             //开奖日期
                             record.AwardingDate = DateTime.Parse(sht.Cells[r, 2].Value.ToString());
+
                             //记录期次
-                            string strTimes = sht.Cells[r, 3].Value.ToString();
+                            var strTimes = sht.Cells[r, 3].Value.ToString();
+
                             //期次必须为4位年3位期次
-                            if (strTimes != recordDate.Year.ToString() + (r - 1).ToString("000"))
+                            if (strTimes != recordDate.Year + (r - 1).ToString("000"))
                             {
                                 throw new Exception("工作表" + sht.Name + ",第" + r + "行期次错误！" + "必须为4位年3位连续的期次。");
                             }
+
                             //写入数据到记录对象
                             record.Times = strTimes;
                             record.TimesValue = int.Parse(strTimes);
@@ -141,6 +159,7 @@ namespace TrendAnalysis.Service.MarkSix
                             record.FifthNum = byte.Parse(sht.Cells[r, 8].Value.ToString());
                             record.SixthNum = byte.Parse(sht.Cells[r, 9].Value.ToString());
                             record.SeventhNum = byte.Parse(sht.Cells[r, 10].Value.ToString());
+
                             //添加到列表
                             records.Add(record);
                         }
@@ -153,7 +172,7 @@ namespace TrendAnalysis.Service.MarkSix
             }
             if (records.Count > 0)
             {
-                this.RecordCount = records.Count;
+                RecordCount = records.Count;
                 OnBeforeImportEvent(null);
                 using (var dao = new TrendDbContext())
                 {
@@ -165,6 +184,7 @@ namespace TrendAnalysis.Service.MarkSix
                     {
                         //记录已导入数量
                         ImportedCount++;
+
                         //处理正在导入事件
                         OnImportingEvent(null);
                         if (IsStopImporting)
@@ -180,7 +200,7 @@ namespace TrendAnalysis.Service.MarkSix
                             originalRecord.FifthNum = record.FifthNum;
                             originalRecord.SixthNum = record.SixthNum;
                             originalRecord.SeventhNum = record.SeventhNum;
-                            dao.Entry(originalRecord).State = System.Data.Entity.EntityState.Modified;
+                            dao.Entry(originalRecord).State = EntityState.Modified;
                         }
                         else
                         {
@@ -195,12 +215,14 @@ namespace TrendAnalysis.Service.MarkSix
             return records.Count();
         }
 
+
         /// <summary>
-        /// 通过网络抓取
+        ///     通过网络抓取
         /// </summary>
         public void NetworkCapture()
         {
-
         }
+
     }
+
 }

@@ -263,12 +263,12 @@ namespace TrendAnalysis.Service.Trend
                 if (factor != null && factor.Count > 0)
                 {
                     //取保存在最后位置的反因子
-                    var oppositeFactor = factor[factor.Count - 1];
+                    var predictiveFactor = factor[factor.Count - 1];
 
                     //删除保存在最后位置的反因子
                     var curFactor = factor;
                     curFactor.RemoveAt(factor.Count - 1);
-                    resultList.Add(CountConsecutive(numbers, curFactor, oppositeFactor, numbersTailCutCount, allowMinTimes));
+                    resultList.Add(CountConsecutive(numbers, curFactor, predictiveFactor, numbersTailCutCount, allowMinTimes));
                 }
             }
 
@@ -292,7 +292,7 @@ namespace TrendAnalysis.Service.Trend
             var curResult = new PermutationFactorTrendAnalyseResult<T>
             {
                 Factors = factors,
-                OppositeFactor = oppositeFactor,
+                PredictiveFactor = oppositeFactor,
                 HistoricalConsecutiveTimes = new SortedDictionary<int, int>()
             };
             var i = 0;

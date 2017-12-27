@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TrendAnalysis.Models;
-using TrendAnalysis.DataTransferObject;
-using TrendAnalysis.Data;
-using System.Data.Entity;
 using System.Data;
+using System.Data.Entity;
+using System.Linq;
 using OfficeLibrary;
+using TrendAnalysis.Data;
+using TrendAnalysis.DataTransferObject;
+using TrendAnalysis.Models;
+
 
 namespace TrendAnalysis.Service.MarkSix
 {
+
     public class MarkSixPurchaseService
     {
+
         /// <summary>
-        /// 获取指定位置的购买记录
+        ///     获取指定位置的购买记录
         /// </summary>
         /// <returns></returns>
         public List<MarkSixSpecifiedLocationPurchase> SearchSpecifiedLocation(MarkSixSpecifiedLocationPurchaseSearchDto dto)
@@ -26,7 +27,7 @@ namespace TrendAnalysis.Service.MarkSix
 
                 source = source.WhereDateTime(nameof(MarkSixSpecifiedLocationPurchase.OnCreated), dto.StartDateTime, dto.EndDateTime);
 
-                if(dto.Location>0)
+                if (dto.Location > 0)
                 {
                     source = source.Where(m => m.Location == dto.Location);
                 }
@@ -42,23 +43,24 @@ namespace TrendAnalysis.Service.MarkSix
             }
         }
 
+
         public void SaveSpecifiedLocation(MarkSixSpecifiedLocationPurchase dto)
         {
             if (string.IsNullOrWhiteSpace(dto.Times))
             {
-                throw new Exception(string.Format("错误，期次不能为空"));
+                throw new Exception("错误，期次不能为空");
             }
             if (string.IsNullOrWhiteSpace(dto.PurchaseList))
             {
-                throw new Exception(string.Format("错误，购买清单不能为空"));
+                throw new Exception("错误，购买清单不能为空");
             }
             if (dto.Location > 7 || dto.Location < 1)
             {
-                throw new Exception(string.Format("错误，购买的指定位置必须为1-7！"));
+                throw new Exception("错误，购买的指定位置必须为1-7！");
             }
             if (dto.Odds <= 0)
             {
-                throw new Exception(string.Format("错误，赔率不能小于等于0！"));
+                throw new Exception("错误，赔率不能小于等于0！");
             }
             using (var dao = new TrendDbContext())
             {
@@ -68,7 +70,7 @@ namespace TrendAnalysis.Service.MarkSix
                     if (purchase == null)
                     {
                         throw new Exception(string.Format("错误，购买记录不存在！（Id:{0}）", dto.Id));
-                    }                    
+                    }
                     purchase.Times = dto.Times;
                     purchase.PurchaseList = dto.PurchaseList;
                     purchase.Odds = dto.Odds;
@@ -78,13 +80,13 @@ namespace TrendAnalysis.Service.MarkSix
                 }
                 else
                 {
-                    dto.OnCreated =dto.OnModified= DateTime.Now;
+                    dto.OnCreated = dto.OnModified = DateTime.Now;
                     dao.Set<MarkSixSpecifiedLocationPurchase>().Add(dto);
                 }
                 dao.SaveChanges();
             }
-
         }
+
 
         public MarkSixSpecifiedLocationPurchase GetSpecifiedLocationPurchaseById(long id)
         {
@@ -99,18 +101,20 @@ namespace TrendAnalysis.Service.MarkSix
         {
             using (var dao = new TrendDbContext())
             {
-                foreach(var id in ids)
+                foreach (var id in ids)
                 {
                     var record = dao.Set<MarkSixSpecifiedLocationPurchase>().FirstOrDefault(m => m.Id == id);
                     if (record == null)
-                        throw new Exception(string.Format("错误，购买记录不存在！(Id:{0})",id));
+                        throw new Exception(string.Format("错误，购买记录不存在！(Id:{0})", id));
                     dao.Entry(record).State = EntityState.Deleted;
                 }
                 dao.SaveChanges();
             }
         }
+
+
         /// <summary>
-        /// 导出
+        ///     导出
         /// </summary>
         /// <returns></returns>
         public void Export(DataTable table, string fileName)
@@ -121,4 +125,5 @@ namespace TrendAnalysis.Service.MarkSix
         }
 
     }
+
 }
