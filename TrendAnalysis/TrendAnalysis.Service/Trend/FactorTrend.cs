@@ -126,7 +126,7 @@ namespace TrendAnalysis.Service.Trend
                             }
                         }
 
-                        var trendItem = new HistoricalTrendItem<T> {Times = times, Number = number, Success = success, ResultConsecutiveTimes = resultConsecutiveTimes, ResultInterval = resultInterval, OppositeFactor = factors};
+                        var trendItem = new HistoricalTrendItem<T> {Times = times, Number = number, Success = success, ResultConsecutiveTimes = resultConsecutiveTimes, ResultInterval = resultInterval, PredictiveFactor = factors};
 
                         trend.AnalyticalCount = resultCount;
                         trend.CorrectCount = successCount;
@@ -170,12 +170,12 @@ namespace TrendAnalysis.Service.Trend
         /// <typeparam name="T"></typeparam>
         /// <param name="numbers">记录</param>
         /// <param name="factor">判断因子</param>
-        /// <param name="oppositeFactor">反因子</param>
+        /// <param name="predictiveFactor">反因子</param>
         /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
         /// <returns></returns>
-        private static FactorTrendAnalyseResult<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> oppositeFactor, int allowMinTimes = 1)
+        private static FactorTrendAnalyseResult<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> predictiveFactor, int allowMinTimes = 1)
         {
-            return AnalyseConsecutive(numbers, factor, oppositeFactor, (n, factorList, index) =>
+            return AnalyseConsecutive(numbers, factor, predictiveFactor, (n, factorList, index) =>
             {
                 var number = n[index];
                 return factorList.Exists(m => m.Equals(number));
@@ -189,13 +189,13 @@ namespace TrendAnalysis.Service.Trend
         /// <typeparam name="T"></typeparam>
         /// <param name="numbers">记录</param>
         /// <param name="factor">判断因子</param>
-        /// <param name="oppositeFactor">反因子</param>
+        /// <param name="predictiveFactor">反因子</param>
         /// <param name="compareFunc">比较因子的委托方法,参数为因子列表和当前索引，返回结果为bool</param>
         /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
         /// <returns></returns>
-        private static FactorTrendAnalyseResult<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> oppositeFactor, Func<IReadOnlyList<T>, List<T>, int, bool> compareFunc, int allowMinTimes = 1)
+        private static FactorTrendAnalyseResult<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> predictiveFactor, Func<IReadOnlyList<T>, List<T>, int, bool> compareFunc, int allowMinTimes = 1)
         {
-            var curResult = new FactorTrendAnalyseResult<T> {Factor = factor, PredictiveFactor = oppositeFactor, HistoricalConsecutiveTimes = new SortedDictionary<int, int>()};
+            var curResult = new FactorTrendAnalyseResult<T> {Factor = factor, PredictiveFactor = predictiveFactor, HistoricalConsecutiveTimes = new SortedDictionary<int, int>()};
             var i = 0;
 
             //连续次数

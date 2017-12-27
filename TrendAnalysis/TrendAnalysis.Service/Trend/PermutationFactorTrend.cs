@@ -117,7 +117,7 @@ namespace TrendAnalysis.Service.Trend
         /// </summary>
         /// <param name="dto">记录集合、比较因子、允许的最小连续次数，大于等于此数才记录......</param>
         /// <returns></returns>
-        public List<PermutationFactorTrendAnalyseResult<T>> AnalyseOppositeFactorAtFirst<T>(PermutationFactorTrendAnalyseDto<T> dto)
+        public List<PermutationFactorTrendAnalyseResult<T>> AnalysepredictiveFactorAtFirst<T>(PermutationFactorTrendAnalyseDto<T> dto)
         {
             //统计连续次数
             var factorResults = CountConsecutives(dto.Numbers, dto.PermutationFactors, dto.NumbersTailCutCount, dto.AllowMinTimes);
@@ -283,16 +283,16 @@ namespace TrendAnalysis.Service.Trend
         /// <typeparam name="T"></typeparam>
         /// <param name="numbers">记录</param>
         /// <param name="factors"></param>
-        /// <param name="oppositeFactor">反因子</param>
+        /// <param name="predictiveFactor">反因子</param>
         /// <param name="numbersTailCutCount"></param>
         /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
         /// <returns></returns>
-        public static PermutationFactorTrendAnalyseResult<T> CountConsecutive<T>(IReadOnlyList<T> numbers, List<List<T>> factors, List<T> oppositeFactor, int numbersTailCutCount = 1, int allowMinTimes = 1)
+        public static PermutationFactorTrendAnalyseResult<T> CountConsecutive<T>(IReadOnlyList<T> numbers, List<List<T>> factors, List<T> predictiveFactor, int numbersTailCutCount = 1, int allowMinTimes = 1)
         {
             var curResult = new PermutationFactorTrendAnalyseResult<T>
             {
                 Factors = factors,
-                PredictiveFactor = oppositeFactor,
+                PredictiveFactor = predictiveFactor,
                 HistoricalConsecutiveTimes = new SortedDictionary<int, int>()
             };
             var i = 0;
@@ -378,7 +378,7 @@ namespace TrendAnalysis.Service.Trend
         /// <typeparam name="T"></typeparam>
         /// <param name="permutationFactors">要遍历的排列因子，二维列表</param>
         /// <returns>遍历结果，总条数是每一行数据条数相乘的结果</returns>
-        public static List<List<List<T>>> TraversePermutationFactorOppositeFactorAtFirst<T>(List<List<Factor<T>>> permutationFactors)
+        public static List<List<List<T>>> TraversePermutationFactorpredictiveFactorAtFirst<T>(List<List<Factor<T>>> permutationFactors)
         {
             var length = permutationFactors.Count;
             var result = new List<List<List<T>>>();

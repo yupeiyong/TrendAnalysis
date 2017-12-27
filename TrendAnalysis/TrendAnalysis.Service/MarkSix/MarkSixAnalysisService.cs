@@ -226,8 +226,8 @@ namespace TrendAnalysis.Service.MarkSix
                 //    var maxOnes = onesDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
                 //    if (maxTens != null && maxOnes != null)
                 //    {
-                //        var tenFactor = maxTens.OppositeFactor;
-                //        var onesFactor = maxOnes.OppositeFactor;
+                //        var tenFactor = maxTens.predictiveFactor;
+                //        var onesFactor = maxOnes.predictiveFactor;
                 //        return GetNumbers(tenFactor, onesFactor);
                 //    }
                 //}

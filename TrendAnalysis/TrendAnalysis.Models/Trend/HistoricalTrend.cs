@@ -63,7 +63,7 @@ namespace TrendAnalysis.Models.Trend
                 foreach (var item in Items)
                 {
                     var message = string.Format("期次：{0},号码：{1},分析结果：{2},结果连续次数:{3}结果间隔数：{4}  ", item.Times, item.Number, item.Success ? "-Yes- " : "-No-  ", item.ResultConsecutiveTimes, item.ResultInterval);
-                    content.AppendLine(message + (item.OppositeFactor != null ? string.Join(";", item.OppositeFactor) : ""));
+                    content.AppendLine(message + (item.PredictiveFactor != null ? string.Join(";", item.PredictiveFactor) : ""));
                 }
             }
             return content.ToString();
