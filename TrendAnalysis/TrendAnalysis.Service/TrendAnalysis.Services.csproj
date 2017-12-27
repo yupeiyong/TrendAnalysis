@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Trend\CompositeNumber.cs" />
     <Compile Include="Trend\FactorTrendAnalyseResult.cs" />
+    <Compile Include="Trend\MergeFactorTrend.cs" />
     <Compile Include="Trend\PermutationFactorTrend.cs" />
     <Compile Include="Trend\FactorTrend.cs" />
     <Compile Include="Trend\FactorGenerator.cs" />
