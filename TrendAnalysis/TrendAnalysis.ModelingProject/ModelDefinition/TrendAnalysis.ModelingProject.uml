@@ -358,7 +358,17 @@
         Id="525add28-7d02-4e45-84a3-9ad8ad2a2c46"
         name="分析指定位置号码"
         isAbstract="false"
-        isLeaf="false" />
+        isLeaf="false">
+        <additions>
+          <include
+            Id="855f3af4-53b5-493b-8b51-b63ddc0a1fd8">
+            <useCaseMoniker
+              Id="635ac7c6-015f-4b2b-b564-721fca287263"
+              LastKnownName="分析历史趋势"
+              LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+          </include>
+        </additions>
+      </useCase>
     </packageHasNamedElement>
     <packageHasNamedElement>
       <useCase
@@ -396,7 +406,17 @@
         Id="ad25ef70-8ade-4f2f-b33d-2ca1d0b59729"
         name="分析全部位置号码"
         isAbstract="false"
-        isLeaf="false" />
+        isLeaf="false">
+        <additions>
+          <include
+            Id="a8869934-26fd-4491-87ee-e9819adc7af5">
+            <useCaseMoniker
+              Id="635ac7c6-015f-4b2b-b564-721fca287263"
+              LastKnownName="分析历史趋势"
+              LastKnownLocation="TrendAnalysis.ModelingProject.uml" />
+          </include>
+        </additions>
+      </useCase>
     </packageHasNamedElement>
     <packageHasNamedElement>
       <useCase
@@ -4226,6 +4246,13 @@
             isLeaf="false" />
         </nodes>
       </activity>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="635ac7c6-015f-4b2b-b564-721fca287263"
+        name="分析历史趋势"
+        isAbstract="false"
+        isLeaf="false" />
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType

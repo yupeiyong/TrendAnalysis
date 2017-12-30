@@ -208,7 +208,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 {
                     var valueStr = tenFactor[i] + onesFactor[j];
                     byte number;
-                    if (!byte.TryParse(valueStr, out number))
+                    if (!byte.TryParse(valueStr.ToString(), out number))
                     {
                         throw new Exception(string.Format("错误，{0}不是有效的byte类型数据！", valueStr));
                     }

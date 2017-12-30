@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="5130416d-df1d-4255-aa2e-5b2e5da82765" name="UMLUseCaseDiagram" linkedPackageId="f41d5e10-47f9-4134-be15-46658b93a845" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm12="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" dslVersion="1.0.0.0" Id="5130416d-df1d-4255-aa2e-5b2e5da82765" name="UMLUseCaseDiagram" linkedPackageId="f41d5e10-47f9-4134-be15-46658b93a845" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
   <packagedElements>
     <useCaseModelRootHasTypes>
       <actor Id="f5749fa7-1206-46e6-b07c-4914d3299263" name="用户" isAbstract="false" isLeaf="false">
@@ -108,6 +108,12 @@
     <useCaseModelRootHasTypes>
       <useCase Id="d48b1ccd-6efd-412d-8f6f-7bbd73c72600" name="分析指定位置号码" isAbstract="false" isLeaf="false">
         <elementDefinition Id="525add28-7d02-4e45-84a3-9ad8ad2a2c46" />
+        <additions>
+          <include Id="bc781488-9637-4707-add9-f59e349847b1">
+            <useCaseMoniker Id="e4c2d106-0f3d-4c29-968d-42adbc14bbce" LastKnownName="分析历史趋势" />
+            <elementDefinition Id="855f3af4-53b5-493b-8b51-b63ddc0a1fd8" />
+          </include>
+        </additions>
       </useCase>
     </useCaseModelRootHasTypes>
     <useCaseModelRootHasTypes>
@@ -129,6 +135,12 @@
     <useCaseModelRootHasTypes>
       <useCase Id="619b2a44-5251-4c68-acef-7b52c811db5f" name="分析全部位置号码" isAbstract="false" isLeaf="false">
         <elementDefinition Id="ad25ef70-8ade-4f2f-b33d-2ca1d0b59729" />
+        <additions>
+          <include Id="6d77aa23-f059-409d-8260-4f028f806df6">
+            <useCaseMoniker Id="e4c2d106-0f3d-4c29-968d-42adbc14bbce" LastKnownName="分析历史趋势" />
+            <elementDefinition Id="a8869934-26fd-4491-87ee-e9819adc7af5" />
+          </include>
+        </additions>
       </useCase>
     </useCaseModelRootHasTypes>
     <useCaseModelRootHasTypes>
@@ -140,6 +152,11 @@
             <elementDefinition Id="00078ed7-0463-4a3f-abe7-ac0825dc0bd8" />
           </include>
         </additions>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="e4c2d106-0f3d-4c29-968d-42adbc14bbce" name="分析历史趋势" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="635ac7c6-015f-4b2b-b564-721fca287263" />
       </useCase>
     </useCaseModelRootHasTypes>
   </packagedElements>

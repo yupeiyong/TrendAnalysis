@@ -28,16 +28,7 @@ namespace TrendAnalysis.Service.Trend
 
 
              */
-            List<FactorTrendAnalyseResult<T>> factorResults;
-            if (dto.NumbersTailCutCount > 0 && dto.Numbers.Count > 0)
-            {
-                var nums = dto.Numbers.Skip(0).Take(dto.Numbers.Count - dto.NumbersTailCutCount).ToList();
-                factorResults = AnalyseConsecutives(nums, dto.Factors, dto.AllowMinTimes);
-            }
-            else
-            {
-                factorResults = AnalyseConsecutives(dto.Numbers, dto.Factors, dto.AllowMinTimes);
-            }
+            var factorResults = AnalyseConsecutives(dto.Numbers, dto.Factors, dto.NumbersTailCutCount, dto.AllowMinTimes);
             factorResults = factorResults.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
             foreach (var item in factorResults)
             {
@@ -63,6 +54,7 @@ namespace TrendAnalysis.Service.Trend
                 .ThenBy(t => t.Interval).ToList();
 
             return factorResults;
+
         }
 
 
@@ -153,7 +145,7 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="factors"></param>
         /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
         /// <returns></returns>
-        public static List<FactorTrendAnalyseResult<T>> AnalyseConsecutives<T>(List<T> numbers, List<Factor<T>> factors, int allowMinTimes = 1)
+        public static List<FactorTrendAnalyseResult<T>> AnalyseConsecutives<T>(List<T> numbers, List<Factor<T>> factors, int numbersTailCutCount = 1, int allowMinTimes = 1)
         {
             var resultList = new List<FactorTrendAnalyseResult<T>>();
             foreach (var factor in factors)
