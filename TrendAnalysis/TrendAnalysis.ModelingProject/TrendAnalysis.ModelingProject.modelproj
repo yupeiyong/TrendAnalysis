@@ -71,6 +71,13 @@
       <SubType>Content</SubType>
       <DependentUpon>MarkSix\MarkSix类图.classdiagram</DependentUpon>
     </Content>
+    <Content Include="历史趋势\多号码趋势分析.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="历史趋势\多号码趋势分析.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>历史趋势\多号码趋势分析.sequencediagram</DependentUpon>
+    </Content>
     <Content Include="历史趋势\活动图-按组合因子分析记录.activitydiagram">
       <SubType>Content</SubType>
     </Content>
