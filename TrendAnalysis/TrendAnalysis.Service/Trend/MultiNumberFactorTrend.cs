@@ -64,32 +64,16 @@ namespace TrendAnalysis.Service.Trend
         ///     解析因子在记录中的连续次数
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="numbers">记录</param>
-        /// <param name="factors"></param>
-        /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         public static List<FactorTrendAnalyseResult<T>> AnalyseConsecutives<T>(MultiNumberFactorTrendAnalyseDto<T> dto)
         {
             var resultList = new List<FactorTrendAnalyseResult<T>>();
             foreach (var factor in dto.Factors)
             {
-                List<T> curFactor = null;
-                List<T> curPredictiveFactor = null;
-                if (factor.Left != null && factor.Left.Count > 0)
-                {
-                    curFactor = factor.Left;
-                    curPredictiveFactor = factor.Right;
-                }
-                if (factor.Right != null && factor.Right.Count > 0)
-                {
-                    curFactor = factor.Right;
-                    curPredictiveFactor = factor.Left;
-                }
                 var curDto = new MultiNumberAnalyseConsecutiveDto<T>
                 {
                     Numbers = dto.Numbers,
-                    Factor = curFactor,
-                    PredictiveFactor = curPredictiveFactor,
                     MultiNumberMaxCount = dto.MultiNumberMaxCount,
                     AllowMaxInterval = dto.AllowMaxInterval,
                     AllowMinTimes = dto.AllowMinTimes,
@@ -97,7 +81,20 @@ namespace TrendAnalysis.Service.Trend
                     NumbersTailCutCount = dto.NumbersTailCutCount,
                     AnalyseConsecutiveCompareFunc = dto.AnalyseConsecutiveCompareFunc
                 };
-                resultList.Add(AnalyseConsecutive(curDto));
+
+                if (factor.Left != null && factor.Left.Count > 0)
+                {
+                    curDto.Factor = factor.Left;
+                    curDto.PredictiveFactor = factor.Right;
+                    resultList.Add(AnalyseConsecutive(curDto));
+                }
+                if (factor.Right != null && factor.Right.Count > 0)
+                {
+                    curDto.Factor = factor.Right;
+                    curDto.PredictiveFactor = factor.Left;
+                    resultList.Add(AnalyseConsecutive(curDto));
+                }
+                
             }
             return resultList;
         }
@@ -126,15 +123,16 @@ namespace TrendAnalysis.Service.Trend
         ///     解析连续在因子中的记录数
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="numbers">记录</param>
-        /// <param name="factor">判断因子</param>
-        /// <param name="predictiveFactor">反因子</param>
-        /// <param name="compareFunc">比较因子的委托方法,参数为因子列表和当前索引，返回结果为bool</param>
-        /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         private static FactorTrendAnalyseResult<T> AnalyseConsecutive<T>(MultiNumberAnalyseConsecutiveDto<T> dto)
         {
-            var curResult = new FactorTrendAnalyseResult<T> { Factor = dto.Factor, PredictiveFactor = dto.PredictiveFactor, HistoricalConsecutiveTimes = new SortedDictionary<int, int>() };
+            var curResult = new FactorTrendAnalyseResult<T>
+            {
+                Factor = dto.Factor,
+                PredictiveFactor = dto.PredictiveFactor,
+                HistoricalConsecutiveTimes = new SortedDictionary<int, int>()
+            };
             var i = dto.MultiNumberMaxCount;
 
             //连续次数
