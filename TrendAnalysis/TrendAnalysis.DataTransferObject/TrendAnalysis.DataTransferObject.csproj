@@ -50,6 +50,8 @@
     <Compile Include="MarkSixSpecifiedLocationPurchaseSaveDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MarkSixSpecifiedLocationPurchaseSearchDto.cs" />
+    <Compile Include="Trend\MultiNumberAnalyseConsecutiveDto.cs" />
+    <Compile Include="Trend\MultiNumberFactorTrendAnalyseDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TrendAnalysis.Models\TrendAnalysis.Models.csproj">

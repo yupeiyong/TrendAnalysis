@@ -36,47 +36,68 @@
       <SubType>Content</SubType>
       <DependentUpon>ImportRecord.sequencediagram</DependentUpon>
     </Content>
-    <Content Include="MarkSixBusiness.classdiagram">
+    <Content Include="MarkSix\MarkSixBusiness.classdiagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="MarkSixBusiness.classdiagram.layout">
+    <Content Include="MarkSix\MarkSixBusiness.classdiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>MarkSixBusiness.classdiagram</DependentUpon>
+      <DependentUpon>MarkSix\MarkSixBusiness.classdiagram</DependentUpon>
     </Content>
-    <Content Include="MarkSixModel.classdiagram">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="MarkSixModel.classdiagram.layout">
-      <SubType>Content</SubType>
-      <DependentUpon>MarkSixModel.classdiagram</DependentUpon>
-    </Content>
-    <Content Include="MarksixPurchase.sequencediagram">
+    <Content Include="MarkSix\MarkSixModel.classdiagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="MarksixPurchase.sequencediagram.layout">
+    <Content Include="MarkSix\MarkSixModel.classdiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>MarksixPurchase.sequencediagram</DependentUpon>
+      <DependentUpon>MarkSix\MarkSixModel.classdiagram</DependentUpon>
     </Content>
-    <Content Include="MarkSixSpecifiedLocationAnalysis.sequencediagram">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="MarkSixSpecifiedLocationAnalysis.sequencediagram.layout">
-      <SubType>Content</SubType>
-      <DependentUpon>MarkSixSpecifiedLocationAnalysis.sequencediagram</DependentUpon>
-    </Content>
-    <Content Include="活动图-按组合因子分析记录.activitydiagram">
+    <Content Include="MarkSix\MarksixPurchase.sequencediagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="活动图-按组合因子分析记录.activitydiagram.layout">
+    <Content Include="MarkSix\MarksixPurchase.sequencediagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>活动图-按组合因子分析记录.activitydiagram</DependentUpon>
+      <DependentUpon>MarkSix\MarksixPurchase.sequencediagram</DependentUpon>
     </Content>
-    <Content Include="活动图-生成二维组合集合.activitydiagram">
+    <Content Include="MarkSix\MarkSixSpecifiedLocationAnalysis.sequencediagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="活动图-生成二维组合集合.activitydiagram.layout">
+    <Content Include="MarkSix\MarkSixSpecifiedLocationAnalysis.sequencediagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>活动图-生成二维组合集合.activitydiagram</DependentUpon>
+      <DependentUpon>MarkSix\MarkSixSpecifiedLocationAnalysis.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="MarkSix\MarkSix类图.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="MarkSix\MarkSix类图.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>MarkSix\MarkSix类图.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="历史趋势\多号码趋势分析.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="历史趋势\多号码趋势分析.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>历史趋势\多号码趋势分析.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="历史趋势\活动图-按组合因子分析记录.activitydiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="历史趋势\活动图-按组合因子分析记录.activitydiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>历史趋势\活动图-按组合因子分析记录.activitydiagram</DependentUpon>
+    </Content>
+    <Content Include="历史趋势\活动图-生成二维组合集合.activitydiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="历史趋势\活动图-生成二维组合集合.activitydiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>历史趋势\活动图-生成二维组合集合.activitydiagram</DependentUpon>
+    </Content>
+    <Content Include="历史趋势\活动图_按号码列表组合判断历史趋势.activitydiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="历史趋势\活动图_按号码列表组合判断历史趋势.activitydiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>历史趋势\活动图_按号码列表组合判断历史趋势.activitydiagram</DependentUpon>
     </Content>
     <Content Include="UMLUseCaseDiagram.usecasediagram">
       <SubType>Content</SubType>
@@ -85,23 +106,11 @@
       <SubType>Content</SubType>
       <DependentUpon>UMLUseCaseDiagram.usecasediagram</DependentUpon>
     </Content>
-    <Content Include="MarkSix类图.classdiagram">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="MarkSix类图.classdiagram.layout">
-      <SubType>Content</SubType>
-      <DependentUpon>MarkSix类图.classdiagram</DependentUpon>
-    </Content>
-    <Content Include="活动图_按号码列表组合判断历史趋势.activitydiagram">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="活动图_按号码列表组合判断历史趋势.activitydiagram.layout">
-      <SubType>Content</SubType>
-      <DependentUpon>活动图_按号码列表组合判断历史趋势.activitydiagram</DependentUpon>
-    </Content>
     <Folder Include="ModelDefinition\" />
     <Content Include="ModelDefinition\TrendAnalysis.ModelingProject.uml">
       <SubType>Content</SubType>
     </Content>
+    <Folder Include="MarkSix" />
+    <Folder Include="历史趋势" />
   </ItemGroup>
 </Project>
