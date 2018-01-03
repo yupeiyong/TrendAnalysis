@@ -45,7 +45,7 @@ namespace TrendAnalysis.Service.Trend
                 var times = 0;
 
                 //记录集合倒序检查，因子是否包含当前号码
-                for (var i = dto.Numbers.Count - 1; i >= 0; i--)
+                for (var i = dto.Numbers.Count - 1; i >= dto.MultiNumberMaxCount; i--)
                 {
                     //if (!item.Factor.Contains(dto.Numbers[i]))
                     if (!dto.PredictiveConsecutivesCompareFunc(dto.Numbers, item.Factor, i))
@@ -186,9 +186,9 @@ namespace TrendAnalysis.Service.Trend
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public List<HistoricalTrend<T>> AnalyseHistoricalTrend<T>(AnalyseHistoricalTrendDto<T> dto)
+        public List<HistoricalTrend> AnalyseHistoricalTrend(AnalyseHistoricalTrendDto<byte> dto)
         {
-            var trends = new List<HistoricalTrend<T>>();
+            var trends = new List<HistoricalTrend>();
 
             if (dto.Numbers.Count < dto.AnalyseNumberCount)
                 throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
@@ -204,7 +204,7 @@ namespace TrendAnalysis.Service.Trend
                     var resultCount = 0;
                     var successCount = 0;
 
-                    var trend = new HistoricalTrend<T> { Items = new List<HistoricalTrendItem<T>>(), Location = dto.Location, AllowConsecutiveTimes = consecutiveTimes, AllowInterval = interval };
+                    var trend = new HistoricalTrend { Items = new List<HistoricalTrendItem>(), Location = dto.Location, AllowConsecutiveTimes = consecutiveTimes, AllowInterval = interval };
                     trends.Add(trend);
                     for (int i = 0, maxCount = analyseNumbers.Count; i < maxCount; i++)
                     {
@@ -213,7 +213,7 @@ namespace TrendAnalysis.Service.Trend
                         var timesValue = analyseNumbers[i].TimesValue;
                         var numbers = dto.Numbers.Where(n => n.TimesValue < timesValue).Select(n => n.Number).ToList();
 
-                        var factorResults = Analyse(new MultiNumberFactorTrendAnalyseDto<T>
+                        var factorResults = Analyse(new MultiNumberFactorTrendAnalyseDto<byte>
                         {
                             Numbers = numbers,
                             Factors = dto.Factors,
@@ -228,7 +228,7 @@ namespace TrendAnalysis.Service.Trend
 
                         //对结果再分析
                         var factorResult = factorResults.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
-                        var factors = new List<T>();
+                        var factors = new List<byte>();
                         var resultConsecutiveTimes = 0;
                         var resultInterval = 0;
                         if (factorResult != null)
@@ -248,7 +248,7 @@ namespace TrendAnalysis.Service.Trend
                             }
                         }
 
-                        var trendItem = new HistoricalTrendItem<T>
+                        var trendItem = new HistoricalTrendItem
                         {
                             Times = times,
                             Number = number,

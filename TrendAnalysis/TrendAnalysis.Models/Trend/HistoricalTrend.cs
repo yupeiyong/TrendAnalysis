@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using TrendAnalysis.Models.DataBase;
 
 
 namespace TrendAnalysis.Models.Trend
@@ -8,8 +9,20 @@ namespace TrendAnalysis.Models.Trend
     /// <summary>
     ///     历史趋势
     /// </summary>
-    public class HistoricalTrend<T> 
+    public class HistoricalTrend : BaseEntity
     {
+
+        /// <summary>
+        ///     历史趋势类型
+        /// </summary>
+        public HistoricalTrendTypeEnum HistoricalTrendType { get; set; }
+
+
+        /// <summary>
+        ///     期次
+        /// </summary>
+        public string StartTimes { get; set; }
+
 
         /// <summary>
         ///     第几位数
@@ -52,7 +65,7 @@ namespace TrendAnalysis.Models.Trend
         /// </summary>
         public double CorrectRate => AnalyticalCount == 0 ? 0 : (double) CorrectCount/AnalyticalCount;
 
-        public List<HistoricalTrendItem<T>> Items { get; set; }
+        public List<HistoricalTrendItem> Items { get; set; }
 
 
         public override string ToString()

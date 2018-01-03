@@ -1,4 +1,7 @@
-﻿namespace TrendAnalysis.Data
+﻿using TrendAnalysis.Models.DataBase;
+
+
+namespace TrendAnalysis.Data
 {
     using Config;
     using System;
