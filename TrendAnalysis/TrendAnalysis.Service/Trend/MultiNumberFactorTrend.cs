@@ -188,7 +188,7 @@ namespace TrendAnalysis.Service.Trend
 
                     var trend = new HistoricalTrend
                     {
-                        HistoricalTrendType = HistoricalTrendTypeEnum.MarkSix,
+                        HistoricalTrendType =dto.HistoricalTrendType,
                         StartTimes = analyseNumbers[0].Times,
                         Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,
@@ -213,7 +213,8 @@ namespace TrendAnalysis.Service.Trend
                             AllowMaxInterval = interval,
                             AnalyseConsecutiveCompareFunc=dto.AnalyseConsecutiveCompareFunc,
                             PredictiveConsecutivesCompareFunc=dto.PredictiveConsecutivesCompareFunc,
-                            PredictiveFactorAction=dto.PredictiveFactorAction
+                            PredictiveFactorAction=dto.PredictiveFactorAction,
+                            MultiNumberMaxCount=dto.MultiNumberMaxCount
                         });
 
                         //结果是否正确

@@ -274,7 +274,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
         ///     用多号码结合的方法 分析个位历史趋势
         /// </summary>
         [TestMethod]
-        public void TestMethod_AnalyseSpecifiedLocationByMultiNumber_Ones()
+        public void TestMethod_AnalyseSpecifiedLocationByMultiNumber()
         {
             using (var dao = new TrendDbContext())
             {
@@ -315,6 +315,38 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     resultString.AppendLine("期次：" + records[i].Times + ",第7位号码：" + seventhNum + ",分析结果：" + (has ? "-Yes- " : "      ") + string.Join(";", result));
                 }
                 var str = resultString.ToString();
+            }
+        }
+
+        /// <summary>
+        /// 测试分析一段时期的趋势
+        /// </summary>
+        [TestMethod]
+        public void TestMethod_AnalyseOnesHistoricalTrendByMultiNumber()
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var service = new MarkSixAnalysisService();
+                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(1000).ToList();
+                var trendDto = new MarkSixAnalyseHistoricalTrendDto
+                {
+                    Location = 7,
+                    Times = records[0].Times,
+                    AnalyseNumberCount = 1000,
+                    StartAllowMaxInterval = 1,
+                    EndAllowMaxInterval = -3,
+                    StartAllowMinFactorCurrentConsecutiveTimes = 9,
+                    EndAllowMinFactorCurrentConsecutiveTimes = 12,
+                    AllowMinTimes = 3,
+                    NumbersTailCutCount = 6
+                };
+
+                var trends = service.AnalyseOnesHistoricalTrendByMultiNumber(trendDto);
+                var content = new StringBuilder();
+                trends.ForEach(item => content.Append(item.ToString()));
+
+
+                var str = content.ToString();
             }
         }
 

@@ -151,7 +151,7 @@ namespace TrendAnalysis.Service.Trend
 
                     var trend = new HistoricalTrend
                     {
-                        HistoricalTrendType=HistoricalTrendTypeEnum.MarkSix,
+                        HistoricalTrendType=dto.HistoricalTrendType,
                         StartTimes = analyseNumbers[0].Times,
                         Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,

@@ -66,6 +66,9 @@ namespace TrendAnalysis.DataTransferObject.Trend
         /// </summary>
         public int NumbersTailCutCount { get; set; }
 
+        public int MultiNumberMaxCount { get; set; }
+
+
         /// <summary>
         /// 分析连续次数时的比较器
         /// </summary>
@@ -81,6 +84,11 @@ namespace TrendAnalysis.DataTransferObject.Trend
         /// 可能因子的分析器
         /// </summary>
         public Action<IReadOnlyList<T>, List<T>> PredictiveFactorAction { get; set; }
+
+        /// <summary>
+        /// 分析类型
+        /// </summary>
+        public HistoricalTrendTypeEnum HistoricalTrendType { get; set; }
 
     }
 

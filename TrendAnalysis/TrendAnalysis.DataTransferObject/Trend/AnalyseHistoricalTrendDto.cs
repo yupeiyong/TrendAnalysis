@@ -68,6 +68,11 @@ namespace TrendAnalysis.DataTransferObject
         /// </summary>
         public int NumbersTailCutCount { get; set; }
 
+        /// <summary>
+        /// 分析类型
+        /// </summary>
+        public HistoricalTrendTypeEnum HistoricalTrendType { get; set; }
+
     }
 
 }
