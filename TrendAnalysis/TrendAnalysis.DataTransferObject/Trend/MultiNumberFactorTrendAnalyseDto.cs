@@ -54,8 +54,14 @@ namespace TrendAnalysis.DataTransferObject.Trend
         public Func<IReadOnlyList<T>, List<T>, int, bool> AnalyseConsecutiveCompareFunc { get; set; }
 
         /// <summary>
-        /// 分析可能因子的比较器
+        /// 分析可能连续次数的比较器
         /// </summary>
-        public Func<IReadOnlyList<T>, List<T>, int, bool> AnalysePredictiveCompareFunc { get; set; }
+        public Func<IReadOnlyList<T>, List<T>, int, bool> PredictiveConsecutivesCompareFunc { get; set; }
+
+
+        /// <summary>
+        /// 可能因子的分析器
+        /// </summary>
+        public Action<IReadOnlyList<T>, List<T>> PredictiveFactorAction { get; set; }
     }
 }

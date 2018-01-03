@@ -29,6 +29,15 @@ namespace TrendAnalysis.Service.Trend
 
 
              */
+            if (dto.AnalyseConsecutiveCompareFunc == null)
+                throw new Exception("错误，统计连续次数的比较委托方法不能为空！");
+
+            if (dto.PredictiveConsecutivesCompareFunc == null)
+                throw new Exception("错误，分析可能连续次数的委托方法不能为空！");
+
+            if (dto.PredictiveFactorAction == null)
+                throw new Exception("错误，分析可能因子的委托方法不能为空！");
+
             var factorResults = AnalyseConsecutives(dto);
             factorResults = factorResults.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
             foreach (var item in factorResults)
@@ -39,10 +48,13 @@ namespace TrendAnalysis.Service.Trend
                 for (var i = dto.Numbers.Count - 1; i >= 0; i--)
                 {
                     //if (!item.Factor.Contains(dto.Numbers[i]))
-                    if (!dto.AnalysePredictiveCompareFunc(dto.Numbers, item.Factor, i))
+                    if (!dto.PredictiveConsecutivesCompareFunc(dto.Numbers, item.Factor, i))
                         break;
                     times++;
                 }
+
+                //重置可能的因子
+                dto.PredictiveFactorAction(dto.Numbers, item.PredictiveFactor);
 
                 //记录因子当前连续次数
                 item.FactorCurrentConsecutiveTimes = times;
@@ -94,7 +106,7 @@ namespace TrendAnalysis.Service.Trend
                     curDto.PredictiveFactor = factor.Left;
                     resultList.Add(AnalyseConsecutive(curDto));
                 }
-                
+
             }
             return resultList;
         }
