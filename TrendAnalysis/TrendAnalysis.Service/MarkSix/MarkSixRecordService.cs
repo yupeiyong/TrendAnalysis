@@ -177,8 +177,8 @@ namespace TrendAnalysis.Service.MarkSix
                 OnBeforeImportEvent(null);
                 using (var dao = new TrendDbContext())
                 {
-                    //var timeses = records.Select(r => r.Times).ToList();
-                    //var originalRecords = dao.Set<MarkSixRecord>().Where(m => timeses.Any(times => times == m.Times));
+                    //var timeses = records.Select(r => r.StartTimes).ToList();
+                    //var originalRecords = dao.Set<MarkSixRecord>().Where(m => timeses.Any(times => times == m.StartTimes));
                     //dao.Set<MarkSixRecord>().RemoveRange(originalRecords);
                     //dao.Set<MarkSixRecord>().AddRange(records);
                     foreach (var record in records)

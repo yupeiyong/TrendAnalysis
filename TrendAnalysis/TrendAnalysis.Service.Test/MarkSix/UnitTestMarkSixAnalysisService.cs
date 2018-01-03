@@ -91,7 +91,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     var times = records[i].Times;
                     var dto = new MarkSixAnalyseSpecifiedLocationDto {Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 8, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0};
 
-                    //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = records[i].Times, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
+                    //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
                     var result = service.AnalyseSpecifiedLocation(dto);
                     if (result.Count > 0)
                     {
@@ -293,7 +293,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     var times = records[i].Times;
                     var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 4, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0 };
 
-                    //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = records[i].Times, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
+                    //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
                     var result = service.AnalyseSpecifiedLocationByMultiNumber(dto);
                     if (result.Count > 0)
                     {
@@ -346,7 +346,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     var times = records[i].Times;
                     var dto = new MarkSixAnalyseSpecifiedLocationDto {Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 4, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0};
 
-                    //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = records[i].Times, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
+                    //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
                     var result = service.AnalyseSpecifiedLocationByPermutationFactors(dto);
                     if (result.Count > 0)
                     {
@@ -411,7 +411,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                         var times = records[i].Times;
                         var dto = new MarkSixAnalyseSpecifiedLocationDto {Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 8, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0};
 
-                        //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = records[i].Times, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
+                        //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
                         var result = service.AnalyseSpecifiedLocationByPermutationFactors(dto);
                         if (result.Count > 0)
                         {

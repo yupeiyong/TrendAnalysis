@@ -127,7 +127,7 @@ namespace TrendAnalysis.Service.MarkSix
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public List<HistoricalTrend<byte>> AnalyseOnesHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
+        public List<HistoricalTrend> AnalyseOnesHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
         {
             using (var dao = new TrendDbContext())
             {
@@ -197,7 +197,8 @@ namespace TrendAnalysis.Service.MarkSix
                     NumbersTailCutCount = dto.NumbersTailCutCount
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
-
+                dao.Set<HistoricalTrend>().AddRange(historicalTrends);
+                dao.SaveChanges();
                 return historicalTrends;
             }
         }
@@ -208,7 +209,7 @@ namespace TrendAnalysis.Service.MarkSix
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public List<HistoricalTrend<byte>> AnalyseTensHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
+        public List<HistoricalTrend> AnalyseTensHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
         {
             using (var dao = new TrendDbContext())
             {
@@ -575,7 +576,7 @@ namespace TrendAnalysis.Service.MarkSix
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public List<HistoricalTrend<byte>> AnalyseCompositeHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
+        public List<HistoricalTrend> AnalyseCompositeHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
         {
             using (var dao = new TrendDbContext())
             {

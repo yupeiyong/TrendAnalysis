@@ -1,22 +1,25 @@
 ﻿using System;
 using System.ComponentModel;
+using TrendAnalysis.Models.DataBase;
 
 
 namespace TrendAnalysis.Models.MarkSix
 {
+
     /// <summary>
-    /// MarkSix历史记录
+    ///     MarkSix历史记录
     /// </summary>
     public class MarkSixRecord : BaseEntity
     {
+
         /// <summary>
-        /// 期次
+        ///     期次
         /// </summary>
         [Description("期次")]
         public string Times { get; set; }
 
         /// <summary>
-        /// 代表期次的整型值
+        ///     代表期次的整型值
         /// </summary>
         [Description("代表期次的整型值")]
         public int TimesValue { get; set; }
@@ -44,9 +47,11 @@ namespace TrendAnalysis.Models.MarkSix
 
 
         /// <summary>
-        /// 开奖日期
+        ///     开奖日期
         /// </summary>
         [Description("开奖日期")]
         public DateTime AwardingDate { get; set; }
+
     }
+
 }
