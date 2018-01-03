@@ -127,7 +127,7 @@ namespace TrendAnalysis.Service.Trend
 
 
         /// <summary>
-        ///     通过号码集合分析历史趋势
+        ///     分析一段日期的历史趋势，（通过号码集合分析历史趋势）
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>

@@ -40,9 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PermutationFactorTrendAnalyseDto.cs" />
-    <Compile Include="AnalyseHistoricalTrendDto.cs" />
-    <Compile Include="FactorTrendAnalyseDto.cs" />
+    <Compile Include="Trend\PermutationFactorTrendAnalyseDto.cs" />
+    <Compile Include="Trend\AnalyseHistoricalTrendDto.cs" />
+    <Compile Include="Trend\FactorTrendAnalyseDto.cs" />
     <Compile Include="MarkSixAnalyseHistoricalTrendDto.cs" />
     <Compile Include="MarkSixAnalyseSpecifiedLocationDto.cs" />
     <Compile Include="BaseSearchDto.cs" />
@@ -51,6 +51,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MarkSixSpecifiedLocationPurchaseSearchDto.cs" />
     <Compile Include="Trend\MultiNumberAnalyseConsecutiveDto.cs" />
+    <Compile Include="Trend\MultiNumberAnalyseHistoricalTrendDto.cs" />
     <Compile Include="Trend\MultiNumberFactorTrendAnalyseDto.cs" />
   </ItemGroup>
   <ItemGroup>

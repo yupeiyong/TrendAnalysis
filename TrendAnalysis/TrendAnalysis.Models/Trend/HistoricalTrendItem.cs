@@ -54,7 +54,7 @@ namespace TrendAnalysis.Models.Trend
             {
                 if (value != null)
                 {
-                    PredictiveFactorString = string.Join(",", PredictiveFactor);
+                    PredictiveFactorString = string.Join(",", value);
                 }
             } }
 

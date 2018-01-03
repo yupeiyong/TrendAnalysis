@@ -123,7 +123,7 @@ namespace TrendAnalysis.Service.MarkSix
 
 
         /// <summary>
-        ///     单独分析指定位置号码个位数
+        ///     分析一段时期指定位置号码个位数趋势
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -205,7 +205,7 @@ namespace TrendAnalysis.Service.MarkSix
 
 
         /// <summary>
-        ///     单独分析指定位置号码十位数
+        ///     分析一段时期指定位置号码十位数趋势
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
