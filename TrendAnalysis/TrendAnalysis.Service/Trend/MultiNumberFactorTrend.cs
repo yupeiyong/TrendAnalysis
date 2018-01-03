@@ -45,7 +45,7 @@ namespace TrendAnalysis.Service.Trend
                 var times = 0;
 
                 //记录集合倒序检查，因子是否包含当前号码
-                for (var i = dto.Numbers.Count - 1; i >= 0; i--)
+                for (var i = dto.Numbers.Count - 1; i >= dto.MultiNumberMaxCount; i--)
                 {
                     //if (!item.Factor.Contains(dto.Numbers[i]))
                     if (!dto.PredictiveConsecutivesCompareFunc(dto.Numbers, item.Factor, i))
