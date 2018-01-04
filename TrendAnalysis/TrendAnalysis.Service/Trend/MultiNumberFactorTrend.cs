@@ -112,25 +112,6 @@ namespace TrendAnalysis.Service.Trend
         }
 
 
-        ///// <summary>
-        /////     解析因子在记录中的连续次数
-        ///// </summary>
-        ///// <typeparam name="T"></typeparam>
-        ///// <param name="numbers">记录</param>
-        ///// <param name="factor">判断因子</param>
-        ///// <param name="predictiveFactor">反因子</param>
-        ///// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
-        ///// <returns></returns>
-        //private static FactorTrendAnalyseResult<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> predictiveFactor, int allowMinTimes = 1)
-        //{
-        //    return AnalyseConsecutive(numbers, factor, predictiveFactor, (n, factorList, index) =>
-        //    {
-        //        var number = n[index];
-        //        return factorList.Exists(m => m.Equals(number));
-        //    }, allowMinTimes);
-        //}
-
-
         /// <summary>
         ///     解析连续在因子中的记录数
         /// </summary>
@@ -181,12 +162,13 @@ namespace TrendAnalysis.Service.Trend
             return curResult;
         }
 
+
         /// <summary>
-        ///     通过号码集合分析历史趋势
+        ///     分析一段日期的历史趋势，（通过号码集合分析历史趋势）
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public List<HistoricalTrend> AnalyseHistoricalTrend(AnalyseHistoricalTrendDto<byte> dto)
+        public List<HistoricalTrend> AnalyseHistoricalTrend(MultiNumberAnalyseHistoricalTrendDto<byte> dto)
         {
             var trends = new List<HistoricalTrend>();
 
@@ -204,7 +186,15 @@ namespace TrendAnalysis.Service.Trend
                     var resultCount = 0;
                     var successCount = 0;
 
-                    var trend = new HistoricalTrend { Items = new List<HistoricalTrendItem>(), Location = dto.Location, AllowConsecutiveTimes = consecutiveTimes, AllowInterval = interval };
+                    var trend = new HistoricalTrend
+                    {
+                        HistoricalTrendType =dto.HistoricalTrendType,
+                        StartTimes = analyseNumbers[0].Times,
+                        Items = new List<HistoricalTrendItem>(),
+                        Location = dto.Location,
+                        AllowConsecutiveTimes = consecutiveTimes,
+                        AllowInterval = interval
+                    };
                     trends.Add(trend);
                     for (int i = 0, maxCount = analyseNumbers.Count; i < maxCount; i++)
                     {
@@ -220,7 +210,11 @@ namespace TrendAnalysis.Service.Trend
                             AllowMinTimes = dto.AllowMinTimes,
                             NumbersTailCutCount = dto.NumbersTailCutCount,
                             AllowMinFactorCurrentConsecutiveTimes = consecutiveTimes,
-                            AllowMaxInterval = interval
+                            AllowMaxInterval = interval,
+                            AnalyseConsecutiveCompareFunc=dto.AnalyseConsecutiveCompareFunc,
+                            PredictiveConsecutivesCompareFunc=dto.PredictiveConsecutivesCompareFunc,
+                            PredictiveFactorAction=dto.PredictiveFactorAction,
+                            MultiNumberMaxCount=dto.MultiNumberMaxCount
                         });
 
                         //结果是否正确

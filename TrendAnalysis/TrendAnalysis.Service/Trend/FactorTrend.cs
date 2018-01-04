@@ -127,7 +127,7 @@ namespace TrendAnalysis.Service.Trend
 
 
         /// <summary>
-        ///     通过号码集合分析历史趋势
+        ///     分析一段日期的历史趋势，（通过号码集合分析历史趋势）
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -151,7 +151,7 @@ namespace TrendAnalysis.Service.Trend
 
                     var trend = new HistoricalTrend
                     {
-                        HistoricalTrendType=HistoricalTrendTypeEnum.MarkSixNormal,
+                        HistoricalTrendType=dto.HistoricalTrendType,
                         StartTimes = analyseNumbers[0].Times,
                         Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,
@@ -201,15 +201,7 @@ namespace TrendAnalysis.Service.Trend
                             }
                         }
 
-                        var trendItem = new HistoricalTrendItem
-                        {
-                            Times = times,
-                            Number = number,
-                            Success = success,
-                            ResultConsecutiveTimes = resultConsecutiveTimes,
-                            ResultInterval = resultInterval,
-                            PredictiveFactor = factors
-                        };
+                        var trendItem = new HistoricalTrendItem { Times = times, Number = number, Success = success, ResultConsecutiveTimes = resultConsecutiveTimes, ResultInterval = resultInterval, PredictiveFactor = factors };
 
                         trend.AnalyticalCount = resultCount;
                         trend.CorrectCount = successCount;
