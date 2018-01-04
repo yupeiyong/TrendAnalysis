@@ -10,7 +10,15 @@ namespace TrendAnalysis.Models.Trend
     public enum HistoricalTrendTypeEnum
     {
 
-        [Description("MarkSix")] MarkSix = 1
+        /// <summary>
+        ///     MarkSix普通分析
+        /// </summary>
+        [Description("MarkSix普通分析")] MarkSixNormal = 1,
+
+        /// <summary>
+        ///     MarkSix多号码结合分析
+        /// </summary>
+        [Description("MarkSix多号码结合分析")] MarkSixMultiNumber = 2
 
     }
 

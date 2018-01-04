@@ -151,7 +151,7 @@ namespace TrendAnalysis.Service.Trend
 
                     var trend = new HistoricalTrend
                     {
-                        HistoricalTrendType=HistoricalTrendTypeEnum.MarkSix,
+                        HistoricalTrendType=HistoricalTrendTypeEnum.MarkSixNormal,
                         StartTimes = analyseNumbers[0].Times,
                         Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,
@@ -201,7 +201,15 @@ namespace TrendAnalysis.Service.Trend
                             }
                         }
 
-                        var trendItem = new HistoricalTrendItem { Times = times, Number = number, Success = success, ResultConsecutiveTimes = resultConsecutiveTimes, ResultInterval = resultInterval, PredictiveFactor = factors };
+                        var trendItem = new HistoricalTrendItem
+                        {
+                            Times = times,
+                            Number = number,
+                            Success = success,
+                            ResultConsecutiveTimes = resultConsecutiveTimes,
+                            ResultInterval = resultInterval,
+                            PredictiveFactor = factors
+                        };
 
                         trend.AnalyticalCount = resultCount;
                         trend.CorrectCount = successCount;

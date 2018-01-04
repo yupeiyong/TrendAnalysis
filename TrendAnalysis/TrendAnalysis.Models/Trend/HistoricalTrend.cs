@@ -65,7 +65,7 @@ namespace TrendAnalysis.Models.Trend
         /// </summary>
         public double CorrectRate => AnalyticalCount == 0 ? 0 : (double) CorrectCount/AnalyticalCount;
 
-        public List<HistoricalTrendItem> Items { get; set; }
+        public virtual List<HistoricalTrendItem> Items { get; set; }
 
 
         public override string ToString()
