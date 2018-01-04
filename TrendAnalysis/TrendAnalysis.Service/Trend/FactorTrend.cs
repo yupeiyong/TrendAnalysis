@@ -205,6 +205,7 @@ namespace TrendAnalysis.Service.Trend
 
                         trend.AnalyticalCount = resultCount;
                         trend.CorrectCount = successCount;
+                        trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
                         trend.Items.Add(trendItem);
                     }
                 }

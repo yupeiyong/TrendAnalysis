@@ -193,7 +193,8 @@ namespace TrendAnalysis.Service.Trend
                         Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,
                         AllowConsecutiveTimes = consecutiveTimes,
-                        AllowInterval = interval
+                        AllowInterval = interval,
+                        AnalyseNumberCount=dto.AnalyseNumberCount
                     };
                     trends.Add(trend);
                     for (int i = 0, maxCount = analyseNumbers.Count; i < maxCount; i++)
@@ -254,6 +255,7 @@ namespace TrendAnalysis.Service.Trend
 
                         trend.AnalyticalCount = resultCount;
                         trend.CorrectCount = successCount;
+                        trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
                         trend.Items.Add(trendItem);
                     }
                 }
