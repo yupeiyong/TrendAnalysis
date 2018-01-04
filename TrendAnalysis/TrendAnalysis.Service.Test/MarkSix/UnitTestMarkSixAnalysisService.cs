@@ -253,7 +253,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
         }
 
         /// <summary>
-        /// 测试分析一段时期 1000期次 的趋势
+        /// 测试分析一段时期 100期次 的趋势
         /// </summary>
         [TestMethod]
         public void TestMethod_AnalyseOnesHistoricalTrendByMultiNumber_100_Times()

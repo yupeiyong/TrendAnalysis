@@ -198,23 +198,9 @@ namespace TrendAnalysis.Service.MarkSix
                     HistoricalTrendType=HistoricalTrendTypeEnum.NormalAnalyseMarkSixOnes
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
-                foreach (var historical in historicalTrends)
-                {
-                    //删除相同的记录
-                    var trends = dao.Set<HistoricalTrend>().Where(ht => ht.StartTimes == historical.StartTimes 
-                    && ht.Location == historical.Location 
-                    && ht.AllowConsecutiveTimes == historical.AllowConsecutiveTimes 
-                    && ht.AllowInterval == historical.AllowInterval).ToList();
-                    foreach (var item in trends)
-                    {
-                        //删除子项
-                        dao.Set<HistoricalTrendItem>().RemoveRange(item.Items);
-                    }
-                    dao.Set<HistoricalTrend>().RemoveRange(trends);
-
-                }
-                dao.Set<HistoricalTrend>().AddRange(historicalTrends);
-                dao.SaveChanges();
+                
+                //保存到数据库
+                HistoricalTrendService.AddRange(historicalTrends);
                 return historicalTrends;
             }
         }
@@ -296,6 +282,8 @@ namespace TrendAnalysis.Service.MarkSix
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
+                //保存到数据库
+                HistoricalTrendService.AddRange(historicalTrends);
                 return historicalTrends;
             }
         }
@@ -691,8 +679,9 @@ namespace TrendAnalysis.Service.MarkSix
                     HistoricalTrendType=HistoricalTrendTypeEnum.MultiNumberAnalyseMarkSixOnes
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
-                dao.Set<HistoricalTrend>().AddRange(historicalTrends);
-                dao.SaveChanges();
+
+                //保存到数据库
+                HistoricalTrendService.AddRange(historicalTrends);
                 return historicalTrends;
             }
         }
