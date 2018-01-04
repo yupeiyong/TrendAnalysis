@@ -19,7 +19,7 @@ namespace TrendAnalysis.Models.Trend
 
 
         /// <summary>
-        ///     期次
+        ///     开始期次
         /// </summary>
         public string StartTimes { get; set; }
 
@@ -55,17 +55,16 @@ namespace TrendAnalysis.Models.Trend
 
 
         /// <summary>
-        ///     总期次
+        ///     分析多少位号码
         /// </summary>
-        public int TotalHistoricalCount { get; set; }
-
+        public int AnalyseNumberCount { get; set; }
 
         /// <summary>
         ///     正确率
         /// </summary>
-        public double CorrectRate => AnalyticalCount == 0 ? 0 : (double) CorrectCount/AnalyticalCount;
+        public double CorrectRate { get; set; }//=>AnalyticalCount == 0 ? 0 : (double) CorrectCount/AnalyticalCount;
 
-        public List<HistoricalTrendItem> Items { get; set; }
+        public virtual List<HistoricalTrendItem> Items { get; set; }
 
 
         public override string ToString()

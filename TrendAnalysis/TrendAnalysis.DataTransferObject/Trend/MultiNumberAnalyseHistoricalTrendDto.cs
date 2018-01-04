@@ -32,6 +32,7 @@ namespace TrendAnalysis.DataTransferObject.Trend
         ///     分析多少位号码
         /// </summary>
         public int AnalyseNumberCount { get; set; }
+
         /// <summary>
         ///     开始的允许最大的间隔数（最大连续期数-指定期次此因子连续次数），由小到大
         /// </summary>

@@ -198,8 +198,9 @@ namespace TrendAnalysis.Service.MarkSix
                     HistoricalTrendType=HistoricalTrendTypeEnum.NormalAnalyseMarkSixOnes
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
-                dao.Set<HistoricalTrend>().AddRange(historicalTrends);
-                dao.SaveChanges();
+                
+                //保存到数据库
+                HistoricalTrendService.AddRange(historicalTrends);
                 return historicalTrends;
             }
         }
@@ -281,6 +282,8 @@ namespace TrendAnalysis.Service.MarkSix
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
+                //保存到数据库
+                HistoricalTrendService.AddRange(historicalTrends);
                 return historicalTrends;
             }
         }
@@ -676,8 +679,9 @@ namespace TrendAnalysis.Service.MarkSix
                     HistoricalTrendType=HistoricalTrendTypeEnum.MultiNumberAnalyseMarkSixOnes
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
-                dao.Set<HistoricalTrend>().AddRange(historicalTrends);
-                dao.SaveChanges();
+
+                //保存到数据库
+                HistoricalTrendService.AddRange(historicalTrends);
                 return historicalTrends;
             }
         }
