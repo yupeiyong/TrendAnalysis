@@ -53,9 +53,10 @@ namespace TrendAnalysis.Service.Trend
                     times++;
                 }
 
+                /* 暂时不重围可能的因子
                 //重置可能的因子
                 dto.PredictiveFactorAction(dto.Numbers, item.PredictiveFactor);
-
+                */
                 //记录因子当前连续次数
                 item.FactorCurrentConsecutiveTimes = times;
             }
@@ -174,9 +175,9 @@ namespace TrendAnalysis.Service.Trend
 
             if (dto.Numbers.Count < dto.AnalyseNumberCount)
                 throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
-
+            
             var analyseNumbers = dto.Numbers.OrderByDescending(n => n.TimesValue).Skip(0).Take(dto.AnalyseNumberCount).ToList();
-
+            //var str = string.Join(",", dto.Numbers.Select(n=>n.Number));
             //允许的连续次数，由小到大
             for (var consecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes; consecutiveTimes <= dto.EndAllowMinFactorCurrentConsecutiveTimes; consecutiveTimes++)
             {
@@ -194,7 +195,8 @@ namespace TrendAnalysis.Service.Trend
                         Location = dto.Location,
                         AllowConsecutiveTimes = consecutiveTimes,
                         AllowInterval = interval,
-                        AnalyseNumberCount=dto.AnalyseNumberCount
+                        AnalyseNumberCount=dto.AnalyseNumberCount,
+                        TypeDescription = dto.TypeDescription
                     };
                     trends.Add(trend);
                     for (int i = 0, maxCount = analyseNumbers.Count; i < maxCount; i++)

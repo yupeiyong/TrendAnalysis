@@ -28,7 +28,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(1000).ToList();
                 var resultString = new StringBuilder();
                 var hasCount = 0;
-                var tensHasCount = 0; 
+                var tensHasCount = 0;
                 var onesHasCount = 0;
                 var onesLeft = new List<byte> {0, 1, 2, 3, 4};
                 var onesRight = new List<byte> {5, 6, 7, 8, 9};
@@ -171,7 +171,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
 
 
         #region  测试多号码结合分析历史趋势
-        
+
         /// <summary>
         ///     用多号码结合的方法 分析个位历史趋势
         /// </summary>
@@ -193,7 +193,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
                     var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
                     var times = records[i].Times;
-                    var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 4, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0 };
+                    var dto = new MarkSixAnalyseSpecifiedLocationDto {Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 4, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0};
 
                     //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
                     var result = service.AnalyseSpecifiedLocationByMultiNumber(dto);
@@ -220,8 +220,9 @@ namespace TrendAnalysis.Service.Test.MarkSix
             }
         }
 
+
         /// <summary>
-        /// 测试分析一段时期 1000期次 的趋势
+        ///     测试分析一段时期 1000期次 的趋势
         /// </summary>
         [TestMethod]
         public void TestMethod_AnalyseOnesHistoricalTrendByMultiNumber_1000_Times()
@@ -235,12 +236,12 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     Location = 7,
                     Times = records[0].Times,
                     AnalyseNumberCount = 1000,
-                    StartAllowMaxInterval = 1,
-                    EndAllowMaxInterval = -5,
+                    StartAllowMaxInterval = -3,
+                    EndAllowMaxInterval = -9,
                     StartAllowMinFactorCurrentConsecutiveTimes = 7,
-                    EndAllowMinFactorCurrentConsecutiveTimes = 12,
+                    EndAllowMinFactorCurrentConsecutiveTimes = 13,
                     AllowMinTimes = 3,
-                    NumbersTailCutCount = 6
+                    NumbersTailCutCount = 12
                 };
 
                 var trends = service.AnalyseOnesHistoricalTrendByMultiNumber(trendDto);
@@ -252,8 +253,9 @@ namespace TrendAnalysis.Service.Test.MarkSix
             }
         }
 
+
         /// <summary>
-        /// 测试分析一段时期 100期次 的趋势
+        ///     测试分析一段时期 100期次 的趋势
         /// </summary>
         [TestMethod]
         public void TestMethod_AnalyseOnesHistoricalTrendByMultiNumber_100_Times()
@@ -283,6 +285,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var str = content.ToString();
             }
         }
+
         #endregion
 
 
@@ -410,7 +413,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
         /// <summary>
         ///     分析个位一个时期 100期 的历史趋势
         /// </summary>
-        [TestMethod] 
+        [TestMethod]
         public void TestMethod_AnalyseTensHistoricalTrend_100_Times()
         {
             using (var dao = new TrendDbContext())
@@ -455,12 +458,12 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     Location = 7,
                     Times = records[0].Times,
                     AnalyseNumberCount = 1000,
-                    StartAllowMaxInterval = 2,
-                    EndAllowMaxInterval = -5,
-                    StartAllowMinFactorCurrentConsecutiveTimes = 3,
+                    StartAllowMaxInterval = -3,
+                    EndAllowMaxInterval = -9,
+                    StartAllowMinFactorCurrentConsecutiveTimes = 6,
                     EndAllowMinFactorCurrentConsecutiveTimes = 9,
                     AllowMinTimes = 3,
-                    NumbersTailCutCount = 6
+                    NumbersTailCutCount = 12
                 };
 
                 var trends = service.AnalyseTensHistoricalTrend(trendDto);
@@ -471,6 +474,8 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var str = content.ToString();
             }
         }
+
+
         [TestMethod]
         public void TestMethod_AnalyseByOnesDigit()
         {
@@ -483,16 +488,16 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var onesDigitNumbers = numbers.Select(n => n.ToString("00").Substring(1)).Select(n => byte.Parse(n)).ToList();
 
                 //个位因子
-                var onesDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
+                var onesDigitFactors = FactorGenerator.Create(new List<byte> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}.ToList());
 
                 //十位数号码列表
                 var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).Select(n => byte.Parse(n)).ToList();
 
                 //十位因子
-                var tensDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4 }.ToList());
+                var tensDigitFactors = FactorGenerator.Create(new List<byte> {0, 1, 2, 3, 4}.ToList());
 
                 var historicalAnalysis = new FactorTrend();
-                var result = historicalAnalysis.Analyse(new FactorTrendAnalyseDto<byte> { Numbers = onesDigitNumbers, Factors = onesDigitFactors, AllowMinTimes = 9, AllowMaxInterval = 2 });
+                var result = historicalAnalysis.Analyse(new FactorTrendAnalyseDto<byte> {Numbers = onesDigitNumbers, Factors = onesDigitFactors, AllowMinTimes = 9, AllowMaxInterval = 2});
                 result = result.Where(m => m.HistoricalConsecutiveTimes.Count > 0).ToList();
             }
         }
@@ -509,19 +514,20 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var onesDigitNumbers = numbers.Select(n => n.ToString("00").Substring(1)).Select(n => byte.Parse(n)).ToList();
 
                 //个位因子
-                var onesDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
+                var onesDigitFactors = FactorGenerator.Create(new List<byte> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}.ToList());
 
                 //十位数号码列表
                 var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).Select(n => byte.Parse(n)).ToList();
 
                 //十位因子
-                var tensDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4 }.ToList());
+                var tensDigitFactors = FactorGenerator.Create(new List<byte> {0, 1, 2, 3, 4}.ToList());
 
                 var historicalAnalysis = new FactorTrend();
-                var result = historicalAnalysis.Analyse(new FactorTrendAnalyseDto<byte> { Numbers = tensDigitNumbers, Factors = tensDigitFactors, AllowMinTimes = 4, AllowMaxInterval = 0 });
+                var result = historicalAnalysis.Analyse(new FactorTrendAnalyseDto<byte> {Numbers = tensDigitNumbers, Factors = tensDigitFactors, AllowMinTimes = 4, AllowMaxInterval = 0});
                 result = result.Where(m => m.HistoricalConsecutiveTimes.Count > 0).ToList();
             }
         }
+
 
         [TestMethod]
         public void TestMethod_AnalyseSpecifiedLocation()
@@ -541,7 +547,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
                     var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
                     var times = records[i].Times;
-                    var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 8, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0 };
+                    var dto = new MarkSixAnalyseSpecifiedLocationDto {Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 8, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0};
 
                     //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
                     var result = service.AnalyseSpecifiedLocation(dto);
@@ -567,6 +573,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var str = resultString.ToString();
             }
         }
+
         #endregion
     }
 
