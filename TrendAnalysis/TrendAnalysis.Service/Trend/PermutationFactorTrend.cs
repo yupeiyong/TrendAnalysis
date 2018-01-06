@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TrendAnalysis.DataTransferObject;
+using TrendAnalysis.DataTransferObject.Trend;
 using TrendAnalysis.Models.Trend;
 
 
@@ -540,7 +542,7 @@ namespace TrendAnalysis.Service.Trend
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public List<HistoricalTrend> AnalyseHistoricalTrend(MultiNumberAnalyseHistoricalTrendDto<byte> dto)
+        public List<HistoricalTrend> AnalyseHistoricalTrend(PermutationFactorAnalyseHistoricalTrendDto<byte> dto)
         {
             var trends = new List<HistoricalTrend>();
 
@@ -577,18 +579,13 @@ namespace TrendAnalysis.Service.Trend
                         var timesValue = analyseNumbers[i].TimesValue;
                         var numbers = dto.Numbers.Where(n => n.TimesValue < timesValue).Select(n => n.Number).ToList();
 
-                        var factorResults = Analyse(new MultiNumberFactorTrendAnalyseDto<byte>
+                        var factorResults = Analyse(new PermutationFactorTrendAnalyseDto<byte>
                         {
                             Numbers = numbers,
-                            Factors = dto.Factors,
                             AllowMinTimes = dto.AllowMinTimes,
                             NumbersTailCutCount = dto.NumbersTailCutCount,
                             AllowMinFactorCurrentConsecutiveTimes = consecutiveTimes,
-                            AllowMaxInterval = interval,
-                            AnalyseConsecutiveCompareFunc = dto.AnalyseConsecutiveCompareFunc,
-                            PredictiveConsecutivesCompareFunc = dto.PredictiveConsecutivesCompareFunc,
-                            PredictiveFactorAction = dto.PredictiveFactorAction,
-                            MultiNumberMaxCount = dto.MultiNumberMaxCount
+                            AllowMaxInterval = interval
                         });
 
                         //结果是否正确
