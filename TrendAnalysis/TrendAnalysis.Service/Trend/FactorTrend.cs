@@ -156,7 +156,9 @@ namespace TrendAnalysis.Service.Trend
                         Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,
                         AllowConsecutiveTimes = consecutiveTimes,
-                        AllowInterval = interval
+                        AllowInterval = interval,
+                        AnalyseNumberCount=dto.AnalyseNumberCount,
+                        TypeDescription = dto.TypeDescription
                     };
                     trends.Add(trend);
                     for (int i = 0, maxCount = analyseNumbers.Count; i < maxCount; i++)

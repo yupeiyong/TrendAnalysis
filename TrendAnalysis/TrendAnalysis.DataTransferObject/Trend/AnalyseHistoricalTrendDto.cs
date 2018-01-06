@@ -73,6 +73,11 @@ namespace TrendAnalysis.DataTransferObject
         /// </summary>
         public HistoricalTrendTypeEnum HistoricalTrendType { get; set; }
 
+        /// <summary>
+        ///     类型说明
+        /// </summary>
+        public string TypeDescription { get; set; }
+
     }
 
 }

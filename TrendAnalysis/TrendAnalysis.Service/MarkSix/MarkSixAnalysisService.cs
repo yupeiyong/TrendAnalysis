@@ -676,7 +676,8 @@ namespace TrendAnalysis.Service.MarkSix
                             factor[n] = (byte)((factor[n] + 10 - sum) % 10);
                         }
                     },
-                    HistoricalTrendType=HistoricalTrendTypeEnum.MultiNumberAnalyseMarkSixOnes
+                    HistoricalTrendType=HistoricalTrendTypeEnum.MultiNumberAnalyseMarkSixOnes,
+                    TypeDescription = "i+1"
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
