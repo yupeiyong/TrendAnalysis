@@ -236,12 +236,12 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     Location = 7,
                     Times = records[0].Times,
                     AnalyseNumberCount = 1000,
-                    StartAllowMaxInterval = -3,
-                    EndAllowMaxInterval = -9,
+                    StartAllowMaxInterval = -9,
+                    EndAllowMaxInterval = -13,
                     StartAllowMinFactorCurrentConsecutiveTimes = 7,
-                    EndAllowMinFactorCurrentConsecutiveTimes = 13,
+                    EndAllowMinFactorCurrentConsecutiveTimes = 11,
                     AllowMinTimes = 3,
-                    NumbersTailCutCount = 12
+                    NumbersTailCutCount = 15
                 };
 
                 var trends = service.AnalyseOnesHistoricalTrendByMultiNumber(trendDto);

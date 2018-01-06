@@ -195,7 +195,7 @@ namespace TrendAnalysis.Service.MarkSix
                     EndAllowMinFactorCurrentConsecutiveTimes = dto.EndAllowMinFactorCurrentConsecutiveTimes,
                     AllowMinTimes = dto.AllowMinTimes,
                     NumbersTailCutCount = dto.NumbersTailCutCount,
-                    HistoricalTrendType=HistoricalTrendTypeEnum.NormalAnalyseMarkSixOnes
+                    HistoricalTrendType=HistoricalTrendTypeEnum.MarkSixOnesNormal
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
                 
@@ -278,7 +278,7 @@ namespace TrendAnalysis.Service.MarkSix
                     EndAllowMinFactorCurrentConsecutiveTimes = dto.EndAllowMinFactorCurrentConsecutiveTimes,
                     AllowMinTimes = dto.AllowMinTimes,
                     NumbersTailCutCount = dto.NumbersTailCutCount,
-                    HistoricalTrendType=HistoricalTrendTypeEnum.NormalAnalyseMarkSixTens
+                    HistoricalTrendType=HistoricalTrendTypeEnum.MarkSixTensNormal
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
@@ -676,7 +676,7 @@ namespace TrendAnalysis.Service.MarkSix
                             factor[n] = (byte)((factor[n] + 10 - sum) % 10);
                         }
                     },
-                    HistoricalTrendType=HistoricalTrendTypeEnum.MultiNumberAnalyseMarkSixOnes,
+                    HistoricalTrendType=HistoricalTrendTypeEnum.MarkSixOnesMultiNumber,
                     TypeDescription = "i+1"
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
@@ -793,7 +793,7 @@ namespace TrendAnalysis.Service.MarkSix
                             factor[n] = (byte)((factor[n] + 5 - sum) % 5);
                         }
                     },
-                    HistoricalTrendType=HistoricalTrendTypeEnum.MultiNumberAnalyseMarkSixTens
+                    HistoricalTrendType=HistoricalTrendTypeEnum.MarkSixTensMultiNumber
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
