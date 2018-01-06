@@ -533,6 +533,109 @@ namespace TrendAnalysis.Service.Trend
         }
 
         #endregion
+
+
+        /// <summary>
+        ///     分析一段日期的历史趋势，（通过号码集合分析历史趋势）
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        public List<HistoricalTrend> AnalyseHistoricalTrend(MultiNumberAnalyseHistoricalTrendDto<byte> dto)
+        {
+            var trends = new List<HistoricalTrend>();
+
+            if (dto.Numbers.Count < dto.AnalyseNumberCount)
+                throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
+
+            var analyseNumbers = dto.Numbers.OrderByDescending(n => n.TimesValue).Skip(0).Take(dto.AnalyseNumberCount).ToList();
+
+            //允许的连续次数，由小到大
+            for (var consecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes; consecutiveTimes <= dto.EndAllowMinFactorCurrentConsecutiveTimes; consecutiveTimes++)
+            {
+                //允许的间隔数，由大到小
+                for (var interval = dto.StartAllowMaxInterval; interval >= dto.EndAllowMaxInterval; interval--)
+                {
+                    var resultCount = 0;
+                    var successCount = 0;
+
+                    var trend = new HistoricalTrend
+                    {
+                        HistoricalTrendType = dto.HistoricalTrendType,
+                        StartTimes = analyseNumbers[0].Times,
+                        Items = new List<HistoricalTrendItem>(),
+                        Location = dto.Location,
+                        AllowConsecutiveTimes = consecutiveTimes,
+                        AllowInterval = interval,
+                        AnalyseNumberCount = dto.AnalyseNumberCount,
+                        TypeDescription = dto.TypeDescription
+                    };
+                    trends.Add(trend);
+                    for (int i = 0, maxCount = analyseNumbers.Count; i < maxCount; i++)
+                    {
+                        var number = analyseNumbers[i].Number;
+                        var times = analyseNumbers[i].Times;
+                        var timesValue = analyseNumbers[i].TimesValue;
+                        var numbers = dto.Numbers.Where(n => n.TimesValue < timesValue).Select(n => n.Number).ToList();
+
+                        var factorResults = Analyse(new MultiNumberFactorTrendAnalyseDto<byte>
+                        {
+                            Numbers = numbers,
+                            Factors = dto.Factors,
+                            AllowMinTimes = dto.AllowMinTimes,
+                            NumbersTailCutCount = dto.NumbersTailCutCount,
+                            AllowMinFactorCurrentConsecutiveTimes = consecutiveTimes,
+                            AllowMaxInterval = interval,
+                            AnalyseConsecutiveCompareFunc = dto.AnalyseConsecutiveCompareFunc,
+                            PredictiveConsecutivesCompareFunc = dto.PredictiveConsecutivesCompareFunc,
+                            PredictiveFactorAction = dto.PredictiveFactorAction,
+                            MultiNumberMaxCount = dto.MultiNumberMaxCount
+                        });
+
+                        //结果是否正确
+                        var success = false;
+
+                        //对结果再分析
+                        var factorResult = factorResults.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
+                        var factors = new List<byte>();
+                        var resultConsecutiveTimes = 0;
+                        var resultInterval = 0;
+                        if (factorResult != null)
+                        {
+                            factors = factorResult.PredictiveFactor;
+                            resultConsecutiveTimes = factorResult.FactorCurrentConsecutiveTimes;
+                            resultInterval = factorResult.Interval;
+                            if (factorResult.PredictiveFactor != null && factorResult.PredictiveFactor.Count > 0)
+                            {
+                                resultCount++;
+
+                                if (factors.Contains(number))
+                                {
+                                    successCount++;
+                                    success = true;
+                                }
+                            }
+                        }
+
+                        var trendItem = new HistoricalTrendItem
+                        {
+                            Times = times,
+                            Number = number,
+                            Success = success,
+                            ResultConsecutiveTimes = resultConsecutiveTimes,
+                            ResultInterval = resultInterval,
+                            PredictiveFactor = factors
+                        };
+
+                        trend.AnalyticalCount = resultCount;
+                        trend.CorrectCount = successCount;
+                        trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
+                        trend.Items.Add(trendItem);
+                    }
+                }
+            }
+            return trends;
+        }
+
     }
 
 }
