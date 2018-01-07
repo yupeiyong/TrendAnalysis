@@ -453,8 +453,8 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     Location = 7,
                     Times = records[0].Times,
                     AnalyseNumberCount = 1000,
-                    StartAllowMaxInterval = -3,
-                    EndAllowMaxInterval = -9,
+                    StartAllowMaxInterval = -1,
+                    EndAllowMaxInterval = -5,
                     StartAllowMinFactorCurrentConsecutiveTimes = 6,
                     EndAllowMinFactorCurrentConsecutiveTimes = 9,
                     AllowMinTimes = 3,
@@ -464,7 +464,6 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var trends = service.AnalyseOnesHistoricalTrendByPermutationFactors(trendDto);
                 var content = new StringBuilder();
                 trends.ForEach(item => content.Append(item.ToString()));
-
 
                 var str = content.ToString();
             }

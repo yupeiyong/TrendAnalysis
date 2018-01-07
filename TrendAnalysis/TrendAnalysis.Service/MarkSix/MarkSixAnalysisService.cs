@@ -488,7 +488,8 @@ namespace TrendAnalysis.Service.MarkSix
                     EndAllowMinFactorCurrentConsecutiveTimes = dto.EndAllowMinFactorCurrentConsecutiveTimes,
                     AllowMinTimes = dto.AllowMinTimes,
                     NumbersTailCutCount = dto.NumbersTailCutCount,
-                    HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixOnesNormal
+                    HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixOnesPermutationFactor,
+                    TypeDescription = "[0]0[1]*"//第一维排列因子只取索引位置为0的元素，第二维排列因子取所有元素
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
@@ -579,7 +580,8 @@ namespace TrendAnalysis.Service.MarkSix
                     EndAllowMinFactorCurrentConsecutiveTimes = dto.EndAllowMinFactorCurrentConsecutiveTimes,
                     AllowMinTimes = dto.AllowMinTimes,
                     NumbersTailCutCount = dto.NumbersTailCutCount,
-                    HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixOnesNormal
+                    HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixTensPermutationFactor,
+                    TypeDescription= "[0]0[1]*"//第一维排列因子只取索引位置为0的元素，第二维排列因子取所有元素
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
