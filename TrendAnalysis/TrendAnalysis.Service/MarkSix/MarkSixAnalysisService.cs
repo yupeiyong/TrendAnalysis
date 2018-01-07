@@ -408,6 +408,234 @@ namespace TrendAnalysis.Service.MarkSix
             }
         }
 
+        /// <summary>
+        ///     分析一段时期指定位置号码个位数趋势(用排列因子方法)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        public List<HistoricalTrend> AnalyseOnesHistoricalTrendByPermutationFactors(MarkSixAnalyseHistoricalTrendDto dto)
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var source = dao.Set<MarkSixRecord>().AsQueryable();
+                if (!string.IsNullOrWhiteSpace(dto.Times))
+                {
+                    var record = dao.Set<MarkSixRecord>().FirstOrDefault(m => m.Times == dto.Times);
+                    if (record == null)
+                        throw new Exception("错误，指定期次的记录不存在！");
+                    source = source.Where(m => m.TimesValue < record.TimesValue);
+                }
+
+                //按期次值升序排列
+                source = source.OrderBy(m => m.TimesValue);
+                List<TemporaryRecord<byte>> records;
+                switch (dto.Location)
+                {
+                    case 1:
+                        records = source.Select(m => new { Number = m.FirstNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 2:
+                        records = source.Select(m => new { Number = m.SecondNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 3:
+                        records = source.Select(m => new { Number = m.ThirdNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 4:
+                        records = source.Select(m => new { Number = m.FourthNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 5:
+                        records = source.Select(m => new { Number = m.FifthNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 6:
+                        records = source.Select(m => new { Number = m.SixthNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 7:
+                        records = source.Select(m => new { Number = m.SeventhNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    default:
+                        throw new Exception("错误，指定的位置不是有效的号码位置！");
+                }
+
+                var factorHistoricalTrend = new MultiNumberFactorTrend();
+
+                //个位因子
+                var onesDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
+
+                //累加号码的偏移位置
+                var offsetIndex = 1;
+                //最多结合多少个号码
+                var multiNumberMaxCount = 30;
+                var trendDto = new MultiNumberAnalyseHistoricalTrendDto<byte>
+                {
+                    Numbers = records,
+                    Factors = onesDigitFactors,
+                    Location = dto.Location,
+                    AnalyseNumberCount = dto.AnalyseNumberCount,
+                    StartAllowMaxInterval = dto.StartAllowMaxInterval,
+                    EndAllowMaxInterval = dto.EndAllowMaxInterval,
+                    StartAllowMinFactorCurrentConsecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes,
+                    EndAllowMinFactorCurrentConsecutiveTimes = dto.EndAllowMinFactorCurrentConsecutiveTimes,
+                    AllowMinTimes = dto.AllowMinTimes,
+                    NumbersTailCutCount = dto.NumbersTailCutCount,
+                    AnalyseConsecutiveCompareFunc = (nums, factors, i) =>
+                    {
+                        var sum = nums[i] + nums[i - offsetIndex];
+                        var curNumber = (byte)(sum % 10);
+                        return factors.Contains(curNumber);
+                    },
+                    MultiNumberMaxCount = multiNumberMaxCount,
+                    PredictiveConsecutivesCompareFunc = (nums, factors, i) =>
+                    {
+                        var sum = nums[i] + nums[i - offsetIndex];
+                        var curNumber = (byte)(sum % 10);
+                        return factors.Contains(curNumber);
+                    },
+                    PredictiveFactorAction = (nums, factor) =>
+                    {
+                        //反向累加
+                        var currentSum = 0;
+                        var lastIndex = nums.Count - 1;
+                        currentSum += nums[lastIndex - (offsetIndex - 1)];
+                        //取10的模
+                        var sum = (byte)(currentSum % 10);
+
+                        //当前因子数-累加数取10的模（分析数字可能区域）
+                        for (var n = 0; n < factor.Count; n++)
+                        {
+                            factor[n] = (byte)((factor[n] + 10 - sum) % 10);
+                        }
+                    },
+                    HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixOnesMultiNumber,
+                    TypeDescription = "i+1"
+                };
+                var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
+
+                //保存到数据库
+                HistoricalTrendService.AddRange(historicalTrends);
+                return historicalTrends;
+            }
+        }
+
+
+        /// <summary>
+        ///     分析一段时期指定位置号码十位数趋势(用排列因子方法)
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        public List<HistoricalTrend> AnalyseTensHistoricalTrendByPermutationFactors(MarkSixAnalyseHistoricalTrendDto dto)
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var source = dao.Set<MarkSixRecord>().AsQueryable();
+                if (!string.IsNullOrWhiteSpace(dto.Times))
+                {
+                    var record = dao.Set<MarkSixRecord>().FirstOrDefault(m => m.Times == dto.Times);
+                    if (record == null)
+                        throw new Exception("错误，指定期次的记录不存在！");
+                    source = source.Where(m => m.TimesValue < record.TimesValue);
+                }
+
+                //按期次值升序排列
+                source = source.OrderBy(m => m.TimesValue);
+                var records = new List<TemporaryRecord<byte>>();
+                switch (dto.Location)
+                {
+                    case 1:
+                        records = source.Select(m => new { Number = m.FirstNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 2:
+                        records = source.Select(m => new { Number = m.SecondNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 3:
+                        records = source.Select(m => new { Number = m.ThirdNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 4:
+                        records = source.Select(m => new { Number = m.FourthNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 5:
+                        records = source.Select(m => new { Number = m.FifthNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 6:
+                        records = source.Select(m => new { Number = m.SixthNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    case 7:
+                        records = source.Select(m => new { Number = m.SeventhNum, m.Times, m.TimesValue }).ToList()
+                            .Select(m => new TemporaryRecord<byte> { Number = byte.Parse(m.Number.ToString("00").Substring(0, 1)), Times = m.Times, TimesValue = m.TimesValue }).ToList();
+                        break;
+                    default:
+                        throw new Exception("错误，指定的位置不是有效的号码位置！");
+                }
+
+                var factorHistoricalTrend = new MultiNumberFactorTrend();
+
+                //十位因子
+                var tensDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4 }.ToList());
+
+                //累加号码的偏移位置
+                var offsetIndex = 1;
+                //最多结合多少个号码
+                var multiNumberMaxCount = 30;
+
+                var trendDto = new MultiNumberAnalyseHistoricalTrendDto<byte>
+                {
+                    Numbers = records,
+                    Factors = tensDigitFactors,
+                    Location = dto.Location,
+                    AnalyseNumberCount = dto.AnalyseNumberCount,
+                    StartAllowMaxInterval = dto.StartAllowMaxInterval,
+                    EndAllowMaxInterval = dto.EndAllowMaxInterval,
+                    StartAllowMinFactorCurrentConsecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes,
+                    EndAllowMinFactorCurrentConsecutiveTimes = dto.EndAllowMinFactorCurrentConsecutiveTimes,
+                    AllowMinTimes = dto.AllowMinTimes,
+                    NumbersTailCutCount = dto.NumbersTailCutCount,
+                    AnalyseConsecutiveCompareFunc = (nums, factors, i) =>
+                    {
+                        var sum = nums[i] + nums[i - offsetIndex];
+                        var curNumber = (byte)(sum % 5);
+                        return factors.Contains(curNumber);
+                    },
+                    MultiNumberMaxCount = multiNumberMaxCount,
+                    PredictiveConsecutivesCompareFunc = (nums, factors, i) =>
+                    {
+                        var sum = nums[i] + nums[i - offsetIndex];
+                        var curNumber = (byte)(sum % 5);
+                        return factors.Contains(curNumber);
+                    },
+                    PredictiveFactorAction = (nums, factor) =>
+                    {
+                        //反向累加
+                        var currentSum = 0;
+                        var lastIndex = nums.Count - 1;
+                        currentSum += nums[lastIndex - (offsetIndex - 1)];
+                        //取10的模
+                        var sum = (byte)(currentSum % 5);
+
+                        //当前因子数-累加数取5的模（分析数字可能区域）
+                        for (var n = 0; n < factor.Count; n++)
+                        {
+                            factor[n] = (byte)((factor[n] + 5 - sum) % 5);
+                        }
+                    },
+                    HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixTensMultiNumber
+                };
+                var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
+
+                return historicalTrends;
+            }
+        }
         #endregion
 
         #region  多号码结合分析指定位置号码

@@ -16,18 +16,5 @@ namespace TrendAnalysis.DataTransferObject.Trend
 
         public List<Factor<T>> Factors { get; set; }
 
-
-        /// <summary>
-        /// 允许最大的间隔数（最大连续期数-指定期次此因子连续次数）
-        /// </summary>
-        public int AllowMaxInterval { get; set; } = int.MaxValue;
-
-
-        /// <summary>
-        /// 允许的最小指定期次此因子连续次数
-        /// </summary>
-        public int AllowMinFactorCurrentConsecutiveTimes { get; set; } = 1;
-
-
     }
 }
