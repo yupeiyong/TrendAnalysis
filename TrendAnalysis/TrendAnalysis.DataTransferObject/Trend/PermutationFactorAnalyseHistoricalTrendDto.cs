@@ -14,7 +14,9 @@ namespace TrendAnalysis.DataTransferObject.Trend
     public class PermutationFactorAnalyseHistoricalTrendDto<T> : BaseAnalyseHistoricalTrendDto<T>
     {
 
-        public List<Factor<T>> Factors { get; set; }
-
+        /// <summary>
+        ///     排列因子
+        /// </summary>
+        public List<List<Factor<T>>> PermutationFactors { get; set; }
     }
 }

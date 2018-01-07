@@ -585,7 +585,8 @@ namespace TrendAnalysis.Service.Trend
                             AllowMinTimes = dto.AllowMinTimes,
                             NumbersTailCutCount = dto.NumbersTailCutCount,
                             AllowMinFactorCurrentConsecutiveTimes = consecutiveTimes,
-                            AllowMaxInterval = interval
+                            AllowMaxInterval = interval,
+                            PermutationFactors=dto.PermutationFactors
                         });
 
                         //结果是否正确
