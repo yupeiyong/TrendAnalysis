@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Trend\BaseAnalyseHistoricalTrendDto.cs" />
+    <Compile Include="Trend\BaseTrendAnalyseDto.cs" />
+    <Compile Include="Trend\PermutationFactorAnalyseHistoricalTrendDto.cs" />
     <Compile Include="Trend\PermutationFactorTrendAnalyseDto.cs" />
     <Compile Include="Trend\AnalyseHistoricalTrendDto.cs" />
     <Compile Include="Trend\FactorTrendAnalyseDto.cs" />

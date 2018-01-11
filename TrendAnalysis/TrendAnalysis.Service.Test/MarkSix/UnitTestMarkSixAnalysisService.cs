@@ -236,12 +236,12 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     Location = 7,
                     Times = records[0].Times,
                     AnalyseNumberCount = 1000,
-                    StartAllowMaxInterval = -3,
-                    EndAllowMaxInterval = -9,
+                    StartAllowMaxInterval = -9,
+                    EndAllowMaxInterval = -13,
                     StartAllowMinFactorCurrentConsecutiveTimes = 7,
-                    EndAllowMinFactorCurrentConsecutiveTimes = 13,
+                    EndAllowMinFactorCurrentConsecutiveTimes = 11,
                     AllowMinTimes = 3,
-                    NumbersTailCutCount = 12
+                    NumbersTailCutCount = 15
                 };
 
                 var trends = service.AnalyseOnesHistoricalTrendByMultiNumber(trendDto);
@@ -405,6 +405,70 @@ namespace TrendAnalysis.Service.Test.MarkSix
             }
         }
 
+        /// <summary>
+        ///     分析个位一个时期 100期 的历史趋势
+        /// </summary>
+        [TestMethod]
+        public void TestMethod_AnalyseOnesHistoricalTrendByPermutationFactors__100_Times()
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var service = new MarkSixAnalysisService();
+                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(1000).ToList();
+                var trendDto = new MarkSixAnalyseHistoricalTrendDto
+                {
+                    Location = 7,
+                    Times = records[0].Times,
+                    AnalyseNumberCount = 100,
+                    StartAllowMaxInterval = 2,
+                    EndAllowMaxInterval = -5,
+                    StartAllowMinFactorCurrentConsecutiveTimes = 3,
+                    EndAllowMinFactorCurrentConsecutiveTimes = 9,
+                    AllowMinTimes = 3,
+                    NumbersTailCutCount = 6
+                };
+
+                var trends = service.AnalyseOnesHistoricalTrendByPermutationFactors(trendDto);
+                var content = new StringBuilder();
+                trends.ForEach(item => content.Append(item.ToString()));
+
+
+                var str = content.ToString();
+            }
+        }
+
+
+        /// <summary>
+        ///     分析个位一个时期 1000期 的历史趋势
+        /// </summary>
+        [TestMethod]
+        public void TestMethod_AnalyseOnesHistoricalTrendByPermutationFactors__1000_Times()
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var service = new MarkSixAnalysisService();
+                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(1000).ToList();
+                var trendDto = new MarkSixAnalyseHistoricalTrendDto
+                {
+                    Location = 7,
+                    Times = records[0].Times,
+                    AnalyseNumberCount = 1000,
+                    StartAllowMaxInterval = -1,
+                    EndAllowMaxInterval = -5,
+                    StartAllowMinFactorCurrentConsecutiveTimes = 6,
+                    EndAllowMinFactorCurrentConsecutiveTimes = 9,
+                    AllowMinTimes = 3,
+                    NumbersTailCutCount = 12
+                };
+
+                var trends = service.AnalyseOnesHistoricalTrendByPermutationFactors(trendDto);
+                var content = new StringBuilder();
+                trends.ForEach(item => content.Append(item.ToString()));
+
+                var str = content.ToString();
+            }
+        }
+
         #endregion
 
 
@@ -414,7 +478,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
         ///     分析个位一个时期 100期 的历史趋势
         /// </summary>
         [TestMethod]
-        public void TestMethod_AnalyseTensHistoricalTrend_100_Times()
+        public void TestMethod_AnalyseOnesHistoricalTrend_100_Times()
         {
             using (var dao = new TrendDbContext())
             {
@@ -447,7 +511,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
         ///     分析个位一个时期 1000期 的历史趋势
         /// </summary>
         [TestMethod]
-        public void TestMethod_AnalyseTensHistoricalTrend_1000_Times()
+        public void TestMethod_AnalyseOnesHistoricalTrend_1000_Times()
         {
             using (var dao = new TrendDbContext())
             {
