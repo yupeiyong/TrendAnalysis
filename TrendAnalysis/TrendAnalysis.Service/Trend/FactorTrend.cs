@@ -231,6 +231,25 @@ namespace TrendAnalysis.Service.Trend
 
             var analyseNumbers = dto.Numbers.OrderByDescending(n => n.TimesValue).Skip(0).Take(dto.AnalyseNumberCount).ToList();
 
+            var factorResultDict=new Dictionary<int,List<FactorTrendAnalyseResult<byte>>>();
+            for (int i = 0, maxCount = analyseNumbers.Count; i < maxCount; i++)
+            {
+                var timesValue = analyseNumbers[i].TimesValue;
+                var numbers = dto.Numbers.Where(n => n.TimesValue < timesValue).Select(n => n.Number).ToList();
+
+                var factorResults = Analyse(new FactorTrendAnalyseDto<byte>
+                {
+                    Numbers = numbers,
+                    Factors = dto.Factors,
+                    AllowMinTimes = dto.AllowMinTimes,
+                    NumbersTailCutCount = dto.NumbersTailCutCount,
+                    AllowMinFactorCurrentConsecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes,
+                    AllowMaxInterval = dto.StartAllowMaxInterval
+                });
+                factorResultDict.Add(i,factorResults);
+            }
+
+
             //允许的连续次数，由小到大
             for (var consecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes; consecutiveTimes <= dto.EndAllowMinFactorCurrentConsecutiveTimes; consecutiveTimes++)
             {
@@ -256,23 +275,19 @@ namespace TrendAnalysis.Service.Trend
                     {
                         var number = analyseNumbers[i].Number;
                         var times = analyseNumbers[i].Times;
-                        var timesValue = analyseNumbers[i].TimesValue;
-                        var numbers = dto.Numbers.Where(n => n.TimesValue < timesValue).Select(n => n.Number).ToList();
 
-                        var factorResults = Analyse(new FactorTrendAnalyseDto<byte>
-                        {
-                            Numbers = numbers,
-                            Factors = dto.Factors,
-                            AllowMinTimes = dto.AllowMinTimes,
-                            NumbersTailCutCount = dto.NumbersTailCutCount,
-                            AllowMinFactorCurrentConsecutiveTimes = consecutiveTimes,
-                            AllowMaxInterval = interval
-                        });
-
+                        var factorResults = factorResultDict[i];
                         //结果是否正确
                         var success = false;
 
                         //对结果再分析
+                        //1、按允许的最小因子当前连续次数和允许的最大间隔次数筛选
+                        //2、先按最大连续次数然后按最小间隔次数排序
+                        factorResults = factorResults
+                            .Where(m => m.FactorCurrentConsecutiveTimes >= consecutiveTimes && m.Interval <= interval)
+                            .OrderByDescending(t => t.FactorCurrentConsecutiveTimes)
+                            .ThenBy(t => t.Interval).ToList();
+
                         var factorResult = factorResults.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
                         var factors = new List<byte>();
                         var resultConsecutiveTimes = 0;
