@@ -34,3 +34,5 @@ E:\workspace\TrendAnalysis\TrendAnalysis\Winform\obj\Debug\Winform.csproj.Genera
 E:\workspace\TrendAnalysis\TrendAnalysis\Winform\obj\Debug\Winform.exe
 E:\workspace\TrendAnalysis\TrendAnalysis\Winform\obj\Debug\Winform.pdb
 F:\workspace\TrendAnalysis\TrendAnalysis\Winform\bin\Debug\Winform.exe.config
+F:\workspace\TrendAnalysis\TrendAnalysis\Winform\obj\Debug\Winform.exe
+F:\workspace\TrendAnalysis\TrendAnalysis\Winform\obj\Debug\Winform.pdb
