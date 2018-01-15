@@ -153,7 +153,7 @@ namespace TrendAnalysis.Service.Trend
                     var trend = new HistoricalTrend
                     {
                         HistoricalTrendType=dto.HistoricalTrendType,
-                        StartTimes = analyseNumbers[0].Times,
+                        StartTimes = analyseNumbers[0].TimesValue,
                         Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,
                         AllowConsecutiveTimes = consecutiveTimes,
@@ -232,6 +232,8 @@ namespace TrendAnalysis.Service.Trend
             var analyseNumbers = dto.Numbers.OrderByDescending(n => n.TimesValue).Skip(0).Take(dto.AnalyseNumberCount).ToList();
 
             var factorResultDict=new Dictionary<int,List<FactorTrendAnalyseResult<byte>>>();
+
+            //先记录分析结果
             for (int i = 0, maxCount = analyseNumbers.Count; i < maxCount; i++)
             {
                 var timesValue = analyseNumbers[i].TimesValue;
@@ -262,7 +264,7 @@ namespace TrendAnalysis.Service.Trend
                     var trend = new HistoricalTrend
                     {
                         HistoricalTrendType = dto.HistoricalTrendType,
-                        StartTimes = analyseNumbers[0].Times,
+                        StartTimes = analyseNumbers[0].TimesValue,
                         Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,
                         AllowConsecutiveTimes = consecutiveTimes,

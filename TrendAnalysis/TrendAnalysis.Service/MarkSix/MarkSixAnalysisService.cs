@@ -197,6 +197,19 @@ namespace TrendAnalysis.Service.MarkSix
                     NumbersTailCutCount = dto.NumbersTailCutCount,
                     HistoricalTrendType=HistoricalTrendTypeEnum.MarkSixOnesNormal
                 };
+                //先删除旧数据
+                var removeDto=new HistoricalTrendServiceRemoveDto
+                {
+                    Location=dto.Location,
+                    StartTimesValue = records[0].TimesValue,
+                    EndTimesValue = records[records.Count-1].TimesValue,
+                    StartAllowConsecutiveTimes=dto.StartAllowMinFactorCurrentConsecutiveTimes,
+                    EndAllowConsecutiveTimes = dto.EndAllowMinFactorCurrentConsecutiveTimes,
+                    StartAllowMaxInterval = dto.StartAllowMaxInterval,
+                    EndAllowMaxInterval = dto.EndAllowMaxInterval,
+                    HistoricalTrendType= HistoricalTrendTypeEnum.MarkSixOnesNormal
+                };
+                HistoricalTrendService.Remove(removeDto);
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
                 
                 //保存到数据库

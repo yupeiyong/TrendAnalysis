@@ -2539,6 +2539,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
 
                 watch.Stop();
                 var usedTimes = watch.ElapsedMilliseconds;//用时：128.294秒
+                Console.Write($"用时:{usedTimes}毫秒");
                 var str = content.ToString();
                 /*
              第7位号码，允许连续次数9,允许间隔数1。出现次数25，正确次数14,正确率：56.00%
