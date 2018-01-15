@@ -4,6 +4,7 @@ using System.Linq;
 using TrendAnalysis.Data;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.Models.Trend;
+using Z.EntityFramework.Plus;
 
 
 namespace TrendAnalysis.Service.Trend
@@ -53,22 +54,36 @@ namespace TrendAnalysis.Service.Trend
         {
             using (var dao = new TrendDbContext())
             {
+                ////删除相同的记录
+                //var trends = dao.Set<HistoricalTrend>().Where(ht => ht.Location == dto.Location
+                //    && ht.StartTimes >= dto.StartTimesValue && ht.StartTimes <= dto.EndTimesValue
+                //    && ht.AllowConsecutiveTimes >= dto.StartAllowConsecutiveTimes && ht.AllowConsecutiveTimes <= dto.EndAllowConsecutiveTimes
+                //    && ht.AllowInterval >= dto.StartAllowMaxInterval && ht.AllowInterval <= dto.EndAllowMaxInterval
+                //    && ht.HistoricalTrendType == dto.HistoricalTrendType
+                //    && ht.HistoricalTrendItemType == dto.HistoricalTrendItemType)
+                //    .ToList();
+
+                //foreach (var item in trends)
+                //{
+                //    //删除子项
+                //    dao.Set<HistoricalTrendItem>().RemoveRange(item.Items);
+                //}
+                //dao.Set<HistoricalTrend>().RemoveRange(trends);
+                //dao.SaveChanges();
+
                 //删除相同的记录
-                var trends = dao.Set<HistoricalTrend>().Where(ht => ht.Location == dto.Location
+                var trendsSource = dao.Set<HistoricalTrend>().Where(ht => ht.Location == dto.Location
                     && ht.StartTimes >= dto.StartTimesValue && ht.StartTimes <= dto.EndTimesValue
                     && ht.AllowConsecutiveTimes >= dto.StartAllowConsecutiveTimes && ht.AllowConsecutiveTimes <= dto.EndAllowConsecutiveTimes
                     && ht.AllowInterval >= dto.StartAllowMaxInterval && ht.AllowInterval <= dto.EndAllowMaxInterval
                     && ht.HistoricalTrendType == dto.HistoricalTrendType
-                    && ht.HistoricalTrendItemType == dto.HistoricalTrendItemType)
-                    .ToList();
+                    && ht.HistoricalTrendItemType == dto.HistoricalTrendItemType);
 
-                foreach (var item in trends)
-                {
-                    //删除子项
-                    dao.Set<HistoricalTrendItem>().RemoveRange(item.Items);
-                }
-                dao.Set<HistoricalTrend>().RemoveRange(trends);
-                dao.SaveChanges();
+                var trendItemIds = trendsSource.SelectMany(t => t.Items).Select(hti => hti.Id);
+                //删除子项
+                dao.Set<HistoricalTrendItem>().Where(hti => trendItemIds.Any(id => id == hti.Id)).Delete();
+
+                trendsSource.Delete();
             }
         }
 
