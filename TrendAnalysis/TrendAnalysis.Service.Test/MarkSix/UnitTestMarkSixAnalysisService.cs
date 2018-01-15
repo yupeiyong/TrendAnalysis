@@ -385,7 +385,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
         ///     分析个位一个时期 100期 的历史趋势
         /// </summary>
         [TestMethod]
-        public void TestMethod_AnalyseOnesHistoricalTrendByPermutationFactors__100_Times()
+        public void TestMethod_AnalyseOnesHistoricalTrendByPermutationFactors_100_Times()
         {
             using (var dao = new TrendDbContext())
             {

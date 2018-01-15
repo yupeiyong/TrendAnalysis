@@ -32,12 +32,12 @@ namespace TrendAnalysis.Models.Trend
 
 
         /// <summary>
-        /// MarkSix个位多号码结合分析
+        /// MarkSix个位排列因子分析
         /// </summary>
         [Description("MarkSix个位排列因子分析")]
         MarkSixOnesPermutationFactor = 5,
         /// <summary>
-        /// MarkSix个位多号码结合分析
+        /// MarkSix十位排列因子分析
         /// </summary>
         [Description("MarkSix十位排列因子分析")]
         MarkSixTensPermutationFactor = 6
