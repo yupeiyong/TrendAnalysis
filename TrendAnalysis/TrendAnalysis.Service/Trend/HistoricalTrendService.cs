@@ -17,46 +17,30 @@ namespace TrendAnalysis.Service.Trend
         {
             using (var dao = new TrendDbContext())
             {
-                //foreach (var historical in historicalTrends)
-                //{
-                //    //删除相同的记录
-                //    var trends = dao.Set<HistoricalTrend>().Where(ht => ht.StartTimes == historical.StartTimes
-                //                                                        && ht.Location == historical.Location
-                //                                                        && ht.AllowConsecutiveTimes == historical.AllowConsecutiveTimes
-                //                                                        && ht.AllowInterval == historical.AllowInterval
-                //                                                        && ht.HistoricalTrendType == historical.HistoricalTrendType
-                //                                                        && ht.TypeDescription == historical.TypeDescription).ToList();
-
-                //    foreach (var item in trends)
-                //    {
-                //        //删除子项
-                //        dao.Set<HistoricalTrendItem>().RemoveRange(item.Items);
-                //    }
-                //    dao.Set<HistoricalTrend>().RemoveRange(trends);
-
-                //    //创建时间和修改时间
-                //    historical.CreatorTime = DateTime.Now;
-                //    historical.LastModifyTime = DateTime.Now;
-                //}
-                foreach (var trend in historicalTrends)
+                historicalTrends.ForEach(trend =>
                 {
                     trend.CreatorTime = DateTime.Now;
                     trend.LastModifyTime = DateTime.Now;
-                    dao.Set<HistoricalTrend>().Add(trend);
-                    dao.SaveChanges();
-                }
-                //historicalTrends.ForEach(trend =>
-                //{
-                //    trend.CreatorTime = DateTime.Now;
-                //    trend.LastModifyTime = DateTime.Now;
-                //});
+                });
 
-                //dao.Set<HistoricalTrend>().AddRange(historicalTrends);
-
-                //dao.SaveChanges();
+                dao.Set<HistoricalTrend>().AddRange(historicalTrends);
+                dao.SaveChanges();
             }
         }
+        public static void AddRangeAsync(List<HistoricalTrend> historicalTrends)
+        {
+            using (var dao = new TrendDbContext())
+            {
+                historicalTrends.ForEach(trend =>
+                {
+                    trend.CreatorTime = DateTime.Now;
+                    trend.LastModifyTime = DateTime.Now;
+                });
 
+                dao.Set<HistoricalTrend>().AddRange(historicalTrends);
+                dao.SaveChangesAsync();
+            }
+        }
 
         public static void Remove(HistoricalTrendServiceRemoveDto dto)
         {
