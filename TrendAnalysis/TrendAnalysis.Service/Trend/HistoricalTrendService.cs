@@ -38,14 +38,22 @@ namespace TrendAnalysis.Service.Trend
                 //    historical.CreatorTime = DateTime.Now;
                 //    historical.LastModifyTime = DateTime.Now;
                 //}
-                historicalTrends.ForEach(trend =>
+                foreach (var trend in historicalTrends)
                 {
                     trend.CreatorTime = DateTime.Now;
                     trend.LastModifyTime = DateTime.Now;
-                });
+                    dao.Set<HistoricalTrend>().Add(trend);
+                    dao.SaveChanges();
+                }
+                //historicalTrends.ForEach(trend =>
+                //{
+                //    trend.CreatorTime = DateTime.Now;
+                //    trend.LastModifyTime = DateTime.Now;
+                //});
 
-                dao.Set<HistoricalTrend>().AddRange(historicalTrends);
-                dao.SaveChanges();
+                //dao.Set<HistoricalTrend>().AddRange(historicalTrends);
+
+                //dao.SaveChanges();
             }
         }
 

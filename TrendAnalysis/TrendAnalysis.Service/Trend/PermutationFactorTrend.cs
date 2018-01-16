@@ -704,6 +704,13 @@ namespace TrendAnalysis.Service.Trend
                         var success = false;
 
                         //对结果再分析
+                        //1、按允许的最小因子当前连续次数和允许的最大间隔次数筛选
+                        //2、先按最大连续次数然后按最小间隔次数排序
+                        factorResults = factorResults
+                            .Where(m => m.FactorCurrentConsecutiveTimes >= consecutiveTimes && m.Interval <= interval)
+                            .OrderByDescending(t => t.FactorCurrentConsecutiveTimes)
+                            .ThenBy(t => t.Interval).ToList();
+
                         var factorResult = factorResults.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
                         var factors = new List<byte>();
                         var resultConsecutiveTimes = 0;
