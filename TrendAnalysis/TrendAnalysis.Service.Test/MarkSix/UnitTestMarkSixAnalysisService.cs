@@ -408,7 +408,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var content = new StringBuilder();
                 trends.ForEach(item => content.Append(item.ToString()));
 
-
+                //用时：5179秒，86分钟
                 var str = content.ToString();
             }
         }

@@ -532,13 +532,13 @@ namespace TrendAnalysis.Service.MarkSix
                     AllowMinTimes = dto.AllowMinTimes,
                     NumbersTailCutCount = dto.NumbersTailCutCount,
                     HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixOnesPermutationFactor,
-                    TypeDescription = $"排列因子:[{i}]0[1]*",//第一维排列因子只取索引位置为0的元素，第二维排列因子取所有元素
+                    TypeDescription = $"排列因子:[{i}]0[1]*",//第一维排列因子只取索引位置为i的元素，第二维排列因子取所有元素
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
                 //保存到数据库
-                HistoricalTrendService.AddRangeAsync(historicalTrends);
-                onesResults.AddRange(historicalTrends);
+                HistoricalTrendService.AddRange(historicalTrends);
+                //onesResults.AddRange(historicalTrends);
             }
 
             ////暂时只分析第一个因子

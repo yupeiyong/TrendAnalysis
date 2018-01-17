@@ -22,9 +22,8 @@ namespace TrendAnalysis.Service.Trend
                     trend.CreatorTime = DateTime.Now;
                     trend.LastModifyTime = DateTime.Now;
                 });
-
-                dao.Set<HistoricalTrend>().AddRange(historicalTrends);
-                dao.SaveChanges();
+                dao.BulkInsert(historicalTrends, options => options.IncludeGraph = true);
+                dao.BulkSaveChanges();
             }
         }
         public static void AddRangeAsync(List<HistoricalTrend> historicalTrends)
@@ -67,14 +66,14 @@ namespace TrendAnalysis.Service.Trend
                 var trendsSource = dao.Set<HistoricalTrend>().Where(ht => ht.Location == dto.Location
                     && ht.StartTimes >= dto.StartTimesValue && ht.StartTimes <= dto.EndTimesValue
                     && ht.AllowConsecutiveTimes >= dto.StartAllowConsecutiveTimes && ht.AllowConsecutiveTimes <= dto.EndAllowConsecutiveTimes
-                    && ht.AllowInterval >= dto.StartAllowMaxInterval && ht.AllowInterval <= dto.EndAllowMaxInterval
+                    && ht.AllowInterval >= dto.EndAllowMaxInterval  && ht.AllowInterval <= dto.StartAllowMaxInterval
                     && ht.HistoricalTrendType == dto.HistoricalTrendType
                     && ht.HistoricalTrendItemType == dto.HistoricalTrendItemType);
 
                 var trendItemIds = trendsSource.SelectMany(t => t.Items).Select(hti => hti.Id);
                 //删除子项
                 dao.Set<HistoricalTrendItem>().Where(hti => trendItemIds.Any(id => id == hti.Id)).Delete();
-
+                
                 trendsSource.Delete();
             }
         }

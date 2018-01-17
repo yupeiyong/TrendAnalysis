@@ -68,7 +68,7 @@
     <Compile Include="Trend\UnitTestCompositeNumber.cs" />
     <Compile Include="MarkSix\UnitTestMarkSixAnalysisService.cs" />
     <Compile Include="Trend\UnitTestFactorTrend.cs" />
-    <Compile Include="Trend\UnitTestNumberCombination.cs" />
+    <Compile Include="Trend\UnitTestFactorGenerator.cs" />
     <Compile Include="MarkSix\UnitTestfrmMarkPurchaseService.cs" />
     <Compile Include="MarkSix\UnitTestMarkSixReportService.cs" />
   </ItemGroup>

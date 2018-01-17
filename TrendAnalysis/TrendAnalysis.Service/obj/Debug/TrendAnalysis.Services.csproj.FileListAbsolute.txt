@@ -51,3 +51,5 @@ F:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\obj\Debug\TrendAn
 F:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\obj\Debug\TrendAnalysis.Service.dll
 F:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\obj\Debug\TrendAnalysis.Service.pdb
 F:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\bin\Debug\Z.EntityFramework.Plus.EF6.dll
+F:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\bin\Debug\Z.EntityFramework.Extensions.dll
+F:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service\bin\Debug\Z.EntityFramework.Extensions.xml

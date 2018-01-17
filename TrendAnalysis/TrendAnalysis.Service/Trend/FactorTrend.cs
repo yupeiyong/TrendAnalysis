@@ -63,14 +63,7 @@ namespace TrendAnalysis.Service.Trend
             var resultList = new List<FactorTrendAnalyseResult<T>>();
             foreach (var factor in factors)
             {
-                if (factor.Left != null && factor.Left.Count > 0)
-                {
-                    resultList.Add(AnalyseConsecutive(numbers, factor.Left, factor.Right, numbersTailCutCount, allowMinTimes));
-                }
-                if (factor.Right != null && factor.Right.Count > 0)
-                {
-                    resultList.Add(AnalyseConsecutive(numbers, factor.Right, factor.Left, numbersTailCutCount, allowMinTimes));
-                }
+                resultList.Add(AnalyseConsecutive(numbers, factor.Left, factor.Right, numbersTailCutCount, allowMinTimes));
             }
             return resultList;
         }
