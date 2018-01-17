@@ -49,6 +49,7 @@ namespace TrendAnalysis.Service.Trend
             return factorResults;
         }
 
+
         /// <summary>
         ///     解析因子在记录中的连续次数
         /// </summary>
@@ -67,8 +68,6 @@ namespace TrendAnalysis.Service.Trend
             }
             return resultList;
         }
-
-
         /// <summary>
         ///     解析连续在因子中的记录数
         /// </summary>
