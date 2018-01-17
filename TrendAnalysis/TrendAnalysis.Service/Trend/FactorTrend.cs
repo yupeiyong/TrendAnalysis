@@ -49,7 +49,6 @@ namespace TrendAnalysis.Service.Trend
             return factorResults;
         }
 
-
         /// <summary>
         ///     解析因子在记录中的连续次数
         /// </summary>
@@ -64,10 +63,19 @@ namespace TrendAnalysis.Service.Trend
             var resultList = new List<FactorTrendAnalyseResult<T>>();
             foreach (var factor in factors)
             {
-                resultList.Add(AnalyseConsecutive(numbers, factor.Left, factor.Right, numbersTailCutCount, allowMinTimes));
+                if (factor.Left != null && factor.Left.Count > 0)
+                {
+                    resultList.Add(AnalyseConsecutive(numbers, factor.Left, factor.Right, numbersTailCutCount, allowMinTimes));
+                }
+                if (factor.Right != null && factor.Right.Count > 0)
+                {
+                    resultList.Add(AnalyseConsecutive(numbers, factor.Right, factor.Left, numbersTailCutCount, allowMinTimes));
+                }
             }
             return resultList;
         }
+
+
         /// <summary>
         ///     解析连续在因子中的记录数
         /// </summary>

@@ -30,18 +30,18 @@ namespace TrendAnalysis.Service.Trend
             var length = arr.Count();
             if (length == 1)
             {
-                nodes.Add(new Factor<T> { Left = new List<T> { arr[0] }, Right = new List<T>() });
+                nodes.Add(new Factor<T> {Left = new List<T> {arr[0]}, Right = new List<T>()});
                 return nodes;
             }
             if (length == 2)
             {
-                nodes.Add(new Factor<T> { Left = new List<T> { arr[0] }, Right = new List<T> { arr[1] } });
+                nodes.Add(new Factor<T> {Left = new List<T> {arr[0]}, Right = new List<T> {arr[1]}});
                 return nodes;
             }
             if (middleIndex == 0)
             {
                 //如果数组长度为奇数，和偶数取相同的中间位置索引，如[1,2,3,4,5]=>[1,2][3,4,5]
-                middleIndex = length / 2 - 1;
+                middleIndex = length/2 - 1;
             }
 
             //声明新数组，记录数组左部索引变化
@@ -58,7 +58,7 @@ namespace TrendAnalysis.Service.Trend
             //var top = length % 2 == 0 ? 1 : 0;
             //统一为1，不论长度是奇数还是偶数
             var top = 1;
-            if (length % 2 == 1 && oddLengthAllowZeroIndex)
+            if (length%2 == 1 && oddLengthAllowZeroIndex)
             {
                 top = 0;
             }
@@ -90,25 +90,7 @@ namespace TrendAnalysis.Service.Trend
                     currentIndex = middleIndex;
                 }
             } while (currentIndex >= top);
-            return CreateList(nodes);
-        }
-
-
-        /// <summary>
-        ///     生成因子列表,每个因子有左右列表，左右换位置组成一个新组合
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="factors"></param>
-        /// <returns></returns>
-        private static List<Factor<T>> CreateList<T>(List<Factor<T>> factors)
-        {
-            var resultFactors = new List<Factor<T>>();
-            foreach (var factor in factors)
-            {
-                resultFactors.Add(factor);
-                resultFactors.Add(new Factor<T> { Left = factor.Right, Right = factor.Left });
-            }
-            return resultFactors;
+            return nodes;
         }
 
 
@@ -128,7 +110,7 @@ namespace TrendAnalysis.Service.Trend
                     rightArray.Add(item);
                 }
             }
-            return new Factor<T> { Left = leftArry, Right = rightArray };
+            return new Factor<T> {Left = leftArry, Right = rightArray};
         }
 
     }
