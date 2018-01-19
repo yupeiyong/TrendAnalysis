@@ -389,6 +389,9 @@ namespace TrendAnalysis.Service.Test.MarkSix
         {
             using (var dao = new TrendDbContext())
             {
+                var watch = new Stopwatch();
+                watch.Start();
+
                 var service = new MarkSixAnalysisService();
                 var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(1000).ToList();
                 var trendDto = new MarkSixAnalyseHistoricalTrendDto
@@ -408,6 +411,8 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var content = new StringBuilder();
                 trends.ForEach(item => content.Append(item.ToString()));
 
+                watch.Stop();
+                var usedTimes = watch.ElapsedMilliseconds;//用时：5117.144秒
                 //用时：5179秒，86分钟
                 var str = content.ToString();
             }

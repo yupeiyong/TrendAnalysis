@@ -59,7 +59,7 @@ namespace TrendAnalysis.Service.Trend
 
                 //从因子列表中的倒数第二个开始遍历
                 var m = factorCount - 2;
-                for (; m >= 0 && i - m >= 0; m--,i--)
+                for (; m >= 0 && i - m >= 0; m--, i--)
                 {
                     if (!item.Factors[m].Contains(dto.Numbers[i]))
                         break;
@@ -402,7 +402,7 @@ namespace TrendAnalysis.Service.Trend
                     if (indexArray[i] < curLength)
                     {
                         //取2的模如果=0，表示遍历到当前元素
-                        if (countArray[i]%2 == 0)
+                        if (countArray[i] % 2 == 0)
                         {
                             factors[i] = permutationFactors[i][indexArray[i]].Left;
                             if (i == 0)
@@ -489,7 +489,7 @@ namespace TrendAnalysis.Service.Trend
                     if (indexArray[i] < curLength)
                     {
                         //取2的模如果=0，表示遍历到当前元素
-                        if (countArray[i]%2 == 0)
+                        if (countArray[i] % 2 == 0)
                         {
                             factors[i] = permutationFactors[i][indexArray[i]].Left;
                         }
@@ -589,7 +589,7 @@ namespace TrendAnalysis.Service.Trend
                             NumbersTailCutCount = dto.NumbersTailCutCount,
                             AllowMinFactorCurrentConsecutiveTimes = consecutiveTimes,
                             AllowMaxInterval = interval,
-                            PermutationFactors=dto.PermutationFactors
+                            PermutationFactors = dto.PermutationFactors
                         });
 
                         //结果是否正确
@@ -712,6 +712,34 @@ namespace TrendAnalysis.Service.Trend
                             .ThenBy(t => t.Interval).ToList();
 
                         var factorResult = factorResults.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
+                        if (factorResult == null) continue;
+                        var resultConsecutiveTimes = factorResult.FactorCurrentConsecutiveTimes;
+                        var resultInterval = factorResult.Interval;
+                        if (factorResult.PredictiveFactor != null && factorResult.PredictiveFactor.Count > 0)
+                        {
+                            resultCount++;
+
+                            if (factorResult.PredictiveFactor.Contains(number))
+                            {
+                                successCount++;
+                                success = true;
+                            }
+                        }
+                        var trendItem = new HistoricalTrendItem
+                        {
+                            Times = times,
+                            Number = number,
+                            Success = success,
+                            ResultConsecutiveTimes = resultConsecutiveTimes,
+                            ResultInterval = resultInterval,
+                            PredictiveFactor = factorResult.PredictiveFactor
+                        };
+
+                        trend.Items.Add(trendItem);
+
+
+                        /*  分析结果为也作记录
+                        var factorResult = factorResults.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
                         var factors = new List<byte>();
                         var resultConsecutiveTimes = 0;
                         var resultInterval = 0;
@@ -742,11 +770,12 @@ namespace TrendAnalysis.Service.Trend
                             PredictiveFactor = factors
                         };
 
-                        trend.AnalyticalCount = resultCount;
-                        trend.CorrectCount = successCount;
-                        trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
-                        trend.Items.Add(trendItem);
+                        trend.Items.Add(trendItem);    
+                     */
                     }
+                    trend.AnalyticalCount = resultCount;
+                    trend.CorrectCount = successCount;
+                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
                 }
             }
             return trends;
