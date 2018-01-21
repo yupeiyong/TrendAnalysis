@@ -19,6 +19,12 @@ namespace TrendAnalysis.Models.Trend
 
 
         /// <summary>
+        /// 明细项分类
+        /// </summary>
+        public int HistoricalTrendItemType { get; set; }
+
+
+        /// <summary>
         ///     类型说明
         /// </summary>
         public string TypeDescription { get; set; }
@@ -27,7 +33,7 @@ namespace TrendAnalysis.Models.Trend
         /// <summary>
         ///     开始期次
         /// </summary>
-        public string StartTimes { get; set; }
+        public int StartTimes { get; set; }
 
 
         /// <summary>

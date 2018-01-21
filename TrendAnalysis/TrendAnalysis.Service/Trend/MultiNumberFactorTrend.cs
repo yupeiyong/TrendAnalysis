@@ -190,7 +190,7 @@ namespace TrendAnalysis.Service.Trend
                     var trend = new HistoricalTrend
                     {
                         HistoricalTrendType =dto.HistoricalTrendType,
-                        StartTimes = analyseNumbers[0].Times,
+                        StartTimes = analyseNumbers[0].TimesValue,
                         Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,
                         AllowConsecutiveTimes = consecutiveTimes,

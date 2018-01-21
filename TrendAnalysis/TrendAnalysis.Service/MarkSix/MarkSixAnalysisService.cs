@@ -195,10 +195,23 @@ namespace TrendAnalysis.Service.MarkSix
                     EndAllowMinFactorCurrentConsecutiveTimes = dto.EndAllowMinFactorCurrentConsecutiveTimes,
                     AllowMinTimes = dto.AllowMinTimes,
                     NumbersTailCutCount = dto.NumbersTailCutCount,
-                    HistoricalTrendType=HistoricalTrendTypeEnum.MarkSixOnesNormal
+                    HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixOnesNormal
                 };
+                //先删除旧数据
+                var removeDto = new HistoricalTrendServiceRemoveDto
+                {
+                    Location = dto.Location,
+                    StartTimesValue = records[0].TimesValue,
+                    EndTimesValue = records[records.Count - 1].TimesValue,
+                    StartAllowConsecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes,
+                    EndAllowConsecutiveTimes = dto.EndAllowMinFactorCurrentConsecutiveTimes,
+                    StartAllowMaxInterval = dto.StartAllowMaxInterval,
+                    EndAllowMaxInterval = dto.EndAllowMaxInterval,
+                    HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixOnesNormal
+                };
+                HistoricalTrendService.Remove(removeDto);
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
-                
+
                 //保存到数据库
                 HistoricalTrendService.AddRange(historicalTrends);
                 return historicalTrends;
@@ -278,8 +291,23 @@ namespace TrendAnalysis.Service.MarkSix
                     EndAllowMinFactorCurrentConsecutiveTimes = dto.EndAllowMinFactorCurrentConsecutiveTimes,
                     AllowMinTimes = dto.AllowMinTimes,
                     NumbersTailCutCount = dto.NumbersTailCutCount,
-                    HistoricalTrendType=HistoricalTrendTypeEnum.MarkSixTensNormal
+                    HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixTensNormal
                 };
+                //先删除旧数据
+                var removeDto = new HistoricalTrendServiceRemoveDto
+                {
+                    Location = dto.Location,
+                    StartTimesValue = records[0].TimesValue,
+                    EndTimesValue = records[records.Count - 1].TimesValue,
+                    StartAllowConsecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes,
+                    EndAllowConsecutiveTimes = dto.EndAllowMinFactorCurrentConsecutiveTimes,
+                    StartAllowMaxInterval = dto.StartAllowMaxInterval,
+                    EndAllowMaxInterval = dto.EndAllowMaxInterval,
+                    HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixTensNormal
+                };
+                HistoricalTrendService.Remove(removeDto);
+
+
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
                 //保存到数据库
@@ -415,6 +443,7 @@ namespace TrendAnalysis.Service.MarkSix
         /// <returns></returns>
         public List<HistoricalTrend> AnalyseOnesHistoricalTrendByPermutationFactors(MarkSixAnalyseHistoricalTrendDto dto)
         {
+            List<TemporaryRecord<byte>> records;
             using (var dao = new TrendDbContext())
             {
                 var source = dao.Set<MarkSixRecord>().AsQueryable();
@@ -428,7 +457,7 @@ namespace TrendAnalysis.Service.MarkSix
 
                 //按期次值升序排列
                 source = source.OrderBy(m => m.TimesValue);
-                List<TemporaryRecord<byte>> records;
+
                 switch (dto.Location)
                 {
                     case 1:
@@ -462,20 +491,34 @@ namespace TrendAnalysis.Service.MarkSix
                     default:
                         throw new Exception("错误，指定的位置不是有效的号码位置！");
                 }
+            }
 
-                var factorHistoricalTrend = new PermutationFactorTrend();
+            if(records==null||records.Count==0)
+                throw new Exception("错误，号码记录为空！");
 
-                //个位因子
-                var onesDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
+            var factorHistoricalTrend = new PermutationFactorTrend();
 
-                //var onesResults = new List<List<PermutationFactorTrendAnalyseResult<byte>>>();
-                //for (var i = 0; i < onesDigitFactors.Count; i++)
-                //{
-                //    var ls = new List<List<Factor<byte>>> { new List<Factor<byte>> { onesDigitFactors[i] }, onesDigitFactors };
-                //}
+            //先删除旧数据
+            var removeDto = new HistoricalTrendServiceRemoveDto
+            {
+                Location = dto.Location,
+                StartTimesValue = records[0].TimesValue,
+                EndTimesValue = records[records.Count - 1].TimesValue,
+                StartAllowConsecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes,
+                EndAllowConsecutiveTimes = dto.EndAllowMinFactorCurrentConsecutiveTimes,
+                StartAllowMaxInterval = dto.StartAllowMaxInterval,
+                EndAllowMaxInterval = dto.EndAllowMaxInterval,
+                HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixOnesPermutationFactor
+            };
 
-                //暂时只分析第一个因子
-                var permutationFactors= new List<List<Factor<byte>>> { new List<Factor<byte>> { onesDigitFactors[0] }, onesDigitFactors };
+            HistoricalTrendService.Remove(removeDto);
+            //个位因子
+            var onesDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
+
+            var onesResults = new List<HistoricalTrend>();
+            for (var i = 0; i < onesDigitFactors.Count; i++)
+            {
+                var permutationFactors = new List<List<Factor<byte>>> { new List<Factor<byte>> { onesDigitFactors[i] }, onesDigitFactors };
                 var trendDto = new PermutationFactorAnalyseHistoricalTrendDto<byte>
                 {
                     Numbers = records,
@@ -489,14 +532,35 @@ namespace TrendAnalysis.Service.MarkSix
                     AllowMinTimes = dto.AllowMinTimes,
                     NumbersTailCutCount = dto.NumbersTailCutCount,
                     HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixOnesPermutationFactor,
-                    TypeDescription = "[0]0[1]*"//第一维排列因子只取索引位置为0的元素，第二维排列因子取所有元素
+                    TypeDescription = $"排列因子:[{i}]0[1]*",//第一维排列因子只取索引位置为i的元素，第二维排列因子取所有元素
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
                 //保存到数据库
                 HistoricalTrendService.AddRange(historicalTrends);
-                return historicalTrends;
+                //onesResults.AddRange(historicalTrends);
             }
+
+            ////暂时只分析第一个因子
+            //var permutationFactors= new List<List<Factor<byte>>> { new List<Factor<byte>> { onesDigitFactors[0] }, onesDigitFactors };
+            //var trendDto = new PermutationFactorAnalyseHistoricalTrendDto<byte>
+            //{
+            //    Numbers = records,
+            //    PermutationFactors = permutationFactors,
+            //    Location = dto.Location,
+            //    AnalyseNumberCount = dto.AnalyseNumberCount,
+            //    StartAllowMaxInterval = dto.StartAllowMaxInterval,
+            //    EndAllowMaxInterval = dto.EndAllowMaxInterval,
+            //    StartAllowMinFactorCurrentConsecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes,
+            //    EndAllowMinFactorCurrentConsecutiveTimes = dto.EndAllowMinFactorCurrentConsecutiveTimes,
+            //    AllowMinTimes = dto.AllowMinTimes,
+            //    NumbersTailCutCount = dto.NumbersTailCutCount,
+            //    HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixOnesPermutationFactor,
+            //    TypeDescription = "[0]0[1]*"//第一维排列因子只取索引位置为0的元素，第二维排列因子取所有元素
+            //};
+            //var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
+
+            return onesResults;
         }
 
 
@@ -581,7 +645,7 @@ namespace TrendAnalysis.Service.MarkSix
                     AllowMinTimes = dto.AllowMinTimes,
                     NumbersTailCutCount = dto.NumbersTailCutCount,
                     HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixTensPermutationFactor,
-                    TypeDescription= "[0]0[1]*"//第一维排列因子只取索引位置为0的元素，第二维排列因子取所有元素
+                    TypeDescription = $"[0]0[1]*"//第一维排列因子只取索引位置为0的元素，第二维排列因子取所有元素
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
@@ -858,7 +922,7 @@ namespace TrendAnalysis.Service.MarkSix
                             factor[n] = (byte)((factor[n] + 10 - sum) % 10);
                         }
                     },
-                    HistoricalTrendType=HistoricalTrendTypeEnum.MarkSixOnesMultiNumber,
+                    HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixOnesMultiNumber,
                     TypeDescription = "i+1"
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
@@ -975,7 +1039,7 @@ namespace TrendAnalysis.Service.MarkSix
                             factor[n] = (byte)((factor[n] + 5 - sum) % 5);
                         }
                     },
-                    HistoricalTrendType=HistoricalTrendTypeEnum.MarkSixTensMultiNumber
+                    HistoricalTrendType = HistoricalTrendTypeEnum.MarkSixTensMultiNumber
                 };
                 var historicalTrends = factorHistoricalTrend.AnalyseHistoricalTrend(trendDto);
 
