@@ -1176,11 +1176,11 @@ namespace TrendAnalysis.Service.MarkSix
         //    if (numbersTailCutCount > 0 && numbersTailCutCount < onesDigitNumbers.Count)
         //    {
         //        var numbers = onesDigitNumbers.Skip(0).Take(onesDigitNumbers.Count - numbersTailCutCount).ToList();
-        //        onesDigitResult = FactorAnalysis.AnalyseConsecutives(numbers, onesDigitFactors, allowMinTimes);
+        //        onesDigitResult = FactorAnalysis.CountConsecutives(numbers, onesDigitFactors, allowMinTimes);
         //    }
         //    else
         //    {
-        //        onesDigitResult = FactorAnalysis.AnalyseConsecutives(onesDigitNumbers, onesDigitFactors, allowMinTimes);
+        //        onesDigitResult = FactorAnalysis.CountConsecutives(onesDigitNumbers, onesDigitFactors, allowMinTimes);
         //    }
         //    onesDigitResult = onesDigitResult.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
         //    foreach (var item in onesDigitResult)
@@ -1216,11 +1216,11 @@ namespace TrendAnalysis.Service.MarkSix
         //    if (numbersTailCutCount > 0 && tensDigitNumbers.Count > 0)
         //    {
         //        var numbers = tensDigitNumbers.Skip(0).Take(tensDigitNumbers.Count - numbersTailCutCount).ToList();
-        //        tensDigitResult = FactorAnalysis.AnalyseConsecutives(numbers, tensDigitFactors, allowMinTimes);
+        //        tensDigitResult = FactorAnalysis.CountConsecutives(numbers, tensDigitFactors, allowMinTimes);
         //    }
         //    else
         //    {
-        //        tensDigitResult = FactorAnalysis.AnalyseConsecutives(tensDigitNumbers, tensDigitFactors, allowMinTimes);
+        //        tensDigitResult = FactorAnalysis.CountConsecutives(tensDigitNumbers, tensDigitFactors, allowMinTimes);
         //    }
         //    tensDigitResult = tensDigitResult.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
         //    foreach (var item in tensDigitResult)
@@ -1258,11 +1258,11 @@ namespace TrendAnalysis.Service.MarkSix
         //    if (numbersTailCutCount > 0 && compositeNumbers.Count > 0)
         //    {
         //        var numbers = compositeNumbers.Skip(0).Take(compositeNumbers.Count - numbersTailCutCount).ToList();
-        //        results = FactorAnalysis.AnalyseConsecutives(numbers, factors, allowMinTimes);
+        //        results = FactorAnalysis.CountConsecutives(numbers, factors, allowMinTimes);
         //    }
         //    else
         //    {
-        //        results = FactorAnalysis.AnalyseConsecutives(compositeNumbers, factors, allowMinTimes);
+        //        results = FactorAnalysis.CountConsecutives(compositeNumbers, factors, allowMinTimes);
         //    }
         //    results = results.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
         //    foreach (var item in results)

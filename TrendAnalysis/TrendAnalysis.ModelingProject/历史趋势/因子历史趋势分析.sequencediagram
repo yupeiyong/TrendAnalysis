@@ -1,22 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm12="http://schemas.microsoft.com/dsltools/UseCaseModel" dslVersion="1.0.0.0" Id="1c526e9e-284b-4bf9-a235-2c101e852744" name="多号码历史趋势分析" linkedPackageId="6d56496a-ee4b-4660-822c-bc3e0d4a3175" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
-  <profileInstances>
-    <packageHasProfileInstances Id="286be4b8-fe55-4015-83ef-5a70e5476c09">
-      <profileInstance Id="c3a0a843-b647-42ae-a7bc-3d5d404a3339" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="ccf6a61c-615c-4019-920f-2b29dea5da4e">
-      <profileInstance Id="a9ac77e1-22cd-42aa-8c16-a167241116f5" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-  </profileInstances>
+<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm12="http://schemas.microsoft.com/dsltools/UseCaseModel" dslVersion="1.0.0.0" Id="1c526e9e-284b-4bf9-a235-2c101e852744" name="因子历史趋势分析" linkedPackageId="6d56496a-ee4b-4660-822c-bc3e0d4a3175" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
   <packagedElements>
     <packageHasNamedElement>
-      <interaction Id="87677b3c-94ff-4c79-a6ba-6f9de62bed1c" name="多号码历史趋势分析" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
+      <interaction Id="87677b3c-94ff-4c79-a6ba-6f9de62bed1c" name="因子历史趋势分析" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
         <elementDefinition Id="93e20299-309e-4160-a971-72037d477092" />
         <fragments>
           <behaviorExecutionSpecification Id="32150286-1f94-4e7f-a5b1-5fa4ed9910c5" name="BehaviorExecutionSpecification1">
@@ -128,16 +114,16 @@
               <lifelineMoniker Id="ead15ef8-dc29-48a5-b0e9-7b786ceefe18" LastKnownName="过往历史趋势分析记录" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="23f7c24a-61e4-40a3-a122-1fb2cd4e13d4" name="MessageOccurrenceSpecification7">
-            <elementDefinition Id="534d1ddf-531e-4e56-8308-2ab1564c6546" />
-            <covered>
-              <lifelineMoniker Id="ead15ef8-dc29-48a5-b0e9-7b786ceefe18" LastKnownName="过往历史趋势分析记录" />
-            </covered>
-          </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="65da5837-50d2-496c-925d-2ee493d55a90" name="MessageOccurrenceSpecification6">
             <elementDefinition Id="97902e9a-86fd-4392-8ba1-3d51c5714ba2" />
             <covered>
               <lifelineMoniker Id="5e0f1675-0c33-4fd2-9a16-db76e03cb6a9" LastKnownName="历史趋势分析服务" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="23f7c24a-61e4-40a3-a122-1fb2cd4e13d4" name="MessageOccurrenceSpecification7">
+            <elementDefinition Id="534d1ddf-531e-4e56-8308-2ab1564c6546" />
+            <covered>
+              <lifelineMoniker Id="ead15ef8-dc29-48a5-b0e9-7b786ceefe18" LastKnownName="过往历史趋势分析记录" />
             </covered>
           </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="74923f8d-18f1-4433-bd03-47220e46fefe" name="MessageOccurrenceSpecification8">
@@ -225,16 +211,16 @@
               <lifelineMoniker Id="520b717f-5abf-45a1-9a40-3c7462df2b6d" LastKnownName="号码记录" />
             </covered>
           </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="6c1dbb1a-db95-4df9-9158-e5ae9080fa9a" name="MessageOccurrenceSpecification4">
-            <elementDefinition Id="5947ccb4-a703-40be-bc35-4a97c23aa2a9" />
-            <covered>
-              <lifelineMoniker Id="5e0f1675-0c33-4fd2-9a16-db76e03cb6a9" LastKnownName="历史趋势分析服务" />
-            </covered>
-          </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="f03fcfca-5eaa-4fed-8630-1bc66412fa69" name="MessageOccurrenceSpecification5">
             <elementDefinition Id="756516ba-2881-4178-ad58-65026cd7b80c" />
             <covered>
               <lifelineMoniker Id="48a6374c-019e-43e3-9aa2-8ba7c2b67274" LastKnownName="趋势分析" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="6c1dbb1a-db95-4df9-9158-e5ae9080fa9a" name="MessageOccurrenceSpecification4">
+            <elementDefinition Id="5947ccb4-a703-40be-bc35-4a97c23aa2a9" />
+            <covered>
+              <lifelineMoniker Id="5e0f1675-0c33-4fd2-9a16-db76e03cb6a9" LastKnownName="历史趋势分析服务" />
             </covered>
           </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="fc86b3c7-d920-41f8-9637-ed4cb81c8507" name="ExecutionOccurrenceSpecification4">
@@ -331,16 +317,16 @@
               <lifelineMoniker Id="2a89f5f0-7a2f-481a-bef3-ee41bec6d826" LastKnownName="趋势分析服务" />
             </covered>
           </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="060d4aad-c814-4e95-9240-abab46c21fbd" name="MessageOccurrenceSpecification29">
-            <elementDefinition Id="712e105f-3fc3-4e63-9bd8-00dafcac55cb" />
-            <covered>
-              <lifelineMoniker Id="2a89f5f0-7a2f-481a-bef3-ee41bec6d826" LastKnownName="趋势分析服务" />
-            </covered>
-          </messageOccurrenceSpecification>
           <messageOccurrenceSpecification Id="8ec519cf-94af-404f-8aad-8ae62c806279" name="MessageOccurrenceSpecification28">
             <elementDefinition Id="42a03d05-8e43-416c-bdb2-38690dc1d0f0" />
             <covered>
               <lifelineMoniker Id="520b717f-5abf-45a1-9a40-3c7462df2b6d" LastKnownName="号码记录" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="060d4aad-c814-4e95-9240-abab46c21fbd" name="MessageOccurrenceSpecification29">
+            <elementDefinition Id="712e105f-3fc3-4e63-9bd8-00dafcac55cb" />
+            <covered>
+              <lifelineMoniker Id="2a89f5f0-7a2f-481a-bef3-ee41bec6d826" LastKnownName="趋势分析服务" />
             </covered>
           </messageOccurrenceSpecification>
           <executionOccurrenceSpecification Id="72c1881c-0249-41ce-8ce6-cae10f9c51ab" name="ExecutionOccurrenceSpecification16">
@@ -662,5 +648,19 @@
   </packagedElements>
   <package Id="6d56496a-ee4b-4660-822c-bc3e0d4a3175" name="TrendAnalysis.ModelingProject">
     <elementDefinition Id="157f3c16-3e6f-4d21-b55b-3345795bc7f0" />
+    <profileInstances>
+      <packageHasProfileInstances Id="286be4b8-fe55-4015-83ef-5a70e5476c09">
+        <profileInstance Id="c3a0a843-b647-42ae-a7bc-3d5d404a3339" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="ccf6a61c-615c-4019-920f-2b29dea5da4e">
+        <profileInstance Id="a9ac77e1-22cd-42aa-8c16-a167241116f5" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </SequenceDesignerModel>

@@ -32,25 +32,25 @@ namespace TrendAnalysis.DataTransferObject.Trend
 
 
         /// <summary>
-        ///     开始的允许最大的间隔数（最大连续期数-指定期次此因子连续次数），由小到大
+        ///     开始的允许最大的间隔数（最大连续期数-指定期次此因子连续次数），由大到小
         /// </summary>
         public int StartAllowMaxInterval { get; set; } = int.MaxValue;
 
 
         /// <summary>
-        ///     结束的允许最大的间隔数（最大连续期数-指定期次此因子连续次数），由小到大
+        ///     结束的允许最大的间隔数（最大连续期数-指定期次此因子连续次数），由大到小
         /// </summary>
         public int EndAllowMaxInterval { get; set; } = int.MaxValue;
 
 
         /// <summary>
-        ///     开始的允许的最小指定期次此因子连续次数，由大到小
+        ///     开始的允许的最小指定期次此因子连续次数，由小到大
         /// </summary>
         public int StartAllowMinFactorCurrentConsecutiveTimes { get; set; } = 1;
 
 
         /// <summary>
-        ///     结束的允许的最小指定期次此因子连续次数，由大到小
+        ///     结束的允许的最小指定期次此因子连续次数，由小到大
         /// </summary>
         public int EndAllowMinFactorCurrentConsecutiveTimes { get; set; } = 1;
 
