@@ -26,17 +26,17 @@ namespace TrendAnalysis.Service.Trend
             if (arr == null || arr.Count() == 0)
                 throw new Exception("错误，输入的集合为空！");
 
-            var nodes = new List<Factor<T>>();
+            var factors = new List<Factor<T>>();
             var length = arr.Count();
             if (length == 1)
             {
-                nodes.Add(new Factor<T> {Left = new List<T> {arr[0]}, Right = new List<T>()});
-                return nodes;
+                factors.Add(new Factor<T> {Left = new List<T> {arr[0]}, Right = new List<T>()});
+                return factors;
             }
             if (length == 2)
             {
-                nodes.Add(new Factor<T> {Left = new List<T> {arr[0]}, Right = new List<T> {arr[1]}});
-                return nodes;
+                factors.Add(new Factor<T> {Left = new List<T> {arr[0]}, Right = new List<T> {arr[1]}});
+                return factors;
             }
             if (middleIndex == 0)
             {
@@ -69,7 +69,7 @@ namespace TrendAnalysis.Service.Trend
                     for (var i = leftIndexArray[middleIndex]; i < length; i++)
                     {
                         //记录组合数
-                        nodes.Add(CreateNode(arr, leftIndexArray));
+                        factors.Add(CreateFactor(arr, leftIndexArray));
                         leftIndexArray[currentIndex]++;
                     }
                 }
@@ -90,11 +90,36 @@ namespace TrendAnalysis.Service.Trend
                     currentIndex = middleIndex;
                 }
             } while (currentIndex >= top);
-            return nodes;
+            return CreateFactors(factors);
         }
 
 
-        private static Factor<T> CreateNode<T>(List<T> arr, int[] leftIndexArray)
+        /// <summary>
+        ///     重新生成因子列表
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="originalFactors"></param>
+        /// <returns></returns>
+        private static List<Factor<T>> CreateFactors<T>(List<Factor<T>> originalFactors)
+        {
+            var factors = new List<Factor<T>>();
+            foreach (var factor in originalFactors)
+            {
+                factors.Add(factor);
+                factors.Add(new Factor<T> { Left = factor.Right, Right = factor.Left });
+            }
+            return factors;
+        }
+
+
+        /// <summary>
+        ///     生成因子
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="arr"></param>
+        /// <param name="leftIndexArray"></param>
+        /// <returns></returns>
+        private static Factor<T> CreateFactor<T>(List<T> arr, int[] leftIndexArray)
         {
             var leftArry = new List<T>();
             var rightArray = new List<T>();
