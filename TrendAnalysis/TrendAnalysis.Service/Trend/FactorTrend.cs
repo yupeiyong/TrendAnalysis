@@ -64,14 +64,8 @@ namespace TrendAnalysis.Service.Trend
             var resultList = new List<FactorTrendAnalyseResult<T>>();
             foreach (var factor in factors)
             {
-                if (factor.Left != null && factor.Left.Count > 0)
-                {
-                    resultList.Add(AnalyseConsecutive(numbers, factor.Left, factor.Right, numbersTailCutCount, allowMinTimes));
-                }
-                if (factor.Right != null && factor.Right.Count > 0)
-                {
-                    resultList.Add(AnalyseConsecutive(numbers, factor.Right, factor.Left, numbersTailCutCount, allowMinTimes));
-                }
+                if (factor.Left == null || factor.Right == null) continue;
+                resultList.Add(AnalyseConsecutive(numbers, factor.Left, factor.Right, numbersTailCutCount, allowMinTimes));
             }
             return resultList;
         }
@@ -89,7 +83,12 @@ namespace TrendAnalysis.Service.Trend
         /// <returns></returns>
         private static FactorTrendAnalyseResult<T> AnalyseConsecutive<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> predictiveFactor, int numbersTailCutCount = 1, int allowMinTimes = 1)
         {
-            var curResult = new FactorTrendAnalyseResult<T> {Factor = factor, PredictiveFactor = predictiveFactor, HistoricalConsecutiveTimes = new SortedDictionary<int, int>()};
+            var curResult = new FactorTrendAnalyseResult<T>
+            {
+                Factor = factor,
+                PredictiveFactor = predictiveFactor,
+                HistoricalConsecutiveTimes = new SortedDictionary<int, int>()
+            };
             var i = 0;
 
             //连续次数
@@ -205,11 +204,11 @@ namespace TrendAnalysis.Service.Trend
                             }
                         }
 
-                        var trendItem = new HistoricalTrendItem {Times = times, Number = number, Success = success, ResultConsecutiveTimes = resultConsecutiveTimes, ResultInterval = resultInterval, PredictiveFactor = factors};
+                        var trendItem = new HistoricalTrendItem { Times = times, Number = number, Success = success, ResultConsecutiveTimes = resultConsecutiveTimes, ResultInterval = resultInterval, PredictiveFactor = factors };
 
                         trend.AnalyticalCount = resultCount;
                         trend.CorrectCount = successCount;
-                        trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double) trend.CorrectCount/trend.AnalyticalCount;
+                        trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
                         trend.Items.Add(trendItem);
                     }
                 }
@@ -348,7 +347,7 @@ namespace TrendAnalysis.Service.Trend
                     }
                     trend.AnalyticalCount = resultCount;
                     trend.CorrectCount = successCount;
-                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double) trend.CorrectCount/trend.AnalyticalCount;
+                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
                 }
             }
             return trends;
