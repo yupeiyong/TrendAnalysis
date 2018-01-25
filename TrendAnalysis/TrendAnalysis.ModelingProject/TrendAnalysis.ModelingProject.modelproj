@@ -71,19 +71,19 @@
       <SubType>Content</SubType>
       <DependentUpon>MarkSix\MarkSix类图.classdiagram</DependentUpon>
     </Content>
-    <Content Include="历史趋势\多号码趋势分析.sequencediagram">
+    <Content Include="历史趋势\因子历史趋势分析.sequencediagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="历史趋势\多号码趋势分析.sequencediagram.layout">
+    <Content Include="历史趋势\因子历史趋势分析.sequencediagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>历史趋势\多号码趋势分析.sequencediagram</DependentUpon>
+      <DependentUpon>历史趋势\因子历史趋势分析.sequencediagram</DependentUpon>
     </Content>
-    <Content Include="历史趋势\活动图-按组合因子分析记录.activitydiagram">
+    <Content Include="历史趋势\活动图-统计因子连续次数.activitydiagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="历史趋势\活动图-按组合因子分析记录.activitydiagram.layout">
+    <Content Include="历史趋势\活动图-统计因子连续次数.activitydiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>历史趋势\活动图-按组合因子分析记录.activitydiagram</DependentUpon>
+      <DependentUpon>历史趋势\活动图-统计因子连续次数.activitydiagram</DependentUpon>
     </Content>
     <Content Include="历史趋势\活动图-生成二维组合集合.activitydiagram">
       <SubType>Content</SubType>

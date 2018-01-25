@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HistoricalTrendServiceRemoveDto.cs" />
+    <Compile Include="Trend\AnalyseFactorHistoricalTrendDto.cs" />
     <Compile Include="Trend\BaseAnalyseHistoricalTrendDto.cs" />
     <Compile Include="Trend\BaseTrendAnalyseDto.cs" />
     <Compile Include="Trend\PermutationFactorAnalyseHistoricalTrendDto.cs" />

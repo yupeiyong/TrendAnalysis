@@ -28,6 +28,12 @@ namespace TrendAnalysis.Service.Trend
         /// </summary>
         public SortedDictionary<int, int> HistoricalConsecutiveTimes { get; set; } = new SortedDictionary<int, int>();
 
+
+        /// <summary>
+        ///     索引和最大连续次数间隔，键为索引，值为最大连续次数－索引位置连续次数
+        /// </summary>
+        public List<FactorTrendAnalyseResultIndexItem> IndexMaxConsecutiveTimesInterval { get; set; }
+
         /// <summary>
         ///     当前指定期次此因子连续次数
         /// </summary>
@@ -37,7 +43,7 @@ namespace TrendAnalysis.Service.Trend
         /// <summary>
         ///     最大连续期数-指定期次此因子连续次数的间隔数，数越小，表示变化的趋势越大
         /// </summary>
-        public int Interval => HistoricalConsecutiveTimes == null 
+        public int Interval => HistoricalConsecutiveTimes == null
             || HistoricalConsecutiveTimes.Count == 0 ? 0 : HistoricalConsecutiveTimes.Max(k => k.Key) - FactorCurrentConsecutiveTimes;
 
     }
