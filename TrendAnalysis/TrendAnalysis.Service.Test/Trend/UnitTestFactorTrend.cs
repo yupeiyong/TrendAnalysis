@@ -53,6 +53,13 @@ namespace TrendAnalysis.Service.Test.Trend
         public void TestAnalyseFactorHistoricalTrend()
         {
             var numbers = new List<byte> { 2, 3, 3, 1, 4, 3, 3, 3, 1, 3, 3, 3 };
+            /*
+             索引位置：0  1  2  3  4  5  6  7  8  9  10 11
+             号码列表：2, 3, 3, 1, 4, 3, 3, 3, 1, 3, 3, 3
+             连续次数：0  1  2  0  1  2  3  4  0  1  2  3
+             最大间隔：0  -1 -2 0  1  0  -1 -2 0  3  2  1
+             */
+
 
             var records = numbers.Select((t, i) => new TemporaryRecord<byte>
             {
@@ -67,7 +74,7 @@ namespace TrendAnalysis.Service.Test.Trend
                 Numbers = records,
                 AnalyseNumberCount = 5,
                 EndAllowMaxInterval = -3,
-                StartAllowMaxInterval = 2,
+                StartAllowMaxInterval = -2,
                 StartAllowMinFactorCurrentConsecutiveTimes = 2,
                 EndAllowMinFactorCurrentConsecutiveTimes = 3,
                 Location=7
@@ -75,6 +82,28 @@ namespace TrendAnalysis.Service.Test.Trend
             var rows = new FactorTrend().AnalyseFactorHistoricalTrend(dto);
             var resultCount = (dto.StartAllowMaxInterval - dto.EndAllowMaxInterval + 1) * (dto.EndAllowMinFactorCurrentConsecutiveTimes - dto.StartAllowMinFactorCurrentConsecutiveTimes + 1);
             Assert.IsTrue(rows.Count == resultCount);
+
+            var index = 8;
+            var fu2_1 = rows.FirstOrDefault(r => r.AllowInterval == dto.StartAllowMaxInterval && r.AllowConsecutiveTimes==dto.StartAllowMinFactorCurrentConsecutiveTimes);
+            Assert.IsNotNull(fu2_1);
+            Assert.IsTrue(fu2_1.CorrectRate == 1);
+            Assert.IsTrue(fu2_1.Items != null && fu2_1.Items[0].Times == index.ToString());
+
+            var fu2_2 = rows.FirstOrDefault(r => r.AllowInterval == dto.StartAllowMaxInterval && r.AllowConsecutiveTimes == dto.EndAllowMinFactorCurrentConsecutiveTimes);
+            Assert.IsNotNull(fu2_2);
+            Assert.IsTrue(fu2_2.CorrectRate == 1);
+            Assert.IsTrue(fu2_2.Items != null && fu2_2.Items[0].Times == index.ToString());
+
+            var fu3_1 = rows.FirstOrDefault(r => r.AllowInterval == dto.EndAllowMaxInterval && r.AllowConsecutiveTimes == dto.StartAllowMinFactorCurrentConsecutiveTimes);
+            Assert.IsNotNull(fu3_1);
+            Assert.IsTrue(fu3_1.CorrectRate == 0);
+            Assert.IsTrue(fu3_1.Items==null || fu3_1.Items.Count == 0);
+
+            var fu3_2 = rows.FirstOrDefault(r => r.AllowInterval == dto.EndAllowMaxInterval && r.AllowConsecutiveTimes == dto.EndAllowMinFactorCurrentConsecutiveTimes);
+            Assert.IsNotNull(fu3_2);
+            Assert.IsTrue(fu3_2.CorrectRate == 0);
+            Assert.IsTrue(fu3_2.Items == null || fu3_2.Items.Count == 0);
+
         }
     }
 }
