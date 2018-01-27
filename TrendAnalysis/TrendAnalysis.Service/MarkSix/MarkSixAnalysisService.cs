@@ -78,7 +78,7 @@ namespace TrendAnalysis.Service.MarkSix
 
                 //按数字位置分析（十位/个位）
                 //十位
-                var tensDigitResult = factorHistoricalTrend.Analyse(new FactorTrendAnalyseDto<byte>
+                var tensDigitResult = factorHistoricalTrend.Analyse(new FactorsTrendAnalyseDto<byte>
                 {
                     Numbers = tensDigitNumbers,
                     Factors = tensDigitFactors,
@@ -95,7 +95,7 @@ namespace TrendAnalysis.Service.MarkSix
                 var onesDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
 
                 //个位
-                var onesDigitResult = factorHistoricalTrend.Analyse(new FactorTrendAnalyseDto<byte>
+                var onesDigitResult = factorHistoricalTrend.Analyse(new FactorsTrendAnalyseDto<byte>
                 {
                     Numbers = onesDigitNumbers,
                     Factors = onesDigitFactors,
@@ -108,14 +108,14 @@ namespace TrendAnalysis.Service.MarkSix
                 if (tensDigitResult.Count > 0 && onesDigitResult.Count > 0)
                 {
                     //选择最多连续次数
-                    var maxTens = tensDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
-                    var maxOnes = onesDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
-                    if (maxTens != null && maxOnes != null)
-                    {
-                        var tenFactor = maxTens.PredictiveFactor;
-                        var onesFactor = maxOnes.PredictiveFactor;
-                        return GetNumbers(tenFactor, onesFactor);
-                    }
+                    //var maxTens = tensDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
+                    //var maxOnes = onesDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
+                    //if (maxTens != null && maxOnes != null)
+                    //{
+                    //    var tenFactor = maxTens.PredictiveFactor;
+                    //    var onesFactor = maxOnes.PredictiveFactor;
+                    //    return GetNumbers(tenFactor, onesFactor);
+                    //}
                 }
                 return new List<byte>();
             }

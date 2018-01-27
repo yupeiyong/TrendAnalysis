@@ -44,10 +44,11 @@
     <Compile Include="Trend\AnalyseFactorHistoricalTrendDto.cs" />
     <Compile Include="Trend\BaseAnalyseHistoricalTrendDto.cs" />
     <Compile Include="Trend\BaseTrendAnalyseDto.cs" />
+    <Compile Include="Trend\FactorTrendAnalyseDto.cs" />
     <Compile Include="Trend\PermutationFactorAnalyseHistoricalTrendDto.cs" />
     <Compile Include="Trend\PermutationFactorTrendAnalyseDto.cs" />
     <Compile Include="Trend\AnalyseHistoricalTrendDto.cs" />
-    <Compile Include="Trend\FactorTrendAnalyseDto.cs" />
+    <Compile Include="Trend\FactorsTrendAnalyseDto.cs" />
     <Compile Include="MarkSixAnalyseHistoricalTrendDto.cs" />
     <Compile Include="MarkSixAnalyseSpecifiedLocationDto.cs" />
     <Compile Include="BaseSearchDto.cs" />

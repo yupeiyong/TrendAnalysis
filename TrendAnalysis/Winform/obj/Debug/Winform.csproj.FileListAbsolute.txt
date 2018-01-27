@@ -71,3 +71,6 @@ F:\workspace\TrendAnalysis\TrendAnalysis\Winform\obj\Debug\Winform.csproj.Genera
 F:\workspace\TrendAnalysis\TrendAnalysis\Winform\bin\Debug\Z.EntityFramework.Plus.EF6.dll
 F:\workspace\TrendAnalysis\TrendAnalysis\Winform\bin\Debug\Z.EntityFramework.Extensions.dll
 F:\workspace\TrendAnalysis\TrendAnalysis\Winform\bin\Debug\Z.EntityFramework.Extensions.xml
+E:\workspace\TrendAnalysis\TrendAnalysis\Winform\bin\Debug\Z.EntityFramework.Extensions.dll
+E:\workspace\TrendAnalysis\TrendAnalysis\Winform\bin\Debug\Z.EntityFramework.Plus.EF6.dll
+E:\workspace\TrendAnalysis\TrendAnalysis\Winform\bin\Debug\Z.EntityFramework.Extensions.xml
