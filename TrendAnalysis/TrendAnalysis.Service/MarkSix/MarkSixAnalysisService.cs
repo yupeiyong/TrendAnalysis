@@ -1176,11 +1176,11 @@ namespace TrendAnalysis.Service.MarkSix
         //    if (numbersTailCutCount > 0 && numbersTailCutCount < onesDigitNumbers.Count)
         //    {
         //        var numbers = onesDigitNumbers.Skip(0).Take(onesDigitNumbers.Count - numbersTailCutCount).ToList();
-        //        onesDigitResult = FactorAnalysis.CountConsecutives(numbers, onesDigitFactors, allowMinTimes);
+        //        onesDigitResult = FactorAnalysis.CountFactorsConsecutivesTimes(numbers, onesDigitFactors, allowMinTimes);
         //    }
         //    else
         //    {
-        //        onesDigitResult = FactorAnalysis.CountConsecutives(onesDigitNumbers, onesDigitFactors, allowMinTimes);
+        //        onesDigitResult = FactorAnalysis.CountFactorsConsecutivesTimes(onesDigitNumbers, onesDigitFactors, allowMinTimes);
         //    }
         //    onesDigitResult = onesDigitResult.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
         //    foreach (var item in onesDigitResult)
@@ -1216,11 +1216,11 @@ namespace TrendAnalysis.Service.MarkSix
         //    if (numbersTailCutCount > 0 && tensDigitNumbers.Count > 0)
         //    {
         //        var numbers = tensDigitNumbers.Skip(0).Take(tensDigitNumbers.Count - numbersTailCutCount).ToList();
-        //        tensDigitResult = FactorAnalysis.CountConsecutives(numbers, tensDigitFactors, allowMinTimes);
+        //        tensDigitResult = FactorAnalysis.CountFactorsConsecutivesTimes(numbers, tensDigitFactors, allowMinTimes);
         //    }
         //    else
         //    {
-        //        tensDigitResult = FactorAnalysis.CountConsecutives(tensDigitNumbers, tensDigitFactors, allowMinTimes);
+        //        tensDigitResult = FactorAnalysis.CountFactorsConsecutivesTimes(tensDigitNumbers, tensDigitFactors, allowMinTimes);
         //    }
         //    tensDigitResult = tensDigitResult.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
         //    foreach (var item in tensDigitResult)
@@ -1258,11 +1258,11 @@ namespace TrendAnalysis.Service.MarkSix
         //    if (numbersTailCutCount > 0 && compositeNumbers.Count > 0)
         //    {
         //        var numbers = compositeNumbers.Skip(0).Take(compositeNumbers.Count - numbersTailCutCount).ToList();
-        //        results = FactorAnalysis.CountConsecutives(numbers, factors, allowMinTimes);
+        //        results = FactorAnalysis.CountFactorsConsecutivesTimes(numbers, factors, allowMinTimes);
         //    }
         //    else
         //    {
-        //        results = FactorAnalysis.CountConsecutives(compositeNumbers, factors, allowMinTimes);
+        //        results = FactorAnalysis.CountFactorsConsecutivesTimes(compositeNumbers, factors, allowMinTimes);
         //    }
         //    results = results.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
         //    foreach (var item in results)

@@ -17,7 +17,7 @@ namespace TrendAnalysis.Service.Test.Trend
         {
             var ls = new List<Factor<string>>() { new Factor<string> { Left = new List<string> { "1", "2" }, Right = new List<string> { "3", "4" } } };
             var numbers = new List<string> { "3", "2", "1", "2", "0", "0", "1", "2", "3", "3", "4", "4", "4", "3", "3", "0", "3", "3", "3" };
-            var rows = FactorTrend.CountConsecutives(numbers, ls);
+            var rows = FactorTrend.CountFactorsConsecutivesTimes(numbers, ls);
             Assert.IsTrue(rows.Count > 0);
             Assert.IsTrue(rows.Count == 1);
             Assert.IsTrue(rows[0].HistoricalConsecutiveTimes.Count == 2);
@@ -35,7 +35,7 @@ namespace TrendAnalysis.Service.Test.Trend
         {
             var ls = new List<Factor<int>>() { new Factor<int> { Left = new List<int> { 1, 2 }, Right = new List<int> { 3, 4 } } };
             var numbers = new List<int> { 3, 2, 1, 2, 0, 0, 1, 2, 3, 3, 4, 4, 4, 3, 3, 0, 3, 3, 3 };
-            var rows = FactorTrend.CountConsecutives(numbers, ls);
+            var rows = FactorTrend.CountFactorsConsecutivesTimes(numbers, ls);
             Assert.IsTrue(rows.Count > 0);
             Assert.IsTrue(rows.Count == 1);
             Assert.IsTrue(rows[0].HistoricalConsecutiveTimes.Count == 2);
