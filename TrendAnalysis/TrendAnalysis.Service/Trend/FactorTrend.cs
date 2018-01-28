@@ -84,8 +84,8 @@ namespace TrendAnalysis.Service.Trend
             var minConsecutiveTimes = trendResult.RowDetailses.Where(n => n.ConsecutiveTimes != 0).Min(n => n.ConsecutiveTimes);
             var maxConsecutiveTimes = trendResult.RowDetailses.Where(n => n.ConsecutiveTimes != 0).Max(n => n.ConsecutiveTimes);
 
-            var minInterval = trendResult.RowDetailses.Min(n => n.MaxConsecutiveTimesInterval);
-            var maxInterval = trendResult.RowDetailses.Max(n => n.MaxConsecutiveTimesInterval);
+            var minInterval = trendResult.RowDetailses.Where(n => n.MaxConsecutiveTimesInterval!=DiscontinuousFlag).Min(n => n.MaxConsecutiveTimesInterval);
+            var maxInterval = trendResult.RowDetailses.Where(n => n.MaxConsecutiveTimesInterval != DiscontinuousFlag).Max(n => n.MaxConsecutiveTimesInterval);
             //允许的连续次数，由小到大
             for (var consecutiveTimes = minConsecutiveTimes; consecutiveTimes <= maxConsecutiveTimes; consecutiveTimes++)
             {
@@ -105,11 +105,11 @@ namespace TrendAnalysis.Service.Trend
 
                     //行明细结果集
                     var rowDetailses = trendResult.RowDetailses;
-                    for (int i = numberCount; i >= analyseNumberCount; i--)
+                    for (int i = numberCount - 1; i >= analyseNumberCount; i--)
                     {
                         var number = numbers[i];
                         //上一索引位置的分析结果,10个号码，分析第10位（索引位置9），取第9位（索引位置8）
-                        var curIndexResult = rowDetailses[numberCount - i - 2];
+                        var curIndexResult = rowDetailses[i - 1];
 
                         //对结果再分析
                         //1、按允许的最小因子当前连续次数和允许的最大间隔次数筛选
@@ -146,7 +146,7 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="factor">判断因子</param>
         /// <param name="predictiveFactor">反因子</param>
         /// <returns></returns>
-        private static FactorTrendAnalyseResult<T> CountFactorConsecutiveTimes<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> predictiveFactor)
+        public static FactorTrendAnalyseResult<T> CountFactorConsecutiveTimes<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> predictiveFactor)
         {
             var curResult = new FactorTrendAnalyseResult<T>
             {
