@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.DataTransferObject.Trend;
@@ -15,47 +14,54 @@ namespace TrendAnalysis.Service.Trend
     /// </summary>
     public class FactorTrend
     {
+
         /// <summary>
-        /// 非连续指示
+        ///     非连续指示
         /// </summary>
         public const int DiscontinuousFlag = int.MaxValue;
 
 
         /// <summary>
-        /// 统计连续次数允许的最小次数
+        ///     统计连续次数允许的最小次数
         /// </summary>
         public const int AllowMinTimes = 1;
+
 
         public List<Factor<T>> Analyse<T>(FactorsTrendAnalyseDto<T> dto)
         {
             //预测的可能因子
             var predictiveFactors = new List<Factor<T>>();
+
             //分析每个因子
             foreach (var factor in dto.Factors)
             {
                 //统计每个因子在记录中的趋势
                 var trendResult = CountFactorConsecutiveTimes(dto.Numbers, factor.Left, factor.Right);
+
                 //行明细结果集
                 var rowDetailses = trendResult.RowDetailses;
                 if (rowDetailses == null || rowDetailses.Count == 0) continue;
                 var lastIndexResult = rowDetailses[rowDetailses.Count - 1];
+
                 //因子不包含最后一个号码，（连续次数为0）
                 if (lastIndexResult.ConsecutiveTimes == 0)
                     continue;
-                //分析历史趋势,排除最后一位号码
-                var historicalTrends = AnalyseFactorHistoricalTrend<T>(dto.Numbers.Take(dto.Numbers.Count - 1).ToList(), trendResult, dto.AnalyseHistoricalTrendCount, factor.Right);
+
+                //分析历史趋势,排除最后一位号码，（最后一位号码分析当前要分析的可能号码）
+                var historicalNumbers = dto.Numbers.Take(dto.Numbers.Count - 1).ToList();
+                var historicalTrends = AnalyseFactorHistoricalTrend(historicalNumbers, trendResult, dto.AnalyseHistoricalTrendCount, factor.Right);
 
                 //筛选正确100%的历史趋势，如没有不记录
                 historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderBy(h => h.AllowInterval).ThenByDescending(h => h.AllowConsecutiveTimes).ToList();
                 if (historicalTrends.Count == 0) continue;
 
                 var firstHistoricalTrend = historicalTrends.FirstOrDefault();
+
                 //当前因子是否符合筛选条件
                 //最多间隔数和最大连续次数
                 //可以考虑加大连续次数和间隔数
                 if (lastIndexResult.ConsecutiveTimes >= firstHistoricalTrend.AllowConsecutiveTimes && lastIndexResult.MaxConsecutiveTimesInterval <= firstHistoricalTrend.AllowInterval)
                     predictiveFactors.Add(factor);
-
             }
             return predictiveFactors;
         }
@@ -64,7 +70,10 @@ namespace TrendAnalysis.Service.Trend
         /// <summary>
         ///     分析因子一段日期的历史趋势，（通过号码集合分析历史趋势）
         /// </summary>
-        /// <param name="dto"></param>
+        /// <param name="numbers">号码集合</param>
+        /// <param name="trendResult">统计结果</param>
+        /// <param name="analyseNumberCount">要分析多少位记录</param>
+        /// <param name="predictiveFactor">可能的因子</param>
         /// <returns></returns>
         public List<HistoricalTrend> AnalyseFactorHistoricalTrend<T>(List<T> numbers, FactorTrendAnalyseResult<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
         {
@@ -84,8 +93,9 @@ namespace TrendAnalysis.Service.Trend
             var minConsecutiveTimes = trendResult.RowDetailses.Where(n => n.ConsecutiveTimes != 0).Min(n => n.ConsecutiveTimes);
             var maxConsecutiveTimes = trendResult.RowDetailses.Where(n => n.ConsecutiveTimes != 0).Max(n => n.ConsecutiveTimes);
 
-            var minInterval = trendResult.RowDetailses.Where(n => n.MaxConsecutiveTimesInterval!=DiscontinuousFlag).Min(n => n.MaxConsecutiveTimesInterval);
+            var minInterval = trendResult.RowDetailses.Where(n => n.MaxConsecutiveTimesInterval != DiscontinuousFlag).Min(n => n.MaxConsecutiveTimesInterval);
             var maxInterval = trendResult.RowDetailses.Where(n => n.MaxConsecutiveTimesInterval != DiscontinuousFlag).Max(n => n.MaxConsecutiveTimesInterval);
+
             //允许的连续次数，由小到大
             for (var consecutiveTimes = minConsecutiveTimes; consecutiveTimes <= maxConsecutiveTimes; consecutiveTimes++)
             {
@@ -105,9 +115,10 @@ namespace TrendAnalysis.Service.Trend
 
                     //行明细结果集
                     var rowDetailses = trendResult.RowDetailses;
-                    for (int i = numberCount - 1; i >= analyseNumberCount; i--)
+                    for (var i = numberCount - 1; i >= analyseNumberCount; i--)
                     {
                         var number = numbers[i];
+
                         //上一索引位置的分析结果,10个号码，分析第10位（索引位置9），取第9位（索引位置8）
                         var curIndexResult = rowDetailses[i - 1];
 
@@ -131,7 +142,7 @@ namespace TrendAnalysis.Service.Trend
                     }
                     trend.AnalyticalCount = resultCount;
                     trend.CorrectCount = successCount;
-                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
+                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double) trend.CorrectCount/trend.AnalyticalCount;
                 }
             }
             return trends;
@@ -156,8 +167,10 @@ namespace TrendAnalysis.Service.Trend
                 RowDetailses = new List<FactorTrendAnalyseResultRowDetails>()
             };
             var i = 0;
+
             //最大连续次数
             var maxConsecutiveTimes = 0;
+
             //连续次数
             var times = 0;
             var length = numbers.Count;
@@ -166,6 +179,7 @@ namespace TrendAnalysis.Service.Trend
                 if (factor.Contains(numbers[i]))
                 {
                     times++;
+
                     //因子连续，最大连续次数－当前连续次数
                     curResult.RowDetailses.Add(
                         new FactorTrendAnalyseResultRowDetails
@@ -188,6 +202,7 @@ namespace TrendAnalysis.Service.Trend
                     if (times > maxConsecutiveTimes)
                         maxConsecutiveTimes = times;
                     times = 0;
+
                     //因子不连续
                     curResult.RowDetailses.Add(
                         new FactorTrendAnalyseResultRowDetails
@@ -210,6 +225,7 @@ namespace TrendAnalysis.Service.Trend
             return curResult;
         }
 
+
         /// <summary>
         ///     统计多个因子在记录中的连续次数
         /// </summary>
@@ -228,7 +244,6 @@ namespace TrendAnalysis.Service.Trend
             }
             return resultList;
         }
-
 
 
         /// <summary>
@@ -299,6 +314,7 @@ namespace TrendAnalysis.Service.Trend
             return factorResults;
         }
 
+
         /// <summary>
         ///     分析因子一段日期的历史趋势，（通过号码集合分析历史趋势）
         /// </summary>
@@ -347,6 +363,7 @@ namespace TrendAnalysis.Service.Trend
                     {
                         var number = analyseNumbers[i].Number;
                         var times = analyseNumbers[i].Times;
+
                         //上一索引位置的分析结果,10个号码，分析第10位（索引位置9），取第9位（索引位置8）
                         var curIndexResult = rowDetailses[numberCount - i - 2];
 
@@ -382,27 +399,28 @@ namespace TrendAnalysis.Service.Trend
                                 PredictiveFactor = predictiveFactor
                             };
                             trend.Items.Add(trendItem);
-
                         }
                     }
                     trend.AnalyticalCount = resultCount;
                     trend.CorrectCount = successCount;
-                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
+                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double) trend.CorrectCount/trend.AnalyticalCount;
                 }
             }
             return trends;
         }
 
 
-        ///// <summary>
-        /////     [准备废弃的代码] 分析一段日期的历史趋势，（通过号码集合分析历史趋势）
-        ///// </summary>
-        ///// <param name="dto"></param>
-        ///// <returns></returns>
-        //[Obsolete]
-        //public List<HistoricalTrend> AnalyseHistoricalTrend_Old1(AnalyseHistoricalTrendDto<byte> dto)
-        //{
         //    var trends = new List<HistoricalTrend>();
+        //{
+        //public List<HistoricalTrend> AnalyseHistoricalTrend_Old1(AnalyseHistoricalTrendDto<byte> dto)
+        //[Obsolete]
+        ///// <returns></returns>
+        ///// <param name="dto"></param>
+        ///// </summary>
+        /////     [准备废弃的代码] 分析一段日期的历史趋势，（通过号码集合分析历史趋势）
+
+
+        ///// <summary>
 
         //    if (dto.Numbers.Count < dto.AnalyseNumberCount)
         //        throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
@@ -621,7 +639,6 @@ namespace TrendAnalysis.Service.Trend
         //    }
         //    return trends;
         //}
-
     }
 
 }

@@ -1,17 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.DataTransferObject.Trend;
-using TrendAnalysis.Models.MarkSix;
 using TrendAnalysis.Models.Trend;
 using TrendAnalysis.Service.Trend;
-using TrendAnalysis.DataTransferObject;
+
 
 namespace TrendAnalysis.Service.Test.Trend
 {
+
     [TestClass]
     public class UnitTestFactorTrend
     {
+
         [TestMethod]
         public void TestAnalyseConsecutives_By_String_Numbers()
         {
@@ -28,6 +30,7 @@ namespace TrendAnalysis.Service.Test.Trend
             Assert.IsTrue(keys[0] == 2 && dict[keys[0]] == 1);
             Assert.IsTrue(keys[1] == 3 && dict[keys[0]] == 1);
         }
+
 
         [TestMethod]
         public void TestAnalyseConsecutives_By_int_Numbers()
@@ -101,7 +104,6 @@ namespace TrendAnalysis.Service.Test.Trend
             Assert.IsNotNull(fu3_2);
             Assert.IsTrue(fu3_2.CorrectRate == 0);
             Assert.IsTrue(fu3_2.Items == null || fu3_2.Items.Count == 0);
-
         }
 
 
@@ -125,6 +127,7 @@ namespace TrendAnalysis.Service.Test.Trend
             Assert.IsTrue(rows.Count >= 1);
         }
 
+
         [TestMethod]
         public void TestAnalyse_PredictiveFactors_Is_Empty()
         {
@@ -140,38 +143,42 @@ namespace TrendAnalysis.Service.Test.Trend
 
             var dto = new FactorsTrendAnalyseDto<byte>
             {
-                Factors = new List<Factor<byte>>() { factor },
+                Factors = new List<Factor<byte>> { factor },
                 Numbers = numbers,
                 AnalyseHistoricalTrendCount = 5
             };
 
-            var predictiveFactors = new FactorTrend().Analyse<byte>(dto);
+            var predictiveFactors = new FactorTrend().Analyse(dto);
             Assert.IsTrue(predictiveFactors.Count == 0);
         }
 
+        /// <summary>
+        /// 分析结果可能的因子数大于0
+        /// </summary>
         [TestMethod]
-        public void TestAnalyse_PredictiveFactors_Has()
+        public void TestAnalyse_PredictiveFactors_Count_Great_Than_Zero()
         {
-            var numbers = new List<byte> { 2, 3, 3, 1, 4, 3, 3, 3, 1, 3, 3, 3, 4, 3, 4 };
+            var numbers = new List<byte> { 2, 3, 3, 1, 4, 3, 3, 3, 1, 3, 3, 3, 4, 3, 4, 3 };
             /*
-             索引位置：0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15
-             号码列表：2, 3, 3, 1, 4, 3, 3, 3, 1, 3, 3, 3  4  3  4
-             连续次数：0  1  2  0  1  2  3  4  0  1  2  3  4  5  6
-             最大间隔：0  -1 -2 0  1  0  -1 -2 0  3  2  1  0  -1  -2
+             索引位置：0   1   2   3   4   5   6   7   8   9   10  11  12  13  14
+             号码列表：2,  3,  3,  1,  4,  3,  3,  3,  1,  3,   3,  3   4   3   4
+             连续次数：0   1   2   0   1   2   3   4   0   1    2   3   4   5   6
+             最大间隔：0  -1  -2   0   1   0  -1  -2   0   3    2   1   0  -1  -2
              */
 
             var factor = new Factor<byte> { Left = new List<byte> { 3, 4 }, Right = new List<byte> { 1, 2 } };
 
             var dto = new FactorsTrendAnalyseDto<byte>
             {
-                Factors = new List<Factor<byte>>() { factor },
+                Factors = new List<Factor<byte>> { factor },
                 Numbers = numbers,
                 AnalyseHistoricalTrendCount = 5
             };
 
-            var predictiveFactors = new FactorTrend().Analyse<byte>(dto);
+            var predictiveFactors = new FactorTrend().Analyse(dto);
             Assert.IsTrue(predictiveFactors.Count == 1);
         }
 
     }
+
 }
