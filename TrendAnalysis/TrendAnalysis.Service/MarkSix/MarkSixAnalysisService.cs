@@ -39,7 +39,7 @@ namespace TrendAnalysis.Service.MarkSix
                 }
 
                 //按期次值升序排列
-                source = source.OrderBy(m => m.TimesValue);
+                source = source.OrderBy(m => m.TimesValue).Skip(0).Take(500);
                 List<byte> numbers;
                 switch (dto.Location)
                 {
@@ -78,12 +78,10 @@ namespace TrendAnalysis.Service.MarkSix
 
                 //按数字位置分析（十位/个位）
                 //十位
-                var tensDigitResult = factorHistoricalTrend.Analyse(new FactorsTrendAnalyseDto<byte>
+                var tenspredictiveFactors = factorHistoricalTrend.Analyse(new FactorsTrendAnalyseDto<byte>
                 {
                     Numbers = tensDigitNumbers,
                     Factors = tensDigitFactors,
-                    AllowMinTimes = dto.TensAllowMinTimes,
-                    NumbersTailCutCount = dto.TensNumbersTailCutCount,
                     AllowMinFactorCurrentConsecutiveTimes = dto.TensAllowMinFactorCurrentConsecutiveTimes,
                     AllowMaxInterval = dto.TensAllowMaxInterval
                 });
@@ -95,17 +93,15 @@ namespace TrendAnalysis.Service.MarkSix
                 var onesDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
 
                 //个位
-                var onesDigitResult = factorHistoricalTrend.Analyse(new FactorsTrendAnalyseDto<byte>
+                var onespredictiveFactors = factorHistoricalTrend.Analyse(new FactorsTrendAnalyseDto<byte>
                 {
                     Numbers = onesDigitNumbers,
                     Factors = onesDigitFactors,
-                    AllowMinTimes = dto.OnesAllowMinTimes,
-                    NumbersTailCutCount = dto.OnesNumbersTailCutCount,
                     AllowMinFactorCurrentConsecutiveTimes = dto.OnesAllowMinFactorCurrentConsecutiveTimes,
                     AllowMaxInterval = dto.OnesAllowMaxInterval
                 });
 
-                if (tensDigitResult.Count > 0 && onesDigitResult.Count > 0)
+                if (tenspredictiveFactors.Count > 0 && onespredictiveFactors.Count > 0)
                 {
                     //选择最多连续次数
                     //var maxTens = tensDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();

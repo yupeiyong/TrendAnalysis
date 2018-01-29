@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TrendAnalysis.DataTransferObject.Trend;
-using TrendAnalysis.Models;
+﻿using System.Collections.Generic;
 using TrendAnalysis.Models.Trend;
 
-namespace TrendAnalysis.DataTransferObject
+
+namespace TrendAnalysis.DataTransferObject.Trend
 {
     /// <summary>
     /// 分析数字记录的传输对象
