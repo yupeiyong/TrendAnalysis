@@ -78,7 +78,7 @@ namespace TrendAnalysis.Service.MarkSix
 
                 //按数字位置分析（十位/个位）
                 //十位
-                var tensDigitResult = factorHistoricalTrend.Analyse(new FactorTrendAnalyseDto<byte>
+                var tensDigitResult = factorHistoricalTrend.Analyse(new FactorsTrendAnalyseDto<byte>
                 {
                     Numbers = tensDigitNumbers,
                     Factors = tensDigitFactors,
@@ -95,7 +95,7 @@ namespace TrendAnalysis.Service.MarkSix
                 var onesDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
 
                 //个位
-                var onesDigitResult = factorHistoricalTrend.Analyse(new FactorTrendAnalyseDto<byte>
+                var onesDigitResult = factorHistoricalTrend.Analyse(new FactorsTrendAnalyseDto<byte>
                 {
                     Numbers = onesDigitNumbers,
                     Factors = onesDigitFactors,
@@ -108,14 +108,14 @@ namespace TrendAnalysis.Service.MarkSix
                 if (tensDigitResult.Count > 0 && onesDigitResult.Count > 0)
                 {
                     //选择最多连续次数
-                    var maxTens = tensDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
-                    var maxOnes = onesDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
-                    if (maxTens != null && maxOnes != null)
-                    {
-                        var tenFactor = maxTens.PredictiveFactor;
-                        var onesFactor = maxOnes.PredictiveFactor;
-                        return GetNumbers(tenFactor, onesFactor);
-                    }
+                    //var maxTens = tensDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
+                    //var maxOnes = onesDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
+                    //if (maxTens != null && maxOnes != null)
+                    //{
+                    //    var tenFactor = maxTens.PredictiveFactor;
+                    //    var onesFactor = maxOnes.PredictiveFactor;
+                    //    return GetNumbers(tenFactor, onesFactor);
+                    //}
                 }
                 return new List<byte>();
             }
@@ -1176,11 +1176,11 @@ namespace TrendAnalysis.Service.MarkSix
         //    if (numbersTailCutCount > 0 && numbersTailCutCount < onesDigitNumbers.Count)
         //    {
         //        var numbers = onesDigitNumbers.Skip(0).Take(onesDigitNumbers.Count - numbersTailCutCount).ToList();
-        //        onesDigitResult = FactorAnalysis.CountConsecutives(numbers, onesDigitFactors, allowMinTimes);
+        //        onesDigitResult = FactorAnalysis.CountFactorsConsecutivesTimes(numbers, onesDigitFactors, allowMinTimes);
         //    }
         //    else
         //    {
-        //        onesDigitResult = FactorAnalysis.CountConsecutives(onesDigitNumbers, onesDigitFactors, allowMinTimes);
+        //        onesDigitResult = FactorAnalysis.CountFactorsConsecutivesTimes(onesDigitNumbers, onesDigitFactors, allowMinTimes);
         //    }
         //    onesDigitResult = onesDigitResult.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
         //    foreach (var item in onesDigitResult)
@@ -1216,11 +1216,11 @@ namespace TrendAnalysis.Service.MarkSix
         //    if (numbersTailCutCount > 0 && tensDigitNumbers.Count > 0)
         //    {
         //        var numbers = tensDigitNumbers.Skip(0).Take(tensDigitNumbers.Count - numbersTailCutCount).ToList();
-        //        tensDigitResult = FactorAnalysis.CountConsecutives(numbers, tensDigitFactors, allowMinTimes);
+        //        tensDigitResult = FactorAnalysis.CountFactorsConsecutivesTimes(numbers, tensDigitFactors, allowMinTimes);
         //    }
         //    else
         //    {
-        //        tensDigitResult = FactorAnalysis.CountConsecutives(tensDigitNumbers, tensDigitFactors, allowMinTimes);
+        //        tensDigitResult = FactorAnalysis.CountFactorsConsecutivesTimes(tensDigitNumbers, tensDigitFactors, allowMinTimes);
         //    }
         //    tensDigitResult = tensDigitResult.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
         //    foreach (var item in tensDigitResult)
@@ -1258,11 +1258,11 @@ namespace TrendAnalysis.Service.MarkSix
         //    if (numbersTailCutCount > 0 && compositeNumbers.Count > 0)
         //    {
         //        var numbers = compositeNumbers.Skip(0).Take(compositeNumbers.Count - numbersTailCutCount).ToList();
-        //        results = FactorAnalysis.CountConsecutives(numbers, factors, allowMinTimes);
+        //        results = FactorAnalysis.CountFactorsConsecutivesTimes(numbers, factors, allowMinTimes);
         //    }
         //    else
         //    {
-        //        results = FactorAnalysis.CountConsecutives(compositeNumbers, factors, allowMinTimes);
+        //        results = FactorAnalysis.CountFactorsConsecutivesTimes(compositeNumbers, factors, allowMinTimes);
         //    }
         //    results = results.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
         //    foreach (var item in results)
