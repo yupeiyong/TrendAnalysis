@@ -39,7 +39,7 @@ namespace TrendAnalysis.Service.MarkSix
                 }
 
                 //按期次值升序排列
-                source = source.OrderBy(m => m.TimesValue).Skip(0).Take(500);
+                source = source.OrderByDescending(m => m.TimesValue).Skip(0).Take(dto.NumberTakeCount).OrderBy(m=>m.TimesValue);
                 List<byte> numbers;
                 switch (dto.Location)
                 {
@@ -103,6 +103,12 @@ namespace TrendAnalysis.Service.MarkSix
 
                 if (tenspredictiveFactors.Count > 0 && onespredictiveFactors.Count > 0)
                 {
+                    var tensFactor=new List<byte>(tenspredictiveFactors[0].Right);
+                    var onesFactor=new List<byte>(onespredictiveFactors[0].Right);
+                    tensFactor = tenspredictiveFactors.Aggregate(tensFactor, (current, factor) => current.Intersect(factor.Right).ToList());
+                    onesFactor = onespredictiveFactors.Aggregate(onesFactor, (current, factor) => current.Intersect(factor.Right).ToList());
+
+                    return GetNumbers(tensFactor, onesFactor);
                     //选择最多连续次数
                     //var maxTens = tensDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
                     //var maxOnes = onesDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
@@ -489,7 +495,7 @@ namespace TrendAnalysis.Service.MarkSix
                 }
             }
 
-            if(records==null||records.Count==0)
+            if (records == null || records.Count == 0)
                 throw new Exception("错误，号码记录为空！");
 
             var factorHistoricalTrend = new PermutationFactorTrend();

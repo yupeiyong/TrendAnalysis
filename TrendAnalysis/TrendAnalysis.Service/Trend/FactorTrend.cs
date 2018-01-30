@@ -32,6 +32,9 @@ namespace TrendAnalysis.Service.Trend
             //预测的可能因子
             var predictiveFactors = new List<Factor<T>>();
 
+            //分析历史趋势,排除最后一位号码，（最后一位号码分析当前要分析的可能号码）
+            var historicalNumbers = dto.Numbers.Take(dto.Numbers.Count - 1).ToList();
+
             //分析每个因子
             foreach (var factor in dto.Factors)
             {
@@ -47,21 +50,25 @@ namespace TrendAnalysis.Service.Trend
                 if (lastIndexResult.ConsecutiveTimes == 0)
                     continue;
 
-                //分析历史趋势,排除最后一位号码，（最后一位号码分析当前要分析的可能号码）
-                var historicalNumbers = dto.Numbers.Take(dto.Numbers.Count - 1).ToList();
                 var historicalTrends = AnalyseFactorHistoricalTrend(historicalNumbers, trendResult, dto.AnalyseHistoricalTrendCount, factor.Right);
 
                 //筛选正确100%的历史趋势，如没有不记录
                 historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderBy(h => h.AllowInterval).ThenByDescending(h => h.AllowConsecutiveTimes).ToList();
                 if (historicalTrends.Count == 0) continue;
 
-                var firstHistoricalTrend = historicalTrends.FirstOrDefault();
+                //var firstHistoricalTrend = historicalTrends.FirstOrDefault();
 
-                //当前因子是否符合筛选条件
-                //最多间隔数和最大连续次数
-                //可以考虑加大连续次数和间隔数
-                if (lastIndexResult.ConsecutiveTimes >= firstHistoricalTrend.AllowConsecutiveTimes && lastIndexResult.MaxConsecutiveTimesInterval <= firstHistoricalTrend.AllowInterval)
-                    predictiveFactors.Add(factor);
+                foreach (var trend in historicalTrends)
+                {
+                    //当前因子是否符合筛选条件
+                    //最多间隔数和最大连续次数
+                    //可以考虑加大连续次数和间隔数
+                    if (lastIndexResult.ConsecutiveTimes >= trend.AllowConsecutiveTimes && lastIndexResult.MaxConsecutiveTimesInterval <= trend.AllowInterval)
+                    {
+                        predictiveFactors.Add(factor);
+                        break;
+                    }
+                }
             }
             return predictiveFactors;
         }
@@ -142,7 +149,7 @@ namespace TrendAnalysis.Service.Trend
                     }
                     trend.AnalyticalCount = resultCount;
                     trend.CorrectCount = successCount;
-                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double) trend.CorrectCount/trend.AnalyticalCount;
+                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
                 }
             }
             return trends;
@@ -403,7 +410,7 @@ namespace TrendAnalysis.Service.Trend
                     }
                     trend.AnalyticalCount = resultCount;
                     trend.CorrectCount = successCount;
-                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double) trend.CorrectCount/trend.AnalyticalCount;
+                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
                 }
             }
             return trends;
