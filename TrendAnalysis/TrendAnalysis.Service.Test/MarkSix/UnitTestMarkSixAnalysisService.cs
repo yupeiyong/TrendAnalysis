@@ -33,15 +33,15 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var hasCount = 0;
                 var tensHasCount = 0;
                 var onesHasCount = 0;
-                var onesLeft = new List<byte> {0, 1, 2, 3, 4};
-                var onesRight = new List<byte> {5, 6, 7, 8, 9};
+                var onesLeft = new List<byte> { 0, 1, 2, 3, 4 };
+                var onesRight = new List<byte> { 5, 6, 7, 8, 9 };
 
-                var tensLeft = new List<byte> {0, 1};
-                var tensRight = new List<byte> {2, 3, 4};
+                var tensLeft = new List<byte> { 0, 1 };
+                var tensRight = new List<byte> { 2, 3, 4 };
                 var rnd = new Random();
                 Parallel.For(0, 100, i =>
                 {
-                    var r = rnd.Next()%2;
+                    var r = rnd.Next() % 2;
                     var tensFactor = new List<byte>();
                     if (r == 1)
                     {
@@ -52,7 +52,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                         tensFactor = tensRight;
                     }
 
-                    var r1 = rnd.Next()%2;
+                    var r1 = rnd.Next() % 2;
                     var onesFactor = new List<byte>();
                     if (r == 1)
                     {
@@ -169,7 +169,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
                     var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
                     var times = records[i].Times;
-                    var dto = new MarkSixAnalyseSpecifiedLocationDto {Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 4, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0};
+                    var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 4, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0 };
 
                     //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
                     var result = service.AnalyseSpecifiedLocationByMultiNumber(dto);
@@ -288,7 +288,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
                     var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
                     var times = records[i].Times;
-                    var dto = new MarkSixAnalyseSpecifiedLocationDto {Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 4, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0};
+                    var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 4, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0 };
 
                     //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
                     var result = service.AnalyseSpecifiedLocationByPermutationFactors(dto);
@@ -335,7 +335,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     var sevenNumbers = new List<MarkSixRecord>();
                     for (var i = 0; i < numbers.Count; i++)
                     {
-                        var record = new MarkSixRecord {Times = i.ToString(), SeventhNum = numbers[i], AwardingDate = DateTime.Now, TimesValue = i};
+                        var record = new MarkSixRecord { Times = i.ToString(), SeventhNum = numbers[i], AwardingDate = DateTime.Now, TimesValue = i };
                         sevenNumbers.Add(record);
                     }
                     dao.Set<MarkSixRecord>().AddRange(sevenNumbers);
@@ -353,7 +353,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                         var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
                         var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
                         var times = records[i].Times;
-                        var dto = new MarkSixAnalyseSpecifiedLocationDto {Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 8, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0};
+                        var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 8, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0 };
 
                         //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
                         var result = service.AnalyseSpecifiedLocationByPermutationFactors(dto);
@@ -607,16 +607,16 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var onesDigitNumbers = numbers.Select(n => n.ToString("00").Substring(1)).Select(n => byte.Parse(n)).ToList();
 
                 //个位因子
-                var onesDigitFactors = FactorGenerator.Create(new List<byte> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}.ToList());
+                var onesDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
 
                 //十位数号码列表
                 var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).Select(n => byte.Parse(n)).ToList();
 
                 //十位因子
-                var tensDigitFactors = FactorGenerator.Create(new List<byte> {0, 1, 2, 3, 4}.ToList());
+                var tensDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4 }.ToList());
 
                 var historicalAnalysis = new FactorTrend();
-                var result = historicalAnalysis.Analyse(new FactorsTrendAnalyseDto<byte> {Numbers = onesDigitNumbers, Factors = onesDigitFactors, AllowMinTimes = 9, AllowMaxInterval = 2});
+                var result = historicalAnalysis.Analyse(new FactorsTrendAnalyseDto<byte> { Numbers = onesDigitNumbers, Factors = onesDigitFactors, AllowMinTimes = 9, AllowMaxInterval = 2 });
                 //result = result.Where(m => m.HistoricalConsecutiveTimes.Count > 0).ToList();
             }
         }
@@ -633,16 +633,16 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var onesDigitNumbers = numbers.Select(n => n.ToString("00").Substring(1)).Select(n => byte.Parse(n)).ToList();
 
                 //个位因子
-                var onesDigitFactors = FactorGenerator.Create(new List<byte> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}.ToList());
+                var onesDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
 
                 //十位数号码列表
                 var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).Select(n => byte.Parse(n)).ToList();
 
                 //十位因子
-                var tensDigitFactors = FactorGenerator.Create(new List<byte> {0, 1, 2, 3, 4}.ToList());
+                var tensDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4 }.ToList());
 
                 var historicalAnalysis = new FactorTrend();
-                var result = historicalAnalysis.Analyse(new FactorsTrendAnalyseDto<byte> {Numbers = tensDigitNumbers, Factors = tensDigitFactors, AllowMinTimes = 4, AllowMaxInterval = 0});
+                var result = historicalAnalysis.Analyse(new FactorsTrendAnalyseDto<byte> { Numbers = tensDigitNumbers, Factors = tensDigitFactors, AllowMinTimes = 4, AllowMaxInterval = 0 });
                 //result = result.Where(m => m.HistoricalConsecutiveTimes.Count > 0).ToList();
             }
         }
@@ -666,7 +666,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
                     var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
                     var times = records[i].Times;
-                    var dto = new MarkSixAnalyseSpecifiedLocationDto {Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 8, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0};
+                    var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 8, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0 };
 
                     //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
                     var result = service.AnalyseSpecifiedLocation(dto);
@@ -686,7 +686,10 @@ namespace TrendAnalysis.Service.Test.MarkSix
                         }
                     }
                     var has = result.Exists(m => m == seventhNum);
-                    if (has) hasCount++;
+                    if (has)
+                    {
+                        hasCount++;
+                    }
                     resultString.AppendLine("期次：" + records[i].Times + ",第7位号码：" + seventhNum + ",分析结果：" + (has ? "-Yes- " : "      ") + string.Join(";", result));
                 }
                 var str = resultString.ToString();

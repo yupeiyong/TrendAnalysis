@@ -53,7 +53,8 @@ namespace TrendAnalysis.Service.Trend
                 var historicalTrends = AnalyseFactorHistoricalTrend(historicalNumbers, trendResult, dto.AnalyseHistoricalTrendCount, factor.Right);
 
                 //筛选正确100%的历史趋势，如没有不记录
-                historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderBy(h => h.AllowInterval).ThenByDescending(h => h.AllowConsecutiveTimes).ToList();
+                //historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderBy(h => h.AllowInterval).ThenByDescending(h => h.AllowConsecutiveTimes).ToList();
+                historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderByDescending(h => h.AllowConsecutiveTimes).ThenBy(h => h.AllowInterval).ToList();
                 if (historicalTrends.Count == 0) continue;
 
                 //var firstHistoricalTrend = historicalTrends.FirstOrDefault();
