@@ -39,7 +39,7 @@ namespace TrendAnalysis.Service.MarkSix
                 }
 
                 //按期次值升序排列
-                source = source.OrderBy(m => m.TimesValue);
+                source = source.OrderByDescending(m => m.TimesValue).Skip(0).Take(dto.NumberTakeCount).OrderBy(m => m.TimesValue);
                 List<byte> numbers;
                 switch (dto.Location)
                 {
@@ -78,12 +78,10 @@ namespace TrendAnalysis.Service.MarkSix
 
                 //按数字位置分析（十位/个位）
                 //十位
-                var tensDigitResult = factorHistoricalTrend.Analyse(new FactorsTrendAnalyseDto<byte>
+                var tenspredictiveFactors = factorHistoricalTrend.Analyse(new FactorsTrendAnalyseDto<byte>
                 {
                     Numbers = tensDigitNumbers,
                     Factors = tensDigitFactors,
-                    AllowMinTimes = dto.TensAllowMinTimes,
-                    NumbersTailCutCount = dto.TensNumbersTailCutCount,
                     AllowMinFactorCurrentConsecutiveTimes = dto.TensAllowMinFactorCurrentConsecutiveTimes,
                     AllowMaxInterval = dto.TensAllowMaxInterval
                 });
@@ -95,27 +93,38 @@ namespace TrendAnalysis.Service.MarkSix
                 var onesDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
 
                 //个位
-                var onesDigitResult = factorHistoricalTrend.Analyse(new FactorsTrendAnalyseDto<byte>
+                var onespredictiveFactors = factorHistoricalTrend.Analyse(new FactorsTrendAnalyseDto<byte>
                 {
                     Numbers = onesDigitNumbers,
                     Factors = onesDigitFactors,
-                    AllowMinTimes = dto.OnesAllowMinTimes,
-                    NumbersTailCutCount = dto.OnesNumbersTailCutCount,
                     AllowMinFactorCurrentConsecutiveTimes = dto.OnesAllowMinFactorCurrentConsecutiveTimes,
                     AllowMaxInterval = dto.OnesAllowMaxInterval
                 });
 
-                if (tensDigitResult.Count > 0 && onesDigitResult.Count > 0)
+                if (tenspredictiveFactors.Count > 0 && onespredictiveFactors.Count > 0)
                 {
-                    //选择最多连续次数
-                    //var maxTens = tensDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
-                    //var maxOnes = onesDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
-                    //if (maxTens != null && maxOnes != null)
-                    //{
-                    //    var tenFactor = maxTens.PredictiveFactor;
-                    //    var onesFactor = maxOnes.PredictiveFactor;
-                    //    return GetNumbers(tenFactor, onesFactor);
-                    //}
+                    var tensFactor = new List<byte>(tenspredictiveFactors[0].Right);
+                    var onesFactor = new List<byte>(onespredictiveFactors[0].Right);
+                    tensFactor = tenspredictiveFactors.Aggregate(tensFactor, (current, factor) => current.Intersect(factor.Right).ToList());
+                    onesFactor = onespredictiveFactors.Aggregate(onesFactor, (current, factor) => current.Intersect(factor.Right).ToList());
+
+                    return GetNumbers(tensFactor, onesFactor);
+                }
+                else if (tenspredictiveFactors.Count > 0)
+                {
+                    var tensFactor = new List<byte>(tenspredictiveFactors[0].Right);
+                    tensFactor = tenspredictiveFactors.Aggregate(tensFactor, (current, factor) => current.Intersect(factor.Right).ToList());
+
+                    return GetNumbers(tensFactor, new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+
+                }
+                else if (onespredictiveFactors.Count > 0)
+                {
+                    var onesFactor = new List<byte>(onespredictiveFactors[0].Right);
+                    onesFactor = onespredictiveFactors.Aggregate(onesFactor, (current, factor) => current.Intersect(factor.Right).ToList());
+
+                    return GetNumbers(new List<byte>() { 0, 1, 2, 3, 4 }, onesFactor);
+
                 }
                 return new List<byte>();
             }
@@ -493,7 +502,7 @@ namespace TrendAnalysis.Service.MarkSix
                 }
             }
 
-            if(records==null||records.Count==0)
+            if (records == null || records.Count == 0)
                 throw new Exception("错误，号码记录为空！");
 
             var factorHistoricalTrend = new PermutationFactorTrend();
@@ -1150,9 +1159,9 @@ namespace TrendAnalysis.Service.MarkSix
             {
                 for (var j = 0; j < onesFactor.Count; j++)
                 {
-                    var valueStr = tenFactor[i] + onesFactor[j];
+                    var valueStr = string.Format("{0}{1}", tenFactor[i], onesFactor[j]);
                     byte number;
-                    if (!byte.TryParse(valueStr.ToString(), out number))
+                    if (!byte.TryParse(valueStr, out number))
                     {
                         throw new Exception($"错误，{valueStr}不是有效的byte类型数据！");
                     }
