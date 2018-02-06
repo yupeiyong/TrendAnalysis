@@ -59,7 +59,7 @@ namespace TrendAnalysis.Service.Trend
 
                 var firstHistoricalTrend = historicalTrends.FirstOrDefault();
                 //可以考虑加大连续次数和间隔数
-                if (lastIndexResult.ConsecutiveTimes >= firstHistoricalTrend.AllowConsecutiveTimes && lastIndexResult.MaxConsecutiveTimesInterval <= firstHistoricalTrend.AllowInterval-1)
+                if (lastIndexResult.ConsecutiveTimes >= firstHistoricalTrend.AllowConsecutiveTimes+2 && lastIndexResult.MaxConsecutiveTimesInterval <= firstHistoricalTrend.AllowInterval-1)
                 {
                     predictiveFactors.Add(factor);
                     continue;
