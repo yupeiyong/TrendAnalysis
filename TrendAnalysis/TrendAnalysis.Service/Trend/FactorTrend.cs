@@ -57,18 +57,18 @@ namespace TrendAnalysis.Service.Trend
                 historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderByDescending(h => h.AllowConsecutiveTimes).ThenBy(h => h.AllowInterval).ToList();
                 if (historicalTrends.Count == 0) continue;
 
-                //var firstHistoricalTrend = historicalTrends.FirstOrDefault();
-
+                var firstHistoricalTrend = historicalTrends.FirstOrDefault();
+                //可以考虑加大连续次数和间隔数
+                if (lastIndexResult.ConsecutiveTimes >= firstHistoricalTrend.AllowConsecutiveTimes+2 && lastIndexResult.MaxConsecutiveTimesInterval <= firstHistoricalTrend.AllowInterval-1)
+                {
+                    predictiveFactors.Add(factor);
+                    continue;
+                }
                 foreach (var trend in historicalTrends)
                 {
                     //当前因子是否符合筛选条件
                     //最多间隔数和最大连续次数
-                    //可以考虑加大连续次数和间隔数
-                    if (lastIndexResult.ConsecutiveTimes >= trend.AllowConsecutiveTimes && lastIndexResult.MaxConsecutiveTimesInterval <= trend.AllowInterval)
-                    {
-                        predictiveFactors.Add(factor);
-                        break;
-                    }
+                    
                 }
             }
             return predictiveFactors;

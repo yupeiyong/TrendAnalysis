@@ -660,7 +660,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var resultCount = 0;
                 var tensHasCount = 0;
                 var onesHasCount = 0;
-                for (var i = 0; i < 100; i++)
+                for (var i = 0; i < 1000; i++)
                 {
                     var seventhNum = records[i].SeventhNum;
                     var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
