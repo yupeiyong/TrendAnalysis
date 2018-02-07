@@ -666,7 +666,16 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
                     var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
                     var times = records[i].Times;
-                    var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 8, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0 };
+                    var dto = new MarkSixAnalyseSpecifiedLocationDto
+                    {
+                        Location = 7,
+                        Times = times,
+                        OnesAddConsecutiveTimes = 2,
+                        TensAddConsecutiveTimes =1,
+                        OnesAddInterval = 1,
+                        TensAddInterval = 1,
+                        NumberTakeCount =300
+                    };
 
                     //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
                     var result = service.AnalyseSpecifiedLocation(dto);

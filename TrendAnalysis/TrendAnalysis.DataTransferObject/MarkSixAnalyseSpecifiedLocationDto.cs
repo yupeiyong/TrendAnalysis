@@ -78,9 +78,32 @@ namespace TrendAnalysis.DataTransferObject
 
 
         /// <summary>
+        ///     个位累加的连续次数
+        /// </summary>
+        public int OnesAddConsecutiveTimes { get; set; }
+
+
+        /// <summary>
+        ///     十位累加的连续次数
+        /// </summary>
+        public int TensAddConsecutiveTimes { get; set; }
+
+
+        /// <summary>
+        ///     个位累加的间隔数
+        /// </summary>
+        public int OnesAddInterval { get; set; }
+
+
+        /// <summary>
+        ///     十位累加的间隔数
+        /// </summary>
+        public int TensAddInterval { get; set; }
+
+        /// <summary>
         ///     取记录条数（不用取全部条数，否则连续次数会无穷递增）
         /// </summary>
-        public int NumberTakeCount { get; set; } = 500;
+        public int NumberTakeCount { get; set; } = 200;
 
     }
 

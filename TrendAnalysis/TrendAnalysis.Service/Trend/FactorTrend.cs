@@ -58,18 +58,21 @@ namespace TrendAnalysis.Service.Trend
                 if (historicalTrends.Count == 0) continue;
 
                 var firstHistoricalTrend = historicalTrends.FirstOrDefault();
+                if (firstHistoricalTrend == null)
+                    continue;
+
                 //可以考虑加大连续次数和间隔数
-                if (lastIndexResult.ConsecutiveTimes >= firstHistoricalTrend.AllowConsecutiveTimes+2 && lastIndexResult.MaxConsecutiveTimesInterval <= firstHistoricalTrend.AllowInterval-1)
+                if (lastIndexResult.ConsecutiveTimes >= firstHistoricalTrend.AllowConsecutiveTimes + dto.AddConsecutiveTimes && lastIndexResult.MaxConsecutiveTimesInterval <= firstHistoricalTrend.AllowInterval - dto.AddInterval)
                 {
                     predictiveFactors.Add(factor);
                     continue;
                 }
-                foreach (var trend in historicalTrends)
-                {
-                    //当前因子是否符合筛选条件
-                    //最多间隔数和最大连续次数
-                    
-                }
+                //foreach (var trend in historicalTrends)
+                //{
+                //    //当前因子是否符合筛选条件
+                //    //最多间隔数和最大连续次数
+
+                //}
             }
             return predictiveFactors;
         }
@@ -328,6 +331,7 @@ namespace TrendAnalysis.Service.Trend
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
+        [Obsolete]
         public List<HistoricalTrend> AnalyseFactorHistoricalTrend(AnalyseFactorHistoricalTrendDto<byte> dto)
         {
             var trends = new List<HistoricalTrend>();
