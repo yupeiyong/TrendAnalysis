@@ -18,10 +18,6 @@ namespace TrendAnalysis.DataTransferObject.Trend
         public List<Factor<T>> Factors { get; set; }
 
 
-        /// <summary>
-        ///     分析多少位历史趋势
-        /// </summary>
-        public int AnalyseHistoricalTrendCount { get; set; } = 100;
 
     }
 
