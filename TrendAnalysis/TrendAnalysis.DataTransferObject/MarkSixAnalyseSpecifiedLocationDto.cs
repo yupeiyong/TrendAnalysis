@@ -105,6 +105,12 @@ namespace TrendAnalysis.DataTransferObject
         /// </summary>
         public int NumberTakeCount { get; set; } = 200;
 
+
+        /// <summary>
+        /// 个位和十位都必须包含
+        /// </summary>
+        public bool OnesAndTensMustContain { get; set; } = true;
+
     }
 
 }
