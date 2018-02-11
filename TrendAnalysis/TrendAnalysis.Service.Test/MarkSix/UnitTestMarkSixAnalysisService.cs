@@ -146,123 +146,123 @@ namespace TrendAnalysis.Service.Test.MarkSix
         #endregion
 
 
-        #region  测试多号码结合分析历史趋势
+        //#region  测试多号码结合分析历史趋势
 
-        /// <summary>
-        ///     用多号码结合的方法 分析个位历史趋势
-        /// </summary>
-        [TestMethod]
-        public void TestMethod_AnalyseSpecifiedLocationByMultiNumber()
-        {
-            using (var dao = new TrendDbContext())
-            {
-                var service = new MarkSixAnalysisService();
-                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(1000).ToList();
-                var resultString = new StringBuilder();
-                var hasCount = 0;
-                var resultCount = 0;
-                var tensHasCount = 0;
-                var onesHasCount = 0;
-                for (var i = 0; i < 100; i++)
-                {
-                    var seventhNum = records[i].SeventhNum;
-                    var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
-                    var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
-                    var times = records[i].Times;
-                    var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 4, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0 };
+        ///// <summary>
+        /////     用多号码结合的方法 分析个位历史趋势
+        ///// </summary>
+        //[TestMethod]
+        //public void TestMethod_AnalyseSpecifiedLocationByMultiNumber()
+        //{
+        //    using (var dao = new TrendDbContext())
+        //    {
+        //        var service = new MarkSixAnalysisService();
+        //        var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(1000).ToList();
+        //        var resultString = new StringBuilder();
+        //        var hasCount = 0;
+        //        var resultCount = 0;
+        //        var tensHasCount = 0;
+        //        var onesHasCount = 0;
+        //        for (var i = 0; i < 100; i++)
+        //        {
+        //            var seventhNum = records[i].SeventhNum;
+        //            var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
+        //            var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
+        //            var times = records[i].Times;
+        //            var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, Times = times, TensNumbersTailCutCount = 6, OnesAllowMinFactorCurrentConsecutiveTimes = 4, OnesNumbersTailCutCount = 10, OnesAllowMaxInterval = 0 };
 
-                    //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
-                    var result = service.AnalyseSpecifiedLocationByMultiNumber(dto);
-                    if (result.Count > 0)
-                    {
-                        resultCount++;
-                        var resultSource = result.Select(r => r.ToString("00"));
-                        var onesResults = resultSource.Select(r => byte.Parse(r.Substring(1))).Distinct().ToList();
-                        var tensResults = resultSource.Select(r => byte.Parse(r.Substring(0, 1))).Distinct().ToList();
-                        if (tensResults.Contains(tens))
-                        {
-                            tensHasCount++;
-                        }
-                        if (onesResults.Contains(ones))
-                        {
-                            onesHasCount++;
-                        }
-                    }
-                    var has = result.Exists(m => m == seventhNum);
-                    if (has) hasCount++;
-                    resultString.AppendLine("期次：" + records[i].Times + ",第7位号码：" + seventhNum + ",分析结果：" + (has ? "-Yes- " : "      ") + string.Join(";", result));
-                }
-                var str = resultString.ToString();
-            }
-        }
-
-
-        /// <summary>
-        ///     测试分析一段时期 1000期次 的趋势
-        /// </summary>
-        [TestMethod]
-        public void TestMethod_AnalyseOnesHistoricalTrendByMultiNumber_1000_Times()
-        {
-            using (var dao = new TrendDbContext())
-            {
-                var service = new MarkSixAnalysisService();
-                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(1000).ToList();
-                var trendDto = new MarkSixAnalyseHistoricalTrendDto
-                {
-                    Location = 7,
-                    Times = records[0].Times,
-                    AnalyseNumberCount = 1000,
-                    StartAllowMaxInterval = -9,
-                    EndAllowMaxInterval = -13,
-                    StartAllowMinFactorCurrentConsecutiveTimes = 7,
-                    EndAllowMinFactorCurrentConsecutiveTimes = 11,
-                    AllowMinTimes = 3,
-                    NumbersTailCutCount = 15
-                };
-
-                var trends = service.AnalyseOnesHistoricalTrendByMultiNumber(trendDto);
-                var content = new StringBuilder();
-                trends.ForEach(item => content.Append(item.ToString()));
+        //            //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
+        //            var result = service.AnalyseSpecifiedLocationByMultiNumber(dto);
+        //            if (result.Count > 0)
+        //            {
+        //                resultCount++;
+        //                var resultSource = result.Select(r => r.ToString("00"));
+        //                var onesResults = resultSource.Select(r => byte.Parse(r.Substring(1))).Distinct().ToList();
+        //                var tensResults = resultSource.Select(r => byte.Parse(r.Substring(0, 1))).Distinct().ToList();
+        //                if (tensResults.Contains(tens))
+        //                {
+        //                    tensHasCount++;
+        //                }
+        //                if (onesResults.Contains(ones))
+        //                {
+        //                    onesHasCount++;
+        //                }
+        //            }
+        //            var has = result.Exists(m => m == seventhNum);
+        //            if (has) hasCount++;
+        //            resultString.AppendLine("期次：" + records[i].Times + ",第7位号码：" + seventhNum + ",分析结果：" + (has ? "-Yes- " : "      ") + string.Join(";", result));
+        //        }
+        //        var str = resultString.ToString();
+        //    }
+        //}
 
 
-                var str = content.ToString();
-            }
-        }
+        ///// <summary>
+        /////     测试分析一段时期 1000期次 的趋势
+        ///// </summary>
+        //[TestMethod]
+        //public void TestMethod_AnalyseOnesHistoricalTrendByMultiNumber_1000_Times()
+        //{
+        //    using (var dao = new TrendDbContext())
+        //    {
+        //        var service = new MarkSixAnalysisService();
+        //        var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(1000).ToList();
+        //        var trendDto = new MarkSixAnalyseHistoricalTrendDto
+        //        {
+        //            Location = 7,
+        //            Times = records[0].Times,
+        //            AnalyseNumberCount = 1000,
+        //            StartAllowMaxInterval = -9,
+        //            EndAllowMaxInterval = -13,
+        //            StartAllowMinFactorCurrentConsecutiveTimes = 7,
+        //            EndAllowMinFactorCurrentConsecutiveTimes = 11,
+        //            AllowMinTimes = 3,
+        //            NumbersTailCutCount = 15
+        //        };
+
+        //        var trends = service.AnalyseOnesHistoricalTrendByMultiNumber(trendDto);
+        //        var content = new StringBuilder();
+        //        trends.ForEach(item => content.Append(item.ToString()));
 
 
-        /// <summary>
-        ///     测试分析一段时期 100期次 的趋势
-        /// </summary>
-        [TestMethod]
-        public void TestMethod_AnalyseOnesHistoricalTrendByMultiNumber_100_Times()
-        {
-            using (var dao = new TrendDbContext())
-            {
-                var service = new MarkSixAnalysisService();
-                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(1000).ToList();
-                var trendDto = new MarkSixAnalyseHistoricalTrendDto
-                {
-                    Location = 7,
-                    Times = records[0].Times,
-                    AnalyseNumberCount = 100,
-                    StartAllowMaxInterval = 1,
-                    EndAllowMaxInterval = -5,
-                    StartAllowMinFactorCurrentConsecutiveTimes = 7,
-                    EndAllowMinFactorCurrentConsecutiveTimes = 12,
-                    AllowMinTimes = 3,
-                    NumbersTailCutCount = 6
-                };
-
-                var trends = service.AnalyseOnesHistoricalTrendByMultiNumber(trendDto);
-                var content = new StringBuilder();
-                trends.ForEach(item => content.Append(item.ToString()));
+        //        var str = content.ToString();
+        //    }
+        //}
 
 
-                var str = content.ToString();
-            }
-        }
+        ///// <summary>
+        /////     测试分析一段时期 100期次 的趋势
+        ///// </summary>
+        //[TestMethod]
+        //public void TestMethod_AnalyseOnesHistoricalTrendByMultiNumber_100_Times()
+        //{
+        //    using (var dao = new TrendDbContext())
+        //    {
+        //        var service = new MarkSixAnalysisService();
+        //        var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(1000).ToList();
+        //        var trendDto = new MarkSixAnalyseHistoricalTrendDto
+        //        {
+        //            Location = 7,
+        //            Times = records[0].Times,
+        //            AnalyseNumberCount = 100,
+        //            StartAllowMaxInterval = 1,
+        //            EndAllowMaxInterval = -5,
+        //            StartAllowMinFactorCurrentConsecutiveTimes = 7,
+        //            EndAllowMinFactorCurrentConsecutiveTimes = 12,
+        //            AllowMinTimes = 3,
+        //            NumbersTailCutCount = 6
+        //        };
 
-        #endregion
+        //        var trends = service.AnalyseOnesHistoricalTrendByMultiNumber(trendDto);
+        //        var content = new StringBuilder();
+        //        trends.ForEach(item => content.Append(item.ToString()));
+
+
+        //        var str = content.ToString();
+        //    }
+        //}
+
+        //#endregion
 
 
         #region  测试通过排列因子分析趋势
@@ -654,13 +654,20 @@ namespace TrendAnalysis.Service.Test.MarkSix
             using (var dao = new TrendDbContext())
             {
                 var service = new MarkSixAnalysisService();
-                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(1000).ToList();
+                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(2505).ToList();
                 var resultString = new StringBuilder();
                 var hasCount = 0;
                 var resultCount = 0;
                 var tensHasCount = 0;
                 var onesHasCount = 0;
-                for (var i = 0; i < 1000; i++)
+                var defaultTakeCount = 200;
+                var rate = 40;
+                var everyPrice = 10;
+                var totalMoney = 0;
+                var winMoney = 0;
+
+                var curTakeCount = defaultTakeCount;
+                for (var i = 0; i < 2500; i++)
                 {
                     var seventhNum = records[i].SeventhNum;
                     var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
@@ -670,12 +677,12 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     {
                         Location = 7,
                         Times = times,
-                        OnesAddConsecutiveTimes =4,
-                        TensAddConsecutiveTimes =10,
+                        OnesAddConsecutiveTimes = 4,
+                        TensAddConsecutiveTimes = 10,
                         OnesAddInterval = 1,
-                        TensAddInterval =10,
-                        NumberTakeCount =500,
-                        OnesAndTensMustContain=false
+                        TensAddInterval = 10,
+                        NumberTakeCount = curTakeCount,
+                        OnesAndTensMustContain = false
                     };
 
                     //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
@@ -696,9 +703,16 @@ namespace TrendAnalysis.Service.Test.MarkSix
                         }
                     }
                     var has = result.Exists(m => m == seventhNum);
+                    totalMoney += result.Count(m => m != 0) * everyPrice;
                     if (has)
                     {
                         hasCount++;
+                        winMoney += everyPrice * rate;
+                        curTakeCount = defaultTakeCount;
+                    }
+                    else
+                    {
+                        curTakeCount++;
                     }
                     resultString.AppendLine("期次：" + records[i].Times + ",第7位号码：" + seventhNum + ",分析结果：" + (has ? "-Yes- " : "      ") + string.Join(";", result));
                 }

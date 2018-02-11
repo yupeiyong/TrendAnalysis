@@ -543,9 +543,9 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="dto"></param>
         /// <returns></returns>
         [Obsolete]
-        public List<HistoricalTrend> AnalyseHistoricalTrend_Old(PermutationFactorAnalyseHistoricalTrendDto<byte> dto)
+        public List<HistoricalFactorTrend> AnalyseHistoricalTrend_Old(PermutationFactorAnalyseHistoricalTrendDto<byte> dto)
         {
-            var trends = new List<HistoricalTrend>();
+            var trends = new List<HistoricalFactorTrend>();
 
             if (dto.Numbers.Count < dto.AnalyseNumberCount)
                 throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
@@ -563,11 +563,11 @@ namespace TrendAnalysis.Service.Trend
                     var resultCount = 0;
                     var successCount = 0;
 
-                    var trend = new HistoricalTrend
+                    var trend = new HistoricalFactorTrend
                     {
-                        HistoricalTrendType = dto.HistoricalTrendType,
+                        //HistoricalTrendType = dto.HistoricalTrendType,
                         StartTimes = analyseNumbers[0].TimesValue,
-                        Items = new List<HistoricalTrendItem>(),
+                        //Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,
                         AllowConsecutiveTimes = consecutiveTimes,
                         AllowInterval = interval,
@@ -630,7 +630,7 @@ namespace TrendAnalysis.Service.Trend
                         trend.AnalyticalCount = resultCount;
                         trend.CorrectCount = successCount;
                         trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
-                        trend.Items.Add(trendItem);
+                        //trend.Items.Add(trendItem);
                     }
                 }
             }
@@ -643,9 +643,9 @@ namespace TrendAnalysis.Service.Trend
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public List<HistoricalTrend> AnalyseHistoricalTrend(PermutationFactorAnalyseHistoricalTrendDto<byte> dto)
+        public List<HistoricalFactorTrend> AnalyseHistoricalTrend(PermutationFactorAnalyseHistoricalTrendDto<byte> dto)
         {
-            var trends = new List<HistoricalTrend>();
+            var trends = new List<HistoricalFactorTrend>();
 
             if (dto.Numbers.Count < dto.AnalyseNumberCount)
                 throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
@@ -681,11 +681,11 @@ namespace TrendAnalysis.Service.Trend
                     var resultCount = 0;
                     var successCount = 0;
 
-                    var trend = new HistoricalTrend
+                    var trend = new HistoricalFactorTrend
                     {
-                        HistoricalTrendType = dto.HistoricalTrendType,
+                        //HistoricalTrendType = dto.HistoricalTrendType,
                         StartTimes = analyseNumbers[0].TimesValue,
-                        Items = new List<HistoricalTrendItem>(),
+                        //Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,
                         AllowConsecutiveTimes = consecutiveTimes,
                         AllowInterval = interval,
@@ -735,7 +735,7 @@ namespace TrendAnalysis.Service.Trend
                             PredictiveFactor = factorResult.PredictiveFactor
                         };
 
-                        trend.Items.Add(trendItem);
+                        //trend.Items.Add(trendItem);
 
 
                         /*  分析结果为也作记录

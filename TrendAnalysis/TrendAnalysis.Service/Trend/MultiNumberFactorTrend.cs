@@ -169,9 +169,9 @@ namespace TrendAnalysis.Service.Trend
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public List<HistoricalTrend> AnalyseHistoricalTrend(MultiNumberAnalyseHistoricalTrendDto<byte> dto)
+        public List<HistoricalFactorTrend> AnalyseHistoricalTrend(MultiNumberAnalyseHistoricalTrendDto<byte> dto)
         {
-            var trends = new List<HistoricalTrend>();
+            var trends = new List<HistoricalFactorTrend>();
 
             if (dto.Numbers.Count < dto.AnalyseNumberCount)
                 throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
@@ -187,7 +187,7 @@ namespace TrendAnalysis.Service.Trend
                     var resultCount = 0;
                     var successCount = 0;
 
-                    var trend = new HistoricalTrend
+                    var trend = new HistoricalFactorTrend
                     {
                         HistoricalTrendType =dto.HistoricalTrendType,
                         StartTimes = analyseNumbers[0].TimesValue,
