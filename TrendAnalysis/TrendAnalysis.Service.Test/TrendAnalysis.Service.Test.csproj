@@ -63,7 +63,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Trend\UnitTestMultiNumberFactorTrend.cs" />
     <Compile Include="Trend\UnitTestPermutationFactorTrend.cs" />
     <Compile Include="Trend\UnitTestCompositeNumber.cs" />
     <Compile Include="MarkSix\UnitTestMarkSixAnalysisService.cs" />
