@@ -565,7 +565,7 @@ namespace TrendAnalysis.Service.Trend
 
                     var trend = new HistoricalFactorTrend
                     {
-                        HistoricalTrendType = dto.HistoricalTrendType,
+                        //HistoricalTrendType = dto.HistoricalTrendType,
                         StartTimes = analyseNumbers[0].TimesValue,
                         //Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,
@@ -683,7 +683,7 @@ namespace TrendAnalysis.Service.Trend
 
                     var trend = new HistoricalFactorTrend
                     {
-                        HistoricalTrendType = dto.HistoricalTrendType,
+                        //HistoricalTrendType = dto.HistoricalTrendType,
                         StartTimes = analyseNumbers[0].TimesValue,
                         //Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,
