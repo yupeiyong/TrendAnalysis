@@ -82,8 +82,8 @@ namespace TrendAnalysis.Service.MarkSix
                 {
                     Numbers = tensDigitNumbers,
                     Factors = tensDigitFactors,
-                    AllowMinFactorCurrentConsecutiveTimes = dto.TensAllowMinFactorCurrentConsecutiveTimes,
-                    AllowMaxInterval = dto.TensAllowMaxInterval
+                    AddConsecutiveTimes=dto.TensAddConsecutiveTimes,
+                    AddInterval=dto.TensAddInterval,
                 });
 
                 //个位数号码列表
@@ -97,8 +97,8 @@ namespace TrendAnalysis.Service.MarkSix
                 {
                     Numbers = onesDigitNumbers,
                     Factors = onesDigitFactors,
-                    AllowMinFactorCurrentConsecutiveTimes = dto.OnesAllowMinFactorCurrentConsecutiveTimes,
-                    AllowMaxInterval = dto.OnesAllowMaxInterval
+                    AddConsecutiveTimes = dto.OnesAddConsecutiveTimes,
+                    AddInterval = dto.OnesAddInterval,
                 });
 
                 if (tenspredictiveFactors.Count > 0 && onespredictiveFactors.Count > 0)
@@ -110,21 +110,24 @@ namespace TrendAnalysis.Service.MarkSix
 
                     return GetNumbers(tensFactor, onesFactor);
                 }
-                else if (tenspredictiveFactors.Count > 0)
+                else if (!dto.OnesAndTensMustContain)
                 {
-                    var tensFactor = new List<byte>(tenspredictiveFactors[0].Right);
-                    tensFactor = tenspredictiveFactors.Aggregate(tensFactor, (current, factor) => current.Intersect(factor.Right).ToList());
+                    if (tenspredictiveFactors.Count > 0)
+                    {
+                        var tensFactor = new List<byte>(tenspredictiveFactors[0].Right);
+                        tensFactor = tenspredictiveFactors.Aggregate(tensFactor, (current, factor) => current.Intersect(factor.Right).ToList());
 
-                    return GetNumbers(tensFactor, new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+                        return GetNumbers(tensFactor, new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
 
-                }
-                else if (onespredictiveFactors.Count > 0)
-                {
-                    var onesFactor = new List<byte>(onespredictiveFactors[0].Right);
-                    onesFactor = onespredictiveFactors.Aggregate(onesFactor, (current, factor) => current.Intersect(factor.Right).ToList());
+                    }
+                    else if (onespredictiveFactors.Count > 0)
+                    {
+                        var onesFactor = new List<byte>(onespredictiveFactors[0].Right);
+                        onesFactor = onespredictiveFactors.Aggregate(onesFactor, (current, factor) => current.Intersect(factor.Right).ToList());
 
-                    return GetNumbers(new List<byte>() { 0, 1, 2, 3, 4 }, onesFactor);
+                        return GetNumbers(new List<byte>() { 0, 1, 2, 3, 4 }, onesFactor);
 
+                    }
                 }
                 return new List<byte>();
             }

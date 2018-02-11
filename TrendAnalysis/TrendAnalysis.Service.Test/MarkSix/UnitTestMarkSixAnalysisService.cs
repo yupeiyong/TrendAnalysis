@@ -670,11 +670,12 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     {
                         Location = 7,
                         Times = times,
-                        OnesAddConsecutiveTimes = 2,
-                        TensAddConsecutiveTimes =1,
+                        OnesAddConsecutiveTimes =4,
+                        TensAddConsecutiveTimes =10,
                         OnesAddInterval = 1,
-                        TensAddInterval = 1,
-                        NumberTakeCount =300
+                        TensAddInterval =10,
+                        NumberTakeCount =500,
+                        OnesAndTensMustContain=false
                     };
 
                     //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
