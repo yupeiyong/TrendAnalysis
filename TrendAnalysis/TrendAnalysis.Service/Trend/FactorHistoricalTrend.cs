@@ -8,7 +8,7 @@ namespace TrendAnalysis.Service.Trend
     /// <summary>
     ///     因子历史趋势
     /// </summary>
-    public class HistoricalFactorTrend
+    public class FactorHistoricalTrend
     {
 
         public List<T> Analyse<T>(HistoricalFactorTrendAnalyseDto<T> dto)
