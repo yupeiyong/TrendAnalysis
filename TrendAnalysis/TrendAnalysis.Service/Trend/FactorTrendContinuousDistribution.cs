@@ -6,10 +6,10 @@ namespace TrendAnalysis.Service.Trend
 {
 
     /// <summary>
-    ///     解析因子结果
+    ///     因子连续分布
     /// </summary>
     /// <typeparam name="T">因子类型</typeparam>
-    public class FactorTrendAnalyseResult<T>
+    public class FactorTrendContinuousDistribution<T>
     {
 
         /// <summary>
@@ -26,25 +26,25 @@ namespace TrendAnalysis.Service.Trend
         /// <summary>
         ///     历史的连续次数分析结果，键为次数，值为数量  表示每个连续次数出现的次数
         /// </summary>
-        public SortedDictionary<int, int> HistoricalConsecutiveTimes { get; set; } = new SortedDictionary<int, int>();
+        public SortedDictionary<int, int> ContinuousDistributions { get; set; } = new SortedDictionary<int, int>();
 
 
         /// <summary>
         ///     每一行的分析明细结果，（索引和最大连续次数间隔，键为索引，值为最大连续次数－索引位置连续次数）
         /// </summary>
-        public List<FactorTrendAnalyseResultRowDetails> RowDetailses { get; set; }
+        public List<FactorTrendContinuousDistributionRowDetails> RowDetailses { get; set; }
 
         /// <summary>
-        ///     当前指定期次此因子连续次数
+        ///     因子最大连续次数
         /// </summary>
-        public int FactorCurrentConsecutiveTimes { get; set; }
+        public int MaxContinuousTimes { get; set; }
 
 
         /// <summary>
         ///     最大连续期数-指定期次此因子连续次数的间隔数，数越小，表示变化的趋势越大
         /// </summary>
-        public int Interval => HistoricalConsecutiveTimes == null
-            || HistoricalConsecutiveTimes.Count == 0 ? 0 : HistoricalConsecutiveTimes.Max(k => k.Key) - FactorCurrentConsecutiveTimes;
+        public int MaxInterval => ContinuousDistributions == null
+            || ContinuousDistributions.Count == 0 ? 0 : ContinuousDistributions.Max(k => k.Key) - MaxContinuousTimes;
 
     }
 

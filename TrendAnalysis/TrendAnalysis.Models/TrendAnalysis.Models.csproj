@@ -43,6 +43,7 @@
     <Compile Include="AnalysisBeforeResult.cs" />
     <Compile Include="DataBase\BaseEntity.cs" />
     <Compile Include="Trend\Factor.cs" />
+    <Compile Include="Trend\HistoricalTrend.cs" />
     <Compile Include="Trend\HistoricalTrendItem.cs" />
     <Compile Include="DataBase\IEntity.cs" />
     <Compile Include="MarkSix\MarkSixRecord.cs" />

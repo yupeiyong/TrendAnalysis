@@ -6,9 +6,9 @@ namespace TrendAnalysis.Service.Trend
 {
 
     /// <summary>
-    ///     因子历史趋势
+    ///     因子的正确率等历史分布（连续次数、间隔等）
     /// </summary>
-    public class HistoricalFactorTrend
+    public class FactorTrendCorrectRate
     {
         /// <summary>
         ///     类型说明
@@ -31,7 +31,7 @@ namespace TrendAnalysis.Service.Trend
         /// <summary>
         ///     允许的连续次数
         /// </summary>
-        public int AllowConsecutiveTimes { set; get; }
+        public int AllowContinuousTimes { set; get; }
 
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace TrendAnalysis.Service.Trend
         public override string ToString()
         {
             var content = new StringBuilder();
-            content.AppendLine(string.Format("第{0}位号码，允许连续次数{1},允许间隔数{2}。出现次数{3}，正确次数{4},正确率：{5:0.00%}", Location, AllowConsecutiveTimes, AllowInterval, AnalyticalCount, CorrectCount, CorrectRate));
+            content.AppendLine(string.Format("第{0}位号码，允许连续次数{1},允许间隔数{2}。出现次数{3}，正确次数{4},正确率：{5:0.00%}", Location, AllowContinuousTimes, AllowInterval, AnalyticalCount, CorrectCount, CorrectRate));
             return content.ToString();
         }
 

@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using TrendAnalysis.DataTransferObject.Trend;
 using TrendAnalysis.Models.Trend;
 
 
-namespace TrendAnalysis.DataTransferObject
+namespace TrendAnalysis.DataTransferObject.Trend
 {
 
     public class PermutationFactorTrendAnalyseDto<T> : BaseTrendAnalyseDto<T>

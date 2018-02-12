@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.DataTransferObject.Trend;
-using TrendAnalysis.Models.Trend;
 
 
 namespace TrendAnalysis.Service.Trend
 {
 
     /// <summary>
-    ///     因子的历史趋势
+    ///     单个因子趋势分析
     /// </summary>
     public class FactorTrend
     {
@@ -27,62 +25,59 @@ namespace TrendAnalysis.Service.Trend
         public const int AllowMinTimes = 1;
 
 
-        public List<Factor<T>> Analyse<T>(FactorsTrendAnalyseDto<T> dto)
+        public List<T> Analyse<T>(FactorTrendAnalyseDto<T> dto)
         {
-            //预测的可能因子
-            var predictiveFactors = new List<Factor<T>>();
-
             //分析历史趋势,排除最后一位号码，（最后一位号码分析当前要分析的可能号码）
             var historicalNumbers = dto.Numbers.Take(dto.Numbers.Count - 1).ToList();
 
             //分析每个因子
-            foreach (var factor in dto.Factors)
+            var factor = dto.Factor;
+
+            //统计每个因子在记录中的趋势
+            var trendResult = CountContinuousDistribution(dto.Numbers, factor.Left, factor.Right);
+
+            //行明细结果集
+            var rowDetailses = trendResult.RowDetailses;
+            if (rowDetailses == null || rowDetailses.Count == 0) return null;
+            var lastIndexResult = rowDetailses[rowDetailses.Count - 1];
+
+            //因子不包含最后一个号码，（连续次数为0）
+            if (lastIndexResult.ConsecutiveTimes == 0)
+                return null;
+
+            var historicalTrends = GetCorrectRates(historicalNumbers, trendResult, dto.AnalyseHistoricalTrendCount, factor.Right);
+
+            //筛选正确100%的历史趋势，如没有不记录
+            //historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderBy(h => h.AllowInterval).ThenByDescending(h => h.AllowContinuousTimes).ToList();
+            historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderByDescending(h => h.AllowContinuousTimes).ThenBy(h => h.AllowInterval).ToList();
+            if (historicalTrends.Count == 0) return null;
+
+            var firstHistoricalTrend = historicalTrends.FirstOrDefault();
+            if (firstHistoricalTrend == null)
+                return null;
+
+            //可以考虑加大连续次数和间隔数
+            if (lastIndexResult.ConsecutiveTimes >= firstHistoricalTrend.AllowContinuousTimes + dto.AddConsecutiveTimes && lastIndexResult.MaxConsecutiveTimesInterval <= firstHistoricalTrend.AllowInterval - dto.AddInterval)
             {
-                //统计每个因子在记录中的趋势
-                var trendResult = CountFactorConsecutiveTimes(dto.Numbers, factor.Left, factor.Right);
-
-                //行明细结果集
-                var rowDetailses = trendResult.RowDetailses;
-                if (rowDetailses == null || rowDetailses.Count == 0) continue;
-                var lastIndexResult = rowDetailses[rowDetailses.Count - 1];
-
-                //因子不包含最后一个号码，（连续次数为0）
-                if (lastIndexResult.ConsecutiveTimes == 0)
-                    continue;
-
-                var historicalTrends = AnalyseFactorHistoricalTrend(historicalNumbers, trendResult, dto.AnalyseHistoricalTrendCount, factor.Right);
-
-                //筛选正确100%的历史趋势，如没有不记录
-                //historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderBy(h => h.AllowInterval).ThenByDescending(h => h.AllowConsecutiveTimes).ToList();
-                historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderByDescending(h => h.AllowConsecutiveTimes).ThenBy(h => h.AllowInterval).ToList();
-                if (historicalTrends.Count == 0) continue;
-
-                var firstHistoricalTrend = historicalTrends.FirstOrDefault();
-                if (firstHistoricalTrend == null)
-                    continue;
-
-                //可以考虑加大连续次数和间隔数
-                if (lastIndexResult.ConsecutiveTimes >= firstHistoricalTrend.AllowConsecutiveTimes + dto.AddConsecutiveTimes && lastIndexResult.MaxConsecutiveTimesInterval <= firstHistoricalTrend.AllowInterval - dto.AddInterval)
-                {
-                    predictiveFactors.Add(factor);
-                    continue;
-                }
+                //返回的可能因子
+                return factor.Right;
             }
-            return predictiveFactors;
+            return null;
         }
 
 
         /// <summary>
-        ///     分析因子一段日期的历史趋势，（通过号码集合分析历史趋势）
+        ///     分析因子的历史正确率分布等，（通过号码集合分析历史趋势）
         /// </summary>
         /// <param name="numbers">号码集合</param>
         /// <param name="trendResult">统计结果</param>
         /// <param name="analyseNumberCount">要分析多少位记录</param>
         /// <param name="predictiveFactor">可能的因子</param>
         /// <returns></returns>
-        public List<HistoricalFactorTrend> AnalyseFactorHistoricalTrend<T>(List<T> numbers, FactorTrendAnalyseResult<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
+        public List<FactorTrendCorrectRate> GetCorrectRates<T>(List<T> numbers, FactorTrendContinuousDistribution<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
         {
-            var trends = new List<HistoricalFactorTrend>();
+
+            var trends = new List<FactorTrendCorrectRate>();
 
             if (analyseNumberCount <= 0)
                 throw new Exception("分析历史趋势时，分析记录数量不能小于等于0！");
@@ -110,9 +105,9 @@ namespace TrendAnalysis.Service.Trend
                     var resultCount = 0;
                     var successCount = 0;
 
-                    var trend = new HistoricalFactorTrend
+                    var trend = new FactorTrendCorrectRate
                     {
-                        AllowConsecutiveTimes = consecutiveTimes,
+                        AllowContinuousTimes = consecutiveTimes,
                         AllowInterval = interval,
                         AnalyseNumberCount = analyseNumberCount
                     };
@@ -153,21 +148,21 @@ namespace TrendAnalysis.Service.Trend
 
 
         /// <summary>
-        ///     统计因子在记录中的连续次数
+        ///     统计因子在记录中的连续次数等分布情况
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="numbers">记录</param>
         /// <param name="factor">判断因子</param>
         /// <param name="predictiveFactor">反因子</param>
         /// <returns></returns>
-        public static FactorTrendAnalyseResult<T> CountFactorConsecutiveTimes<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> predictiveFactor)
+        public static FactorTrendContinuousDistribution<T> CountContinuousDistribution<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> predictiveFactor)
         {
-            var curResult = new FactorTrendAnalyseResult<T>
+            var curResult = new FactorTrendContinuousDistribution<T>
             {
                 Factor = factor,
                 PredictiveFactor = predictiveFactor,
-                HistoricalConsecutiveTimes = new SortedDictionary<int, int>(),
-                RowDetailses = new List<FactorTrendAnalyseResultRowDetails>()
+                ContinuousDistributions = new SortedDictionary<int, int>(),
+                RowDetailses = new List<FactorTrendContinuousDistributionRowDetails>()
             };
             var i = 0;
 
@@ -185,7 +180,7 @@ namespace TrendAnalysis.Service.Trend
 
                     //因子连续，最大连续次数－当前连续次数
                     curResult.RowDetailses.Add(
-                        new FactorTrendAnalyseResultRowDetails
+                        new FactorTrendContinuousDistributionRowDetails
                         {
                             Index = i,
                             MaxConsecutiveTimesInterval = maxConsecutiveTimes - times,
@@ -194,13 +189,13 @@ namespace TrendAnalysis.Service.Trend
                 }
                 else
                 {
-                    if (curResult.HistoricalConsecutiveTimes.ContainsKey(times))
+                    if (curResult.ContinuousDistributions.ContainsKey(times))
                     {
-                        curResult.HistoricalConsecutiveTimes[times]++;
+                        curResult.ContinuousDistributions[times]++;
                     }
                     else if (times >= AllowMinTimes)
                     {
-                        curResult.HistoricalConsecutiveTimes.Add(times, 1);
+                        curResult.ContinuousDistributions.Add(times, 1);
                     }
                     if (times > maxConsecutiveTimes)
                         maxConsecutiveTimes = times;
@@ -208,7 +203,7 @@ namespace TrendAnalysis.Service.Trend
 
                     //因子不连续
                     curResult.RowDetailses.Add(
-                        new FactorTrendAnalyseResultRowDetails
+                        new FactorTrendContinuousDistributionRowDetails
                         {
                             Index = i,
                             MaxConsecutiveTimesInterval = DiscontinuousFlag,
@@ -217,16 +212,17 @@ namespace TrendAnalysis.Service.Trend
                 }
                 i++;
             }
-            if (curResult.HistoricalConsecutiveTimes.ContainsKey(times))
+            if (curResult.ContinuousDistributions.ContainsKey(times))
             {
-                curResult.HistoricalConsecutiveTimes[times]++;
+                curResult.ContinuousDistributions[times]++;
             }
             else if (times >= AllowMinTimes)
             {
-                curResult.HistoricalConsecutiveTimes.Add(times, 1);
+                curResult.ContinuousDistributions.Add(times, 1);
             }
             return curResult;
         }
+
     }
 
 }

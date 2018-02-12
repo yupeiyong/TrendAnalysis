@@ -543,9 +543,9 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="dto"></param>
         /// <returns></returns>
         [Obsolete]
-        public List<HistoricalFactorTrend> AnalyseHistoricalTrend_Old(PermutationFactorAnalyseHistoricalTrendDto<byte> dto)
+        public List<FactorTrendCorrectRate> AnalyseHistoricalTrend_Old(PermutationFactorHistoricalTrendAnalyseDto<byte> dto)
         {
-            var trends = new List<HistoricalFactorTrend>();
+            var trends = new List<FactorTrendCorrectRate>();
 
             if (dto.Numbers.Count < dto.AnalyseNumberCount)
                 throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
@@ -563,13 +563,13 @@ namespace TrendAnalysis.Service.Trend
                     var resultCount = 0;
                     var successCount = 0;
 
-                    var trend = new HistoricalFactorTrend
+                    var trend = new FactorTrendCorrectRate
                     {
                         //HistoricalTrendType = dto.HistoricalTrendType,
                         StartTimes = analyseNumbers[0].TimesValue,
                         //Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,
-                        AllowConsecutiveTimes = consecutiveTimes,
+                        AllowContinuousTimes = consecutiveTimes,
                         AllowInterval = interval,
                         AnalyseNumberCount = dto.AnalyseNumberCount,
                         TypeDescription = dto.TypeDescription
@@ -643,9 +643,9 @@ namespace TrendAnalysis.Service.Trend
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public List<HistoricalFactorTrend> AnalyseHistoricalTrend(PermutationFactorAnalyseHistoricalTrendDto<byte> dto)
+        public List<FactorTrendCorrectRate> AnalyseHistoricalTrend(PermutationFactorHistoricalTrendAnalyseDto<byte> dto)
         {
-            var trends = new List<HistoricalFactorTrend>();
+            var trends = new List<FactorTrendCorrectRate>();
 
             if (dto.Numbers.Count < dto.AnalyseNumberCount)
                 throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
@@ -681,13 +681,13 @@ namespace TrendAnalysis.Service.Trend
                     var resultCount = 0;
                     var successCount = 0;
 
-                    var trend = new HistoricalFactorTrend
+                    var trend = new FactorTrendCorrectRate
                     {
                         //HistoricalTrendType = dto.HistoricalTrendType,
                         StartTimes = analyseNumbers[0].TimesValue,
                         //Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,
-                        AllowConsecutiveTimes = consecutiveTimes,
+                        AllowContinuousTimes = consecutiveTimes,
                         AllowInterval = interval,
                         AnalyseNumberCount = dto.AnalyseNumberCount,
                         TypeDescription = dto.TypeDescription
@@ -739,15 +739,15 @@ namespace TrendAnalysis.Service.Trend
 
 
                         /*  分析结果为也作记录
-                        var factorResult = factorResults.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
+                        var factorResult = factorResults.OrderByDescending(t => t.MaxContinuousTimes).FirstOrDefault();
                         var factors = new List<byte>();
                         var resultConsecutiveTimes = 0;
                         var resultInterval = 0;
                         if (factorResult != null)
                         {
                             factors = factorResult.PredictiveFactor;
-                            resultConsecutiveTimes = factorResult.FactorCurrentConsecutiveTimes;
-                            resultInterval = factorResult.Interval;
+                            resultConsecutiveTimes = factorResult.MaxContinuousTimes;
+                            resultInterval = factorResult.MaxInterval;
                             if (factorResult.PredictiveFactor != null && factorResult.PredictiveFactor.Count > 0)
                             {
                                 resultCount++;

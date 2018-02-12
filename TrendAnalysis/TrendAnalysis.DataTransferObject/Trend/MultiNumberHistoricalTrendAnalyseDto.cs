@@ -7,7 +7,7 @@ using TrendAnalysis.Models.Trend;
 
 namespace TrendAnalysis.DataTransferObject.Trend
 {
-    public class MultiNumberAnalyseHistoricalTrendDto<T> : BaseAnalyseHistoricalTrendDto<T>
+    public class MultiNumberHistoricalTrendAnalyseDto<T> : BaseHistoricalTrendAnalyseDto<T>
     {
 
         /// <summary>

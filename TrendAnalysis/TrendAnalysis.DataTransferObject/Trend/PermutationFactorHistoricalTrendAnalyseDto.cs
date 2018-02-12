@@ -11,7 +11,7 @@ namespace TrendAnalysis.DataTransferObject.Trend
     /// 排列因子分析一段时期的历史趋势
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class PermutationFactorAnalyseHistoricalTrendDto<T> : BaseAnalyseHistoricalTrendDto<T>
+    public class PermutationFactorHistoricalTrendAnalyseDto<T> : BaseHistoricalTrendAnalyseDto<T>
     {
 
         /// <summary>

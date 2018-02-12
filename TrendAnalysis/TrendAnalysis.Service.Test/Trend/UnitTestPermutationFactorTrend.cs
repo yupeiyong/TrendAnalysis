@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrendAnalysis.DataTransferObject;
+using TrendAnalysis.DataTransferObject.Trend;
 using TrendAnalysis.Models.Trend;
 using TrendAnalysis.Service.Trend;
 
