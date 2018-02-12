@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.DataTransferObject.Trend;
-using TrendAnalysis.Models.Trend;
 
 
 namespace TrendAnalysis.Service.Trend
 {
 
     /// <summary>
-    ///     因子的历史趋势
+    ///     单个因子趋势分析
     /// </summary>
-    public class FactorsTrend
+    public class FactorTrend
     {
 
         /// <summary>
@@ -27,48 +25,44 @@ namespace TrendAnalysis.Service.Trend
         public const int AllowMinTimes = 1;
 
 
-        public List<Factor<T>> Analyse<T>(FactorsTrendAnalyseDto<T> dto)
+        public List<T> Analyse<T>(FactorTrendAnalyseDto<T> dto)
         {
-            //预测的可能因子
-            var predictiveFactors = new List<Factor<T>>();
-
             //分析历史趋势,排除最后一位号码，（最后一位号码分析当前要分析的可能号码）
             var historicalNumbers = dto.Numbers.Take(dto.Numbers.Count - 1).ToList();
 
             //分析每个因子
-            foreach (var factor in dto.Factors)
+            var factor = dto.Factor;
+
+            //统计每个因子在记录中的趋势
+            var trendResult = CountFactorContinuousTimes(dto.Numbers, factor.Left, factor.Right);
+
+            //行明细结果集
+            var rowDetailses = trendResult.RowDetailses;
+            if (rowDetailses == null || rowDetailses.Count == 0) return null;
+            var lastIndexResult = rowDetailses[rowDetailses.Count - 1];
+
+            //因子不包含最后一个号码，（连续次数为0）
+            if (lastIndexResult.ConsecutiveTimes == 0)
+                return null;
+
+            var historicalTrends = AnalyseFactorHistoricalTrend(historicalNumbers, trendResult, dto.AnalyseHistoricalTrendCount, factor.Right);
+
+            //筛选正确100%的历史趋势，如没有不记录
+            //historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderBy(h => h.AllowInterval).ThenByDescending(h => h.AllowContinuousTimes).ToList();
+            historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderByDescending(h => h.AllowContinuousTimes).ThenBy(h => h.AllowInterval).ToList();
+            if (historicalTrends.Count == 0) return null;
+
+            var firstHistoricalTrend = historicalTrends.FirstOrDefault();
+            if (firstHistoricalTrend == null)
+                return null;
+
+            //可以考虑加大连续次数和间隔数
+            if (lastIndexResult.ConsecutiveTimes >= firstHistoricalTrend.AllowContinuousTimes + dto.AddConsecutiveTimes && lastIndexResult.MaxConsecutiveTimesInterval <= firstHistoricalTrend.AllowInterval - dto.AddInterval)
             {
-                //统计每个因子在记录中的趋势
-                var trendResult = CountFactorContinuousTimes(dto.Numbers, factor.Left, factor.Right);
-
-                //行明细结果集
-                var rowDetailses = trendResult.RowDetailses;
-                if (rowDetailses == null || rowDetailses.Count == 0) continue;
-                var lastIndexResult = rowDetailses[rowDetailses.Count - 1];
-
-                //因子不包含最后一个号码，（连续次数为0）
-                if (lastIndexResult.ConsecutiveTimes == 0)
-                    continue;
-
-                var historicalTrends = AnalyseFactorHistoricalTrend(historicalNumbers, trendResult, dto.AnalyseHistoricalTrendCount, factor.Right);
-
-                //筛选正确100%的历史趋势，如没有不记录
-                //historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderBy(h => h.AllowInterval).ThenByDescending(h => h.AllowContinuousTimes).ToList();
-                historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderByDescending(h => h.AllowContinuousTimes).ThenBy(h => h.AllowInterval).ToList();
-                if (historicalTrends.Count == 0) continue;
-
-                var firstHistoricalTrend = historicalTrends.FirstOrDefault();
-                if (firstHistoricalTrend == null)
-                    continue;
-
-                //可以考虑加大连续次数和间隔数
-                if (lastIndexResult.ConsecutiveTimes >= firstHistoricalTrend.AllowContinuousTimes + dto.AddConsecutiveTimes && lastIndexResult.MaxConsecutiveTimesInterval <= firstHistoricalTrend.AllowInterval - dto.AddInterval)
-                {
-                    predictiveFactors.Add(factor);
-                    continue;
-                }
+                //返回的可能因子
+                return factor.Right;
             }
-            return predictiveFactors;
+            return null;
         }
 
 
@@ -145,7 +139,7 @@ namespace TrendAnalysis.Service.Trend
                     }
                     trend.AnalyticalCount = resultCount;
                     trend.CorrectCount = successCount;
-                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
+                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double) trend.CorrectCount/trend.AnalyticalCount;
                 }
             }
             return trends;
@@ -227,6 +221,7 @@ namespace TrendAnalysis.Service.Trend
             }
             return curResult;
         }
+
     }
 
 }

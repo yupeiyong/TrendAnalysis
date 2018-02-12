@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Trend\CompositeNumber.cs" />
+    <Compile Include="Trend\FactorTrend.cs" />
     <Compile Include="Trend\FactorTrendContinuousDistribution.cs" />
     <Compile Include="Trend\FactorTrendAnalyseResultIndexItem.cs" />
     <Compile Include="Trend\HistoricalFactorTrend.cs" />

@@ -569,7 +569,7 @@ namespace TrendAnalysis.Service.Trend
                         StartTimes = analyseNumbers[0].TimesValue,
                         //Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,
-                        AllowConsecutiveTimes = consecutiveTimes,
+                        AllowContinuousTimes = consecutiveTimes,
                         AllowInterval = interval,
                         AnalyseNumberCount = dto.AnalyseNumberCount,
                         TypeDescription = dto.TypeDescription
@@ -687,7 +687,7 @@ namespace TrendAnalysis.Service.Trend
                         StartTimes = analyseNumbers[0].TimesValue,
                         //Items = new List<HistoricalTrendItem>(),
                         Location = dto.Location,
-                        AllowConsecutiveTimes = consecutiveTimes,
+                        AllowContinuousTimes = consecutiveTimes,
                         AllowInterval = interval,
                         AnalyseNumberCount = dto.AnalyseNumberCount,
                         TypeDescription = dto.TypeDescription

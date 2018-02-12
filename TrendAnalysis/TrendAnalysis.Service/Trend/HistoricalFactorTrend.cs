@@ -31,7 +31,7 @@ namespace TrendAnalysis.Service.Trend
         /// <summary>
         ///     允许的连续次数
         /// </summary>
-        public int AllowConsecutiveTimes { set; get; }
+        public int AllowContinuousTimes { set; get; }
 
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace TrendAnalysis.Service.Trend
         public override string ToString()
         {
             var content = new StringBuilder();
-            content.AppendLine(string.Format("第{0}位号码，允许连续次数{1},允许间隔数{2}。出现次数{3}，正确次数{4},正确率：{5:0.00%}", Location, AllowConsecutiveTimes, AllowInterval, AnalyticalCount, CorrectCount, CorrectRate));
+            content.AppendLine(string.Format("第{0}位号码，允许连续次数{1},允许间隔数{2}。出现次数{3}，正确次数{4},正确率：{5:0.00%}", Location, AllowContinuousTimes, AllowInterval, AnalyticalCount, CorrectCount, CorrectRate));
             return content.ToString();
         }
 
