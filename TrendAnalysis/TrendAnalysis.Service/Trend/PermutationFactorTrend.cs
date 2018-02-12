@@ -543,9 +543,9 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="dto"></param>
         /// <returns></returns>
         [Obsolete]
-        public List<FactorHistoricalDistribution> AnalyseHistoricalTrend_Old(PermutationFactorAnalyseHistoricalTrendDto<byte> dto)
+        public List<FactorTrendCorrectRate> AnalyseHistoricalTrend_Old(PermutationFactorAnalyseHistoricalTrendDto<byte> dto)
         {
-            var trends = new List<FactorHistoricalDistribution>();
+            var trends = new List<FactorTrendCorrectRate>();
 
             if (dto.Numbers.Count < dto.AnalyseNumberCount)
                 throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
@@ -563,7 +563,7 @@ namespace TrendAnalysis.Service.Trend
                     var resultCount = 0;
                     var successCount = 0;
 
-                    var trend = new FactorHistoricalDistribution
+                    var trend = new FactorTrendCorrectRate
                     {
                         //HistoricalTrendType = dto.HistoricalTrendType,
                         StartTimes = analyseNumbers[0].TimesValue,
@@ -643,9 +643,9 @@ namespace TrendAnalysis.Service.Trend
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public List<FactorHistoricalDistribution> AnalyseHistoricalTrend(PermutationFactorAnalyseHistoricalTrendDto<byte> dto)
+        public List<FactorTrendCorrectRate> AnalyseHistoricalTrend(PermutationFactorAnalyseHistoricalTrendDto<byte> dto)
         {
-            var trends = new List<FactorHistoricalDistribution>();
+            var trends = new List<FactorTrendCorrectRate>();
 
             if (dto.Numbers.Count < dto.AnalyseNumberCount)
                 throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
@@ -681,7 +681,7 @@ namespace TrendAnalysis.Service.Trend
                     var resultCount = 0;
                     var successCount = 0;
 
-                    var trend = new FactorHistoricalDistribution
+                    var trend = new FactorTrendCorrectRate
                     {
                         //HistoricalTrendType = dto.HistoricalTrendType,
                         StartTimes = analyseNumbers[0].TimesValue,

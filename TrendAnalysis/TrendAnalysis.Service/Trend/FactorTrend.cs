@@ -45,7 +45,7 @@ namespace TrendAnalysis.Service.Trend
             if (lastIndexResult.ConsecutiveTimes == 0)
                 return null;
 
-            var historicalTrends = AnalyseFactorHistoricalTrend(historicalNumbers, trendResult, dto.AnalyseHistoricalTrendCount, factor.Right);
+            var historicalTrends = GetCorrectRates(historicalNumbers, trendResult, dto.AnalyseHistoricalTrendCount, factor.Right);
 
             //筛选正确100%的历史趋势，如没有不记录
             //historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderBy(h => h.AllowInterval).ThenByDescending(h => h.AllowContinuousTimes).ToList();
@@ -67,16 +67,17 @@ namespace TrendAnalysis.Service.Trend
 
 
         /// <summary>
-        ///     分析因子一段日期的历史趋势，（通过号码集合分析历史趋势）
+        ///     分析因子的历史正确率分布等，（通过号码集合分析历史趋势）
         /// </summary>
         /// <param name="numbers">号码集合</param>
         /// <param name="trendResult">统计结果</param>
         /// <param name="analyseNumberCount">要分析多少位记录</param>
         /// <param name="predictiveFactor">可能的因子</param>
         /// <returns></returns>
-        public List<FactorHistoricalDistribution> AnalyseFactorHistoricalTrend<T>(List<T> numbers, FactorTrendContinuousDistribution<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
+        public List<FactorTrendCorrectRate> GetCorrectRates<T>(List<T> numbers, FactorTrendContinuousDistribution<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
         {
-            var trends = new List<FactorHistoricalDistribution>();
+
+            var trends = new List<FactorTrendCorrectRate>();
 
             if (analyseNumberCount <= 0)
                 throw new Exception("分析历史趋势时，分析记录数量不能小于等于0！");
@@ -104,7 +105,7 @@ namespace TrendAnalysis.Service.Trend
                     var resultCount = 0;
                     var successCount = 0;
 
-                    var trend = new FactorHistoricalDistribution
+                    var trend = new FactorTrendCorrectRate
                     {
                         AllowContinuousTimes = consecutiveTimes,
                         AllowInterval = interval,
@@ -139,7 +140,7 @@ namespace TrendAnalysis.Service.Trend
                     }
                     trend.AnalyticalCount = resultCount;
                     trend.CorrectCount = successCount;
-                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double) trend.CorrectCount/trend.AnalyticalCount;
+                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
                 }
             }
             return trends;
@@ -147,7 +148,7 @@ namespace TrendAnalysis.Service.Trend
 
 
         /// <summary>
-        ///     统计因子在记录中的连续次数
+        ///     统计因子在记录中的连续次数等分布情况
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="numbers">记录</param>

@@ -140,7 +140,7 @@ namespace TrendAnalysis.Service.MarkSix
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public List<FactorHistoricalDistribution> AnalyseOnesHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
+        public List<FactorTrendCorrectRate> AnalyseOnesHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
         {
             using (var dao = new TrendDbContext())
             {
@@ -238,7 +238,7 @@ namespace TrendAnalysis.Service.MarkSix
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public List<FactorHistoricalDistribution> AnalyseTensHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
+        public List<FactorTrendCorrectRate> AnalyseTensHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
         {
             using (var dao = new TrendDbContext())
             {
@@ -456,7 +456,7 @@ namespace TrendAnalysis.Service.MarkSix
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public List<FactorHistoricalDistribution> AnalyseOnesHistoricalTrendByPermutationFactors(MarkSixAnalyseHistoricalTrendDto dto)
+        public List<FactorTrendCorrectRate> AnalyseOnesHistoricalTrendByPermutationFactors(MarkSixAnalyseHistoricalTrendDto dto)
         {
             List<TemporaryRecord<byte>> records;
             using (var dao = new TrendDbContext())
@@ -530,7 +530,7 @@ namespace TrendAnalysis.Service.MarkSix
             //个位因子
             var onesDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
 
-            var onesResults = new List<FactorHistoricalDistribution>();
+            var onesResults = new List<FactorTrendCorrectRate>();
             for (var i = 0; i < onesDigitFactors.Count; i++)
             {
                 var permutationFactors = new List<List<Factor<byte>>> { new List<Factor<byte>> { onesDigitFactors[i] }, onesDigitFactors };
@@ -584,7 +584,7 @@ namespace TrendAnalysis.Service.MarkSix
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public List<FactorHistoricalDistribution> AnalyseTensHistoricalTrendByPermutationFactors(MarkSixAnalyseHistoricalTrendDto dto)
+        public List<FactorTrendCorrectRate> AnalyseTensHistoricalTrendByPermutationFactors(MarkSixAnalyseHistoricalTrendDto dto)
         {
             using (var dao = new TrendDbContext())
             {
@@ -838,7 +838,7 @@ namespace TrendAnalysis.Service.MarkSix
         ///// </summary>
         ///// <param name="dto"></param>
         ///// <returns></returns>
-        //public List<FactorHistoricalDistribution> AnalyseOnesHistoricalTrendByMultiNumber(MarkSixAnalyseHistoricalTrendDto dto)
+        //public List<FactorTrendCorrectRate> AnalyseOnesHistoricalTrendByMultiNumber(MarkSixAnalyseHistoricalTrendDto dto)
         //{
         //    using (var dao = new TrendDbContext())
         //    {
@@ -954,7 +954,7 @@ namespace TrendAnalysis.Service.MarkSix
         ///// </summary>
         ///// <param name="dto"></param>
         ///// <returns></returns>
-        //public List<FactorHistoricalDistribution> AnalyseTensHistoricalTrendByMultiNumber(MarkSixAnalyseHistoricalTrendDto dto)
+        //public List<FactorTrendCorrectRate> AnalyseTensHistoricalTrendByMultiNumber(MarkSixAnalyseHistoricalTrendDto dto)
         //{
         //    using (var dao = new TrendDbContext())
         //    {
@@ -1071,7 +1071,7 @@ namespace TrendAnalysis.Service.MarkSix
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public List<FactorHistoricalDistribution> AnalyseCompositeHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
+        public List<FactorTrendCorrectRate> AnalyseCompositeHistoricalTrend(MarkSixAnalyseHistoricalTrendDto dto)
         {
             using (var dao = new TrendDbContext())
             {

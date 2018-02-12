@@ -50,7 +50,7 @@ namespace TrendAnalysis.Service.Trend
                 if (lastIndexResult.ConsecutiveTimes == 0)
                     continue;
 
-                var historicalTrends = AnalyseFactorHistoricalTrend(historicalNumbers, trendResult, dto.AnalyseHistoricalTrendCount, factor.Right);
+                var historicalTrends = GetCorrectRates(historicalNumbers, trendResult, dto.AnalyseHistoricalTrendCount, factor.Right);
 
                 //筛选正确100%的历史趋势，如没有不记录
                 //historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderBy(h => h.AllowInterval).ThenByDescending(h => h.AllowContinuousTimes).ToList();
@@ -80,9 +80,9 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="analyseNumberCount">要分析多少位记录</param>
         /// <param name="predictiveFactor">可能的因子</param>
         /// <returns></returns>
-        public List<FactorHistoricalDistribution> AnalyseFactorHistoricalTrend<T>(List<T> numbers, FactorTrendContinuousDistribution<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
+        public List<FactorTrendCorrectRate> GetCorrectRates<T>(List<T> numbers, FactorTrendContinuousDistribution<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
         {
-            var trends = new List<FactorHistoricalDistribution>();
+            var trends = new List<FactorTrendCorrectRate>();
 
             if (analyseNumberCount <= 0)
                 throw new Exception("分析历史趋势时，分析记录数量不能小于等于0！");
@@ -110,7 +110,7 @@ namespace TrendAnalysis.Service.Trend
                     var resultCount = 0;
                     var successCount = 0;
 
-                    var trend = new FactorHistoricalDistribution
+                    var trend = new FactorTrendCorrectRate
                     {
                         AllowContinuousTimes = consecutiveTimes,
                         AllowInterval = interval,

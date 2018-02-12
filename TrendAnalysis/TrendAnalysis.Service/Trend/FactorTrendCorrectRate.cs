@@ -6,9 +6,9 @@ namespace TrendAnalysis.Service.Trend
 {
 
     /// <summary>
-    ///     因子的历史分布（连续次数、间隔等）
+    ///     因子的正确率等历史分布（连续次数、间隔等）
     /// </summary>
-    public class FactorHistoricalDistribution
+    public class FactorTrendCorrectRate
     {
         /// <summary>
         ///     类型说明
