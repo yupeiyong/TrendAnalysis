@@ -11,7 +11,7 @@ namespace TrendAnalysis.DataTransferObject.Trend
     /// 分析历史趋势的传输对象基类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class BaseAnalyseHistoricalTrendDto<T>
+    public class BaseHistoricalTrendAnalyseDto<T>
     {
         /// <summary>
         ///     第几位数

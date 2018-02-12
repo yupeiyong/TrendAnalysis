@@ -543,7 +543,7 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="dto"></param>
         /// <returns></returns>
         [Obsolete]
-        public List<FactorTrendCorrectRate> AnalyseHistoricalTrend_Old(PermutationFactorAnalyseHistoricalTrendDto<byte> dto)
+        public List<FactorTrendCorrectRate> AnalyseHistoricalTrend_Old(PermutationFactorHistoricalTrendAnalyseDto<byte> dto)
         {
             var trends = new List<FactorTrendCorrectRate>();
 
@@ -643,7 +643,7 @@ namespace TrendAnalysis.Service.Trend
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public List<FactorTrendCorrectRate> AnalyseHistoricalTrend(PermutationFactorAnalyseHistoricalTrendDto<byte> dto)
+        public List<FactorTrendCorrectRate> AnalyseHistoricalTrend(PermutationFactorHistoricalTrendAnalyseDto<byte> dto)
         {
             var trends = new List<FactorTrendCorrectRate>();
 

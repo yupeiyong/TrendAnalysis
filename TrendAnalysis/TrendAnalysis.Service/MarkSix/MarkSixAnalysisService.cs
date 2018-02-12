@@ -196,7 +196,7 @@ namespace TrendAnalysis.Service.MarkSix
                 var onesDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
 
                 //onesDigitFactors = onesDigitFactors.Skip(FactorIndex * 20).Take(20).ToList();
-                var trendDto = new AnalyseHistoricalTrendDto<byte>
+                var trendDto = new HistoricalTrendAnalyseDto<byte>
                 {
                     Numbers = records,
                     Factors = onesDigitFactors,
@@ -293,7 +293,7 @@ namespace TrendAnalysis.Service.MarkSix
                 //十位因子
                 var tensDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4 }.ToList());
 
-                var trendDto = new AnalyseHistoricalTrendDto<byte>
+                var trendDto = new HistoricalTrendAnalyseDto<byte>
                 {
                     Numbers = records,
                     Factors = tensDigitFactors,
@@ -534,7 +534,7 @@ namespace TrendAnalysis.Service.MarkSix
             for (var i = 0; i < onesDigitFactors.Count; i++)
             {
                 var permutationFactors = new List<List<Factor<byte>>> { new List<Factor<byte>> { onesDigitFactors[i] }, onesDigitFactors };
-                var trendDto = new PermutationFactorAnalyseHistoricalTrendDto<byte>
+                var trendDto = new PermutationFactorHistoricalTrendAnalyseDto<byte>
                 {
                     Numbers = records,
                     PermutationFactors = permutationFactors,
@@ -558,7 +558,7 @@ namespace TrendAnalysis.Service.MarkSix
 
             ////暂时只分析第一个因子
             //var permutationFactors= new List<List<Factor<byte>>> { new List<Factor<byte>> { onesDigitFactors[0] }, onesDigitFactors };
-            //var trendDto = new PermutationFactorAnalyseHistoricalTrendDto<byte>
+            //var trendDto = new PermutationFactorHistoricalTrendAnalyseDto<byte>
             //{
             //    Numbers = records,
             //    PermutationFactors = permutationFactors,
@@ -647,7 +647,7 @@ namespace TrendAnalysis.Service.MarkSix
 
                 //暂时只分析第一个因子
                 var permutationFactors = new List<List<Factor<byte>>> { new List<Factor<byte>> { tensDigitFactors[0] }, tensDigitFactors };
-                var trendDto = new PermutationFactorAnalyseHistoricalTrendDto<byte>
+                var trendDto = new PermutationFactorHistoricalTrendAnalyseDto<byte>
                 {
                     Numbers = records,
                     PermutationFactors = permutationFactors,
@@ -897,7 +897,7 @@ namespace TrendAnalysis.Service.MarkSix
         //        var offsetIndex = 1;
         //        //最多结合多少个号码
         //        var multiNumberMaxCount = 30;
-        //        var trendDto = new MultiNumberAnalyseHistoricalTrendDto<byte>
+        //        var trendDto = new MultiNumberHistoricalTrendAnalyseDto<byte>
         //        {
         //            Numbers = records,
         //            Factors = onesDigitFactors,
@@ -1014,7 +1014,7 @@ namespace TrendAnalysis.Service.MarkSix
         //        //最多结合多少个号码
         //        var multiNumberMaxCount = 30;
 
-        //        var trendDto = new MultiNumberAnalyseHistoricalTrendDto<byte>
+        //        var trendDto = new MultiNumberHistoricalTrendAnalyseDto<byte>
         //        {
         //            Numbers = records,
         //            Factors = tensDigitFactors,
@@ -1129,7 +1129,7 @@ namespace TrendAnalysis.Service.MarkSix
                 //合数因子
                 var compositeDigitFactors = FactorGenerator.Create(compositeNumber);
 
-                var trendDto = new AnalyseHistoricalTrendDto<byte>
+                var trendDto = new HistoricalTrendAnalyseDto<byte>
                 {
                     Numbers = records,
                     Factors = compositeDigitFactors,

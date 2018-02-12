@@ -34,7 +34,7 @@ namespace TrendAnalysis.Service.Trend
             var factor = dto.Factor;
 
             //统计每个因子在记录中的趋势
-            var trendResult = CountFactorContinuousTimes(dto.Numbers, factor.Left, factor.Right);
+            var trendResult = CountContinuousDistribution(dto.Numbers, factor.Left, factor.Right);
 
             //行明细结果集
             var rowDetailses = trendResult.RowDetailses;
@@ -155,7 +155,7 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="factor">判断因子</param>
         /// <param name="predictiveFactor">反因子</param>
         /// <returns></returns>
-        public static FactorTrendContinuousDistribution<T> CountFactorContinuousTimes<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> predictiveFactor)
+        public static FactorTrendContinuousDistribution<T> CountContinuousDistribution<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> predictiveFactor)
         {
             var curResult = new FactorTrendContinuousDistribution<T>
             {

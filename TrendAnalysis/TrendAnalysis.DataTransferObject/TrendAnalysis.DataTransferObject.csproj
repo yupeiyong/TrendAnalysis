@@ -41,13 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HistoricalTrendServiceRemoveDto.cs" />
-    <Compile Include="Trend\AnalyseFactorHistoricalTrendDto.cs" />
-    <Compile Include="Trend\BaseAnalyseHistoricalTrendDto.cs" />
+    <Compile Include="Trend\HistoricalFactorTrendAnalyseDto.cs" />
+    <Compile Include="Trend\BaseHistoricalTrendAnalyseDto.cs" />
     <Compile Include="Trend\BaseTrendAnalyseDto.cs" />
     <Compile Include="Trend\FactorTrendAnalyseDto.cs" />
-    <Compile Include="Trend\PermutationFactorAnalyseHistoricalTrendDto.cs" />
+    <Compile Include="Trend\PermutationFactorHistoricalTrendAnalyseDto.cs" />
     <Compile Include="Trend\PermutationFactorTrendAnalyseDto.cs" />
-    <Compile Include="Trend\AnalyseHistoricalTrendDto.cs" />
+    <Compile Include="Trend\HistoricalTrendAnalyseDto.cs" />
     <Compile Include="Trend\FactorsTrendAnalyseDto.cs" />
     <Compile Include="MarkSixAnalyseHistoricalTrendDto.cs" />
     <Compile Include="MarkSixAnalyseSpecifiedLocationDto.cs" />
@@ -57,7 +57,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MarkSixSpecifiedLocationPurchaseSearchDto.cs" />
     <Compile Include="Trend\MultiNumberAnalyseConsecutiveDto.cs" />
-    <Compile Include="Trend\MultiNumberAnalyseHistoricalTrendDto.cs" />
+    <Compile Include="Trend\MultiNumberHistoricalTrendAnalyseDto.cs" />
     <Compile Include="Trend\MultiNumberFactorTrendAnalyseDto.cs" />
   </ItemGroup>
   <ItemGroup>
