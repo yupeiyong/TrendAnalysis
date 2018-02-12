@@ -21,11 +21,11 @@ namespace TrendAnalysis.Service.Test.Trend
             var numbers = new List<string> { "3", "2", "1", "2", "0", "0", "1", "2", "3", "3", "4", "4", "4", "3", "3", "0", "3", "3", "3" };
             var result = FactorTrend.CountFactorConsecutiveTimes(numbers, factor.Left, factor.Right);
             Assert.IsTrue(result != null);
-            Assert.IsTrue(result.HistoricalConsecutiveTimes.Count == 2);
+            Assert.IsTrue(result.ContinuousDistributions.Count == 2);
 
-            var keys = result.HistoricalConsecutiveTimes.Keys.ToList();
+            var keys = result.ContinuousDistributions.Keys.ToList();
             keys.Sort();
-            var dict = result.HistoricalConsecutiveTimes;
+            var dict = result.ContinuousDistributions;
             Assert.IsTrue(keys.Count == 2);
             Assert.IsTrue(keys[0] == 2 && dict[keys[0]] == 1);
             Assert.IsTrue(keys[1] == 3 && dict[keys[0]] == 1);
@@ -39,11 +39,11 @@ namespace TrendAnalysis.Service.Test.Trend
             var numbers = new List<int> { 3, 2, 1, 2, 0, 0, 1, 2, 3, 3, 4, 4, 4, 3, 3, 0, 3, 3, 3 };
             var result = FactorTrend.CountFactorConsecutiveTimes(numbers, factor.Left, factor.Right);
             Assert.IsTrue(result != null);
-            Assert.IsTrue(result.HistoricalConsecutiveTimes.Count == 2);
+            Assert.IsTrue(result.ContinuousDistributions.Count == 2);
 
-            var keys = result.HistoricalConsecutiveTimes.Keys.ToList();
+            var keys = result.ContinuousDistributions.Keys.ToList();
             keys.Sort();
-            var dict = result.HistoricalConsecutiveTimes;
+            var dict = result.ContinuousDistributions;
             Assert.IsTrue(keys.Count == 2);
             Assert.IsTrue(keys[0] == 2 && dict[keys[0]] == 1);
             Assert.IsTrue(keys[1] == 3 && dict[keys[0]] == 1);

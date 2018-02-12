@@ -739,15 +739,15 @@ namespace TrendAnalysis.Service.Trend
 
 
                         /*  分析结果为也作记录
-                        var factorResult = factorResults.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
+                        var factorResult = factorResults.OrderByDescending(t => t.MaxContinuousTimes).FirstOrDefault();
                         var factors = new List<byte>();
                         var resultConsecutiveTimes = 0;
                         var resultInterval = 0;
                         if (factorResult != null)
                         {
                             factors = factorResult.PredictiveFactor;
-                            resultConsecutiveTimes = factorResult.FactorCurrentConsecutiveTimes;
-                            resultInterval = factorResult.Interval;
+                            resultConsecutiveTimes = factorResult.MaxContinuousTimes;
+                            resultInterval = factorResult.MaxInterval;
                             if (factorResult.PredictiveFactor != null && factorResult.PredictiveFactor.Count > 0)
                             {
                                 resultCount++;

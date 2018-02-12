@@ -80,7 +80,7 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="analyseNumberCount">要分析多少位记录</param>
         /// <param name="predictiveFactor">可能的因子</param>
         /// <returns></returns>
-        public List<HistoricalFactorTrend> AnalyseFactorHistoricalTrend<T>(List<T> numbers, FactorTrendAnalyseResult<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
+        public List<HistoricalFactorTrend> AnalyseFactorHistoricalTrend<T>(List<T> numbers, FactorTrendContinuousDistribution<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
         {
             var trends = new List<HistoricalFactorTrend>();
 
@@ -160,14 +160,14 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="factor">判断因子</param>
         /// <param name="predictiveFactor">反因子</param>
         /// <returns></returns>
-        public static FactorTrendAnalyseResult<T> CountFactorConsecutiveTimes<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> predictiveFactor)
+        public static FactorTrendContinuousDistribution<T> CountFactorConsecutiveTimes<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> predictiveFactor)
         {
-            var curResult = new FactorTrendAnalyseResult<T>
+            var curResult = new FactorTrendContinuousDistribution<T>
             {
                 Factor = factor,
                 PredictiveFactor = predictiveFactor,
-                HistoricalConsecutiveTimes = new SortedDictionary<int, int>(),
-                RowDetailses = new List<FactorTrendAnalyseResultRowDetails>()
+                ContinuousDistributions = new SortedDictionary<int, int>(),
+                RowDetailses = new List<FactorTrendContinuousDistributionRowDetails>()
             };
             var i = 0;
 
@@ -185,7 +185,7 @@ namespace TrendAnalysis.Service.Trend
 
                     //因子连续，最大连续次数－当前连续次数
                     curResult.RowDetailses.Add(
-                        new FactorTrendAnalyseResultRowDetails
+                        new FactorTrendContinuousDistributionRowDetails
                         {
                             Index = i,
                             MaxConsecutiveTimesInterval = maxConsecutiveTimes - times,
@@ -194,13 +194,13 @@ namespace TrendAnalysis.Service.Trend
                 }
                 else
                 {
-                    if (curResult.HistoricalConsecutiveTimes.ContainsKey(times))
+                    if (curResult.ContinuousDistributions.ContainsKey(times))
                     {
-                        curResult.HistoricalConsecutiveTimes[times]++;
+                        curResult.ContinuousDistributions[times]++;
                     }
                     else if (times >= AllowMinTimes)
                     {
-                        curResult.HistoricalConsecutiveTimes.Add(times, 1);
+                        curResult.ContinuousDistributions.Add(times, 1);
                     }
                     if (times > maxConsecutiveTimes)
                         maxConsecutiveTimes = times;
@@ -208,7 +208,7 @@ namespace TrendAnalysis.Service.Trend
 
                     //因子不连续
                     curResult.RowDetailses.Add(
-                        new FactorTrendAnalyseResultRowDetails
+                        new FactorTrendContinuousDistributionRowDetails
                         {
                             Index = i,
                             MaxConsecutiveTimesInterval = DiscontinuousFlag,
@@ -217,13 +217,13 @@ namespace TrendAnalysis.Service.Trend
                 }
                 i++;
             }
-            if (curResult.HistoricalConsecutiveTimes.ContainsKey(times))
+            if (curResult.ContinuousDistributions.ContainsKey(times))
             {
-                curResult.HistoricalConsecutiveTimes[times]++;
+                curResult.ContinuousDistributions[times]++;
             }
             else if (times >= AllowMinTimes)
             {
-                curResult.HistoricalConsecutiveTimes.Add(times, 1);
+                curResult.ContinuousDistributions.Add(times, 1);
             }
             return curResult;
         }

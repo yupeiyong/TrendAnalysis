@@ -437,8 +437,8 @@ namespace TrendAnalysis.Service.MarkSix
                 //if (tensDigitResult.Count > 0 && onesDigitResult.Count > 0)
                 //{
                 //    //选择最多连续次数
-                //    var maxTens = tensDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
-                //    var maxOnes = onesDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
+                //    var maxTens = tensDigitResult.OrderByDescending(t => t.MaxContinuousTimes).FirstOrDefault();
+                //    var maxOnes = onesDigitResult.OrderByDescending(t => t.MaxContinuousTimes).FirstOrDefault();
                 //    if (maxTens != null && maxOnes != null)
                 //    {
                 //        var tenFactor = maxTens.predictiveFactor;
@@ -820,8 +820,8 @@ namespace TrendAnalysis.Service.MarkSix
         //        if (tensDigitResult.Count > 0 && onesDigitResult.Count > 0)
         //        {
         //            //选择最多连续次数
-        //            var maxTens = tensDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
-        //            var maxOnes = onesDigitResult.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
+        //            var maxTens = tensDigitResult.OrderByDescending(t => t.MaxContinuousTimes).FirstOrDefault();
+        //            var maxOnes = onesDigitResult.OrderByDescending(t => t.MaxContinuousTimes).FirstOrDefault();
         //            if (maxTens != null && maxOnes != null)
         //            {
         //                var tenFactor = maxTens.PredictiveFactor;
@@ -1186,9 +1186,9 @@ namespace TrendAnalysis.Service.MarkSix
         ///// <param name="tensDigitFactors">比较因子</param>
         ///// <param name="allowMinTimes">允许的最小连续次数，大于等于此数才记录</param>
         ///// <returns></returns>
-        //public List<FactorTrendAnalyseResult<byte>> AnalyseOnesDigit(List<byte> onesDigitNumbers, List<Factor<byte>> onesDigitFactors, int allowMinTimes, int numbersTailCutCount)
+        //public List<FactorTrendContinuousDistribution<byte>> AnalyseOnesDigit(List<byte> onesDigitNumbers, List<Factor<byte>> onesDigitFactors, int allowMinTimes, int numbersTailCutCount)
         //{
-        //    List<FactorTrendAnalyseResult<byte>> onesDigitResult;
+        //    List<FactorTrendContinuousDistribution<byte>> onesDigitResult;
         //    if (numbersTailCutCount > 0 && numbersTailCutCount < onesDigitNumbers.Count)
         //    {
         //        var numbers = onesDigitNumbers.Skip(0).Take(onesDigitNumbers.Count - numbersTailCutCount).ToList();
@@ -1198,7 +1198,7 @@ namespace TrendAnalysis.Service.MarkSix
         //    {
         //        onesDigitResult = FactorAnalysis.CountFactorsConsecutivesTimes(onesDigitNumbers, onesDigitFactors, allowMinTimes);
         //    }
-        //    onesDigitResult = onesDigitResult.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
+        //    onesDigitResult = onesDigitResult.Where(t => t.ContinuousDistributions.Count > 0).ToList();
         //    foreach (var item in onesDigitResult)
         //    {
         //        var times = 0;
@@ -1208,12 +1208,12 @@ namespace TrendAnalysis.Service.MarkSix
         //                break;
         //            times++;
         //        }
-        //        item.FactorCurrentConsecutiveTimes = times;
+        //        item.MaxContinuousTimes = times;
         //    }
         //    //先按最大连续次数然后按最小间隔次数排序
         //    onesDigitResult = onesDigitResult
-        //        .OrderByDescending(t => t.FactorCurrentConsecutiveTimes)
-        //        .ThenBy(t => t.Interval).ToList();
+        //        .OrderByDescending(t => t.MaxContinuousTimes)
+        //        .ThenBy(t => t.MaxInterval).ToList();
 
         //    return onesDigitResult;
         //}
@@ -1226,9 +1226,9 @@ namespace TrendAnalysis.Service.MarkSix
         ///// <param name="tensDigitFactors">比较因子</param>
         ///// <param name="allowMinTimes">允许的最小连续次数，大于等于此数才记录</param>
         ///// <returns></returns>
-        //public List<FactorTrendAnalyseResult<byte>> AnalyseTensDigit(List<byte> tensDigitNumbers, List<Factor<byte>> tensDigitFactors, int allowMinTimes, int numbersTailCutCount)
+        //public List<FactorTrendContinuousDistribution<byte>> AnalyseTensDigit(List<byte> tensDigitNumbers, List<Factor<byte>> tensDigitFactors, int allowMinTimes, int numbersTailCutCount)
         //{
-        //    List<FactorTrendAnalyseResult<byte>> tensDigitResult;
+        //    List<FactorTrendContinuousDistribution<byte>> tensDigitResult;
         //    if (numbersTailCutCount > 0 && tensDigitNumbers.Count > 0)
         //    {
         //        var numbers = tensDigitNumbers.Skip(0).Take(tensDigitNumbers.Count - numbersTailCutCount).ToList();
@@ -1238,7 +1238,7 @@ namespace TrendAnalysis.Service.MarkSix
         //    {
         //        tensDigitResult = FactorAnalysis.CountFactorsConsecutivesTimes(tensDigitNumbers, tensDigitFactors, allowMinTimes);
         //    }
-        //    tensDigitResult = tensDigitResult.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
+        //    tensDigitResult = tensDigitResult.Where(t => t.ContinuousDistributions.Count > 0).ToList();
         //    foreach (var item in tensDigitResult)
         //    {
         //        var times = 0;
@@ -1248,13 +1248,13 @@ namespace TrendAnalysis.Service.MarkSix
         //                break;
         //            times++;
         //        }
-        //        item.FactorCurrentConsecutiveTimes = times;
+        //        item.MaxContinuousTimes = times;
         //    }
 
         //    //先按最大连续次数然后按最小间隔次数排序
         //    tensDigitResult = tensDigitResult
-        //        .OrderByDescending(t => t.FactorCurrentConsecutiveTimes)
-        //        .ThenBy(t => t.Interval).ToList();
+        //        .OrderByDescending(t => t.MaxContinuousTimes)
+        //        .ThenBy(t => t.MaxInterval).ToList();
 
         //    return tensDigitResult;
         //}
@@ -1268,9 +1268,9 @@ namespace TrendAnalysis.Service.MarkSix
         ///// <param name="allowMinTimes"></param>
         ///// <param name="numbersTailCutCount"></param>
         ///// <returns></returns>
-        //public List<FactorTrendAnalyseResult<byte>> AnalyseCompositeNumber(List<byte> compositeNumbers, List<Factor<byte>> factors, int allowMinTimes, int numbersTailCutCount)
+        //public List<FactorTrendContinuousDistribution<byte>> AnalyseCompositeNumber(List<byte> compositeNumbers, List<Factor<byte>> factors, int allowMinTimes, int numbersTailCutCount)
         //{
-        //    List<FactorTrendAnalyseResult<byte>> results;
+        //    List<FactorTrendContinuousDistribution<byte>> results;
         //    if (numbersTailCutCount > 0 && compositeNumbers.Count > 0)
         //    {
         //        var numbers = compositeNumbers.Skip(0).Take(compositeNumbers.Count - numbersTailCutCount).ToList();
@@ -1280,7 +1280,7 @@ namespace TrendAnalysis.Service.MarkSix
         //    {
         //        results = FactorAnalysis.CountFactorsConsecutivesTimes(compositeNumbers, factors, allowMinTimes);
         //    }
-        //    results = results.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
+        //    results = results.Where(t => t.ContinuousDistributions.Count > 0).ToList();
         //    foreach (var item in results)
         //    {
         //        var times = 0;
@@ -1290,13 +1290,13 @@ namespace TrendAnalysis.Service.MarkSix
         //                break;
         //            times++;
         //        }
-        //        item.FactorCurrentConsecutiveTimes = times;
+        //        item.MaxContinuousTimes = times;
         //    }
 
         //    //先按最大连续次数然后按最小间隔次数排序
         //    results = results
-        //        .OrderByDescending(t => t.FactorCurrentConsecutiveTimes)
-        //        .ThenBy(t => t.Interval).ToList();
+        //        .OrderByDescending(t => t.MaxContinuousTimes)
+        //        .ThenBy(t => t.MaxInterval).ToList();
 
         //    return results;
         //}
@@ -1309,7 +1309,7 @@ namespace TrendAnalysis.Service.MarkSix
         ///// <param name="around">后面连续期次</param>
         ///// <param name="allowMinTimes">允许的最小连续次数，大于等于此数才记录</param>
         ///// <returns></returns>
-        //public List<FactorTrendAnalyseResult<byte>> AnalyseTensDigitAround(List<byte> tensDigitNumbers, List<Factor<byte>> tensDigitFactors, int around, int allowMinTimes, int numbersTailCutCount)
+        //public List<FactorTrendContinuousDistribution<byte>> AnalyseTensDigitAround(List<byte> tensDigitNumbers, List<Factor<byte>> tensDigitFactors, int around, int allowMinTimes, int numbersTailCutCount)
         //{
         //    /*
         //     十位数相加组合
@@ -1350,7 +1350,7 @@ namespace TrendAnalysis.Service.MarkSix
         //       return factor.Contains(sum);
         //   };
         //    //分析结果
-        //    List<FactorTrendAnalyseResult<byte>> tensDigitResult;
+        //    List<FactorTrendContinuousDistribution<byte>> tensDigitResult;
         //    if (numbersTailCutCount > 0 && tensDigitNumbers.Count > 0)
         //    {
         //        var numbers = tensDigitNumbers.Skip(0).Take(tensDigitNumbers.Count - numbersTailCutCount).ToList();
@@ -1361,7 +1361,7 @@ namespace TrendAnalysis.Service.MarkSix
         //    {
         //        tensDigitResult = FactorAnalysis.Consecutives(tensDigitNumbers, tensDigitFactors, compareFunc, allowMinTimes);
         //    }
-        //    tensDigitResult = tensDigitResult.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
+        //    tensDigitResult = tensDigitResult.Where(t => t.ContinuousDistributions.Count > 0).ToList();
         //    foreach (var item in tensDigitResult)
         //    {
         //        var times = 0;
@@ -1371,11 +1371,11 @@ namespace TrendAnalysis.Service.MarkSix
         //                break;
         //            times++;
         //        }
-        //        item.FactorCurrentConsecutiveTimes = times;
+        //        item.MaxContinuousTimes = times;
         //    }
         //    tensDigitResult = tensDigitResult
-        //        .OrderByDescending(t => t.FactorCurrentConsecutiveTimes)
-        //        .ThenBy(t => t.Interval).ToList();
+        //        .OrderByDescending(t => t.MaxContinuousTimes)
+        //        .ThenBy(t => t.MaxInterval).ToList();
 
         //    return tensDigitResult;
         //}
