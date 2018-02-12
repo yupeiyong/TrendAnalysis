@@ -6,9 +6,9 @@ namespace TrendAnalysis.Service.Trend
 {
 
     /// <summary>
-    ///     因子历史趋势
+    ///     因子的历史分布（连续次数、间隔等）
     /// </summary>
-    public class HistoricalFactorTrend
+    public class FactorHistoricalDistribution
     {
         /// <summary>
         ///     类型说明

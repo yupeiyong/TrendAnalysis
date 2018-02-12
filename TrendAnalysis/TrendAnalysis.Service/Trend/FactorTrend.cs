@@ -74,9 +74,9 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="analyseNumberCount">要分析多少位记录</param>
         /// <param name="predictiveFactor">可能的因子</param>
         /// <returns></returns>
-        public List<HistoricalFactorTrend> AnalyseFactorHistoricalTrend<T>(List<T> numbers, FactorTrendContinuousDistribution<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
+        public List<FactorHistoricalDistribution> AnalyseFactorHistoricalTrend<T>(List<T> numbers, FactorTrendContinuousDistribution<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
         {
-            var trends = new List<HistoricalFactorTrend>();
+            var trends = new List<FactorHistoricalDistribution>();
 
             if (analyseNumberCount <= 0)
                 throw new Exception("分析历史趋势时，分析记录数量不能小于等于0！");
@@ -104,7 +104,7 @@ namespace TrendAnalysis.Service.Trend
                     var resultCount = 0;
                     var successCount = 0;
 
-                    var trend = new HistoricalFactorTrend
+                    var trend = new FactorHistoricalDistribution
                     {
                         AllowContinuousTimes = consecutiveTimes,
                         AllowInterval = interval,

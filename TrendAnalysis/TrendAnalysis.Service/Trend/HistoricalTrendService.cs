@@ -13,7 +13,7 @@ namespace TrendAnalysis.Service.Trend
     public class HistoricalTrendService
     {
 
-        //public static void AddRange(List<HistoricalFactorTrend> historicalTrends)
+        //public static void AddRange(List<FactorHistoricalDistribution> historicalTrends)
         //{
         //    using (var dao = new TrendDbContext())
         //    {
@@ -26,7 +26,7 @@ namespace TrendAnalysis.Service.Trend
         //        dao.BulkSaveChanges();
         //    }
         //}
-        //public static void AddRangeAsync(List<HistoricalFactorTrend> historicalTrends)
+        //public static void AddRangeAsync(List<FactorHistoricalDistribution> historicalTrends)
         //{
         //    using (var dao = new TrendDbContext())
         //    {
@@ -36,7 +36,7 @@ namespace TrendAnalysis.Service.Trend
         //            trend.LastModifyTime = DateTime.Now;
         //        });
 
-        //        dao.Set<HistoricalFactorTrend>().AddRange(historicalTrends);
+        //        dao.Set<FactorHistoricalDistribution>().AddRange(historicalTrends);
         //        dao.SaveChangesAsync();
         //    }
         //}
@@ -46,7 +46,7 @@ namespace TrendAnalysis.Service.Trend
         //    using (var dao = new TrendDbContext())
         //    {
         //        ////删除相同的记录
-        //        //var trends = dao.Set<HistoricalFactorTrend>().Where(ht => ht.Location == dto.Location
+        //        //var trends = dao.Set<FactorHistoricalDistribution>().Where(ht => ht.Location == dto.Location
         //        //    && ht.StartTimes >= dto.StartTimesValue && ht.StartTimes <= dto.EndTimesValue
         //        //    && ht.AllowContinuousTimes >= dto.StartAllowConsecutiveTimes && ht.AllowContinuousTimes <= dto.EndAllowConsecutiveTimes
         //        //    && ht.AllowInterval >= dto.StartAllowMaxInterval && ht.AllowInterval <= dto.EndAllowMaxInterval
@@ -59,11 +59,11 @@ namespace TrendAnalysis.Service.Trend
         //        //    //删除子项
         //        //    dao.Set<HistoricalTrendItem>().RemoveRange(item.Items);
         //        //}
-        //        //dao.Set<HistoricalFactorTrend>().RemoveRange(trends);
+        //        //dao.Set<FactorHistoricalDistribution>().RemoveRange(trends);
         //        //dao.SaveChanges();
 
         //        //删除相同的记录
-        //        var trendsSource = dao.Set<HistoricalFactorTrend>().Where(ht => ht.Location == dto.Location
+        //        var trendsSource = dao.Set<FactorHistoricalDistribution>().Where(ht => ht.Location == dto.Location
         //            && ht.StartTimes >= dto.StartTimesValue && ht.StartTimes <= dto.EndTimesValue
         //            && ht.AllowContinuousTimes >= dto.StartAllowConsecutiveTimes && ht.AllowContinuousTimes <= dto.EndAllowConsecutiveTimes
         //            && ht.AllowInterval >= dto.EndAllowMaxInterval  && ht.AllowInterval <= dto.StartAllowMaxInterval
