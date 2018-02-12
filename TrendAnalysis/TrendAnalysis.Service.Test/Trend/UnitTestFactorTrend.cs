@@ -19,7 +19,7 @@ namespace TrendAnalysis.Service.Test.Trend
         {
             var factor = new Factor<string> { Left = new List<string> { "1", "2" }, Right = new List<string> { "3", "4" } };
             var numbers = new List<string> { "3", "2", "1", "2", "0", "0", "1", "2", "3", "3", "4", "4", "4", "3", "3", "0", "3", "3", "3" };
-            var result = FactorTrend.CountFactorConsecutiveTimes(numbers, factor.Left, factor.Right);
+            var result = FactorsTrend.CountFactorConsecutiveTimes(numbers, factor.Left, factor.Right);
             Assert.IsTrue(result != null);
             Assert.IsTrue(result.ContinuousDistributions.Count == 2);
 
@@ -37,7 +37,7 @@ namespace TrendAnalysis.Service.Test.Trend
         {
             var factor = new Factor<int> { Left = new List<int> { 1, 2 }, Right = new List<int> { 3, 4 } };
             var numbers = new List<int> { 3, 2, 1, 2, 0, 0, 1, 2, 3, 3, 4, 4, 4, 3, 3, 0, 3, 3, 3 };
-            var result = FactorTrend.CountFactorConsecutiveTimes(numbers, factor.Left, factor.Right);
+            var result = FactorsTrend.CountFactorConsecutiveTimes(numbers, factor.Left, factor.Right);
             Assert.IsTrue(result != null);
             Assert.IsTrue(result.ContinuousDistributions.Count == 2);
 
@@ -62,9 +62,9 @@ namespace TrendAnalysis.Service.Test.Trend
              */
 
             var factor = new Factor<byte> { Left = new List<byte> { 3, 4 }, Right = new List<byte> { 1, 2 } };
-            var trendResult = FactorTrend.CountFactorConsecutiveTimes(numbers, factor.Left, factor.Right);
+            var trendResult = FactorsTrend.CountFactorConsecutiveTimes(numbers, factor.Left, factor.Right);
 
-            var rows = new FactorTrend().AnalyseFactorHistoricalTrend(numbers, trendResult, 5, factor.Right);
+            var rows = new FactorsTrend().AnalyseFactorHistoricalTrend(numbers, trendResult, 5, factor.Right);
             Assert.IsTrue(rows.Count > 0);
             rows = rows.Where(r => r.CorrectRate == 1 && r.AllowInterval == -2).ToList();
             Assert.IsTrue(rows.Count >= 1);
@@ -91,7 +91,7 @@ namespace TrendAnalysis.Service.Test.Trend
                 AnalyseHistoricalTrendCount = 5
             };
 
-            var predictiveFactors = new FactorTrend().Analyse(dto);
+            var predictiveFactors = new FactorsTrend().Analyse(dto);
             Assert.IsTrue(predictiveFactors.Count == 0);
         }
 
@@ -118,7 +118,7 @@ namespace TrendAnalysis.Service.Test.Trend
                 AnalyseHistoricalTrendCount = 5
             };
 
-            var predictiveFactors = new FactorTrend().Analyse(dto);
+            var predictiveFactors = new FactorsTrend().Analyse(dto);
             Assert.IsTrue(predictiveFactors.Count == 1);
         }
 

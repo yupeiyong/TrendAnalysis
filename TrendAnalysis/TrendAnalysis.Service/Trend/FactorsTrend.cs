@@ -12,7 +12,7 @@ namespace TrendAnalysis.Service.Trend
     /// <summary>
     ///     因子的历史趋势
     /// </summary>
-    public class FactorTrend
+    public class FactorsTrend
     {
 
         /// <summary>

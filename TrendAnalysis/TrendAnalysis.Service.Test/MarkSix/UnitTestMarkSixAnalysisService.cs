@@ -615,7 +615,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 //十位因子
                 var tensDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4 }.ToList());
 
-                var historicalAnalysis = new FactorTrend();
+                var historicalAnalysis = new FactorsTrend();
                 var result = historicalAnalysis.Analyse(new FactorsTrendAnalyseDto<byte> { Numbers = onesDigitNumbers, Factors = onesDigitFactors, AllowMinTimes = 9, AllowMaxInterval = 2 });
                 //result = result.Where(m => m.ContinuousDistributions.Count > 0).ToList();
             }
@@ -641,7 +641,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 //十位因子
                 var tensDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4 }.ToList());
 
-                var historicalAnalysis = new FactorTrend();
+                var historicalAnalysis = new FactorsTrend();
                 var result = historicalAnalysis.Analyse(new FactorsTrendAnalyseDto<byte> { Numbers = tensDigitNumbers, Factors = tensDigitFactors, AllowMinTimes = 4, AllowMaxInterval = 0 });
                 //result = result.Where(m => m.ContinuousDistributions.Count > 0).ToList();
             }

@@ -69,7 +69,7 @@ namespace TrendAnalysis.Service.MarkSix
                         throw new Exception("错误，指定的位置不是有效的号码位置！");
                 }
 
-                var factorHistoricalTrend = new FactorTrend();
+                var factorHistoricalTrend = new FactorsTrend();
 
                 //十位数号码列表
                 var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).Select(byte.Parse).ToList();
@@ -190,7 +190,7 @@ namespace TrendAnalysis.Service.MarkSix
                         throw new Exception("错误，指定的位置不是有效的号码位置！");
                 }
 
-                var factorHistoricalTrend = new FactorTrend();
+                var factorHistoricalTrend = new FactorsTrend();
 
                 //个位因子
                 var onesDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
@@ -288,7 +288,7 @@ namespace TrendAnalysis.Service.MarkSix
                         throw new Exception("错误，指定的位置不是有效的号码位置！");
                 }
 
-                var factorHistoricalTrend = new FactorTrend();
+                var factorHistoricalTrend = new FactorsTrend();
 
                 //十位因子
                 var tensDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4 }.ToList());
@@ -1121,7 +1121,7 @@ namespace TrendAnalysis.Service.MarkSix
                         throw new Exception("错误，指定的位置不是有效的号码位置！");
                 }
 
-                var factorHistoricalTrend = new FactorTrend();
+                var factorHistoricalTrend = new FactorsTrend();
 
                 var compositeService = new CompositeNumber(1, 49);
                 var compositeNumber = compositeService.CompositeNumbers.Select(n => (byte)n).ToList();
