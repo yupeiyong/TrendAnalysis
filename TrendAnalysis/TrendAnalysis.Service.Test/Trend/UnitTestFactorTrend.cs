@@ -19,13 +19,13 @@ namespace TrendAnalysis.Service.Test.Trend
         {
             var factor = new Factor<string> { Left = new List<string> { "1", "2" }, Right = new List<string> { "3", "4" } };
             var numbers = new List<string> { "3", "2", "1", "2", "0", "0", "1", "2", "3", "3", "4", "4", "4", "3", "3", "0", "3", "3", "3" };
-            var result = FactorTrend.CountContinuousDistribution(numbers, factor.Left, factor.Right);
+            var result = FactorTrend.CountConsecutiveDistribution(numbers, factor.Left, factor.Right);
             Assert.IsTrue(result != null);
-            Assert.IsTrue(result.ContinuousDistributions.Count == 2);
+            Assert.IsTrue(result.ConsecutiveDistributions.Count == 2);
 
-            var keys = result.ContinuousDistributions.Keys.ToList();
+            var keys = result.ConsecutiveDistributions.Keys.ToList();
             keys.Sort();
-            var dict = result.ContinuousDistributions;
+            var dict = result.ConsecutiveDistributions;
             Assert.IsTrue(keys.Count == 2);
             Assert.IsTrue(keys[0] == 2 && dict[keys[0]] == 1);
             Assert.IsTrue(keys[1] == 3 && dict[keys[0]] == 1);
@@ -37,13 +37,13 @@ namespace TrendAnalysis.Service.Test.Trend
         {
             var factor = new Factor<int> { Left = new List<int> { 1, 2 }, Right = new List<int> { 3, 4 } };
             var numbers = new List<int> { 3, 2, 1, 2, 0, 0, 1, 2, 3, 3, 4, 4, 4, 3, 3, 0, 3, 3, 3 };
-            var result = FactorTrend.CountContinuousDistribution(numbers, factor.Left, factor.Right);
+            var result = FactorTrend.CountConsecutiveDistribution(numbers, factor.Left, factor.Right);
             Assert.IsTrue(result != null);
-            Assert.IsTrue(result.ContinuousDistributions.Count == 2);
+            Assert.IsTrue(result.ConsecutiveDistributions.Count == 2);
 
-            var keys = result.ContinuousDistributions.Keys.ToList();
+            var keys = result.ConsecutiveDistributions.Keys.ToList();
             keys.Sort();
-            var dict = result.ContinuousDistributions;
+            var dict = result.ConsecutiveDistributions;
             Assert.IsTrue(keys.Count == 2);
             Assert.IsTrue(keys[0] == 2 && dict[keys[0]] == 1);
             Assert.IsTrue(keys[1] == 3 && dict[keys[0]] == 1);
@@ -62,7 +62,7 @@ namespace TrendAnalysis.Service.Test.Trend
              */
 
             var factor = new Factor<byte> { Left = new List<byte> { 3, 4 }, Right = new List<byte> { 1, 2 } };
-            var trendResult = FactorTrend.CountContinuousDistribution(numbers, factor.Left, factor.Right);
+            var trendResult = FactorTrend.CountConsecutiveDistribution(numbers, factor.Left, factor.Right);
 
             var rows = new FactorTrend().GetCorrectRates(numbers, trendResult, 5, factor.Right);
             Assert.IsTrue(rows.Count > 0);

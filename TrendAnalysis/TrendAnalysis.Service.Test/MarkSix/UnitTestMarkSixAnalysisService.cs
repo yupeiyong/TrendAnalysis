@@ -617,7 +617,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
 
                 var historicalAnalysis = new FactorsTrend();
                 var result = historicalAnalysis.Analyse(new FactorsTrendAnalyseDto<byte> { Numbers = onesDigitNumbers, Factors = onesDigitFactors, AllowMinTimes = 9, AllowMaxInterval = 2 });
-                //result = result.Where(m => m.ContinuousDistributions.Count > 0).ToList();
+                //result = result.Where(m => m.ConsecutiveDistributions.Count > 0).ToList();
             }
         }
 
@@ -643,7 +643,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
 
                 var historicalAnalysis = new FactorsTrend();
                 var result = historicalAnalysis.Analyse(new FactorsTrendAnalyseDto<byte> { Numbers = tensDigitNumbers, Factors = tensDigitFactors, AllowMinTimes = 4, AllowMaxInterval = 0 });
-                //result = result.Where(m => m.ContinuousDistributions.Count > 0).ToList();
+                //result = result.Where(m => m.ConsecutiveDistributions.Count > 0).ToList();
             }
         }
 
@@ -662,7 +662,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var resultCount = 0;
                 var tensHasCount = 0;
                 var onesHasCount = 0;
-                var defaultTakeCount = 200;
+                var defaultTakeCount = 101;
                 var rate = 40;
                 var everyPrice = 10;
                 var totalMoney = 0;

@@ -68,7 +68,7 @@
     <Compile Include="Trend\CompositeNumber.cs" />
     <Compile Include="Trend\FactorHistoricalTrend.cs" />
     <Compile Include="Trend\FactorTrend.cs" />
-    <Compile Include="Trend\FactorTrendContinuousDistribution.cs" />
+    <Compile Include="Trend\FactorTrendConsecutiveDistribution.cs" />
     <Compile Include="Trend\FactorTrendAnalyseResultIndexItem.cs" />
     <Compile Include="Trend\FactorTrendCorrectRate.cs" />
     <Compile Include="Trend\HistoricalTrendService.cs" />

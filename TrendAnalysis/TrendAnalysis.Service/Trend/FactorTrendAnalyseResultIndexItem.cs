@@ -4,7 +4,7 @@
     /// <summary>
     ///     因子分析结果，索引明细
     /// </summary>
-    public class FactorTrendContinuousDistributionRowDetails
+    public class FactorTrendConsecutiveDistributionRowDetails
     {
 
         /// <summary>
@@ -20,7 +20,7 @@
 
 
         /// <summary>
-        ///     最大因子连续次数－当前索引位置的因子连续次数
+        ///     最大因子连续次数－当前索引位置的因子连续次数,为负数表示当前连续次数大于历史最大连续次数
         /// </summary>
         public int MaxConsecutiveTimesInterval { get; set; }
 
