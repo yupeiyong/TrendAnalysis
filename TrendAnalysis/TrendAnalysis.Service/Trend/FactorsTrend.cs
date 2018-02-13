@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using TrendAnalysis.DataTransferObject.Trend;
 using TrendAnalysis.Models.Trend;
 
@@ -20,6 +18,7 @@ namespace TrendAnalysis.Service.Trend
             var predictiveFactors = new List<Factor<T>>();
 
             var factorTrend = new FactorTrend();
+
             //分析每个因子
             foreach (var factor in dto.Factors)
             {
@@ -38,6 +37,7 @@ namespace TrendAnalysis.Service.Trend
             }
             return predictiveFactors;
         }
+
     }
 
 }

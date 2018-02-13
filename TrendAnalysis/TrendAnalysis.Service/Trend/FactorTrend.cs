@@ -16,7 +16,7 @@ namespace TrendAnalysis.Service.Trend
         /// <summary>
         ///     非连续指示
         /// </summary>
-        public const int DiscontinuousFlag = int.MaxValue;
+        public const int DisConsecutiveFlag = int.MaxValue;
 
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace TrendAnalysis.Service.Trend
             var factor = dto.Factor;
 
             //统计每个因子在记录中的趋势
-            var trendResult = CountContinuousDistribution(dto.Numbers, factor.Left, factor.Right);
+            var trendResult = CountConsecutiveDistribution(dto.Numbers, factor.Left, factor.Right);
 
             //行明细结果集
             var rowDetailses = trendResult.RowDetailses;
@@ -48,16 +48,17 @@ namespace TrendAnalysis.Service.Trend
             var historicalTrends = GetCorrectRates(historicalNumbers, trendResult, dto.AnalyseHistoricalTrendCount, factor.Right);
 
             //筛选正确100%的历史趋势，如没有不记录
-            //historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderBy(h => h.AllowInterval).ThenByDescending(h => h.AllowContinuousTimes).ToList();
-            historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderByDescending(h => h.AllowContinuousTimes).ThenBy(h => h.AllowInterval).ToList();
+            //historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderBy(h => h.AllowInterval).ThenByDescending(h => h.AllowConsecutiveTimes).ToList();
+            historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderByDescending(h => h.AllowConsecutiveTimes).ThenBy(h => h.AllowInterval).ToList();
             if (historicalTrends.Count == 0) return null;
 
             var firstHistoricalTrend = historicalTrends.FirstOrDefault();
             if (firstHistoricalTrend == null)
                 return null;
 
+            Console.WriteLine(firstHistoricalTrend.AllowInterval);
             //可以考虑加大连续次数和间隔数
-            if (lastIndexResult.ConsecutiveTimes >= firstHistoricalTrend.AllowContinuousTimes + dto.AddConsecutiveTimes && lastIndexResult.MaxConsecutiveTimesInterval <= firstHistoricalTrend.AllowInterval - dto.AddInterval)
+            if (lastIndexResult.ConsecutiveTimes >= firstHistoricalTrend.AllowConsecutiveTimes + dto.AddConsecutiveTimes && lastIndexResult.MaxConsecutiveTimesInterval <= firstHistoricalTrend.AllowInterval - dto.AddInterval)
             {
                 //返回的可能因子
                 return factor.Right;
@@ -74,7 +75,7 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="analyseNumberCount">要分析多少位记录</param>
         /// <param name="predictiveFactor">可能的因子</param>
         /// <returns></returns>
-        public List<FactorTrendCorrectRate> GetCorrectRates<T>(List<T> numbers, FactorTrendContinuousDistribution<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
+        public List<FactorTrendCorrectRate> GetCorrectRates<T>(List<T> numbers, FactorTrendConsecutiveDistribution<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
         {
 
             var trends = new List<FactorTrendCorrectRate>();
@@ -93,8 +94,8 @@ namespace TrendAnalysis.Service.Trend
             var minConsecutiveTimes = trendResult.RowDetailses.Where(n => n.ConsecutiveTimes != 0).Min(n => n.ConsecutiveTimes);
             var maxConsecutiveTimes = trendResult.RowDetailses.Where(n => n.ConsecutiveTimes != 0).Max(n => n.ConsecutiveTimes);
 
-            var minInterval = trendResult.RowDetailses.Where(n => n.MaxConsecutiveTimesInterval != DiscontinuousFlag).Min(n => n.MaxConsecutiveTimesInterval);
-            var maxInterval = trendResult.RowDetailses.Where(n => n.MaxConsecutiveTimesInterval != DiscontinuousFlag).Max(n => n.MaxConsecutiveTimesInterval);
+            var minInterval = trendResult.RowDetailses.Where(n => n.MaxConsecutiveTimesInterval != DisConsecutiveFlag).Min(n => n.MaxConsecutiveTimesInterval);
+            var maxInterval = trendResult.RowDetailses.Where(n => n.MaxConsecutiveTimesInterval != DisConsecutiveFlag).Max(n => n.MaxConsecutiveTimesInterval);
 
             //允许的连续次数，由小到大
             for (var consecutiveTimes = minConsecutiveTimes; consecutiveTimes <= maxConsecutiveTimes; consecutiveTimes++)
@@ -107,7 +108,7 @@ namespace TrendAnalysis.Service.Trend
 
                     var trend = new FactorTrendCorrectRate
                     {
-                        AllowContinuousTimes = consecutiveTimes,
+                        AllowConsecutiveTimes = consecutiveTimes,
                         AllowInterval = interval,
                         AnalyseNumberCount = analyseNumberCount
                     };
@@ -155,14 +156,14 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="factor">判断因子</param>
         /// <param name="predictiveFactor">反因子</param>
         /// <returns></returns>
-        public static FactorTrendContinuousDistribution<T> CountContinuousDistribution<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> predictiveFactor)
+        public static FactorTrendConsecutiveDistribution<T> CountConsecutiveDistribution<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> predictiveFactor)
         {
-            var curResult = new FactorTrendContinuousDistribution<T>
+            var curResult = new FactorTrendConsecutiveDistribution<T>
             {
                 Factor = factor,
                 PredictiveFactor = predictiveFactor,
-                ContinuousDistributions = new SortedDictionary<int, int>(),
-                RowDetailses = new List<FactorTrendContinuousDistributionRowDetails>()
+                ConsecutiveDistributions = new SortedDictionary<int, int>(),
+                RowDetailses = new List<FactorTrendConsecutiveDistributionRowDetails>()
             };
             var i = 0;
 
@@ -180,7 +181,7 @@ namespace TrendAnalysis.Service.Trend
 
                     //因子连续，最大连续次数－当前连续次数
                     curResult.RowDetailses.Add(
-                        new FactorTrendContinuousDistributionRowDetails
+                        new FactorTrendConsecutiveDistributionRowDetails
                         {
                             Index = i,
                             MaxConsecutiveTimesInterval = maxConsecutiveTimes - times,
@@ -189,13 +190,13 @@ namespace TrendAnalysis.Service.Trend
                 }
                 else
                 {
-                    if (curResult.ContinuousDistributions.ContainsKey(times))
+                    if (curResult.ConsecutiveDistributions.ContainsKey(times))
                     {
-                        curResult.ContinuousDistributions[times]++;
+                        curResult.ConsecutiveDistributions[times]++;
                     }
                     else if (times >= AllowMinTimes)
                     {
-                        curResult.ContinuousDistributions.Add(times, 1);
+                        curResult.ConsecutiveDistributions.Add(times, 1);
                     }
                     if (times > maxConsecutiveTimes)
                         maxConsecutiveTimes = times;
@@ -203,22 +204,22 @@ namespace TrendAnalysis.Service.Trend
 
                     //因子不连续
                     curResult.RowDetailses.Add(
-                        new FactorTrendContinuousDistributionRowDetails
+                        new FactorTrendConsecutiveDistributionRowDetails
                         {
                             Index = i,
-                            MaxConsecutiveTimesInterval = DiscontinuousFlag,
+                            MaxConsecutiveTimesInterval = DisConsecutiveFlag,
                             ConsecutiveTimes = times
                         });
                 }
                 i++;
             }
-            if (curResult.ContinuousDistributions.ContainsKey(times))
+            if (curResult.ConsecutiveDistributions.ContainsKey(times))
             {
-                curResult.ContinuousDistributions[times]++;
+                curResult.ConsecutiveDistributions[times]++;
             }
             else if (times >= AllowMinTimes)
             {
-                curResult.ContinuousDistributions.Add(times, 1);
+                curResult.ConsecutiveDistributions.Add(times, 1);
             }
             return curResult;
         }

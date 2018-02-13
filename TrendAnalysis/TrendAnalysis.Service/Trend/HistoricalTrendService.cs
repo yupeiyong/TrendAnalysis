@@ -48,7 +48,7 @@ namespace TrendAnalysis.Service.Trend
         //        ////删除相同的记录
         //        //var trends = dao.Set<FactorTrendCorrectRate>().Where(ht => ht.Location == dto.Location
         //        //    && ht.StartTimes >= dto.StartTimesValue && ht.StartTimes <= dto.EndTimesValue
-        //        //    && ht.AllowContinuousTimes >= dto.StartAllowConsecutiveTimes && ht.AllowContinuousTimes <= dto.EndAllowConsecutiveTimes
+        //        //    && ht.AllowConsecutiveTimes >= dto.StartAllowConsecutiveTimes && ht.AllowConsecutiveTimes <= dto.EndAllowConsecutiveTimes
         //        //    && ht.AllowInterval >= dto.StartAllowMaxInterval && ht.AllowInterval <= dto.EndAllowMaxInterval
         //        //    && ht.HistoricalTrendType == dto.HistoricalTrendType
         //        //    && ht.HistoricalTrendItemType == dto.HistoricalTrendItemType)
@@ -65,7 +65,7 @@ namespace TrendAnalysis.Service.Trend
         //        //删除相同的记录
         //        var trendsSource = dao.Set<FactorTrendCorrectRate>().Where(ht => ht.Location == dto.Location
         //            && ht.StartTimes >= dto.StartTimesValue && ht.StartTimes <= dto.EndTimesValue
-        //            && ht.AllowContinuousTimes >= dto.StartAllowConsecutiveTimes && ht.AllowContinuousTimes <= dto.EndAllowConsecutiveTimes
+        //            && ht.AllowConsecutiveTimes >= dto.StartAllowConsecutiveTimes && ht.AllowConsecutiveTimes <= dto.EndAllowConsecutiveTimes
         //            && ht.AllowInterval >= dto.EndAllowMaxInterval  && ht.AllowInterval <= dto.StartAllowMaxInterval
         //            && ht.HistoricalTrendType == dto.HistoricalTrendType
         //            && ht.HistoricalTrendItemType == dto.HistoricalTrendItemType);

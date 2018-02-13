@@ -4,7 +4,7 @@
     /// <summary>
     ///     因子分析结果，索引明细
     /// </summary>
-    public class FactorTrendContinuousDistributionRowDetails
+    public class FactorTrendConsecutiveDistributionRowDetails
     {
 
         /// <summary>
