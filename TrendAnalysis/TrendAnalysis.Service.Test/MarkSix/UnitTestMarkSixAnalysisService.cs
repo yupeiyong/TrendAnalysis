@@ -653,6 +653,8 @@ namespace TrendAnalysis.Service.Test.MarkSix
         {
             using (var dao = new TrendDbContext())
             {
+                var watch = new Stopwatch();
+                watch.Start();
                 var service = new MarkSixAnalysisService();
                 var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(2505).ToList();
                 var resultString = new StringBuilder();
@@ -677,7 +679,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     {
                         Location = 7,
                         Times = times,
-                        OnesAddConsecutiveTimes = 4,
+                        OnesAddConsecutiveTimes = 3,
                         TensAddConsecutiveTimes = 10,
                         OnesAddInterval = 1,
                         TensAddInterval = 10,
@@ -716,6 +718,8 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     }
                     resultString.AppendLine("期次：" + records[i].Times + ",第7位号码：" + seventhNum + ",分析结果：" + (has ? "-Yes- " : "      ") + string.Join(";", result));
                 }
+                watch.Stop();
+                var usedSeconds = watch.ElapsedMilliseconds / 1000;
                 var str = resultString.ToString();
             }
         }

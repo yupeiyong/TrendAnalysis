@@ -50,6 +50,3 @@ F:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service.Test\bin\Debug\zh
 F:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service.Test\obj\Debug\TrendAnalysis.Service.Test.csprojResolveAssemblyReference.cache
 F:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service.Test\obj\Debug\TrendAnalysis.Service.Test.dll
 F:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service.Test\obj\Debug\TrendAnalysis.Service.Test.pdb
-E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service.Test\bin\Debug\Z.EntityFramework.Extensions.dll
-E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service.Test\bin\Debug\Z.EntityFramework.Plus.EF6.dll
-E:\workspace\TrendAnalysis\TrendAnalysis\TrendAnalysis.Service.Test\bin\Debug\Z.EntityFramework.Extensions.xml
