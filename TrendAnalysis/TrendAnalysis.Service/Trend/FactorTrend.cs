@@ -126,7 +126,10 @@ namespace TrendAnalysis.Service.Trend
                         //对结果再分析
                         //1、按允许的最小因子当前连续次数和允许的最大间隔次数筛选
                         //2、先按最大连续次数然后按最小间隔次数排序
-                        if (curIndexResult.ConsecutiveTimes >= consecutiveTimes && curIndexResult.MaxConsecutiveTimesInterval <= interval)
+
+                        ////历史最大连续次数
+                        //var historicalMaxConsecutiveTimes = curIndexResult.ConsecutiveTimes + interval;
+                        if (curIndexResult.ConsecutiveTimes == consecutiveTimes && curIndexResult.MaxConsecutiveTimesInterval == interval)
                         {
                             if (predictiveFactor != null && predictiveFactor.Count > 0)
                             {
