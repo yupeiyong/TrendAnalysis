@@ -37,7 +37,7 @@ namespace TrendAnalysis.Service.Trend
             var trendResult = CountConsecutiveDistribution(dto.Numbers, factor.Left, factor.Right);
 
             //行明细结果集
-            var rowDetailses = trendResult.RowDetailses;
+            var rowDetailses = trendResult.FactorDistributions;
             if (rowDetailses == null || rowDetailses.Count == 0) return null;
             var lastIndexResult = rowDetailses[rowDetailses.Count - 1];
 
@@ -75,7 +75,7 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="analyseNumberCount">要分析多少位记录</param>
         /// <param name="predictiveFactor">可能的因子</param>
         /// <returns></returns>
-        public List<FactorTrendCorrectRate> GetCorrectRates<T>(List<T> numbers, FactorTrendConsecutiveDistribution<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
+        public List<FactorTrendCorrectRate> GetCorrectRates<T>(List<T> numbers, FactorTrendConsecutiveDetails<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
         {
 
             var trends = new List<FactorTrendCorrectRate>();
@@ -91,11 +91,11 @@ namespace TrendAnalysis.Service.Trend
             if (numberCount < analyseNumberCount)
                 throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
 
-            var minConsecutiveTimes = trendResult.RowDetailses.Where(n => n.ConsecutiveTimes != 0).Min(n => n.ConsecutiveTimes);
-            var maxConsecutiveTimes = trendResult.RowDetailses.Where(n => n.ConsecutiveTimes != 0).Max(n => n.ConsecutiveTimes);
+            var minConsecutiveTimes = trendResult.FactorDistributions.Where(n => n.ConsecutiveTimes != 0).Min(n => n.ConsecutiveTimes);
+            var maxConsecutiveTimes = trendResult.FactorDistributions.Where(n => n.ConsecutiveTimes != 0).Max(n => n.ConsecutiveTimes);
 
-            var minInterval = trendResult.RowDetailses.Where(n => n.MaxConsecutiveTimesInterval != DisConsecutiveFlag).Min(n => n.MaxConsecutiveTimesInterval);
-            var maxInterval = trendResult.RowDetailses.Where(n => n.MaxConsecutiveTimesInterval != DisConsecutiveFlag).Max(n => n.MaxConsecutiveTimesInterval);
+            var minInterval = trendResult.FactorDistributions.Where(n => n.MaxConsecutiveTimesInterval != DisConsecutiveFlag).Min(n => n.MaxConsecutiveTimesInterval);
+            var maxInterval = trendResult.FactorDistributions.Where(n => n.MaxConsecutiveTimesInterval != DisConsecutiveFlag).Max(n => n.MaxConsecutiveTimesInterval);
 
             //允许的连续次数，由小到大
             for (var consecutiveTimes = minConsecutiveTimes; consecutiveTimes <= maxConsecutiveTimes; consecutiveTimes++)
@@ -115,7 +115,7 @@ namespace TrendAnalysis.Service.Trend
                     trends.Add(trend);
 
                     //行明细结果集
-                    var rowDetailses = trendResult.RowDetailses;
+                    var rowDetailses = trendResult.FactorDistributions;
                     for (var i = numberCount - 1; i >= analyseNumberCount; i--)
                     {
                         var number = numbers[i];
@@ -159,14 +159,14 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="factor">判断因子</param>
         /// <param name="predictiveFactor">反因子</param>
         /// <returns></returns>
-        public static FactorTrendConsecutiveDistribution<T> CountConsecutiveDistribution<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> predictiveFactor)
+        public static FactorTrendConsecutiveDetails<T> CountConsecutiveDistribution<T>(IReadOnlyList<T> numbers, List<T> factor, List<T> predictiveFactor)
         {
-            var curResult = new FactorTrendConsecutiveDistribution<T>
+            var curResult = new FactorTrendConsecutiveDetails<T>
             {
                 Factor = factor,
                 PredictiveFactor = predictiveFactor,
                 ConsecutiveDistributions = new SortedDictionary<int, int>(),
-                RowDetailses = new List<FactorTrendConsecutiveDistributionRowDetails>()
+                FactorDistributions = new List<FactorDistribution>()
             };
             var i = 0;
 
@@ -183,8 +183,8 @@ namespace TrendAnalysis.Service.Trend
                     times++;
 
                     //因子连续，最大连续次数－当前连续次数
-                    curResult.RowDetailses.Add(
-                        new FactorTrendConsecutiveDistributionRowDetails
+                    curResult.FactorDistributions.Add(
+                        new FactorDistribution
                         {
                             Index = i,
                             MaxConsecutiveTimesInterval = maxConsecutiveTimes - times,
@@ -206,8 +206,8 @@ namespace TrendAnalysis.Service.Trend
                     times = 0;
 
                     //因子不连续
-                    curResult.RowDetailses.Add(
-                        new FactorTrendConsecutiveDistributionRowDetails
+                    curResult.FactorDistributions.Add(
+                        new FactorDistribution
                         {
                             Index = i,
                             MaxConsecutiveTimesInterval = DisConsecutiveFlag,

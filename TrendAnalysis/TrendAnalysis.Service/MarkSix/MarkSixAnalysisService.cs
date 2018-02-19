@@ -1186,9 +1186,9 @@ namespace TrendAnalysis.Service.MarkSix
         ///// <param name="tensDigitFactors">比较因子</param>
         ///// <param name="allowMinTimes">允许的最小连续次数，大于等于此数才记录</param>
         ///// <returns></returns>
-        //public List<FactorTrendConsecutiveDistribution<byte>> AnalyseOnesDigit(List<byte> onesDigitNumbers, List<Factor<byte>> onesDigitFactors, int allowMinTimes, int numbersTailCutCount)
+        //public List<FactorTrendConsecutiveDetails<byte>> AnalyseOnesDigit(List<byte> onesDigitNumbers, List<Factor<byte>> onesDigitFactors, int allowMinTimes, int numbersTailCutCount)
         //{
-        //    List<FactorTrendConsecutiveDistribution<byte>> onesDigitResult;
+        //    List<FactorTrendConsecutiveDetails<byte>> onesDigitResult;
         //    if (numbersTailCutCount > 0 && numbersTailCutCount < onesDigitNumbers.Count)
         //    {
         //        var numbers = onesDigitNumbers.Skip(0).Take(onesDigitNumbers.Count - numbersTailCutCount).ToList();
@@ -1226,9 +1226,9 @@ namespace TrendAnalysis.Service.MarkSix
         ///// <param name="tensDigitFactors">比较因子</param>
         ///// <param name="allowMinTimes">允许的最小连续次数，大于等于此数才记录</param>
         ///// <returns></returns>
-        //public List<FactorTrendConsecutiveDistribution<byte>> AnalyseTensDigit(List<byte> tensDigitNumbers, List<Factor<byte>> tensDigitFactors, int allowMinTimes, int numbersTailCutCount)
+        //public List<FactorTrendConsecutiveDetails<byte>> AnalyseTensDigit(List<byte> tensDigitNumbers, List<Factor<byte>> tensDigitFactors, int allowMinTimes, int numbersTailCutCount)
         //{
-        //    List<FactorTrendConsecutiveDistribution<byte>> tensDigitResult;
+        //    List<FactorTrendConsecutiveDetails<byte>> tensDigitResult;
         //    if (numbersTailCutCount > 0 && tensDigitNumbers.Count > 0)
         //    {
         //        var numbers = tensDigitNumbers.Skip(0).Take(tensDigitNumbers.Count - numbersTailCutCount).ToList();
@@ -1268,9 +1268,9 @@ namespace TrendAnalysis.Service.MarkSix
         ///// <param name="allowMinTimes"></param>
         ///// <param name="numbersTailCutCount"></param>
         ///// <returns></returns>
-        //public List<FactorTrendConsecutiveDistribution<byte>> AnalyseCompositeNumber(List<byte> compositeNumbers, List<Factor<byte>> factors, int allowMinTimes, int numbersTailCutCount)
+        //public List<FactorTrendConsecutiveDetails<byte>> AnalyseCompositeNumber(List<byte> compositeNumbers, List<Factor<byte>> factors, int allowMinTimes, int numbersTailCutCount)
         //{
-        //    List<FactorTrendConsecutiveDistribution<byte>> results;
+        //    List<FactorTrendConsecutiveDetails<byte>> results;
         //    if (numbersTailCutCount > 0 && compositeNumbers.Count > 0)
         //    {
         //        var numbers = compositeNumbers.Skip(0).Take(compositeNumbers.Count - numbersTailCutCount).ToList();
@@ -1309,7 +1309,7 @@ namespace TrendAnalysis.Service.MarkSix
         ///// <param name="around">后面连续期次</param>
         ///// <param name="allowMinTimes">允许的最小连续次数，大于等于此数才记录</param>
         ///// <returns></returns>
-        //public List<FactorTrendConsecutiveDistribution<byte>> AnalyseTensDigitAround(List<byte> tensDigitNumbers, List<Factor<byte>> tensDigitFactors, int around, int allowMinTimes, int numbersTailCutCount)
+        //public List<FactorTrendConsecutiveDetails<byte>> AnalyseTensDigitAround(List<byte> tensDigitNumbers, List<Factor<byte>> tensDigitFactors, int around, int allowMinTimes, int numbersTailCutCount)
         //{
         //    /*
         //     十位数相加组合
@@ -1350,7 +1350,7 @@ namespace TrendAnalysis.Service.MarkSix
         //       return factor.Contains(sum);
         //   };
         //    //分析结果
-        //    List<FactorTrendConsecutiveDistribution<byte>> tensDigitResult;
+        //    List<FactorTrendConsecutiveDetails<byte>> tensDigitResult;
         //    if (numbersTailCutCount > 0 && tensDigitNumbers.Count > 0)
         //    {
         //        var numbers = tensDigitNumbers.Skip(0).Take(tensDigitNumbers.Count - numbersTailCutCount).ToList();
