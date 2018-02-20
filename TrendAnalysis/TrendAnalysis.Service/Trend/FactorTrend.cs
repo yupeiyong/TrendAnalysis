@@ -56,7 +56,6 @@ namespace TrendAnalysis.Service.Trend
             if (firstHistoricalTrend == null)
                 return null;
 
-            Console.WriteLine(firstHistoricalTrend.AllowInterval);
             //可以考虑加大连续次数和间隔数
             if (lastIndexResult.ConsecutiveTimes >= firstHistoricalTrend.AllowConsecutiveTimes + dto.AddConsecutiveTimes && lastIndexResult.MaxConsecutiveTimesInterval <= firstHistoricalTrend.AllowInterval - dto.AddInterval)
             {

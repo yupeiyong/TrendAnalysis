@@ -69,6 +69,7 @@ namespace TrendAnalysis.Service.Test.Trend
             rows = rows.Where(r => r.CorrectRate == 1 && r.AllowInterval == -2).ToList();
             Assert.IsTrue(rows.Count >= 1);
         }
+
     }
 
 }
