@@ -755,9 +755,9 @@ namespace TrendAnalysis.Service.Test.MarkSix
                         Location = 7,
                         Times = times,
                         OnesAddConsecutiveTimes = 3,
-                        TensAddConsecutiveTimes = 1000,
+                        TensAddConsecutiveTimes = 100,//2,
                         OnesAddInterval = 1,
-                        TensAddInterval = 10,
+                        TensAddInterval = 1,
                         NumberTakeCount = curTakeCount,
                         OnesAndTensMustContain = false
                     };
