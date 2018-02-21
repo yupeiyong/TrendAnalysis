@@ -72,6 +72,7 @@
     <Compile Include="Trend\FactorDistribution.cs" />
     <Compile Include="Trend\FactorTrendCorrectRate.cs" />
     <Compile Include="Trend\HistoricalTrendService.cs" />
+    <Compile Include="Trend\PermutationFactorsTrend.cs" />
     <Compile Include="Trend\PermutationFactorTrend.cs" />
     <Compile Include="Trend\FactorsTrend.cs" />
     <Compile Include="Trend\FactorGenerator.cs" />

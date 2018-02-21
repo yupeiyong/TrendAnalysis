@@ -74,12 +74,12 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="analyseNumberCount">要分析多少位记录</param>
         /// <param name="predictiveFactor">可能的因子</param>
         /// <returns></returns>
-        public List<FactorTrendCorrectRate> GetCorrectRates<T>(List<T> numbers, FactorTrendConsecutiveDetails<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
+        public List<FactorTrendCorrectRate> GetCorrectRates<T>(List<T> numbers, FactorTrendConsecutiveDetails<T> trendResult, int endIndex, List<T> predictiveFactor)
         {
 
             var trends = new List<FactorTrendCorrectRate>();
 
-            if (analyseNumberCount <= 0)
+            if (endIndex <= 0)
                 throw new Exception("分析历史趋势时，分析记录数量不能小于等于0！");
 
             if (numbers == null || numbers.Count == 0)
@@ -87,7 +87,7 @@ namespace TrendAnalysis.Service.Trend
 
             var numberCount = numbers.Count;
 
-            if (numberCount < analyseNumberCount)
+            if (numberCount < endIndex)
                 throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
 
             var minConsecutiveTimes = trendResult.FactorDistributions.Where(n => n.ConsecutiveTimes != 0).Min(n => n.ConsecutiveTimes);
@@ -109,13 +109,13 @@ namespace TrendAnalysis.Service.Trend
                     {
                         AllowConsecutiveTimes = consecutiveTimes,
                         AllowInterval = interval,
-                        AnalyseNumberCount = analyseNumberCount
+                        AnalyseNumberCount = endIndex
                     };
                     trends.Add(trend);
 
                     //行明细结果集
                     var rowDetailses = trendResult.FactorDistributions;
-                    for (var i = numberCount - 1; i >= analyseNumberCount; i--)
+                    for (var i = numberCount - 1; i >= endIndex; i--)
                     {
                         var number = numbers[i];
 

@@ -5,7 +5,7 @@ using System.Linq;
 namespace TrendAnalysis.Service.Trend
 {
 
-    public class PermutationFactorTrendAnalyseResult<T>
+    public class PermutationFactorTrendConsecutiveDetails<T>
     {
 
         /// <summary>
@@ -34,6 +34,13 @@ namespace TrendAnalysis.Service.Trend
         ///     最大连续期数-指定期次此因子连续次数的间隔数，数越小，表示变化的趋势越大
         /// </summary>
         public int Interval => HistoricalConsecutiveTimes == null || HistoricalConsecutiveTimes.Count == 0 ? 0 : HistoricalConsecutiveTimes.Max(k => k.Key) - FactorCurrentConsecutiveTimes;
+
+
+        /// <summary>
+        ///     因子分布的明细结果
+        /// </summary>
+        public List<FactorDistribution> FactorDistributions { get; set; }
+
 
     }
 

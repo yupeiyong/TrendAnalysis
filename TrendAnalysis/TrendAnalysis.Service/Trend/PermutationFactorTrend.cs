@@ -16,267 +16,145 @@ namespace TrendAnalysis.Service.Trend
     {
 
         /// <summary>
+        ///     非连续指示
+        /// </summary>
+        public const int DisConsecutiveFlag = int.MaxValue;
+
+
+        /// <summary>
+        ///     统计连续次数允许的最小次数
+        /// </summary>
+        public const int AllowMinTimes = 1;
+
+        /// <summary>
         ///     分析
         /// </summary>
         /// <param name="dto">记录集合、比较因子、允许的最小连续次数，大于等于此数才记录......</param>
         /// <returns></returns>
-        public List<PermutationFactorTrendAnalyseResult<T>> Analyse<T>(PermutationFactorTrendAnalyseDto<T> dto)
+        public Factor<T> Analyse<T>(PermutationFactorTrendAnalyseDto<T> dto)
         {
-            //统计连续次数
-            var factorResults = CountConsecutives(dto.Numbers, dto.PermutationFactors, dto.NumbersTailCutCount, dto.AllowMinTimes);
-            factorResults = factorResults.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
-            foreach (var item in factorResults)
+            //分析历史趋势,排除最后一位号码，（最后一位号码分析当前要分析的可能号码）
+            var historicalNumbers = dto.Numbers.Take(dto.Numbers.Count - 1).ToList();
+
+            //预测因子
+            var predictiveFactor = dto.PermutationFactors[0];
+
+            var factors = dto.PermutationFactors.Select(p => p.Left).ToList();
+            //统计每个因子在记录中的趋势
+            var trendResult = CountConsecutiveDistribution(dto.Numbers, factors, predictiveFactor.Right);
+
+            //行明细结果集
+            var rowDetailses = trendResult.FactorDistributions;
+            if (rowDetailses == null || rowDetailses.Count == 0) return null;
+            var lastIndexResult = rowDetailses[rowDetailses.Count - 1];
+
+            //因子不包含最后一个号码，（连续次数为0）
+            if (lastIndexResult.ConsecutiveTimes == 0)
+                return null;
+
+            var historicalTrends = GetCorrectRates(historicalNumbers, trendResult, dto.AnalyseHistoricalTrendCount, predictiveFactor.Right);
+
+            //筛选正确100%的历史趋势，如没有不记录
+            //historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderBy(h => h.AllowInterval).ThenByDescending(h => h.AllowConsecutiveTimes).ToList();
+            historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderByDescending(h => h.AllowConsecutiveTimes).ThenBy(h => h.AllowInterval).ToList();
+            if (historicalTrends.Count == 0) return null;
+
+            var firstHistoricalTrend = historicalTrends.FirstOrDefault();
+            if (firstHistoricalTrend == null)
+                return null;
+
+            //可以考虑加大连续次数和间隔数
+            if (lastIndexResult.ConsecutiveTimes >= firstHistoricalTrend.AllowConsecutiveTimes + dto.AddConsecutiveTimes && lastIndexResult.MaxConsecutiveTimesInterval <= firstHistoricalTrend.AllowInterval - dto.AddInterval)
             {
-                var times = 0;
-
-                //因子列表数量
-                var factorCount = item.Factors.Count;
-
-                /*
-                 根据连续次数来分析可能的趋势：
-                 
-                 第一种情况：
-                 如：[{left:1,2,right:3,4},{left:5,6,right:7,8}]为因子列表,排列因子列表：[{1,2},{5,6}]取第一个排列因子的反因子为{3,4}
-                 倒序的历史记录列表：6,2,5,2,6,1,5,7,8,5,6...
-                 分析结果：
-                 |6,2,|  |5,2,|  |6,1,| 5,7,8,5,6...
-                 连续次数3次
-                 可能的趋势是{3,4}
-
-                 第二种情况：（当前方法采用的）
-                 如：[{left:1,2,right:3,4},{left:5,6,right:7,8}]为因子列表,排列因子列表：[{1,2},{5,6}]取最后一个排列因子的反因子为{7,8}
-                 倒序的历史记录列表：1,6,2,5,2,6,1,5,7,8,5,6...
-                 分析结果：
-                 1,| |6,2,|  |5,2,|  |6,1,| 5,7,8,5,6...
-                 连续次数3次
-                 可能的趋势是{7,8}
-
-                 如果排列是多个，将不止有两种情况，结果应该=排列数
-                 */
-
-                //号码索引位置
-                var i = dto.Numbers.Count - 1;
-
-                //从因子列表中的倒数第二个开始遍历
-                var m = factorCount - 2;
-                for (; m >= 0 && i - m >= 0; m--, i--)
-                {
-                    if (!item.Factors[m].Contains(dto.Numbers[i]))
-                        break;
-                }
-
-                //所有因子都包含，则次数递增
-                if (m < 0)
-                {
-                    times++;
-                }
-                else
-                {
-                    continue;
-                }
-
-                //记录集合倒序检查，因子是否包含当前号码
-                for (; i >= 0; i -= factorCount)
-                {
-                    var n = item.Factors.Count - 1;
-
-                    //倒序遍历因子列表
-                    //j是控制获取号码索引位置的指针
-                    for (var j = 0; n >= 0 && i - j >= 0; n--, j++)
-                    {
-                        if (!item.Factors[n].Contains(dto.Numbers[i - j]))
-                            break;
-                    }
-
-                    //所有因子都包含，则次数递增
-                    if (n < 0)
-                    {
-                        times++;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-
-                //记录因子当前连续次数
-                item.FactorCurrentConsecutiveTimes = times;
+                //返回的可能因子
+                return predictiveFactor;
             }
-
-            //1、按允许的最小因子当前连续次数和允许的最大间隔次数筛选
-            //2、先按最大连续次数然后按最小间隔次数排序
-            factorResults = factorResults
-                .Where(m => m.FactorCurrentConsecutiveTimes >= dto.AllowMinFactorCurrentConsecutiveTimes && m.Interval <= dto.AllowMaxInterval)
-                .OrderByDescending(t => t.FactorCurrentConsecutiveTimes)
-                .ThenBy(t => t.Interval).ToList();
-
-            return factorResults;
+            return null;
         }
-
 
         /// <summary>
-        ///     分析，分析所取的反因子，是排列因子列表的首个因子取反
+        ///     分析因子的历史正确率分布等，（通过号码集合分析历史趋势）
         /// </summary>
-        /// <param name="dto">记录集合、比较因子、允许的最小连续次数，大于等于此数才记录......</param>
+        /// <param name="numbers">号码集合</param>
+        /// <param name="trendResult">统计结果</param>
+        /// <param name="analyseNumberCount">要分析多少位记录</param>
+        /// <param name="predictiveFactor">可能的因子</param>
         /// <returns></returns>
-        public List<PermutationFactorTrendAnalyseResult<T>> AnalysepredictiveFactorAtFirst<T>(PermutationFactorTrendAnalyseDto<T> dto)
+        public List<FactorTrendCorrectRate> GetCorrectRates<T>(List<T> numbers, PermutationFactorTrendConsecutiveDetails<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
         {
-            //统计连续次数
-            var factorResults = CountConsecutives(dto.Numbers, dto.PermutationFactors, dto.NumbersTailCutCount, dto.AllowMinTimes);
-            factorResults = factorResults.Where(t => t.HistoricalConsecutiveTimes.Count > 0).ToList();
-            foreach (var item in factorResults)
+
+            var trends = new List<FactorTrendCorrectRate>();
+
+            if (analyseNumberCount <= 0)
+                throw new Exception("分析历史趋势时，分析记录数量不能小于等于0！");
+
+            if (numbers == null || numbers.Count == 0)
+                throw new Exception("分析历史趋势时，记录不能为空！");
+
+            var numberCount = numbers.Count;
+
+            if (numberCount < analyseNumberCount)
+                throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
+
+            var minConsecutiveTimes = trendResult.FactorDistributions.Where(n => n.ConsecutiveTimes != 0).Min(n => n.ConsecutiveTimes);
+            var maxConsecutiveTimes = trendResult.FactorDistributions.Where(n => n.ConsecutiveTimes != 0).Max(n => n.ConsecutiveTimes);
+
+            var minInterval = trendResult.FactorDistributions.Where(n => n.MaxConsecutiveTimesInterval != DisConsecutiveFlag).Min(n => n.MaxConsecutiveTimesInterval);
+            var maxInterval = trendResult.FactorDistributions.Where(n => n.MaxConsecutiveTimesInterval != DisConsecutiveFlag).Max(n => n.MaxConsecutiveTimesInterval);
+
+            //允许的连续次数，由小到大
+            for (var consecutiveTimes = minConsecutiveTimes; consecutiveTimes <= maxConsecutiveTimes; consecutiveTimes++)
             {
-                var times = 0;
-
-                //因子列表数量
-                var factorCount = item.Factors.Count;
-
-                /*
-                 根据连续次数来分析可能的趋势：
-                 
-                 第一种情况：（当前方法采用的）
-                 如：[{left:1,2,right:3,4},{left:5,6,right:7,8}]为因子列表,排列因子列表：[{1,2},{5,6}]取第一个排列因子的反因子为{3,4}
-                 倒序的历史记录列表：6,2,5,2,6,1,5,7,8,5,6...
-                 分析结果：
-                 |6,2,|  |5,2,|  |6,1,| 5,7,8,5,6...
-                 连续次数3次
-                 可能的趋势是{3,4}
-
-                 第二种情况：
-                 如：[{left:1,2,right:3,4},{left:5,6,right:7,8}]为因子列表,排列因子列表：[{1,2},{5,6}]取最后一个排列因子的反因子为{7,8}
-                 倒序的历史记录列表：1,6,2,5,2,6,1,5,7,8,5,6...
-                 分析结果：
-                 1,| |6,2,|  |5,2,|  |6,1,| 5,7,8,5,6...
-                 连续次数3次
-                 可能的趋势是{7,8}
-
-                 如果排列是多个，将不止有两种情况，结果应该=排列数
-                 */
-
-                //记录集合倒序检查，因子是否包含当前号码
-                for (var i = dto.Numbers.Count - 1; i >= 0; i -= factorCount)
+                //允许的间隔数，由大到小
+                for (var interval = maxInterval; interval >= minInterval; interval--)
                 {
-                    var n = item.Factors.Count - 1;
+                    var resultCount = 0;
+                    var successCount = 0;
 
-                    //倒序遍历因子列表
-                    //j是控制获取号码索引位置的指针
-                    for (var j = 0; n >= 0 && i - j >= 0; n--, j++)
+                    var trend = new FactorTrendCorrectRate
                     {
-                        if (!item.Factors[n].Contains(dto.Numbers[i - j]))
-                            break;
+                        AllowConsecutiveTimes = consecutiveTimes,
+                        AllowInterval = interval,
+                        AnalyseNumberCount = analyseNumberCount
+                    };
+                    trends.Add(trend);
+
+                    //行明细结果集
+                    var distributions = trendResult.FactorDistributions;
+                    foreach(var distribution in distributions)
+                    {
+                        //非连续因子不分析历史趋势
+                        if (distribution.MaxConsecutiveTimesInterval == DisConsecutiveFlag) continue;
+
+                        var nextIndex = distribution.Index + 1;
+                        if (nextIndex > numberCount) break;
+                        var nextNumber = numbers[nextIndex];
+
+                        //对结果再分析
+                        //1、按允许的最小因子当前连续次数和允许的最大间隔次数筛选
+                        //2、先按最大连续次数然后按最小间隔次数排序
+
+                        ////历史最大连续次数
+                        //var historicalMaxConsecutiveTimes = curIndexResult.ConsecutiveTimes + interval;
+                        if (distribution.ConsecutiveTimes == consecutiveTimes && distribution.MaxConsecutiveTimesInterval == interval)
+                        {
+                            resultCount++;
+                            if (predictiveFactor.Contains(nextNumber))
+                            {
+                                successCount++;
+                            }
+                        }
+
                     }
 
-                    //所有因子都包含，则次数递增
-                    if (n < 0)
-                    {
-                        times++;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-
-                //记录因子当前连续次数
-                item.FactorCurrentConsecutiveTimes = times;
-            }
-
-            //1、按允许的最小因子当前连续次数和允许的最大间隔次数筛选
-            //2、先按最大连续次数然后按最小间隔次数排序
-            factorResults = factorResults
-                .Where(m => m.FactorCurrentConsecutiveTimes >= dto.AllowMinFactorCurrentConsecutiveTimes && m.Interval <= dto.AllowMaxInterval)
-                .OrderByDescending(t => t.FactorCurrentConsecutiveTimes)
-                .ThenBy(t => t.Interval).ToList();
-
-            return factorResults;
-        }
-
-
-        /// <summary>
-        ///     解析因子在记录中的连续次数
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="numbers">记录</param>
-        /// <param name="permutationFactors">排列因子</param>
-        /// <param name="numbersTailCutCount">切去尾部数量，尾部不计入统计数量</param>
-        /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
-        /// <returns></returns>
-        public static List<PermutationFactorTrendAnalyseResult<T>> CountConsecutives<T>(List<T> numbers, List<List<Factor<T>>> permutationFactors, int numbersTailCutCount = 1, int allowMinTimes = 1)
-        {
-            #region 因子排列
-
-            /*
-             因子
-             12 34
-             13 24
-             14 23
-
-            排列因子（两层排列，2*6=12种组合）：
-            1、12
-               12
-            2、12
-               34
-            3、12
-               13
-            4、12
-               24
-            5、12
-               14
-            6、12
-               23
-            7、34
-               12
-            8、34
-               34
-            9、34
-               13
-            10、34
-                24
-            11、34
-                14
-            12、34
-                23
-             */
-
-            /*
-             如果只有两层
-             for(var i=0;i<arr[0].Count;i++)
-             {
-                 for(var j=0;j<arr[1].Count;j++)
-                 {
-                     1、var factors=new List<<List<T>>(){arr[0][i].Left,arr[1][j].Left}; 反因子：arr[1][j].Right
-                     2、var factors=new List<<List<T>>(){arr[0][i].Left,arr[1][j].Right};反因子：arr[1][j].Left
-                     3、var factors=new List<<List<T>>(){arr[0][i].Right,arr[1][j].Left}; 反因子：arr[1][j].Right
-                     4、var factors=new List<<List<T>>(){arr[0][i].Right,arr[1][j].Right};反因子：arr[1][j].Left
-                 }
-
-            }
-             
-             */
-
-            #endregion
-
-
-            var factors = TraversePermutationFactor(permutationFactors);
-            factors = factors.Distinct().ToList();
-            var resultList = new List<PermutationFactorTrendAnalyseResult<T>>();
-            foreach (var factor in factors)
-            {
-                if (factor != null && factor.Count > 0)
-                {
-                    //取保存在最后位置的反因子
-                    var predictiveFactor = factor[factor.Count - 1];
-
-                    //删除保存在最后位置的反因子
-                    var curFactor = factor;
-                    curFactor.RemoveAt(factor.Count - 1);
-                    resultList.Add(CountConsecutive(numbers, curFactor, predictiveFactor, numbersTailCutCount, allowMinTimes));
+                    trend.AnalyticalCount = resultCount;
+                    trend.CorrectCount = successCount;
+                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
                 }
             }
-
-
-            return resultList;
+            return trends;
         }
+
 
 
         /// <summary>
@@ -286,16 +164,15 @@ namespace TrendAnalysis.Service.Trend
         /// <param name="numbers">记录</param>
         /// <param name="factors"></param>
         /// <param name="predictiveFactor">反因子</param>
-        /// <param name="numbersTailCutCount"></param>
-        /// <param name="allowMinTimes">允许的最小连续数，大于等于此数才记录</param>
         /// <returns></returns>
-        public static PermutationFactorTrendAnalyseResult<T> CountConsecutive<T>(IReadOnlyList<T> numbers, List<List<T>> factors, List<T> predictiveFactor, int numbersTailCutCount = 1, int allowMinTimes = 1)
+        public static PermutationFactorTrendConsecutiveDetails<T> CountConsecutiveDistribution<T>(IReadOnlyList<T> numbers, List<List<T>> factors, List<T> predictiveFactor)
         {
-            var curResult = new PermutationFactorTrendAnalyseResult<T>
+            var curResult = new PermutationFactorTrendConsecutiveDetails<T>
             {
                 Factors = factors,
                 PredictiveFactor = predictiveFactor,
-                HistoricalConsecutiveTimes = new SortedDictionary<int, int>()
+                HistoricalConsecutiveTimes = new SortedDictionary<int, int>(),
+                FactorDistributions = new List<FactorDistribution>()
             };
             var i = 0;
 
@@ -303,7 +180,10 @@ namespace TrendAnalysis.Service.Trend
             var times = 0;
 
             //统计记录的长度
-            var length = numbers.Count - numbersTailCutCount;
+            var length = numbers.Count;
+
+            //最大连续次数
+            var maxConsecutiveTimes = 0;
 
             //遍历所有记录
             while (i < length)
@@ -333,6 +213,15 @@ namespace TrendAnalysis.Service.Trend
 
                     //索引位置调整，指向下一索引位置的前一条记录
                     i = i + factors.Count - 1;
+
+                    //因子连续，最大连续次数－当前连续次数
+                    curResult.FactorDistributions.Add(
+                        new FactorDistribution
+                        {
+                            Index = i,
+                            MaxConsecutiveTimesInterval = maxConsecutiveTimes - times,
+                            ConsecutiveTimes = times
+                        });
                 }
                 else
                 {
@@ -341,13 +230,25 @@ namespace TrendAnalysis.Service.Trend
                     {
                         curResult.HistoricalConsecutiveTimes[times]++;
                     }
-                    else if (times >= allowMinTimes)
+                    else if (times >= AllowMinTimes)
                     {
                         curResult.HistoricalConsecutiveTimes.Add(times, 1);
                     }
 
+                    if (times > maxConsecutiveTimes)
+                        maxConsecutiveTimes = times;
+
                     //连续次数清零，下一次重新统计
                     times = 0;
+
+                    //因子不连续
+                    curResult.FactorDistributions.Add(
+                        new FactorDistribution
+                        {
+                            Index = i,
+                            MaxConsecutiveTimesInterval = DisConsecutiveFlag,
+                            ConsecutiveTimes = times
+                        });
                 }
                 i++;
             }
@@ -357,7 +258,7 @@ namespace TrendAnalysis.Service.Trend
             {
                 curResult.HistoricalConsecutiveTimes[times]++;
             }
-            else if (times >= allowMinTimes)
+            else if (times >= AllowMinTimes)
             {
                 curResult.HistoricalConsecutiveTimes.Add(times, 1);
             }
@@ -366,92 +267,6 @@ namespace TrendAnalysis.Service.Trend
 
 
         #region  遍历因子
-
-        /// <summary>
-        ///     遍历排列因子，组装分析趋势的因子时，记录反因子按首个因子取反
-        ///     比如：
-        ///     { 1, 2 }, { 3, 4 },
-        ///     排列结果：
-        ///     1,3
-        ///     1,4
-        ///     2,3
-        ///     2,4
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="permutationFactors">要遍历的排列因子，二维列表</param>
-        /// <returns>遍历结果，总条数是每一行数据条数相乘的结果</returns>
-        public static List<List<List<T>>> TraversePermutationFactorpredictiveFactorAtFirst<T>(List<List<Factor<T>>> permutationFactors)
-        {
-            var length = permutationFactors.Count;
-            var result = new List<List<List<T>>>();
-
-            //列表数组,最后一个元素为反因子
-            var factors = new List<T>[length + 1];
-
-            //每一因子索引位置数组，记录了相当每一行因子的位置
-            var indexArray = new int[length];
-
-            //记录每一因子遍历数量，记录了相当每一行遍历过的因子数量，因为每个因子有左右列表，所以每一行遍历数为每 一行元素数量*2
-            var countArray = new int[length];
-            var i = 0;
-            while (i < length)
-            {
-                if (i < length - 1)
-                {
-                    var curLength = permutationFactors[i].Count;
-                    if (indexArray[i] < curLength)
-                    {
-                        //取2的模如果=0，表示遍历到当前元素
-                        if (countArray[i] % 2 == 0)
-                        {
-                            factors[i] = permutationFactors[i][indexArray[i]].Left;
-                            if (i == 0)
-                            {
-                                //记录反因子到最后位置
-                                factors[length] = permutationFactors[i][indexArray[i]].Right;
-                            }
-                        }
-                        else
-                        {
-                            factors[i] = permutationFactors[i][indexArray[i]].Right;
-                            if (i == 0)
-                            {
-                                //记录反因子到最后位置
-                                factors[length] = permutationFactors[i][indexArray[i]].Left;
-                            }
-
-                            //可以遍历下一个元素
-                            indexArray[i]++;
-                        }
-                        countArray[i]++;
-                    }
-                    else
-                    {
-                        if (i == 0) break;
-                        indexArray[i] = 0;
-                        i--;
-                        continue;
-                    }
-                }
-                else
-                {
-                    for (var j = 0; j < permutationFactors[i].Count; j++)
-                    {
-                        factors[i] = permutationFactors[i][j].Left;
-
-                        result.Add(factors.ToList());
-
-                        factors[i] = permutationFactors[i][j].Right;
-
-                        result.Add(factors.ToList());
-                    }
-                    i--;
-                    continue;
-                }
-                i++;
-            }
-            return result;
-        }
 
 
         /// <summary>
@@ -542,242 +357,141 @@ namespace TrendAnalysis.Service.Trend
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        [Obsolete]
-        public List<FactorTrendCorrectRate> AnalyseHistoricalTrend_Old(PermutationFactorHistoricalTrendAnalyseDto<byte> dto)
-        {
-            var trends = new List<FactorTrendCorrectRate>();
-
-            if (dto.Numbers.Count < dto.AnalyseNumberCount)
-                throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
-
-            var analyseNumbers = dto.Numbers.OrderByDescending(n => n.TimesValue).Skip(0).Take(dto.AnalyseNumberCount).ToList();
-
-
-
-            //允许的连续次数，由小到大
-            for (var consecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes; consecutiveTimes <= dto.EndAllowMinFactorCurrentConsecutiveTimes; consecutiveTimes++)
-            {
-                //允许的间隔数，由大到小
-                for (var interval = dto.StartAllowMaxInterval; interval >= dto.EndAllowMaxInterval; interval--)
-                {
-                    var resultCount = 0;
-                    var successCount = 0;
-
-                    var trend = new FactorTrendCorrectRate
-                    {
-                        //HistoricalTrendType = dto.HistoricalTrendType,
-                        StartTimes = analyseNumbers[0].TimesValue,
-                        //Items = new List<HistoricalTrendItem>(),
-                        Location = dto.Location,
-                        AllowConsecutiveTimes = consecutiveTimes,
-                        AllowInterval = interval,
-                        AnalyseNumberCount = dto.AnalyseNumberCount,
-                        TypeDescription = dto.TypeDescription
-                    };
-                    trends.Add(trend);
-                    for (int i = 0, maxCount = analyseNumbers.Count; i < maxCount; i++)
-                    {
-                        var number = analyseNumbers[i].Number;
-                        var times = analyseNumbers[i].Times;
-                        var timesValue = analyseNumbers[i].TimesValue;
-                        var numbers = dto.Numbers.Where(n => n.TimesValue < timesValue).Select(n => n.Number).ToList();
-
-                        var factorResults = Analyse(new PermutationFactorTrendAnalyseDto<byte>
-                        {
-                            Numbers = numbers,
-                            AllowMinTimes = dto.AllowMinTimes,
-                            NumbersTailCutCount = dto.NumbersTailCutCount,
-                            AllowMinFactorCurrentConsecutiveTimes = consecutiveTimes,
-                            AllowMaxInterval = interval,
-                            PermutationFactors = dto.PermutationFactors
-                        });
-
-                        //结果是否正确
-                        var success = false;
-
-                        //对结果再分析
-                        var factorResult = factorResults.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
-                        var factors = new List<byte>();
-                        var resultConsecutiveTimes = 0;
-                        var resultInterval = 0;
-                        if (factorResult != null)
-                        {
-                            factors = factorResult.PredictiveFactor;
-                            resultConsecutiveTimes = factorResult.FactorCurrentConsecutiveTimes;
-                            resultInterval = factorResult.Interval;
-                            if (factorResult.PredictiveFactor != null && factorResult.PredictiveFactor.Count > 0)
-                            {
-                                resultCount++;
-
-                                if (factors.Contains(number))
-                                {
-                                    successCount++;
-                                    success = true;
-                                }
-                            }
-                        }
-
-                        var trendItem = new HistoricalTrendItem
-                        {
-                            Times = times,
-                            Number = number,
-                            Success = success,
-                            ResultConsecutiveTimes = resultConsecutiveTimes,
-                            ResultInterval = resultInterval,
-                            PredictiveFactor = factors
-                        };
-
-                        trend.AnalyticalCount = resultCount;
-                        trend.CorrectCount = successCount;
-                        trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
-                        //trend.Items.Add(trendItem);
-                    }
-                }
-            }
-            return trends;
-        }
-
-
-        /// <summary>
-        ///     分析一段日期的历史趋势，（通过号码集合分析历史趋势）
-        /// </summary>
-        /// <param name="dto"></param>
-        /// <returns></returns>
         public List<FactorTrendCorrectRate> AnalyseHistoricalTrend(PermutationFactorHistoricalTrendAnalyseDto<byte> dto)
         {
             var trends = new List<FactorTrendCorrectRate>();
 
-            if (dto.Numbers.Count < dto.AnalyseNumberCount)
-                throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
+            //if (dto.Numbers.Count < dto.AnalyseNumberCount)
+            //    throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
 
-            var analyseNumbers = dto.Numbers.OrderByDescending(n => n.TimesValue).Skip(0).Take(dto.AnalyseNumberCount).ToList();
-            var factorResultDict = new Dictionary<int, List<PermutationFactorTrendAnalyseResult<byte>>>();
+            //var analyseNumbers = dto.Numbers.OrderByDescending(n => n.TimesValue).Skip(0).Take(dto.AnalyseNumberCount).ToList();
+            //var factorResultDict = new Dictionary<int, List<PermutationFactorTrendConsecutiveDetails<byte>>>();
 
-            //先记录分析结果
-            for (int i = 0, maxCount = analyseNumbers.Count; i < maxCount; i++)
-            {
-                var timesValue = analyseNumbers[i].TimesValue;
-                var numbers = dto.Numbers.Where(n => n.TimesValue < timesValue).Select(n => n.Number).ToList();
+            ////先记录分析结果
+            //for (int i = 0, maxCount = analyseNumbers.Count; i < maxCount; i++)
+            //{
+            //    var timesValue = analyseNumbers[i].TimesValue;
+            //    var numbers = dto.Numbers.Where(n => n.TimesValue < timesValue).Select(n => n.Number).ToList();
 
-                var factorResults = Analyse(new PermutationFactorTrendAnalyseDto<byte>
-                {
-                    Numbers = numbers,
-                    PermutationFactors = dto.PermutationFactors,
-                    AllowMinTimes = dto.AllowMinTimes,
-                    NumbersTailCutCount = dto.NumbersTailCutCount,
-                    AllowMinFactorCurrentConsecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes,
-                    AllowMaxInterval = dto.StartAllowMaxInterval
-                });
-                factorResultDict.Add(i, factorResults);
-            }
-
-
-            //允许的连续次数，由小到大
-            for (var consecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes; consecutiveTimes <= dto.EndAllowMinFactorCurrentConsecutiveTimes; consecutiveTimes++)
-            {
-                //允许的间隔数，由大到小
-                for (var interval = dto.StartAllowMaxInterval; interval >= dto.EndAllowMaxInterval; interval--)
-                {
-                    var resultCount = 0;
-                    var successCount = 0;
-
-                    var trend = new FactorTrendCorrectRate
-                    {
-                        //HistoricalTrendType = dto.HistoricalTrendType,
-                        StartTimes = analyseNumbers[0].TimesValue,
-                        //Items = new List<HistoricalTrendItem>(),
-                        Location = dto.Location,
-                        AllowConsecutiveTimes = consecutiveTimes,
-                        AllowInterval = interval,
-                        AnalyseNumberCount = dto.AnalyseNumberCount,
-                        TypeDescription = dto.TypeDescription
-                    };
-                    trends.Add(trend);
-                    for (int i = 0, maxCount = analyseNumbers.Count; i < maxCount; i++)
-                    {
-                        var number = analyseNumbers[i].Number;
-                        var times = analyseNumbers[i].Times;
-
-                        var factorResults = factorResultDict[i];
-
-                        //结果是否正确
-                        var success = false;
-
-                        //对结果再分析
-                        //1、按允许的最小因子当前连续次数和允许的最大间隔次数筛选
-                        //2、先按最大连续次数然后按最小间隔次数排序
-                        factorResults = factorResults
-                            .Where(m => m.FactorCurrentConsecutiveTimes >= consecutiveTimes && m.Interval <= interval)
-                            .OrderByDescending(t => t.FactorCurrentConsecutiveTimes)
-                            .ThenBy(t => t.Interval).ToList();
-
-                        var factorResult = factorResults.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
-                        if (factorResult == null) continue;
-                        var resultConsecutiveTimes = factorResult.FactorCurrentConsecutiveTimes;
-                        var resultInterval = factorResult.Interval;
-                        if (factorResult.PredictiveFactor != null && factorResult.PredictiveFactor.Count > 0)
-                        {
-                            resultCount++;
-
-                            if (factorResult.PredictiveFactor.Contains(number))
-                            {
-                                successCount++;
-                                success = true;
-                            }
-                        }
-                        var trendItem = new HistoricalTrendItem
-                        {
-                            Times = times,
-                            Number = number,
-                            Success = success,
-                            ResultConsecutiveTimes = resultConsecutiveTimes,
-                            ResultInterval = resultInterval,
-                            PredictiveFactor = factorResult.PredictiveFactor
-                        };
-
-                        //trend.Items.Add(trendItem);
+            //    var factorResults = Analyse(new PermutationFactorTrendAnalyseDto<byte>
+            //    {
+            //        Numbers = numbers,
+            //        PermutationFactors = dto.PermutationFactors,
+            //        AllowMinTimes = dto.AllowMinTimes,
+            //        NumbersTailCutCount = dto.NumbersTailCutCount,
+            //        AllowMinFactorCurrentConsecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes,
+            //        AllowMaxInterval = dto.StartAllowMaxInterval
+            //    });
+            //    factorResultDict.Add(i, factorResults);
+            //}
 
 
-                        /*  分析结果为也作记录
-                        var factorResult = factorResults.OrderByDescending(t => t.MaxConsecutiveTimes).FirstOrDefault();
-                        var factors = new List<byte>();
-                        var resultConsecutiveTimes = 0;
-                        var resultInterval = 0;
-                        if (factorResult != null)
-                        {
-                            factors = factorResult.PredictiveFactor;
-                            resultConsecutiveTimes = factorResult.MaxConsecutiveTimes;
-                            resultInterval = factorResult.MaxInterval;
-                            if (factorResult.PredictiveFactor != null && factorResult.PredictiveFactor.Count > 0)
-                            {
-                                resultCount++;
+            ////允许的连续次数，由小到大
+            //for (var consecutiveTimes = dto.StartAllowMinFactorCurrentConsecutiveTimes; consecutiveTimes <= dto.EndAllowMinFactorCurrentConsecutiveTimes; consecutiveTimes++)
+            //{
+            //    //允许的间隔数，由大到小
+            //    for (var interval = dto.StartAllowMaxInterval; interval >= dto.EndAllowMaxInterval; interval--)
+            //    {
+            //        var resultCount = 0;
+            //        var successCount = 0;
 
-                                if (factors.Contains(number))
-                                {
-                                    successCount++;
-                                    success = true;
-                                }
-                            }
-                        }
+            //        var trend = new FactorTrendCorrectRate
+            //        {
+            //            //HistoricalTrendType = dto.HistoricalTrendType,
+            //            StartTimes = analyseNumbers[0].TimesValue,
+            //            //Items = new List<HistoricalTrendItem>(),
+            //            Location = dto.Location,
+            //            AllowConsecutiveTimes = consecutiveTimes,
+            //            AllowInterval = interval,
+            //            AnalyseNumberCount = dto.AnalyseNumberCount,
+            //            TypeDescription = dto.TypeDescription
+            //        };
+            //        trends.Add(trend);
+            //        for (int i = 0, maxCount = analyseNumbers.Count; i < maxCount; i++)
+            //        {
+            //            var number = analyseNumbers[i].Number;
+            //            var times = analyseNumbers[i].Times;
 
-                        var trendItem = new HistoricalTrendItem
-                        {
-                            Times = times,
-                            Number = number,
-                            Success = success,
-                            ResultConsecutiveTimes = resultConsecutiveTimes,
-                            ResultInterval = resultInterval,
-                            PredictiveFactor = factors
-                        };
+            //            var factorResults = factorResultDict[i];
 
-                        trend.Items.Add(trendItem);    
-                     */
-                    }
-                    trend.AnalyticalCount = resultCount;
-                    trend.CorrectCount = successCount;
-                    trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
-                }
-            }
+            //            //结果是否正确
+            //            var success = false;
+
+            //            //对结果再分析
+            //            //1、按允许的最小因子当前连续次数和允许的最大间隔次数筛选
+            //            //2、先按最大连续次数然后按最小间隔次数排序
+            //            factorResults = factorResults
+            //                .Where(m => m.FactorCurrentConsecutiveTimes >= consecutiveTimes && m.Interval <= interval)
+            //                .OrderByDescending(t => t.FactorCurrentConsecutiveTimes)
+            //                .ThenBy(t => t.Interval).ToList();
+
+            //            var factorResult = factorResults.OrderByDescending(t => t.FactorCurrentConsecutiveTimes).FirstOrDefault();
+            //            if (factorResult == null) continue;
+            //            var resultConsecutiveTimes = factorResult.FactorCurrentConsecutiveTimes;
+            //            var resultInterval = factorResult.Interval;
+            //            if (factorResult.PredictiveFactor != null && factorResult.PredictiveFactor.Count > 0)
+            //            {
+            //                resultCount++;
+
+            //                if (factorResult.PredictiveFactor.Contains(number))
+            //                {
+            //                    successCount++;
+            //                    success = true;
+            //                }
+            //            }
+            //            var trendItem = new HistoricalTrendItem
+            //            {
+            //                Times = times,
+            //                Number = number,
+            //                Success = success,
+            //                ResultConsecutiveTimes = resultConsecutiveTimes,
+            //                ResultInterval = resultInterval,
+            //                PredictiveFactor = factorResult.PredictiveFactor
+            //            };
+
+            //            //trend.Items.Add(trendItem);
+
+
+            //            /*  分析结果为也作记录
+            //            var factorResult = factorResults.OrderByDescending(t => t.MaxConsecutiveTimes).FirstOrDefault();
+            //            var factors = new List<byte>();
+            //            var resultConsecutiveTimes = 0;
+            //            var resultInterval = 0;
+            //            if (factorResult != null)
+            //            {
+            //                factors = factorResult.PredictiveFactor;
+            //                resultConsecutiveTimes = factorResult.MaxConsecutiveTimes;
+            //                resultInterval = factorResult.MaxInterval;
+            //                if (factorResult.PredictiveFactor != null && factorResult.PredictiveFactor.Count > 0)
+            //                {
+            //                    resultCount++;
+
+            //                    if (factors.Contains(number))
+            //                    {
+            //                        successCount++;
+            //                        success = true;
+            //                    }
+            //                }
+            //            }
+
+            //            var trendItem = new HistoricalTrendItem
+            //            {
+            //                Times = times,
+            //                Number = number,
+            //                Success = success,
+            //                ResultConsecutiveTimes = resultConsecutiveTimes,
+            //                ResultInterval = resultInterval,
+            //                PredictiveFactor = factors
+            //            };
+
+            //            trend.Items.Add(trendItem);    
+            //         */
+            //        }
+            //        trend.AnalyticalCount = resultCount;
+            //        trend.CorrectCount = successCount;
+            //        trend.CorrectRate = trend.AnalyticalCount == 0 ? 0 : (double)trend.CorrectCount / trend.AnalyticalCount;
+            //    }
+            //}
             return trends;
         }
 

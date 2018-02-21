@@ -385,25 +385,28 @@ namespace TrendAnalysis.Service.MarkSix
                 //十位数号码列表
                 var tensDigitNumbers = numbers.Select(n => n.ToString("00").Substring(0, 1)).Select(byte.Parse).ToList();
 
+                var trend = new PermutationFactorTrend();
                 //十位因子
                 var tensDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4 }.ToList());
-                var tensResults = new List<List<PermutationFactorTrendAnalyseResult<byte>>>();
+                var tenspredictiveFactors = new List<Factor<byte>>();
                 for (var i = 0; i < tensDigitFactors.Count; i++)
                 {
-                    var ls = new List<List<Factor<byte>>> { new List<Factor<byte>> { tensDigitFactors[i] }, tensDigitFactors };
-                    var trend = new PermutationFactorTrend();
-                    var curResult = trend.Analyse(new PermutationFactorTrendAnalyseDto<byte>
+                    for (var j = 0; j < tensDigitFactors.Count; j++)
                     {
-                        Numbers = tensDigitNumbers,
-                        PermutationFactors = ls,
-                        AllowMinTimes = dto.TensAllowMinTimes,
-                        NumbersTailCutCount = dto.TensNumbersTailCutCount,
-                        AllowMinFactorCurrentConsecutiveTimes = dto.TensAllowMinFactorCurrentConsecutiveTimes,
-                        AllowMaxInterval = dto.TensAllowMaxInterval
-                    });
-                    if (curResult.Count > 0)
-                    {
-                        tensResults.Add(curResult);
+                        var ls = new List<Factor<byte>> { tensDigitFactors[i], tensDigitFactors[j] };
+
+                        var curResult = trend.Analyse(new PermutationFactorTrendAnalyseDto<byte>
+                        {
+                            Numbers = tensDigitNumbers,
+                            PermutationFactors = ls,
+                            AddConsecutiveTimes = dto.TensAddConsecutiveTimes,
+                            AddInterval = dto.TensAddInterval,
+                        });
+                        if (curResult != null)
+                        {
+                            tenspredictiveFactors.Add(curResult);
+                            break;
+                        }
                     }
                 }
 
@@ -414,39 +417,57 @@ namespace TrendAnalysis.Service.MarkSix
                 //个位因子
                 var onesDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
 
-                var onesResults = new List<List<PermutationFactorTrendAnalyseResult<byte>>>();
+                var onespredictiveFactors = new List<Factor<byte>>();
                 for (var i = 0; i < onesDigitFactors.Count; i++)
                 {
-                    var ls = new List<List<Factor<byte>>> { new List<Factor<byte>> { onesDigitFactors[i] }, onesDigitFactors };
-                    var trend = new PermutationFactorTrend();
-                    var curResult = trend.Analyse(new PermutationFactorTrendAnalyseDto<byte>
+                    for (var j = 0; j < onesDigitFactors.Count; j++)
                     {
-                        Numbers = onesDigitNumbers,
-                        PermutationFactors = ls,
-                        AllowMinTimes = dto.OnesAllowMinTimes,
-                        NumbersTailCutCount = dto.OnesNumbersTailCutCount,
-                        AllowMinFactorCurrentConsecutiveTimes = dto.OnesAllowMinFactorCurrentConsecutiveTimes,
-                        AllowMaxInterval = dto.OnesAllowMaxInterval
-                    });
-                    if (curResult.Count > 0)
-                    {
-                        onesResults.Add(curResult);
+                        var ls = new List<Factor<byte>> { onesDigitFactors[i], onesDigitFactors[j] };
+
+                        var curResult = trend.Analyse(new PermutationFactorTrendAnalyseDto<byte>
+                        {
+                            Numbers = onesDigitNumbers,
+                            PermutationFactors = ls,
+                            AddConsecutiveTimes = dto.OnesAddConsecutiveTimes,
+                            AddInterval = dto.OnesAddInterval,
+                        });
+                        if (curResult != null)
+                        {
+                            onespredictiveFactors.Add(curResult);
+                            break;
+                        }
                     }
                 }
 
-                //if (tensDigitResult.Count > 0 && onesDigitResult.Count > 0)
-                //{
-                //    //选择最多连续次数
-                //    var maxTens = tensDigitResult.OrderByDescending(t => t.MaxConsecutiveTimes).FirstOrDefault();
-                //    var maxOnes = onesDigitResult.OrderByDescending(t => t.MaxConsecutiveTimes).FirstOrDefault();
-                //    if (maxTens != null && maxOnes != null)
-                //    {
-                //        var tenFactor = maxTens.predictiveFactor;
-                //        var onesFactor = maxOnes.predictiveFactor;
-                //        return GetNumbers(tenFactor, onesFactor);
-                //    }
-                //}
-                var test = onesResults.OrderBy(p => p.First().Interval).ThenByDescending(p => p.First().FactorCurrentConsecutiveTimes).ToList();
+                if (tenspredictiveFactors.Count > 0 && onespredictiveFactors.Count > 0)
+                {
+                    var tensFactor = new List<byte>(tenspredictiveFactors[0].Right);
+                    var onesFactor = new List<byte>(onespredictiveFactors[0].Right);
+                    tensFactor = tenspredictiveFactors.Aggregate(tensFactor, (current, factor) => current.Intersect(factor.Right).ToList());
+                    onesFactor = onespredictiveFactors.Aggregate(onesFactor, (current, factor) => current.Intersect(factor.Right).ToList());
+
+                    return GetNumbers(tensFactor, onesFactor);
+                }
+                else if (!dto.OnesAndTensMustContain)
+                {
+                    if (tenspredictiveFactors.Count > 0)
+                    {
+                        var tensFactor = new List<byte>(tenspredictiveFactors[0].Right);
+                        tensFactor = tenspredictiveFactors.Aggregate(tensFactor, (current, factor) => current.Intersect(factor.Right).ToList());
+
+                        return GetNumbers(tensFactor, new List<byte>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+
+                    }
+                    else if (onespredictiveFactors.Count > 0)
+                    {
+                        var onesFactor = new List<byte>(onespredictiveFactors[0].Right);
+                        onesFactor = onespredictiveFactors.Aggregate(onesFactor, (current, factor) => current.Intersect(factor.Right).ToList());
+
+                        return GetNumbers(new List<byte>() { 0, 1, 2, 3, 4 }, onesFactor);
+
+                    }
+                }
+
                 return new List<byte>();
             }
         }
@@ -639,7 +660,7 @@ namespace TrendAnalysis.Service.MarkSix
                 //十位因子
                 var tensDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4 }.ToList());
 
-                //var onesResults = new List<List<PermutationFactorTrendAnalyseResult<byte>>>();
+                //var onesResults = new List<List<PermutationFactorTrendConsecutiveDetails<byte>>>();
                 //for (var i = 0; i < onesDigitFactors.Count; i++)
                 //{
                 //    var ls = new List<List<Factor<byte>>> { new List<Factor<byte>> { onesDigitFactors[i] }, onesDigitFactors };
