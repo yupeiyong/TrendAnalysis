@@ -45,7 +45,7 @@ namespace TrendAnalysis.Service.Trend
             if (lastIndexResult.ConsecutiveTimes == 0)
                 return null;
 
-            var historicalTrends = GetCorrectRates(historicalNumbers, trendResult, dto.AnalyseHistoricalTrendCount, factor.Right);
+            var historicalTrends = GetCorrectRates(historicalNumbers, trendResult, dto.AnalyseHistoricalTrendEndIndex, factor.Right);
 
             //筛选正确100%的历史趋势，如没有不记录
             //historicalTrends = historicalTrends.Where(h => h.CorrectRate == 1).OrderBy(h => h.AllowInterval).ThenByDescending(h => h.AllowConsecutiveTimes).ToList();

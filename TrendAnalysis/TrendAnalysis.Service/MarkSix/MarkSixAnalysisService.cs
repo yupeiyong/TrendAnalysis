@@ -85,6 +85,7 @@ namespace TrendAnalysis.Service.MarkSix
                     Factors = tensDigitFactors,
                     AddConsecutiveTimes = dto.TensAddConsecutiveTimes,
                     AddInterval = dto.TensAddInterval,
+                    AnalyseHistoricalTrendEndIndex=dto.AnalyseHistoricalTrendEndIndex
                 });
 
                 //个位数号码列表
@@ -100,6 +101,7 @@ namespace TrendAnalysis.Service.MarkSix
                     Factors = onesDigitFactors,
                     AddConsecutiveTimes = dto.OnesAddConsecutiveTimes,
                     AddInterval = dto.OnesAddInterval,
+                    AnalyseHistoricalTrendEndIndex = dto.AnalyseHistoricalTrendEndIndex
                 });
 
                 if (tenspredictiveFactors.Count > 0 && onespredictiveFactors.Count > 0)
@@ -428,7 +430,7 @@ namespace TrendAnalysis.Service.MarkSix
                         PermutationFactors = ls,
                         AddConsecutiveTimes = dto.OnesAddConsecutiveTimes,
                         AddInterval = dto.OnesAddInterval,
-                        AnalyseHistoricalTrendCount=200
+                        AnalyseHistoricalTrendEndIndex=200
                     });
                     if (curResult != null)
                     {

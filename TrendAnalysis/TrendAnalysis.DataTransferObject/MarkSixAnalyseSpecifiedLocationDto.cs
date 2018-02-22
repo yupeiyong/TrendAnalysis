@@ -105,6 +105,10 @@ namespace TrendAnalysis.DataTransferObject
         /// </summary>
         public int NumberTakeCount { get; set; } = 200;
 
+        /// <summary>
+        ///     分析历史趋势的最后位置
+        /// </summary>
+        public int AnalyseHistoricalTrendEndIndex { get; set; } = 100;
 
         /// <summary>
         /// 个位和十位都必须包含

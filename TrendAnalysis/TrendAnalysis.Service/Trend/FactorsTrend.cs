@@ -27,7 +27,7 @@ namespace TrendAnalysis.Service.Trend
                     Factor = factor,
                     Numbers = dto.Numbers,
                     AllowMinTimes = dto.AllowMinTimes,
-                    AnalyseHistoricalTrendCount = dto.AnalyseHistoricalTrendCount,
+                    AnalyseHistoricalTrendEndIndex = dto.AnalyseHistoricalTrendEndIndex,
                     AddConsecutiveTimes = dto.AddConsecutiveTimes,
                     AddInterval = dto.AddInterval
                 };

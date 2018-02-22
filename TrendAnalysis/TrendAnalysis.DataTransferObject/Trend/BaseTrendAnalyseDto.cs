@@ -44,9 +44,9 @@ namespace TrendAnalysis.DataTransferObject.Trend
         public int NumbersTailCutCount { get; set; }
 
         /// <summary>
-        ///     分析多少位历史趋势
+        ///     分析历史趋势的最后位置
         /// </summary>
-        public int AnalyseHistoricalTrendCount { get; set; } = 100;
+        public int AnalyseHistoricalTrendEndIndex { get; set; } = 100;
 
         /// <summary>
         ///     累加的连续次数

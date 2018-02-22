@@ -31,7 +31,7 @@ namespace TrendAnalysis.Service.Test.Trend
             {
                 Factors = new List<Factor<byte>> { factor },
                 Numbers = numbers,
-                AnalyseHistoricalTrendCount = 5
+                AnalyseHistoricalTrendEndIndex = 5
             };
 
             var predictiveFactors = new FactorsTrend().Analyse(dto);
@@ -58,7 +58,7 @@ namespace TrendAnalysis.Service.Test.Trend
             {
                 Factors = new List<Factor<byte>> { factor },
                 Numbers = numbers,
-                AnalyseHistoricalTrendCount = 5
+                AnalyseHistoricalTrendEndIndex = 5
             };
 
             var predictiveFactors = new FactorsTrend().Analyse(dto);

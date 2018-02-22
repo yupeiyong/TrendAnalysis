@@ -784,6 +784,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     if (has)
                     {
                         hasCount++;
+                        resultString.AppendLine("期次：" + records[i].Times + ",第7位号码：" + seventhNum + ",分析结果：" + (has ? "-Yes- " : "      ") + string.Join(";", result));
                         winMoney += everyPrice * rate;
                         curTakeCount = defaultTakeCount;
                     }
@@ -791,13 +792,398 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     {
                         curTakeCount++;
                     }
-                    resultString.AppendLine("期次：" + records[i].Times + ",第7位号码：" + seventhNum + ",分析结果：" + (has ? "-Yes- " : "      ") + string.Join(";", result));
                 }
                 watch.Stop();
                 var usedSeconds = watch.ElapsedMilliseconds / 1000;
                 var str = resultString.ToString();
             }
         }
+
+        [TestMethod]
+        public void TestMethod_AnalyseSpecifiedLocation2()
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var watch = new Stopwatch();
+                watch.Start();
+                var service = new MarkSixAnalysisService();
+                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(2505).ToList();
+                var resultString = new StringBuilder();
+                var hasCount = 0;
+                var resultCount = 0;
+                var tensHasCount = 0;
+                var onesHasCount = 0;
+                var defaultTakeCount = 111;
+                var rate = 40;
+                var everyPrice = 10;
+                var totalMoney = 0;
+                var winMoney = 0;
+
+                var curTakeCount = defaultTakeCount;
+                for (var i = 0; i < 2500; i++)
+                {
+                    var seventhNum = records[i].SeventhNum;
+                    var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
+                    var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
+                    var times = records[i].Times;
+                    var dto = new MarkSixAnalyseSpecifiedLocationDto
+                    {
+                        Location = 7,
+                        Times = times,
+                        OnesAddConsecutiveTimes = 4,
+                        TensAddConsecutiveTimes = 100,//2,
+                        OnesAddInterval = 1,
+                        TensAddInterval = 1,
+                        NumberTakeCount = curTakeCount,
+                        OnesAndTensMustContain = false,
+                        AnalyseHistoricalTrendEndIndex=110
+                    };
+
+                    //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
+                    var result = service.AnalyseSpecifiedLocation(dto);
+                    if (result.Count > 0)
+                    {
+                        resultCount++;
+                        var resultSource = result.Select(r => r.ToString("00"));
+                        var onesResults = resultSource.Select(r => byte.Parse(r.Substring(1))).Distinct().ToList();
+                        var tensResults = resultSource.Select(r => byte.Parse(r.Substring(0, 1))).Distinct().ToList();
+                        if (tensResults.Contains(tens))
+                        {
+                            tensHasCount++;
+                        }
+                        if (onesResults.Contains(ones))
+                        {
+                            onesHasCount++;
+                        }
+                    }
+                    var has = result.Exists(m => m == seventhNum);
+                    totalMoney += result.Count(m => m != 0) * everyPrice;
+                    if (has)
+                    {
+                        hasCount++;
+                        resultString.AppendLine("期次：" + records[i].Times + ",第7位号码：" + seventhNum + ",分析结果：" + (has ? "-Yes- " : "      ") + string.Join(";", result));
+                        winMoney += everyPrice * rate;
+                        curTakeCount = defaultTakeCount;
+                    }
+                    else
+                    {
+                        curTakeCount++;
+                    }
+                }
+                watch.Stop();
+                var usedSeconds = watch.ElapsedMilliseconds / 1000;
+                var str = resultString.ToString();
+            }
+        }
+
+        [TestMethod]
+        public void TestMethod_AnalyseSpecifiedLocation3()
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var watch = new Stopwatch();
+                watch.Start();
+                var service = new MarkSixAnalysisService();
+                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(2505).ToList();
+                var resultString = new StringBuilder();
+                var hasCount = 0;
+                var resultCount = 0;
+                var tensHasCount = 0;
+                var onesHasCount = 0;
+                var defaultTakeCount = 91;
+                var rate = 40;
+                var everyPrice = 10;
+                var totalMoney = 0;
+                var winMoney = 0;
+
+                var curTakeCount = defaultTakeCount;
+                for (var i = 0; i < 2500; i++)
+                {
+                    var seventhNum = records[i].SeventhNum;
+                    var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
+                    var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
+                    var times = records[i].Times;
+                    var dto = new MarkSixAnalyseSpecifiedLocationDto
+                    {
+                        Location = 7,
+                        Times = times,
+                        OnesAddConsecutiveTimes = 6,
+                        TensAddConsecutiveTimes = 100,//2,
+                        OnesAddInterval = 1,
+                        TensAddInterval = 1,
+                        NumberTakeCount = curTakeCount,
+                        OnesAndTensMustContain = false,
+                        AnalyseHistoricalTrendEndIndex = 70
+                    };
+
+                    //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
+                    var result = service.AnalyseSpecifiedLocation(dto);
+                    if (result.Count > 0)
+                    {
+                        resultCount++;
+                        var resultSource = result.Select(r => r.ToString("00"));
+                        var onesResults = resultSource.Select(r => byte.Parse(r.Substring(1))).Distinct().ToList();
+                        var tensResults = resultSource.Select(r => byte.Parse(r.Substring(0, 1))).Distinct().ToList();
+                        if (tensResults.Contains(tens))
+                        {
+                            tensHasCount++;
+                        }
+                        if (onesResults.Contains(ones))
+                        {
+                            onesHasCount++;
+                        }
+                    }
+                    var has = result.Exists(m => m == seventhNum);
+                    totalMoney += result.Count(m => m != 0) * everyPrice;
+                    if (has)
+                    {
+                        hasCount++;
+                        resultString.AppendLine("期次：" + records[i].Times + ",第7位号码：" + seventhNum + ",分析结果：" + (has ? "-Yes- " : "      ") + string.Join(";", result));
+                        winMoney += everyPrice * rate;
+                        curTakeCount = defaultTakeCount;
+                    }
+                    else
+                    {
+                        curTakeCount++;
+                    }
+                }
+                watch.Stop();
+                var usedSeconds = watch.ElapsedMilliseconds / 1000;
+                var str = resultString.ToString();
+            }
+        }
+
+        [TestMethod]
+        public void TestMethod_AnalyseSpecifiedLocation4()
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var watch = new Stopwatch();
+                watch.Start();
+                var service = new MarkSixAnalysisService();
+                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(2505).ToList();
+                var resultString = new StringBuilder();
+                var hasCount = 0;
+                var resultCount = 0;
+                var tensHasCount = 0;
+                var onesHasCount = 0;
+                var defaultTakeCount = 51;
+                var rate = 40;
+                var everyPrice = 10;
+                var totalMoney = 0;
+                var winMoney = 0;
+
+                var curTakeCount = defaultTakeCount;
+                for (var i = 0; i < 2500; i++)
+                {
+                    var seventhNum = records[i].SeventhNum;
+                    var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
+                    var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
+                    var times = records[i].Times;
+                    var dto = new MarkSixAnalyseSpecifiedLocationDto
+                    {
+                        Location = 7,
+                        Times = times,
+                        OnesAddConsecutiveTimes = 4,
+                        TensAddConsecutiveTimes = 100,//2,
+                        OnesAddInterval = 1,
+                        TensAddInterval = 1,
+                        NumberTakeCount = curTakeCount,
+                        OnesAndTensMustContain = false,
+                        AnalyseHistoricalTrendEndIndex = 50
+                    };
+
+                    //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
+                    var result = service.AnalyseSpecifiedLocation(dto);
+                    if (result.Count > 0)
+                    {
+                        resultCount++;
+                        var resultSource = result.Select(r => r.ToString("00"));
+                        var onesResults = resultSource.Select(r => byte.Parse(r.Substring(1))).Distinct().ToList();
+                        var tensResults = resultSource.Select(r => byte.Parse(r.Substring(0, 1))).Distinct().ToList();
+                        if (tensResults.Contains(tens))
+                        {
+                            tensHasCount++;
+                        }
+                        if (onesResults.Contains(ones))
+                        {
+                            onesHasCount++;
+                        }
+                    }
+                    var has = result.Exists(m => m == seventhNum);
+                    totalMoney += result.Count(m => m != 0) * everyPrice;
+                    if (has)
+                    {
+                        hasCount++;
+                        resultString.AppendLine("期次：" + records[i].Times + ",第7位号码：" + seventhNum + ",分析结果：" + (has ? "-Yes- " : "      ") + string.Join(";", result));
+                        winMoney += everyPrice * rate;
+                        curTakeCount = defaultTakeCount;
+                    }
+                    else
+                    {
+                        curTakeCount++;
+                    }
+                }
+                watch.Stop();
+                var usedSeconds = watch.ElapsedMilliseconds / 1000;
+                var str = resultString.ToString();
+            }
+        }
+
+        [TestMethod]
+        public void TestMethod_AnalyseSpecifiedLocation5()
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var watch = new Stopwatch();
+                watch.Start();
+                var service = new MarkSixAnalysisService();
+                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(2505).ToList();
+                var resultString = new StringBuilder();
+                var hasCount = 0;
+                var resultCount = 0;
+                var tensHasCount = 0;
+                var onesHasCount = 0;
+                var defaultTakeCount = 52;
+                var rate = 40;
+                var everyPrice = 10;
+                var totalMoney = 0;
+                var winMoney = 0;
+
+                var curTakeCount = defaultTakeCount;
+                for (var i = 0; i < 2500; i++)
+                {
+                    var seventhNum = records[i].SeventhNum;
+                    var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
+                    var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
+                    var times = records[i].Times;
+                    var dto = new MarkSixAnalyseSpecifiedLocationDto
+                    {
+                        Location = 7,
+                        Times = times,
+                        OnesAddConsecutiveTimes = 4,
+                        TensAddConsecutiveTimes = 100,//2,
+                        OnesAddInterval = 1,
+                        TensAddInterval = 1,
+                        NumberTakeCount = curTakeCount,
+                        OnesAndTensMustContain = false,
+                        AnalyseHistoricalTrendEndIndex = 51
+                    };
+
+                    //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
+                    var result = service.AnalyseSpecifiedLocation(dto);
+                    if (result.Count > 0)
+                    {
+                        resultCount++;
+                        var resultSource = result.Select(r => r.ToString("00"));
+                        var onesResults = resultSource.Select(r => byte.Parse(r.Substring(1))).Distinct().ToList();
+                        var tensResults = resultSource.Select(r => byte.Parse(r.Substring(0, 1))).Distinct().ToList();
+                        if (tensResults.Contains(tens))
+                        {
+                            tensHasCount++;
+                        }
+                        if (onesResults.Contains(ones))
+                        {
+                            onesHasCount++;
+                        }
+                    }
+                    var has = result.Exists(m => m == seventhNum);
+                    totalMoney += result.Count(m => m != 0) * everyPrice;
+                    if (has)
+                    {
+                        hasCount++;
+                        resultString.AppendLine("期次：" + records[i].Times + ",第7位号码：" + seventhNum + ",分析结果：" + (has ? "-Yes- " : "      ") + string.Join(";", result));
+                        winMoney += everyPrice * rate;
+                        curTakeCount = defaultTakeCount;
+                    }
+                    else
+                    {
+                        curTakeCount++;
+                    }
+                }
+                watch.Stop();
+                var usedSeconds = watch.ElapsedMilliseconds / 1000;
+                var str = resultString.ToString();
+            }
+        }
+
+        [TestMethod]
+        public void TestMethod_AnalyseSpecifiedLocation6()
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var watch = new Stopwatch();
+                watch.Start();
+                var service = new MarkSixAnalysisService();
+                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(2505).ToList();
+                var resultString = new StringBuilder();
+                var hasCount = 0;
+                var resultCount = 0;
+                var tensHasCount = 0;
+                var onesHasCount = 0;
+                var defaultTakeCount = 56;
+                var rate = 40;
+                var everyPrice = 10;
+                var totalMoney = 0;
+                var winMoney = 0;
+
+                var curTakeCount = defaultTakeCount;
+                for (var i = 0; i < 2500; i++)
+                {
+                    var seventhNum = records[i].SeventhNum;
+                    var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
+                    var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
+                    var times = records[i].Times;
+                    var dto = new MarkSixAnalyseSpecifiedLocationDto
+                    {
+                        Location = 7,
+                        Times = times,
+                        OnesAddConsecutiveTimes = 4,
+                        TensAddConsecutiveTimes = 100,//2,
+                        OnesAddInterval = 1,
+                        TensAddInterval = 1,
+                        NumberTakeCount = curTakeCount,
+                        OnesAndTensMustContain = false,
+                        AnalyseHistoricalTrendEndIndex = 55
+                    };
+
+                    //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
+                    var result = service.AnalyseSpecifiedLocation(dto);
+                    if (result.Count > 0)
+                    {
+                        resultCount++;
+                        var resultSource = result.Select(r => r.ToString("00"));
+                        var onesResults = resultSource.Select(r => byte.Parse(r.Substring(1))).Distinct().ToList();
+                        var tensResults = resultSource.Select(r => byte.Parse(r.Substring(0, 1))).Distinct().ToList();
+                        if (tensResults.Contains(tens))
+                        {
+                            tensHasCount++;
+                        }
+                        if (onesResults.Contains(ones))
+                        {
+                            onesHasCount++;
+                        }
+                    }
+                    var has = result.Exists(m => m == seventhNum);
+                    totalMoney += result.Count(m => m != 0) * everyPrice;
+                    if (has)
+                    {
+                        hasCount++;
+                        resultString.AppendLine("期次：" + records[i].Times + ",第7位号码：" + seventhNum + ",分析结果：" + (has ? "-Yes- " : "      ") + string.Join(";", result));
+                        winMoney += everyPrice * rate;
+                        curTakeCount = defaultTakeCount;
+                    }
+                    else
+                    {
+                        curTakeCount++;
+                    }
+                }
+                watch.Stop();
+                var usedSeconds = watch.ElapsedMilliseconds / 1000;
+                var str = resultString.ToString();
+            }
+        }
+
         /*
          1、平均分配左右部分出现的概率为50%
          2、每次出现的机会都为总数的任一，如果总数20，出现机会为20分之1
