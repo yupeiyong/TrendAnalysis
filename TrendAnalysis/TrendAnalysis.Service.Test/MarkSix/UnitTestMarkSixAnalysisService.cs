@@ -679,7 +679,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     {
                         Location = 7,
                         Times = times,
-                        OnesAddConsecutiveTimes = 3,
+                        OnesAddConsecutiveTimes = 2,
                         TensAddConsecutiveTimes = 10,
                         OnesAddInterval = 1,
                         TensAddInterval = 10,
