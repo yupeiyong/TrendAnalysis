@@ -354,6 +354,10 @@ namespace TrendAnalysis.Service.MarkSix
 
                 //按期次值升序排列
                 source = source.OrderBy(m => m.TimesValue);
+                if (dto.NumberTakeCount > 0)
+                    //按期次值升序排列
+                    source = source.OrderByDescending(m => m.TimesValue).Skip(0).Take(dto.NumberTakeCount).OrderBy(m => m.TimesValue);
+
                 List<byte> numbers;
                 switch (dto.Location)
                 {
@@ -391,22 +395,18 @@ namespace TrendAnalysis.Service.MarkSix
                 var tenspredictiveFactors = new List<Factor<byte>>();
                 for (var i = 0; i < tensDigitFactors.Count; i++)
                 {
-                    for (var j = 0; j < tensDigitFactors.Count; j++)
-                    {
-                        var ls = new List<Factor<byte>> { tensDigitFactors[i], tensDigitFactors[j] };
+                    var ls = new List<Factor<byte>> { tensDigitFactors[i], tensDigitFactors[0] };
 
-                        var curResult = trend.Analyse(new PermutationFactorTrendAnalyseDto<byte>
-                        {
-                            Numbers = tensDigitNumbers,
-                            PermutationFactors = ls,
-                            AddConsecutiveTimes = dto.TensAddConsecutiveTimes,
-                            AddInterval = dto.TensAddInterval,
-                        });
-                        if (curResult != null)
-                        {
-                            tenspredictiveFactors.Add(curResult);
-                            break;
-                        }
+                    var curResult = trend.Analyse(new PermutationFactorTrendAnalyseDto<byte>
+                    {
+                        Numbers = tensDigitNumbers,
+                        PermutationFactors = ls,
+                        AddConsecutiveTimes = dto.TensAddConsecutiveTimes,
+                        AddInterval = dto.TensAddInterval
+                    });
+                    if (curResult != null)
+                    {
+                        tenspredictiveFactors.Add(curResult);
                     }
                 }
 
@@ -420,22 +420,19 @@ namespace TrendAnalysis.Service.MarkSix
                 var onespredictiveFactors = new List<Factor<byte>>();
                 for (var i = 0; i < onesDigitFactors.Count; i++)
                 {
-                    for (var j = 0; j < onesDigitFactors.Count; j++)
-                    {
-                        var ls = new List<Factor<byte>> { onesDigitFactors[i], onesDigitFactors[j] };
+                    var ls = new List<Factor<byte>> { onesDigitFactors[i], onesDigitFactors[0] };
 
-                        var curResult = trend.Analyse(new PermutationFactorTrendAnalyseDto<byte>
-                        {
-                            Numbers = onesDigitNumbers,
-                            PermutationFactors = ls,
-                            AddConsecutiveTimes = dto.OnesAddConsecutiveTimes,
-                            AddInterval = dto.OnesAddInterval,
-                        });
-                        if (curResult != null)
-                        {
-                            onespredictiveFactors.Add(curResult);
-                            break;
-                        }
+                    var curResult = trend.Analyse(new PermutationFactorTrendAnalyseDto<byte>
+                    {
+                        Numbers = onesDigitNumbers,
+                        PermutationFactors = ls,
+                        AddConsecutiveTimes = dto.OnesAddConsecutiveTimes,
+                        AddInterval = dto.OnesAddInterval,
+                        AnalyseHistoricalTrendCount=200
+                    });
+                    if (curResult != null)
+                    {
+                        onespredictiveFactors.Add(curResult);
                     }
                 }
 

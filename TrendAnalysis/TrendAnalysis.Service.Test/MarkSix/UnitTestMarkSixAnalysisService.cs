@@ -329,7 +329,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var resultCount = 0;
                 var tensHasCount = 0;
                 var onesHasCount = 0;
-                var defaultTakeCount = 101;
+                var defaultTakeCount = 201;
                 var rate = 40;
                 var everyPrice = 10;
                 var totalMoney = 0;
@@ -346,7 +346,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     {
                         Location = 7,
                         Times = times,
-                        OnesAddConsecutiveTimes = 3,
+                        OnesAddConsecutiveTimes = 1,
                         TensAddConsecutiveTimes = 1000,
                         OnesAddInterval = 0,
                         TensAddInterval = 10,

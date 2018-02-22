@@ -71,7 +71,7 @@ namespace TrendAnalysis.Service.Trend
         /// </summary>
         /// <param name="numbers">号码集合</param>
         /// <param name="trendResult">统计结果</param>
-        /// <param name="analyseNumberCount">要分析多少位记录</param>
+        /// <param name="endIndex">分析记录的最后索引位置</param>
         /// <param name="predictiveFactor">可能的因子</param>
         /// <returns></returns>
         public List<FactorTrendCorrectRate> GetCorrectRates<T>(List<T> numbers, FactorTrendConsecutiveDetails<T> trendResult, int endIndex, List<T> predictiveFactor)
@@ -114,13 +114,13 @@ namespace TrendAnalysis.Service.Trend
                     trends.Add(trend);
 
                     //行明细结果集
-                    var rowDetailses = trendResult.FactorDistributions;
+                    var distributions = trendResult.FactorDistributions;
                     for (var i = numberCount - 1; i >= endIndex; i--)
                     {
                         var number = numbers[i];
 
                         //上一索引位置的分析结果,10个号码，分析第10位（索引位置9），取第9位（索引位置8）
-                        var curIndexResult = rowDetailses[i - 1];
+                        var distribution = distributions[i - 1];
 
                         //对结果再分析
                         //1、按允许的最小因子当前连续次数和允许的最大间隔次数筛选
@@ -128,16 +128,13 @@ namespace TrendAnalysis.Service.Trend
 
                         ////历史最大连续次数
                         //var historicalMaxConsecutiveTimes = curIndexResult.ConsecutiveTimes + interval;
-                        if (curIndexResult.ConsecutiveTimes == consecutiveTimes && curIndexResult.MaxConsecutiveTimesInterval == interval)
+                        if (distribution.ConsecutiveTimes == consecutiveTimes && distribution.MaxConsecutiveTimesInterval == interval)
                         {
-                            if (predictiveFactor != null && predictiveFactor.Count > 0)
-                            {
-                                resultCount++;
+                            resultCount++;
 
-                                if (predictiveFactor.Contains(number))
-                                {
-                                    successCount++;
-                                }
+                            if (predictiveFactor.Contains(number))
+                            {
+                                successCount++;
                             }
                         }
                     }
