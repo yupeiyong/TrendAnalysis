@@ -68,10 +68,11 @@
     <Compile Include="Trend\CompositeNumber.cs" />
     <Compile Include="Trend\FactorHistoricalTrend.cs" />
     <Compile Include="Trend\FactorTrend.cs" />
-    <Compile Include="Trend\FactorTrendConsecutiveDistribution.cs" />
-    <Compile Include="Trend\FactorTrendAnalyseResultIndexItem.cs" />
+    <Compile Include="Trend\FactorTrendConsecutiveDetails.cs" />
+    <Compile Include="Trend\FactorDistribution.cs" />
     <Compile Include="Trend\FactorTrendCorrectRate.cs" />
     <Compile Include="Trend\HistoricalTrendService.cs" />
+    <Compile Include="Trend\PermutationFactorsTrend.cs" />
     <Compile Include="Trend\PermutationFactorTrend.cs" />
     <Compile Include="Trend\FactorsTrend.cs" />
     <Compile Include="Trend\FactorGenerator.cs" />

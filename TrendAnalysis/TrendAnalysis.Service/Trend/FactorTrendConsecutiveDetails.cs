@@ -9,7 +9,7 @@ namespace TrendAnalysis.Service.Trend
     ///     因子连续分布
     /// </summary>
     /// <typeparam name="T">因子类型</typeparam>
-    public class FactorTrendConsecutiveDistribution<T>
+    public class FactorTrendConsecutiveDetails<T>
     {
 
         /// <summary>
@@ -30,9 +30,9 @@ namespace TrendAnalysis.Service.Trend
 
 
         /// <summary>
-        ///     每一行的分析明细结果，（索引和最大连续次数间隔，键为索引，值为最大连续次数－索引位置连续次数）
+        ///     因子分布的明细结果
         /// </summary>
-        public List<FactorTrendConsecutiveDistributionRowDetails> RowDetailses { get; set; }
+        public List<FactorDistribution> FactorDistributions { get; set; }
 
         /// <summary>
         ///     因子最大连续次数

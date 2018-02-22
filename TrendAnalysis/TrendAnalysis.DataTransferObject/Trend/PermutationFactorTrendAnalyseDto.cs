@@ -12,7 +12,7 @@ namespace TrendAnalysis.DataTransferObject.Trend
         /// <summary>
         ///     排列因子
         /// </summary>
-        public List<List<Factor<T>>> PermutationFactors { get; set; }
+        public List<Factor<T>> PermutationFactors { get; set; }
 
 
     }
