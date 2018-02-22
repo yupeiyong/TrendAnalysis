@@ -77,15 +77,15 @@ namespace TrendAnalysis.Service.Trend
         /// </summary>
         /// <param name="numbers">号码集合</param>
         /// <param name="trendResult">统计结果</param>
-        /// <param name="analyseNumberCount">要分析多少位记录</param>
+        /// <param name="endIndex">分析记录的最后索引位置</param>
         /// <param name="predictiveFactor">可能的因子</param>
         /// <returns></returns>
-        public List<FactorTrendCorrectRate> GetCorrectRates<T>(List<T> numbers, PermutationFactorTrendConsecutiveDetails<T> trendResult, int analyseNumberCount, List<T> predictiveFactor)
+        public List<FactorTrendCorrectRate> GetCorrectRates<T>(List<T> numbers, PermutationFactorTrendConsecutiveDetails<T> trendResult, int endIndex, List<T> predictiveFactor)
         {
 
             var trends = new List<FactorTrendCorrectRate>();
 
-            if (analyseNumberCount <= 0)
+            if (endIndex <= 0)
                 throw new Exception("分析历史趋势时，分析记录数量不能小于等于0！");
 
             if (numbers == null || numbers.Count == 0)
@@ -93,7 +93,7 @@ namespace TrendAnalysis.Service.Trend
 
             var numberCount = numbers.Count;
 
-            if (numberCount < analyseNumberCount)
+            if (numberCount < endIndex)
                 throw new Exception("分析历史趋势时，分析记录数量不能大于记录数量！");
 
             var minConsecutiveTimes = trendResult.FactorDistributions.Where(n => n.ConsecutiveTimes != 0).Min(n => n.ConsecutiveTimes);
@@ -115,20 +115,19 @@ namespace TrendAnalysis.Service.Trend
                     {
                         AllowConsecutiveTimes = consecutiveTimes,
                         AllowInterval = interval,
-                        AnalyseNumberCount = analyseNumberCount
+                        AnalyseNumberCount = endIndex
                     };
                     trends.Add(trend);
 
                     //行明细结果集
                     var distributions = trendResult.FactorDistributions;
-                    foreach(var distribution in distributions)
+                    for (var i = numberCount - 1; i >= endIndex; i--)
                     {
-                        //非连续因子不分析历史趋势
-                        if (distribution.MaxConsecutiveTimesInterval == DisConsecutiveFlag) continue;
+                        var number = numbers[i];
 
-                        var nextIndex = distribution.Index + 1;
-                        if (nextIndex > numberCount) break;
-                        var nextNumber = numbers[nextIndex];
+                        //上一索引位置的分析结果,10个号码，分析第10位（索引位置9），取第9位（索引位置8）
+                        var distribution = distributions.FirstOrDefault(d => d.Index == i - 1);// distributions[i - 1];
+                        if (distribution == null) continue;
 
                         //对结果再分析
                         //1、按允许的最小因子当前连续次数和允许的最大间隔次数筛选
@@ -139,12 +138,12 @@ namespace TrendAnalysis.Service.Trend
                         if (distribution.ConsecutiveTimes == consecutiveTimes && distribution.MaxConsecutiveTimesInterval == interval)
                         {
                             resultCount++;
-                            if (predictiveFactor.Contains(nextNumber))
+
+                            if (predictiveFactor.Contains(number))
                             {
                                 successCount++;
                             }
                         }
-
                     }
 
                     trend.AnalyticalCount = resultCount;

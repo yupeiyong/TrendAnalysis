@@ -329,7 +329,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var resultCount = 0;
                 var tensHasCount = 0;
                 var onesHasCount = 0;
-                var defaultTakeCount = 101;
+                var defaultTakeCount = 201;
                 var rate = 40;
                 var everyPrice = 10;
                 var totalMoney = 0;
@@ -346,7 +346,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     {
                         Location = 7,
                         Times = times,
-                        OnesAddConsecutiveTimes = 3,
+                        OnesAddConsecutiveTimes = 1,
                         TensAddConsecutiveTimes = 1000,
                         OnesAddInterval = 0,
                         TensAddInterval = 10,
@@ -798,7 +798,14 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var str = resultString.ToString();
             }
         }
-
+        /*
+         1、平均分配左右部分出现的概率为50%
+         2、每次出现的机会都为总数的任一，如果总数20，出现机会为20分之1
+         3、历史记录划分为均等段
+         4、因为50%概率，所以左右部分都不会永久连续出现
+         5、分析当前记录和最近的正确率为100%的连续次数有关联
+         6、如果分析结果不正确，记录次数累加
+         */
         #endregion
     }
 
