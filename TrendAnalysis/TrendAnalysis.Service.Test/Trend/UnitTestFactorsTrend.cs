@@ -67,36 +67,37 @@ namespace TrendAnalysis.Service.Test.Trend
             Assert.IsTrue(predictiveFactors.Count == 1);
         }
 
+        /// <summary>
+        /// 使用随机数测试
+        /// </summary>
         [TestMethod]
-        public void TestMethod_AnalyseSpecifiedLocation()
+        public void TestMethod_Analyse_By_Random()
         {
             var numbers = GetTestNumbers(0, 10, 100000);
+
+            //因子
+            var factors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
 
             var watch = new Stopwatch();
             watch.Start();
             var resultString = new StringBuilder();
             var hasCount = 0;
             var resultCount = 0;
-            var defaultTakeCount = 101;
-            var rate = 40;
-            var everyPrice = 10;
-            var totalMoney = 0;
-            var winMoney = 0;
+            var defaultTakeCount = 201;
 
             var curTakeCount = defaultTakeCount;
-            for (var i = 0; i < 2500; i++)
+            for (var i = 0; i < 25000; i++)
             {
                 var number = numbers[i];
-                var dto = new MarkSixAnalyseSpecifiedLocationDto
+                var curNumbers = numbers.Skip(i + 1).Take(curTakeCount).ToList();
+                curNumbers.Reverse();
+                var dto = new FactorsTrendAnalyseDto<byte>
                 {
-                    Location = 7,
-                    Times = times,
-                    OnesAddConsecutiveTimes = 6,
-                    TensAddConsecutiveTimes = 100,//2,
-                    OnesAddInterval = 1,
-                    TensAddInterval = 1,
-                    NumberTakeCount = curTakeCount,
-                    OnesAndTensMustContain = false
+                    AddConsecutiveTimes = 3,
+                    AddInterval = 1,
+                    Numbers = curNumbers,
+                    AnalyseHistoricalTrendEndIndex = 200,
+                    Factors = factors
                 };
 
                 //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
@@ -110,12 +111,10 @@ namespace TrendAnalysis.Service.Test.Trend
                         success = true;
                     }
                 }
-                totalMoney += result.Count(m => m != 0) * everyPrice;
                 if (success)
                 {
                     hasCount++;
-                    resultString.AppendLine("期次：" + i + ",号码：" + number + ",分析结果：" + (has ? "-Yes- " : "      ") + string.Join(";", result));
-                    winMoney += everyPrice * rate;
+                    resultString.AppendLine("期次：" + i + ",号码：" + number + ",分析结果：" + (success ? "-Yes- " : "      ") + string.Join(";", result));
                     curTakeCount = defaultTakeCount;
                 }
                 else
@@ -133,26 +132,22 @@ namespace TrendAnalysis.Service.Test.Trend
         /// 分析结果可能的因子数大于0
         /// </summary>
         [TestMethod]
-        private List<byte> TestAnalyse(MarkSixAnalyseSpecifiedLocationDto dto)
+        private List<byte> TestAnalyse(FactorsTrendAnalyseDto<byte> dto)
         {
-            //个位因子
-            var onesDigitFactors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
-
             var factorHistoricalTrend = new FactorsTrend();
 
-            //个位
-            var onespredictiveFactors = factorHistoricalTrend.Analyse(new FactorsTrendAnalyseDto<byte>
+            var predictiveFactors = factorHistoricalTrend.Analyse(new FactorsTrendAnalyseDto<byte>
             {
-                Numbers = numbers,
-                Factors = onesDigitFactors,
-                AddConsecutiveTimes = dto.OnesAddConsecutiveTimes,
-                AddInterval = dto.OnesAddInterval,
+                Numbers = dto.Numbers,
+                Factors = dto.Factors,
+                AddConsecutiveTimes = dto.AddConsecutiveTimes,
+                AddInterval = dto.AddInterval,
                 AnalyseHistoricalTrendEndIndex = dto.AnalyseHistoricalTrendEndIndex
             });
-            if (onespredictiveFactors.Count > 0)
+            if (predictiveFactors.Count > 0)
             {
-                var onesFactor = new List<byte>(onespredictiveFactors[0].Right);
-                onesFactor = onespredictiveFactors.Aggregate(onesFactor, (current, factor) => current.Intersect(factor.Right).ToList());
+                var onesFactor = new List<byte>(predictiveFactors[0].Right);
+                onesFactor = predictiveFactors.Aggregate(onesFactor, (current, factor) => current.Intersect(factor.Right).ToList());
 
                 return onesFactor;
 
