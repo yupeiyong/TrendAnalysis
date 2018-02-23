@@ -46,7 +46,7 @@ namespace TrendAnalysis.DataTransferObject.Trend
         /// <summary>
         ///     分析历史趋势的最后位置
         /// </summary>
-        public int AnalyseHistoricalTrendEndIndex { get; set; } = 100;
+        public int AnalyseHistoricalTrendEndIndex { get; set; } 
 
         /// <summary>
         ///     累加的连续次数

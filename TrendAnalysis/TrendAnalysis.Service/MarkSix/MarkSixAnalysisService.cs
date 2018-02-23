@@ -404,7 +404,8 @@ namespace TrendAnalysis.Service.MarkSix
                         Numbers = tensDigitNumbers,
                         PermutationFactors = ls,
                         AddConsecutiveTimes = dto.TensAddConsecutiveTimes,
-                        AddInterval = dto.TensAddInterval
+                        AddInterval = dto.TensAddInterval,
+                        AnalyseHistoricalTrendEndIndex=dto.AnalyseHistoricalTrendEndIndex
                     });
                     if (curResult != null)
                     {
@@ -430,7 +431,7 @@ namespace TrendAnalysis.Service.MarkSix
                         PermutationFactors = ls,
                         AddConsecutiveTimes = dto.OnesAddConsecutiveTimes,
                         AddInterval = dto.OnesAddInterval,
-                        AnalyseHistoricalTrendEndIndex=200
+                        AnalyseHistoricalTrendEndIndex = dto.AnalyseHistoricalTrendEndIndex
                     });
                     if (curResult != null)
                     {
