@@ -755,7 +755,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     {
                         Location = 7,
                         Times = times,
-                        OnesAddConsecutiveTimes = 3,
+                        OnesAddConsecutiveTimes = 6,
                         TensAddConsecutiveTimes = 100,//2,
                         OnesAddInterval = 1,
                         TensAddInterval = 1,
@@ -831,13 +831,13 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     {
                         Location = 7,
                         Times = times,
-                        OnesAddConsecutiveTimes = 4,
+                        OnesAddConsecutiveTimes = 3,
                         TensAddConsecutiveTimes = 100,//2,
                         OnesAddInterval = 1,
                         TensAddInterval = 1,
                         NumberTakeCount = curTakeCount,
                         OnesAndTensMustContain = false,
-                        AnalyseHistoricalTrendEndIndex=110
+                        AnalyseHistoricalTrendEndIndex=100
                     };
 
                     //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };

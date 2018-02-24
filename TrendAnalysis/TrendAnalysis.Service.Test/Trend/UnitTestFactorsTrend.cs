@@ -5,7 +5,9 @@ using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.DataTransferObject.Trend;
 using TrendAnalysis.Models.Trend;
 using TrendAnalysis.Service.Trend;
-
+using System;
+using System.Text;
+using System.Diagnostics;
 
 namespace TrendAnalysis.Service.Test.Trend
 {
@@ -65,6 +67,105 @@ namespace TrendAnalysis.Service.Test.Trend
             Assert.IsTrue(predictiveFactors.Count == 1);
         }
 
+        /// <summary>
+        /// 使用随机数测试
+        /// </summary>
+        [TestMethod]
+        public void TestMethod_Analyse_By_Random()
+        {
+            var numbers = GetTestNumbers(0, 10, 100000);
+
+            //因子
+            var factors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
+
+            var watch = new Stopwatch();
+            watch.Start();
+            var resultString = new StringBuilder();
+            var hasCount = 0;
+            var resultCount = 0;
+            var defaultTakeCount = 201;
+
+            var curTakeCount = defaultTakeCount;
+            for (var i = 0; i < 25000; i++)
+            {
+                var number = numbers[i];
+                var curNumbers = numbers.Skip(i + 1).Take(curTakeCount).ToList();
+                curNumbers.Reverse();
+                var dto = new FactorsTrendAnalyseDto<byte>
+                {
+                    AddConsecutiveTimes = 3,
+                    AddInterval = 1,
+                    Numbers = curNumbers,
+                    AnalyseHistoricalTrendEndIndex = 200,
+                    Factors = factors
+                };
+
+                //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
+                var result = TestAnalyse(dto);
+                var success = false;
+                if (result.Count > 0)
+                {
+                    resultCount++;
+                    if (result.Contains(number))
+                    {
+                        success = true;
+                    }
+                }
+                if (success)
+                {
+                    hasCount++;
+                    resultString.AppendLine("期次：" + i + ",号码：" + number + ",分析结果：" + (success ? "-Yes- " : "      ") + string.Join(";", result));
+                    curTakeCount = defaultTakeCount;
+                }
+                else
+                {
+                    curTakeCount++;
+                }
+            }
+            watch.Stop();
+            var usedSeconds = watch.ElapsedMilliseconds / 1000;
+            var str = resultString.ToString();
+        }
+
+
+        /// <summary>
+        /// 分析结果可能的因子数大于0
+        /// </summary>
+        [TestMethod]
+        private List<byte> TestAnalyse(FactorsTrendAnalyseDto<byte> dto)
+        {
+            var factorHistoricalTrend = new FactorsTrend();
+
+            var predictiveFactors = factorHistoricalTrend.Analyse(new FactorsTrendAnalyseDto<byte>
+            {
+                Numbers = dto.Numbers,
+                Factors = dto.Factors,
+                AddConsecutiveTimes = dto.AddConsecutiveTimes,
+                AddInterval = dto.AddInterval,
+                AnalyseHistoricalTrendEndIndex = dto.AnalyseHistoricalTrendEndIndex
+            });
+            if (predictiveFactors.Count > 0)
+            {
+                var onesFactor = new List<byte>(predictiveFactors[0].Right);
+                onesFactor = predictiveFactors.Aggregate(onesFactor, (current, factor) => current.Intersect(factor.Right).ToList());
+
+                return onesFactor;
+
+            }
+            return new List<byte>();
+        }
+
+
+        public List<byte> GetTestNumbers(int startNumber, int endNumber, int count)
+        {
+            var numbers = new List<byte>();
+            var rnd = new Random();
+            for (var i = 0; i < count; i++)
+            {
+                numbers.Add((byte)rnd.Next(startNumber, endNumber));
+            }
+            return numbers;
+        }
     }
 
 }
