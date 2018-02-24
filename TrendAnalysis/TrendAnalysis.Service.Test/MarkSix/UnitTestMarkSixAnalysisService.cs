@@ -798,7 +798,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var usedSeconds = watch.ElapsedMilliseconds / 1000;
                 var str = resultString.ToString();
                 /*
-             i=346
+             i=346 
              curTakeCount=126  
              times=2012028
              factor={0,1,4,6,8} 
