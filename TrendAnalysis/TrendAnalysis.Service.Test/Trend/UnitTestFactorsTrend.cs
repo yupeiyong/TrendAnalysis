@@ -85,20 +85,20 @@ namespace TrendAnalysis.Service.Test.Trend
             var resultString = new StringBuilder();
             var hasCount = 0;
             var resultCount = 0;
-            var defaultTakeCount = 201;
+            var defaultTakeCount = 101;
 
             var curTakeCount = defaultTakeCount;
-            for (var i = 0; i < 25000; i++)
+            for (var i = 0; i < 2500; i++)
             {
                 var number = numbers[i];
                 var curNumbers = numbers.Skip(i + 1).Take(curTakeCount).ToList();
                 curNumbers.Reverse();
                 var dto = new FactorsTrendAnalyseDto<byte>
                 {
-                    AddConsecutiveTimes = 3,
+                    AddConsecutiveTimes = 8,
                     AddInterval = 1,
                     Numbers = curNumbers,
-                    AnalyseHistoricalTrendEndIndex = 200,
+                    AnalyseHistoricalTrendEndIndex = 100,
                     Factors = factors
                 };
 

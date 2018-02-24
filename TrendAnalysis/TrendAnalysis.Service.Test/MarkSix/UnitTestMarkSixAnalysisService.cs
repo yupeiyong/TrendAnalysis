@@ -352,7 +352,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                         TensAddInterval = 10,
                         NumberTakeCount = curTakeCount,
                         OnesAndTensMustContain = false,
-                        AnalyseHistoricalTrendEndIndex=1
+                        AnalyseHistoricalTrendEndIndex = 1
                     };
 
                     //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
@@ -755,7 +755,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                     {
                         Location = 7,
                         Times = times,
-                        OnesAddConsecutiveTimes = 6,
+                        OnesAddConsecutiveTimes = 3,
                         TensAddConsecutiveTimes = 100,//2,
                         OnesAddInterval = 1,
                         TensAddInterval = 1,
@@ -797,6 +797,27 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 watch.Stop();
                 var usedSeconds = watch.ElapsedMilliseconds / 1000;
                 var str = resultString.ToString();
+                /*
+             i=346
+             curTakeCount=126  
+             times=2012028
+             factor={0,1,4,6,8} 
+             Numbers={
+             0,8,1,8,5,4,3,0,8,7,
+             8,8,5,2,6,2,9,8,2,9,
+             8,3,7,7,0,5,9,6,5,0,
+             2,1,0,4,0,6,1,4,4,8,
+             0,7,2,1,0,2,0,6,2,9,
+             7,2,6,2,5,2,3,6,8,3,
+             5,7,3,6,3,3,4,0,7,4,
+             9,7,0,3,9,8,3,5,9,5,
+             1,5,2,4,9,5,1,5,1,4,
+             1,2,5,2,4,1,5,1,8,0,
+             2,0,2,7,4,1,1,1,5,9,
+             7,7,7,3,8,5,8,5,7,7,
+             2,7,3,5,2,3
+             } 
+             */
             }
         }
 
@@ -837,7 +858,7 @@ namespace TrendAnalysis.Service.Test.MarkSix
                         TensAddInterval = 1,
                         NumberTakeCount = curTakeCount,
                         OnesAndTensMustContain = false,
-                        AnalyseHistoricalTrendEndIndex=100
+                        AnalyseHistoricalTrendEndIndex = 100
                     };
 
                     //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };

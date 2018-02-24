@@ -53,7 +53,7 @@ namespace TrendAnalysis.Service.Trend
             if (historicalTrends.Count == 0) return null;
 
             var firstHistoricalTrend = historicalTrends.FirstOrDefault();
-            if (firstHistoricalTrend == null)
+            if (firstHistoricalTrend == null )
                 return null;
 
             //可以考虑加大连续次数和间隔数
