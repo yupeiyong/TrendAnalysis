@@ -25,7 +25,13 @@ namespace TrendAnalysis.Service.Trend
         ///      和最大连续次数的间隔，
         ///      最大因子连续次数－当前索引位置的因子连续次数,为负数表示当前连续次数大于历史最大连续次数
         /// </summary>
-        public int MaxConsecutiveTimesInterval { get; set; }       
+        public int MaxConsecutiveTimesInterval { get; set; }
+
+        public override string ToString()
+        {
+            return $"I:{Index},C:{ConsecutiveTimes},i:{(MaxConsecutiveTimesInterval > 100 ? "X" : MaxConsecutiveTimesInterval.ToString())}";
+        }
+
     }
 
 }

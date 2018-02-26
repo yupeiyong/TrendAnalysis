@@ -1282,6 +1282,111 @@ namespace TrendAnalysis.Service.Test.MarkSix
                 var str = resultString.ToString();
             }
         }
+        [TestMethod]
+        public void TestMethod_AnalyseSpecifiedLocation8()
+        {
+            using (var dao = new TrendDbContext())
+            {
+                var watch = new Stopwatch();
+                watch.Start();
+                var service = new MarkSixAnalysisService();
+                /*
+Select * from
+(
+SELECT TOP 2505 Times
+  FROM [TrendAnalysis].[dbo].[T_MarkSixRecord]
+  order by times desc)T 
+  order by times
+                 */
+                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(2505).OrderBy(m => m.Times).ToList();
+                var resultString = new StringBuilder();
+                var hasCount = 0;
+                var resultCount = 0;
+                var tensHasCount = 0;
+                var onesHasCount = 0;
+                var defaultTakeCount = 501;
+                var rate = 40;
+                var everyPrice = 10;
+                var totalMoney = 0;
+                var winMoney = 0;
+
+                var curTakeCount = defaultTakeCount;
+                for (var i = 0; i < 2500; i++)
+                {
+                    var seventhNum = records[i].SeventhNum;
+                    var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
+                    var tens = byte.Parse(seventhNum.ToString("00").Substring(0, 1));
+                    var times = records[i].Times;
+                    var dto = new MarkSixAnalyseSpecifiedLocationDto
+                    {
+                        Location = 7,
+                        Times = times,
+                        OnesAddConsecutiveTimes = 3,
+                        TensAddConsecutiveTimes = 100,//2,
+                        OnesAddInterval = 1,
+                        TensAddInterval = 1,
+                        NumberTakeCount = curTakeCount,
+                        OnesAndTensMustContain = false,
+                        AnalyseHistoricalTrendEndIndex=500
+                    };
+
+                    //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
+                    var result = service.AnalyseSpecifiedLocation(dto);
+                    if (result.Count > 0)
+                    {
+                        resultCount++;
+                        var resultSource = result.Select(r => r.ToString("00"));
+                        var onesResults = resultSource.Select(r => byte.Parse(r.Substring(1))).Distinct().ToList();
+                        var tensResults = resultSource.Select(r => byte.Parse(r.Substring(0, 1))).Distinct().ToList();
+                        if (tensResults.Contains(tens))
+                        {
+                            tensHasCount++;
+                        }
+                        if (onesResults.Contains(ones))
+                        {
+                            onesHasCount++;
+                        }
+                    }
+                    var has = result.Exists(m => m == seventhNum);
+                    totalMoney += result.Count(m => m != 0) * everyPrice;
+                    if (has)
+                    {
+                        hasCount++;
+                        resultString.AppendLine("期次：" + records[i].Times + ",第7位号码：" + seventhNum + ",分析结果：" + (has ? "-Yes- " : "      ") + string.Join(";", result));
+                        winMoney += everyPrice * rate;
+                        curTakeCount = defaultTakeCount;
+                    }
+                    else
+                    {
+                        curTakeCount++;
+                    }
+                }
+                watch.Stop();
+                var usedSeconds = watch.ElapsedMilliseconds / 1000;
+                var str = resultString.ToString();
+                /*
+             i=346 
+             curTakeCount=126  
+             times=2012028
+             factor={0,1,4,6,8} 
+             Numbers={
+             0,8,1,8,5,4,3,0,8,7,
+             8,8,5,2,6,2,9,8,2,9,
+             8,3,7,7,0,5,9,6,5,0,
+             2,1,0,4,0,6,1,4,4,8,
+             0,7,2,1,0,2,0,6,2,9,
+             7,2,6,2,5,2,3,6,8,3,
+             5,7,3,6,3,3,4,0,7,4,
+             9,7,0,3,9,8,3,5,9,5,
+             1,5,2,4,9,5,1,5,1,4,
+             1,2,5,2,4,1,5,1,8,0,
+             2,0,2,7,4,1,1,1,5,9,
+             7,7,7,3,8,5,8,5,7,7,
+             2,7,3,5,2,3
+             } 
+             */
+            }
+        }
 
         /*
          1、平均分配左右部分出现的概率为50%
