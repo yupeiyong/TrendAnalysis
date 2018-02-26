@@ -149,7 +149,7 @@ namespace TrendAnalysis.Service.Test.Trend
             var resultString = new StringBuilder();
             var hasCount = 0;
             var resultCount = 0;
-            var defaultTakeCount = 101;
+            var defaultTakeCount = 501;
 
             var indexs = new Dictionary<int, int>();
             var curTakeCount = defaultTakeCount;
@@ -165,7 +165,7 @@ namespace TrendAnalysis.Service.Test.Trend
                     AddConsecutiveTimes = 3,
                     AddInterval = 1,
                     Numbers = curNumbers,
-                    AnalyseHistoricalTrendEndIndex = 100,
+                    AnalyseHistoricalTrendEndIndex = 500,
                     Factors = factors
                 };
 
