@@ -1298,20 +1298,21 @@ SELECT TOP 2505 Times
   order by times desc)T 
   order by times
                  */
-                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(2505).OrderBy(m => m.Times).ToList();
+                var records = dao.Set<MarkSixRecord>().OrderByDescending(m => m.Times).Take(2505).ToList();
                 var resultString = new StringBuilder();
                 var hasCount = 0;
                 var resultCount = 0;
                 var tensHasCount = 0;
                 var onesHasCount = 0;
-                var defaultTakeCount = 501;
+                var defaultTakeCount = 1001;
                 var rate = 40;
                 var everyPrice = 10;
                 var totalMoney = 0;
                 var winMoney = 0;
 
                 var curTakeCount = defaultTakeCount;
-                for (var i = 0; i < 2500; i++)
+                var testCount = 2500;
+                for (var i = testCount; i > 0; i--)
                 {
                     var seventhNum = records[i].SeventhNum;
                     var ones = byte.Parse(seventhNum.ToString("00").Substring(1));
@@ -1321,13 +1322,13 @@ SELECT TOP 2505 Times
                     {
                         Location = 7,
                         Times = times,
-                        OnesAddConsecutiveTimes = 3,
+                        OnesAddConsecutiveTimes = 4,
                         TensAddConsecutiveTimes = 100,//2,
                         OnesAddInterval = 1,
                         TensAddInterval = 1,
                         NumberTakeCount = curTakeCount,
                         OnesAndTensMustContain = false,
-                        AnalyseHistoricalTrendEndIndex=500
+                        AnalyseHistoricalTrendEndIndex = 1
                     };
 
                     //var dto = new MarkSixAnalyseSpecifiedLocationDto { Location = 7, StartTimes = records[i].StartTimes, TensAllowMinFactorCurrentConsecutiveTimes = 6, TensAllowMaxInterval = -1, TensAroundCount = 200, TensNumbersTailCutCount = 6 };
