@@ -65,6 +65,34 @@ namespace TrendAnalysis.Service.Trend
             return null;
         }
 
+        public List<T>Analyse1<T>(FactorTrendAnalyseDto<T> dto)
+        {
+            //分析历史趋势,排除最后一位号码，（最后一位号码分析当前要分析的可能号码）
+            var historicalNumbers = dto.Numbers.Take(dto.Numbers.Count - 1).ToList();
+
+            //分析每个因子
+            var factor = dto.Factor;
+
+            //统计因子在记录中的趋势
+            var trendResult = CountConsecutiveDistribution(dto.Numbers, factor.Left, factor.Right);
+
+            //行明细结果集
+            var rowDetailses = trendResult.FactorDistributions;
+            if (rowDetailses == null || rowDetailses.Count == 0) return null;
+            var lastIndexResult = rowDetailses[rowDetailses.Count - 1];
+
+            //因子不包含最后一个号码，（连续次数为0）
+            if (lastIndexResult.ConsecutiveTimes == 0)
+                return null;
+
+            //大于等于指定的连续次和小于等于指定的间隔数
+            if (lastIndexResult.ConsecutiveTimes >= dto.AddConsecutiveTimes && lastIndexResult.MaxConsecutiveTimesInterval <= dto.AddInterval)
+            {
+                //返回的可能因子
+                return factor.Right;
+            }
+            return null;
+        }
 
         /// <summary>
         ///     分析因子的历史正确率分布等，（通过号码集合分析历史趋势）

@@ -5,7 +5,9 @@ using TrendAnalysis.DataTransferObject;
 using TrendAnalysis.DataTransferObject.Trend;
 using TrendAnalysis.Models.Trend;
 using TrendAnalysis.Service.Trend;
-
+using System.Diagnostics;
+using System.Text;
+using System;
 
 namespace TrendAnalysis.Service.Test.Trend
 {
@@ -70,6 +72,93 @@ namespace TrendAnalysis.Service.Test.Trend
             Assert.IsTrue(rows.Count >= 1);
         }
 
+
+
+        /// <summary>
+        ///     使用随机数测试，模拟10个数（0，1，2，3，4，5，6，7，8，9）的记录,顺序
+        /// </summary>
+        [TestMethod]
+        public void TestMethod_Analyse_Ten_Digit_By_Random_ASC()
+        {
+            var numbers = GetTestNumbers(0, 10, 100000);
+            //因子
+            var factors = FactorGenerator.Create(new List<byte> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }.ToList());
+
+            var watch = new Stopwatch();
+            watch.Start();
+            var resultString = new StringBuilder();
+            var defaultTakeCount = 100;
+
+            var indexs = new Dictionary<int, int>();
+
+            var testCount = 2500;
+            var trend = new FactorTrend();
+            var trendCorrectRates = new List<FactorTrendCorrectRate>();
+
+            foreach (var factor in factors)
+            {
+                var strFactor = string.Join(",", factor.Right);
+                for (var c = 3; c < 19; c++)
+                {
+
+                    for (var interval = 0; interval > -9; interval--)
+                    {
+                        var hasCount = 0;
+                        var resultCount = 0;
+
+                        for (var i = testCount; i >= 0; i--)
+                        {
+                            var number = numbers[i];
+                            var curNumbers = numbers.Skip(i + 1).Take(defaultTakeCount).ToList();
+                            curNumbers.Reverse();
+
+                            var dto = new FactorTrendAnalyseDto<byte>
+                            {
+                                AddConsecutiveTimes = c,
+                                AddInterval = interval,
+                                Numbers = curNumbers,
+                                AnalyseHistoricalTrendEndIndex = 1,
+                                Factor = factor
+                            };
+                            var result = trend.Analyse1(dto);
+                            var success = false;
+                            if (result == null) continue;
+                            if (result.Count > 0)
+                            {
+                                resultCount++;
+                                if (result.Contains(number))
+                                {
+                                    success = true;
+                                }
+                            }
+                            if (success)
+                            {
+                                hasCount++;
+                            }
+                        }
+                        trendCorrectRates.Add(new FactorTrendCorrectRate { AllowConsecutiveTimes = c, AllowInterval = interval, AnalyticalCount = resultCount, CorrectCount = hasCount, TypeDescription = strFactor,CorrectRate= resultCount == 0 ? 0 : (double)hasCount / resultCount });
+                        //resultString.AppendLine($"{strFactor},连续次数：{c}间隔次数：{interval}，正确率：{(resultCount == 0 ? 0 : (double)hasCount / resultCount)}");
+                    }
+                }
+
+
+                watch.Stop();
+                var usedSeconds = watch.ElapsedMilliseconds / 1000;
+                var str = resultString.ToString();
+
+            }
+        }
+
+        public List<byte> GetTestNumbers(int startNumber, int endNumber, int count)
+        {
+            var numbers = new List<byte>();
+            var rnd = new Random();
+            for (var i = 0; i < count; i++)
+            {
+                numbers.Add((byte)rnd.Next(startNumber, endNumber));
+            }
+            return numbers;
+        }
     }
 
 }
