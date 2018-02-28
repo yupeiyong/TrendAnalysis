@@ -89,15 +89,16 @@ namespace TrendAnalysis.Service.Test.Trend
             var resultString = new StringBuilder();
             var defaultTakeCount = 100;
 
-            var indexs = new Dictionary<int, int>();
 
             var testCount = 2500;
             var trend = new FactorTrend();
-            var trendCorrectRates = new List<FactorTrendCorrectRate>();
+            var factorsTrendCorrectRates = new Dictionary<Factor<byte>,List<FactorTrendCorrectRate>>();
 
+            var firstrFactor = factors[0];
             foreach (var factor in factors)
             {
                 var strFactor = string.Join(",", factor.Right);
+                var trendCorrectRates=new List<FactorTrendCorrectRate>();
                 for (var c = 3; c < 19; c++)
                 {
 
@@ -136,17 +137,70 @@ namespace TrendAnalysis.Service.Test.Trend
                                 hasCount++;
                             }
                         }
-                        trendCorrectRates.Add(new FactorTrendCorrectRate { AllowConsecutiveTimes = c, AllowInterval = interval, AnalyticalCount = resultCount, CorrectCount = hasCount, TypeDescription = strFactor,CorrectRate= resultCount == 0 ? 0 : (double)hasCount / resultCount });
-                        //resultString.AppendLine($"{strFactor},连续次数：{c}间隔次数：{interval}，正确率：{(resultCount == 0 ? 0 : (double)hasCount / resultCount)}");
+                        var correctRate = resultCount == 0 ? 0 : (double)hasCount / resultCount;
+                        if (correctRate == 1)
+                        {
+                            trendCorrectRates.Add(new FactorTrendCorrectRate
+                            {
+                                AllowConsecutiveTimes = c,
+                                AllowInterval = interval,
+                                AnalyticalCount = resultCount,
+                                CorrectCount = hasCount,
+                                TypeDescription = strFactor,
+                                CorrectRate = correctRate
+                            });
+                        }
                     }
                 }
 
-
-                watch.Stop();
-                var usedSeconds = watch.ElapsedMilliseconds / 1000;
-                var str = resultString.ToString();
-
+                if(trendCorrectRates.Count>0)
+                    factorsTrendCorrectRates.Add(factor,trendCorrectRates);
+                break;
             }
+            watch.Stop();
+            var usedSeconds = watch.ElapsedMilliseconds / 1000;
+
+            var realHasCount = 0;
+            var realResultCount = 0;
+
+            var consecutiveTimes = 12;
+            var curInterval = -8;
+            testCount = 99000;
+            for (var i = testCount; i >= 0; i--)
+            {
+                var number = numbers[i];
+                var curNumbers = numbers.Skip(i + 1).Take(defaultTakeCount).ToList();
+                curNumbers.Reverse();
+                var dto = new FactorTrendAnalyseDto<byte>
+                {
+                    AddConsecutiveTimes = consecutiveTimes,
+                    AddInterval = curInterval,
+                    Numbers = curNumbers,
+                    AnalyseHistoricalTrendEndIndex = 1,
+                    Factor = firstrFactor
+                };
+                var result = trend.Analyse1(dto);
+                var success = false;
+                if (result == null) continue;
+                if (result.Count > 0)
+                {
+                    realResultCount++;
+                    if (result.Contains(number))
+                    {
+                        success = true;
+                    }
+                }
+                if (success)
+                {
+                    realHasCount++;
+                    resultString.AppendLine("期次：" + i + ",号码：" + number + ",分析结果：" + (success ? "-Yes- " : "      ") + string.Join(";", result));
+                }
+            }
+            watch.Stop();
+            usedSeconds = watch.ElapsedMilliseconds / 1000;
+
+
+            var str = resultString.ToString();
         }
 
         public List<byte> GetTestNumbers(int startNumber, int endNumber, int count)
