@@ -87,19 +87,19 @@ namespace TrendAnalysis.Service.Test.Trend
             var watch = new Stopwatch();
             watch.Start();
             var resultString = new StringBuilder();
-            var defaultTakeCount = 100;
+            var defaultTakeCount = 1000;
 
 
             var testCount = 2500;
             var trend = new FactorTrend();
-            var factorsTrendCorrectRates = new Dictionary<Factor<byte>,List<FactorTrendCorrectRate>>();
+            var factorsTrendCorrectRates = new Dictionary<Factor<byte>, List<FactorTrendCorrectRate>>();
 
             var firstrFactor = factors[0];
             foreach (var factor in factors)
             {
                 var strFactor = string.Join(",", factor.Right);
-                var trendCorrectRates=new List<FactorTrendCorrectRate>();
-                for (var c = 3; c < 19; c++)
+                var trendCorrectRates = new List<FactorTrendCorrectRate>();
+                for (var c = 3; c < 22; c++)
                 {
 
                     for (var interval = 0; interval > -9; interval--)
@@ -153,8 +153,8 @@ namespace TrendAnalysis.Service.Test.Trend
                     }
                 }
 
-                if(trendCorrectRates.Count>0)
-                    factorsTrendCorrectRates.Add(factor,trendCorrectRates);
+                if (trendCorrectRates.Count > 0)
+                    factorsTrendCorrectRates.Add(factor, trendCorrectRates);
                 break;
             }
             watch.Stop();
@@ -164,12 +164,12 @@ namespace TrendAnalysis.Service.Test.Trend
             var realResultCount = 0;
 
             var consecutiveTimes = 12;
-            var curInterval = -8;
+            var curInterval = -2;
             testCount = 99000;
             for (var i = testCount; i >= 0; i--)
             {
                 var number = numbers[i];
-                var curNumbers = numbers.Skip(i + 1).Take(defaultTakeCount).ToList();
+                var curNumbers = numbers.Skip(i + 1).Take(200).ToList();
                 curNumbers.Reverse();
                 var dto = new FactorTrendAnalyseDto<byte>
                 {
